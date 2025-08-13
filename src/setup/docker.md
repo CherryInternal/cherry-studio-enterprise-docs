@@ -1,0 +1,513 @@
+# Cherry Studio Enterprise Docker 部署指南
+
+这个文档详细介绍了如何使用 Docker 和 Docker Compose 部署 Cherry Studio Enterprise API 服务。
+
+## 特性
+
+- **双服务集成**：单容器内同时运行 API 服务（3670端口）和管理后台（3680端口）
+- **数据持久化**：支持数据卷挂载，确保数据安全
+- **环境配置**：灵活的环境变量配置
+- **健康检查**：内置健康检查机制
+- **自动重启**：支持容器自动重启策略
+
+## 快速开始
+
+### 前置条件
+
+- Docker 20.10+
+- Docker Compose 2.0+（可选）
+- PostgreSQL 数据库（生产环境）
+
+### 使用 Docker Compose
+
+```yaml
+services:
+  api:
+    image: cherrystudio/cherry-studio-enterprise-api:latest
+    container_name: cherry-studio-enterprise-api
+    ports:
+      - '36700:3670'
+      - '36800:3680'
+    environment:
+      - API_PORT=3670
+      - API_URL=https://api.demo.cherry-ai.com
+      - ADMIN_PORT=3680
+      - JWT_SECRET=your-secure-jwt-secret-at-least-32-characters
+      - DB_HOST=1Panel-postgresql-UmXp
+      - DB_PORT=5432
+      - DB_USERNAME=cherry-studio-enterprise
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=cherry-studio-enterprise
+      - DB_TYPE=postgres
+      - DB_SSL=false
+      - CASDOOR_ENDPOINT=https://auth.cherry-ai.com
+      - CASDOOR_APP_ID=d29cf4a499060d916d5e
+      - CASDOOR_APP_SECRET=your-casdoor-app-secret
+      - CASDOOR_ORGANIZATION_NAME=cherry-studio
+      - CASDOOR_APPLICATION_NAME=cherry-studio-enterprise
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+```
+
+#### 完整生产环境配置（含数据库）
+
+```yaml
+services:
+  # PostgreSQL 数据库
+  postgres:
+    image: postgres:15-alpine
+    container_name: cherry-studio-enterprise-postgres
+    environment:
+      POSTGRES_USER: cherry-studio-enterprise
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: cherry-studio-enterprise
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U cherry-studio-enterprise']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Cherry Studio API
+  api:
+    image: cherrystudio/cherry-studio-enterprise-api:latest
+    container_name: cherry-studio-api
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - '3670:3670'
+      - '3680:3680'
+    environment:
+      # 服务配置
+      - API_PORT=3670
+      - ADMIN_PORT=3680
+      - API_URL=https://api.your-domain.com
+      - ADMIN_APP_NAME=Cherry Studio Enterprise
+
+      # 安全配置
+      - JWT_SECRET=${JWT_SECRET:-your-secure-jwt-secret-at-least-32-characters}
+
+      # 数据库配置
+      - DB_TYPE=postgres
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USERNAME=cherry-studio-enterprise
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_NAME=cherry-studio-enterprise
+      - DB_SSL=false
+
+      # Casdoor 配置（可选）
+      - CASDOOR_ENDPOINT=${CASDOOR_ENDPOINT}
+      - CASDOOR_APP_ID=${CASDOOR_APP_ID}
+      - CASDOOR_APP_SECRET=${CASDOOR_APP_SECRET}
+      - CASDOOR_ORGANIZATION_NAME=${CASDOOR_ORGANIZATION_NAME}
+      - CASDOOR_APPLICATION_NAME=${CASDOOR_APPLICATION_NAME}
+
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+
+    restart: unless-stopped
+
+    healthcheck:
+      test: ['CMD', 'wget', '--quiet', '--tries=1', '--spider', 'http://localhost:3670/health']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  postgres_data:
+    driver: local
+```
+
+### 启动和管理
+
+```bash
+# 启动服务
+docker-compose up -d
+
+# 查看日志
+docker-compose logs -f
+
+# 停止服务
+docker-compose down
+
+# 停止并删除数据卷（危险操作）
+docker-compose down -v
+```
+
+## 配置说明
+
+### 端口映射
+
+| 容器端口 | 服务       | 说明                             |
+| -------- | ---------- | -------------------------------- |
+| 3670     | API 服务   | RESTful API 接口，供客户端调用   |
+| 3680     | Admin 后台 | Web 管理界面，用于系统配置和管理 |
+
+### 环境变量
+
+#### 核心配置
+
+| 变量名               | 描述              | 默认值          | 必填 |
+| -------------------- | ----------------- | --------------- | ---- |
+| `API_PORT`           | API 服务端口      | `3670`          | 否   |
+| `ADMIN_PORT`         | Admin 后台端口    | `3680`          | 否   |
+| `API_URL`            | API 基础 URL      | -               | 是   |
+| `JWT_SECRET`         | JWT 加密密钥      | -               | 是   |
+| `ADMIN_APP_NAME`     | 管理后台应用名称  | `Cherry Studio` | 否   |
+| `ADMIN_APP_LOGO_URL` | 管理后台 Logo URL | -               | 否   |
+
+#### 数据库配置
+
+| 变量名        | 描述         | 默认值   | 说明                       |
+| ------------- | ------------ | -------- | -------------------------- |
+| `DB_TYPE`     | 数据库类型   | `sqlite` | 可选: `sqlite`, `postgres` |
+| `DB_HOST`     | 数据库主机   | -        | PostgreSQL 必填            |
+| `DB_PORT`     | 数据库端口   | `5432`   | PostgreSQL 默认端口        |
+| `DB_USERNAME` | 数据库用户名 | -        | PostgreSQL 必填            |
+| `DB_PASSWORD` | 数据库密码   | -        | PostgreSQL 必填            |
+| `DB_NAME`     | 数据库名称   | -        | PostgreSQL 必填            |
+| `DB_SSL`      | 是否启用 SSL | `false`  | PostgreSQL SSL 连接        |
+
+#### Casdoor SSO 配置（可选）
+
+| 变量名                      | 描述             | 默认值 |
+| --------------------------- | ---------------- | ------ |
+| `CASDOOR_ENDPOINT`          | Casdoor 服务地址 | -      |
+| `CASDOOR_APP_ID`            | 应用 ID          | -      |
+| `CASDOOR_APP_SECRET`        | 应用密钥         | -      |
+| `CASDOOR_ORGANIZATION_NAME` | 组织名称         | -      |
+| `CASDOOR_APPLICATION_NAME`  | 应用名称         | -      |
+
+### 数据持久化
+
+应用数据存储在 `/app/data` 目录，包括：
+
+- SQLite 数据库文件（如果使用 SQLite）
+- 上传的文件
+- 知识库数据
+- 应用配置
+
+建议将此目录挂载到宿主机，确保数据持久化：
+
+```yaml
+volumes:
+  - ./data:/app/data # 应用数据
+  - ./logs:/app/logs # 日志文件（可选）
+```
+
+## 部署最佳实践
+
+### 1. 安全配置
+
+**JWT 密钥管理**：
+
+```bash
+# 生成强随机密钥
+openssl rand -base64 32
+
+# 使用环境文件管理敏感信息
+echo "JWT_SECRET=$(openssl rand -base64 32)" >> .env
+```
+
+**使用 Docker Secrets**（Swarm 模式）：
+
+```bash
+# 创建 secret
+echo "your-secure-password" | docker secret create db_password -
+
+# 在 compose 中引用
+services:
+  api:
+    secrets:
+      - db_password
+    environment:
+      DB_PASSWORD_FILE: /run/secrets/db_password
+```
+
+### 2. 网络配置
+
+**使用自定义网络**：
+
+```yaml
+services:
+  api:
+    networks:
+      - cherry-network
+
+networks:
+  cherry-network:
+    driver: bridge
+```
+
+**配置反向代理（Nginx）**：
+
+```nginx
+server {
+    listen 80;
+    server_name api.your-domain.com;
+
+    location / {
+        proxy_pass http://localhost:3670;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+server {
+    listen 80;
+    server_name admin.your-domain.com;
+
+    location / {
+        proxy_pass http://localhost:3680;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+```
+
+### 3. 性能优化
+
+**资源限制**：
+
+```yaml
+services:
+  api:
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+```
+
+**健康检查配置**：
+
+```yaml
+healthcheck:
+  test: ['CMD', 'curl', '-f', 'http://localhost:3670/health']
+  interval: 30s
+  timeout: 10s
+  retries: 3
+  start_period: 40s
+```
+
+### 4. 日志管理
+
+**配置日志驱动**：
+
+```yaml
+services:
+  api:
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '10m'
+        max-file: '3'
+```
+
+**集中日志管理**：
+
+```yaml
+services:
+  api:
+    logging:
+      driver: syslog
+      options:
+        syslog-address: 'tcp://192.168.0.42:514'
+        tag: 'cherry-studio'
+```
+
+## 备份与恢复
+
+### 数据备份
+
+#### PostgreSQL 备份
+
+```bash
+# 备份 PostgreSQL
+docker exec cherry-postgres \
+  pg_dump -U cherry_user cherry_studio > backup.sql
+
+# 使用 docker-compose
+docker-compose exec postgres \
+  pg_dump -U cherry_user cherry_studio > backup.sql
+```
+
+#### 完整数据目录备份
+
+```bash
+# 停止容器
+docker stop cherry-studio-enterprise
+
+# 备份数据目录
+tar -czf cherry-backup-$(date +%Y%m%d).tar.gz ./data
+
+# 重启容器
+docker start cherry-studio-enterprise
+```
+
+### 数据恢复
+
+#### PostgreSQL 恢复
+
+```bash
+# 恢复 PostgreSQL
+docker exec -i cherry-postgres \
+  psql -U cherry_user cherry_studio < backup.sql
+```
+
+## 监控与维护
+
+### 查看日志
+
+```bash
+# 实时查看日志
+docker logs -f cherry-studio-enterprise
+
+# 查看最后 100 行日志
+docker logs --tail 100 cherry-studio-enterprise
+
+# 查看特定时间段的日志
+docker logs --since 2024-01-01 --until 2024-01-02 cherry-studio-enterprise
+```
+
+### 性能监控
+
+```bash
+# 查看容器资源使用
+docker stats cherry-studio-enterprise
+
+# 查看容器详细信息
+docker inspect cherry-studio-enterprise
+
+# 进入容器调试
+docker exec -it cherry-studio-enterprise sh
+```
+
+### 更新升级
+
+```bash
+# 拉取最新镜像
+docker pull cherrystudio/cherry-studio-enterprise-api:latest
+
+# 停止并删除旧容器
+docker stop cherry-studio-enterprise
+docker rm cherry-studio-enterprise
+
+# 使用新镜像启动
+docker run -d \
+  --name cherry-studio-enterprise \
+  -p 3670:3670 \
+  -p 3680:3680 \
+  -v $(pwd)/data:/app/data \
+  cherrystudio/cherry-studio-enterprise-api:latest
+```
+
+## 故障排除
+
+### 常见问题
+
+#### 1. 容器无法启动
+
+```bash
+# 检查容器日志
+docker logs cherry-studio-enterprise
+
+# 检查端口占用
+netstat -tulpn | grep -E '3670|3680'
+
+# 检查 Docker 守护进程
+systemctl status docker
+```
+
+#### 2. 数据库连接失败
+
+- 确认数据库服务正在运行
+- 检查网络连接和防火墙设置
+- 验证数据库凭据是否正确
+- 确保数据库已创建并有正确的权限
+
+#### 3. 权限问题
+
+```bash
+# 修复数据目录权限
+sudo chown -R 1000:1000 ./data
+
+# 或在容器内修复
+docker exec cherry-studio-enterprise \
+  chown -R node:node /app/data
+```
+
+#### 4. 内存不足
+
+```bash
+# 增加 Docker 内存限制
+docker update --memory 4g cherry-studio-enterprise
+
+# 或在 docker-compose.yml 中配置
+deploy:
+  resources:
+    limits:
+      memory: 4G
+```
+
+### 调试模式
+
+```bash
+# 以交互模式运行容器
+docker run -it \
+  --name cherry-debug \
+  -p 3670:3670 \
+  -p 3680:3680 \
+  -e NODE_ENV=development \
+  cherrystudio/cherry-studio-enterprise-api:latest \
+  sh
+
+# 在容器内手动启动应用
+yarn start:dev
+```
+
+## 注意事项
+
+1. **生产环境安全**：
+
+   - 必须更改默认的 JWT_SECRET
+   - 使用强密码保护数据库
+   - 启用 HTTPS/TLS
+   - 定期更新镜像版本
+
+2. **数据持久化**：
+
+   - 始终挂载数据卷到宿主机
+   - 定期备份重要数据
+   - 测试恢复流程
+
+3. **性能考虑**：
+
+   - 根据负载调整资源限制
+   - 使用外部 PostgreSQL 以获得更好的性能
+   - 配置适当的健康检查参数
+
+4. **网络安全**：
+   - 仅暴露必要的端口
+   - 使用防火墙规则限制访问
+   - 在生产环境中使用反向代理
+
+## 相关文档
+
+- [Helm 部署指南](./helm.md) - Kubernetes 环境部署
+- [数据库配置指南](./database.md) - PostgreSQL 详细配置
+- [Casdoor 集成指南](./casdoor.md) - SSO 单点登录配置

@@ -1,0 +1,203 @@
+# 数据库配置
+
+Cherry Studio Enterprise 使用 PostgreSQL 作为数据库系统。本文档介绍如何配置数据库连接。
+
+## 推荐方案
+
+### 方案一：使用云数据库服务（推荐）
+
+使用云服务商提供的托管数据库服务，无需自行维护：
+
+- **阿里云 RDS PostgreSQL**
+- **腾讯云 PostgreSQL**
+- **华为云 RDS for PostgreSQL**
+- **AWS RDS PostgreSQL**
+- **Azure Database for PostgreSQL**
+
+### 方案二：使用现有 PostgreSQL 服务器
+
+如果您的组织已有 PostgreSQL 数据库服务器，可直接使用。
+
+## 数据库准备
+
+无论使用云服务还是自有数据库，需要准备：
+
+1. **创建数据库**：创建名为 `cherry-studio-enterprise` 的数据库
+2. **创建用户**：创建专用数据库用户并授予权限
+3. **获取连接信息**：
+   - 数据库地址（Host）
+   - 端口（Port，默认 5432）
+   - 数据库名（Database）
+   - 用户名（Username）
+   - 密码（Password）
+
+## 环境变量配置
+
+根据 [Docker 部署文档](./docker.md)，配置以下数据库相关环境变量：
+
+### 必需配置
+
+```bash
+# 数据库类型
+DB_TYPE=postgres
+
+# 数据库连接信息
+DB_HOST=your-database-host.com             # 数据库地址
+DB_PORT=5432                               # 数据库端口，默认 5432
+DB_USERNAME=cherry-studio-enterprise       # 数据库用户名
+DB_PASSWORD=your_secure_password           # 数据库密码
+DB_NAME=cherry-studio-enterprise           # 数据库名称
+
+# SSL 连接（云服务通常需要开启）
+DB_SSL=true                                # 是否启用 SSL 连接
+```
+
+## 配置示例
+
+### 示例 1：阿里云 RDS
+
+```bash
+DB_TYPE=postgres
+DB_HOST=rm-xxxxxx.pg.rds.aliyuncs.com
+DB_PORT=5432
+DB_USERNAME=cherry-studio-enterprise
+DB_PASSWORD=Al1yun_Secure_Pwd_2024
+DB_NAME=cherry-studio-enterprise
+DB_SSL=true
+```
+
+### 示例 2：腾讯云 PostgreSQL
+
+```bash
+DB_TYPE=postgres
+DB_HOST=postgres-xxxxxx.ap-shanghai.postgres.tencentcloudmysql.com
+DB_PORT=5432
+DB_USERNAME=cherry-studio-enterprise
+DB_PASSWORD=Tencent_DB_Pwd_2024
+DB_NAME=cherry-studio-enterprise
+DB_SSL=true
+```
+
+### 示例 3：私有 PostgreSQL 服务器
+
+```bash
+DB_TYPE=postgres
+DB_HOST=192.168.1.100
+DB_PORT=5432
+DB_USERNAME=cherry-studio-enterprise
+DB_PASSWORD=Internal_Secure_Pwd
+DB_NAME=cherry-studio-enterprise
+DB_SSL=false    # 内网环境可关闭 SSL
+```
+
+## Docker Compose 配置
+
+在 `docker-compose.yml` 中配置：
+
+```yaml
+services:
+  cherry-studio-enterprise-api:
+    image: cherrystudio/cherry-studio-enterprise-api:latest
+    container_name: cherry-studio-enterprise-api
+    environment:
+      # 数据库配置
+      - DB_TYPE=postgres
+      - DB_HOST=your-database-host.com
+      - DB_PORT=5432
+      - DB_USERNAME=cherry-studio-enterprise
+      - DB_PASSWORD=${DB_PASSWORD} # 建议使用环境变量或 .env 文件
+      - DB_NAME=cherry-studio-enterprise
+      - DB_SSL=true
+      # 此处省略其他必要配置
+    ports:
+      - '3670:3670'
+      - '3680:3680'
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    restart: unless-stopped
+```
+
+## 使用 .env 文件（推荐）
+
+创建 `.env` 文件管理敏感信息：
+
+```bash
+# .env 文件
+DB_TYPE=postgres
+DB_HOST=your-database-host.com
+DB_PORT=5432
+DB_USERNAME=cherry-studio-enterprise
+DB_PASSWORD=your_secure_password
+DB_NAME=cherry-studio-enterprise
+DB_SSL=true
+# 此处省略其他必要配置
+```
+
+然后在 `docker-compose.yml` 中引用：
+
+```yaml
+services:
+  cherry-studio-enterprise-api:
+    image: cherrystudio/cherry-studio-enterprise-api:latest
+    container_name: cherry-studio-enterprise-api
+    env_file:
+      - .env
+    ports:
+      - '3670:3670'
+      - '3680:3680'
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    restart: unless-stopped
+```
+
+## 连接测试
+
+启动服务后，可通过以下方式验证数据库连接：
+
+```bash
+# 查看容器日志
+docker logs cherry-studio-enterprise-api
+
+# 成功连接会显示类似信息：
+# [Database] Connected to PostgreSQL successfully
+# [Database] Database initialized
+```
+
+## 注意事项
+
+1. **数据库命名规范**：建议统一使用 `cherry-studio-enterprise` 作为数据库名和用户名
+2. **强密码策略**：数据库密码应使用强密码，避免使用默认或简单密码
+3. **SSL 连接**：
+   - 云服务通常需要开启（`DB_SSL=true`）
+   - 内网环境可根据安全需求决定是否开启
+4. **数据备份**：定期备份数据库，特别是生产环境
+5. **版本要求**：PostgreSQL 12.0 或更高版本（推荐 15.x）
+
+## 故障排查
+
+### 连接失败
+
+- 检查数据库地址和端口是否正确
+- 确认用户名密码是否正确
+- 验证防火墙是否允许连接
+- 云服务需检查白名单设置
+
+### SSL 连接问题
+
+- 云服务通常强制要求 SSL，确保 `DB_SSL=true`
+- 某些云服务可能需要下载 SSL 证书
+- 内网环境如无特殊要求可设置 `DB_SSL=false`
+
+### 权限不足
+
+确保数据库用户拥有以下权限：
+
+- CREATE（创建表）
+- SELECT、INSERT、UPDATE、DELETE（数据操作）
+- ALTER（修改表结构）
+
+---
+
+如需技术支持，请联系：xinming.wang@cherry-ai.com

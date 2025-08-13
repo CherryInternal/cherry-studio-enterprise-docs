@@ -1,0 +1,56 @@
+# Cherry Studio 企业版
+
+欢迎使用 Cherry Studio 企业版 - 专为现代团队和企业打造的 AI 生产力与管理平台。
+
+Cherry Studio 企业版提供完整的企业级 AI 解决方案，包括集中化的管理后台和功能强大的客户端，帮助企业快速构建和部署 AI 应用，提升团队生产力。
+
+## ⚠️ 重要注意事项
+
+1. **数据安全**：体验环境数据可能会随时清除，请勿存储重要数据
+2. **密钥保护**：请勿在体验环境使用真实的 API Key 或敏感凭证
+3. **功能预告**：完整的客户端与管理平台通信功能即将推出
+
+## 📝 预期体验与反馈
+
+在体验过程中，您可以重点关注以下方面：
+
+- **易用性**：各项操作是否直观、便捷？导航是否清晰？
+- **功能性**：核心功能是否满足预期？是否有缺失的关键功能？
+- **稳定性**：系统运行是否稳定？有无遇到错误或卡顿？
+- **界面设计**：UI 是否美观、友好？
+
+我们非常期待您能将体验过程中遇到的任何问题、Bug，或对产品功能的建议和想法反馈给我们。
+
+## 📚 更多文档
+
+### 产品功能
+
+- 📊 [管理后台](/admin) - 了解管理后台的完整功能和使用方法
+- 💻 [客户端](/client) - 查看客户端功能特性和使用指南
+- 💰 [定价方案](/pricing) - 查看不同版本的功能对比和定价信息
+
+### 部署指南
+
+- 🐳 [Docker 部署](/setup/docker) - 使用 Docker 快速部署 Cherry Studio Enterprise
+- ⚙️ [数据库配置](/setup/database) - PostgreSQL 数据库连接和配置指南
+- ☸️ [Helm 部署](/setup/helm) - Kubernetes 环境下的 Helm 部署方案
+- 🔐 [Casdoor 认证](/setup/casdoor) - 单点登录 (SSO) 配置指南
+
+### 开始使用
+
+1. **快速体验** → [管理后台](https://admin.demo.cherry-ai.com/) | [客户端下载](https://gitcode.com/CherryHQ/cherry-studio-enterprise/releases)
+2. **私有化部署** → [Docker 部署指南](/setup/docker)
+3. **企业集成** → [数据库配置](/setup/database) + [SSO 认证](/setup/casdoor)
+
+## 📞 联系我们
+
+如需技术支持或商务咨询，请通过以下方式联系：
+
+- **反馈表单**：[点击填写](https://doc.weixin.qq.com/forms/APkA7AeJABIASIAPQaBALgCN3uf4se4jf)
+- **邮箱**：xinming.wang@cherry-ai.com
+- **电话**：18954281942
+- **微信**：yinsenho
+
+---
+
+感谢您选择 Cherry Studio 企业版，我们将持续改进产品，为您提供更优质的 AI 服务体验。
