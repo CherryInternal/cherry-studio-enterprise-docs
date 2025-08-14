@@ -167,15 +167,15 @@ docker-compose down -v
 
 #### 数据库配置
 
-| 变量名        | 描述         | 默认值   | 说明                       |
-| ------------- | ------------ | -------- | -------------------------- |
-| `DB_TYPE`     | 数据库类型   | `sqlite` | 可选: `sqlite`, `postgres` |
-| `DB_HOST`     | 数据库主机   | -        | PostgreSQL 必填            |
-| `DB_PORT`     | 数据库端口   | `5432`   | PostgreSQL 默认端口        |
-| `DB_USERNAME` | 数据库用户名 | -        | PostgreSQL 必填            |
-| `DB_PASSWORD` | 数据库密码   | -        | PostgreSQL 必填            |
-| `DB_NAME`     | 数据库名称   | -        | PostgreSQL 必填            |
-| `DB_SSL`      | 是否启用 SSL | `false`  | PostgreSQL SSL 连接        |
+| 变量名        | 描述         | 默认值     | 说明                |
+| ------------- | ------------ | ---------- | ------------------- |
+| `DB_TYPE`     | 数据库类型   | `postgres` | 仅支持 postgres     |
+| `DB_HOST`     | 数据库主机   | -          | PostgreSQL 必填     |
+| `DB_PORT`     | 数据库端口   | `5432`     | PostgreSQL 默认端口 |
+| `DB_USERNAME` | 数据库用户名 | -          | PostgreSQL 必填     |
+| `DB_PASSWORD` | 数据库密码   | -          | PostgreSQL 必填     |
+| `DB_NAME`     | 数据库名称   | -          | PostgreSQL 必填     |
+| `DB_SSL`      | 是否启用 SSL | `false`    | PostgreSQL SSL 连接 |
 
 #### Casdoor SSO 配置（可选）
 
@@ -337,13 +337,9 @@ services:
 #### PostgreSQL 备份
 
 ```bash
-# 备份 PostgreSQL
-docker exec cherry-postgres \
-  pg_dump -U cherry_user cherry_studio > backup.sql
-
-# 使用 docker-compose
+# 使用 docker-compose 备份
 docker-compose exec postgres \
-  pg_dump -U cherry_user cherry_studio > backup.sql
+  pg_dump -U cherry-studio-enterprise cherry-studio-enterprise > backup.sql
 ```
 
 #### 完整数据目录备份
@@ -364,9 +360,9 @@ docker start cherry-studio-enterprise
 #### PostgreSQL 恢复
 
 ```bash
-# 恢复 PostgreSQL
-docker exec -i cherry-postgres \
-  psql -U cherry_user cherry_studio < backup.sql
+# 使用 docker-compose 恢复
+docker-compose exec -T postgres \
+  psql -U cherry-studio-enterprise cherry-studio-enterprise < backup.sql
 ```
 
 ## 监控与维护
@@ -401,19 +397,11 @@ docker exec -it cherry-studio-enterprise sh
 
 ```bash
 # 拉取最新镜像
-docker pull cherrystudio/cherry-studio-enterprise-api:latest
+docker-compose pull
 
-# 停止并删除旧容器
-docker stop cherry-studio-enterprise
-docker rm cherry-studio-enterprise
-
-# 使用新镜像启动
-docker run -d \
-  --name cherry-studio-enterprise \
-  -p 3670:3670 \
-  -p 3680:3680 \
-  -v $(pwd)/data:/app/data \
-  cherrystudio/cherry-studio-enterprise-api:latest
+# 停止并重新启动服务
+docker-compose down
+docker-compose up -d
 ```
 
 ## 故障排除
@@ -462,22 +450,6 @@ deploy:
   resources:
     limits:
       memory: 4G
-```
-
-### 调试模式
-
-```bash
-# 以交互模式运行容器
-docker run -it \
-  --name cherry-debug \
-  -p 3670:3670 \
-  -p 3680:3680 \
-  -e NODE_ENV=development \
-  cherrystudio/cherry-studio-enterprise-api:latest \
-  sh
-
-# 在容器内手动启动应用
-yarn start:dev
 ```
 
 ## 注意事项
