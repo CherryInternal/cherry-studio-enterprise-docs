@@ -44,7 +44,6 @@ helm install cherry-studio-enterprise ./helm
 
 🐳 **Docker 镜像**: [cherrystudio/cherry-studio-enterprise-api](https://hub.docker.com/repository/docker/cherrystudio/cherry-studio-enterprise-api) - 查看可用的镜像标签
 
-
 ## 安装
 
 ### 前置条件
@@ -58,6 +57,7 @@ helm install cherry-studio-enterprise ./helm
 根据你获取 Helm Chart 的方式，选择相应的安装命令：
 
 **如果下载了发布版本：**
+
 ```bash
 # 进入解压后的目录
 cd cherry-studio-enterprise-helm-main
@@ -70,6 +70,7 @@ helm install cherry-studio-enterprise ./helm --namespace cherry-studio --create-
 ```
 
 **如果使用 git clone：**
+
 ```bash
 # 进入克隆的目录
 cd cherry-studio-enterprise-helm
@@ -80,7 +81,6 @@ helm install cherry-studio-enterprise ./helm
 # 或者指定命名空间
 helm install cherry-studio-enterprise ./helm --namespace cherry-studio --create-namespace
 ```
-
 
 ### 自定义安装
 
@@ -206,19 +206,20 @@ Chart 包含了所有必需的环境变量配置。以下是主要环境变量�
 | `ADMIN_PORT`         | Admin 后台端口     | `3680`                                                   |
 | `ADMIN_APP_NAME`     | 管理后台应用名称   | `Cherry Studio`                                          |
 | `ADMIN_APP_LOGO_URL` | 管理后台Logo URL   | `https://img.picui.cn/free/2025/07/07/686ab9a2b7825.png` |
-| `JWT_SECRET`         | JWT 密钥           | `your-secure-jwt-secret-at-least-32-characters`         |
+| `ADMIN_BASE_PATH`    | 管理后台基础路径   | `/`                                                      |
+| `JWT_SECRET`         | JWT 密钥           | `your-secure-jwt-secret-at-least-32-characters`          |
 
 #### 数据库环境变量
 
-| 环境变量      | 描述           | 默认值                          |
-| ------------- | -------------- | ------------------------------- |
-| `DB_HOST`     | 数据库主机地址 | `1panel.cherry-ai.com`          |
-| `DB_PORT`     | 数据库端口     | `5432`                          |
-| `DB_USERNAME` | 数据库用户名   | `cherry-studio-enterprise`      |
-| `DB_PASSWORD` | 数据库密码     | `your-secure-password`          |
-| `DB_NAME`     | 数据库名称     | `cherry-studio-enterprise`      |
-| `DB_TYPE`     | 数据库类型     | `postgres`                      |
-| `DB_SSL`      | 是否启用SSL    | `false`                         |
+| 环境变量      | 描述           | 默认值                     |
+| ------------- | -------------- | -------------------------- |
+| `DB_HOST`     | 数据库主机地址 | `1panel.cherry-ai.com`     |
+| `DB_PORT`     | 数据库端口     | `5432`                     |
+| `DB_USERNAME` | 数据库用户名   | `cherry-studio-enterprise` |
+| `DB_PASSWORD` | 数据库密码     | `your-secure-password`     |
+| `DB_NAME`     | 数据库名称     | `cherry-studio-enterprise` |
+| `DB_TYPE`     | 数据库类型     | `postgres`                 |
+| `DB_SSL`      | 是否启用SSL    | `false`                    |
 
 **⚠️ 重要提醒**：
 

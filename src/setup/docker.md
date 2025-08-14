@@ -164,6 +164,7 @@ docker-compose down -v
 | `JWT_SECRET`         | JWT 加密密钥      | -               | 是   |
 | `ADMIN_APP_NAME`     | 管理后台应用名称  | `Cherry Studio` | 否   |
 | `ADMIN_APP_LOGO_URL` | 管理后台 Logo URL | -               | 否   |
+| `ADMIN_BASE_PATH`    | 管理后台基础路径  | `/`             | 否   |
 
 #### 数据库配置
 
