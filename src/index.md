@@ -12,7 +12,7 @@ hero:
       link: /docs
     - theme: alt
       text: 部署指南
-      link: /setup/docker.html
+      link: /setup
 
 features:
   - title: 统一模型管理
