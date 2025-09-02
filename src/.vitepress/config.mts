@@ -29,7 +29,7 @@ export default defineConfig({
 
     // 页面底部的编辑链接文案
     editLink: {
-      pattern: 'https://github.com/CherryHQ/cherry-studio-enterprise-docs/edit/main/src/:path',
+      pattern: 'https://github.com/CherryInternal/cherry-studio-enterprise-docs/edit/main/src/:path',
       text: '在 GitHub 上编辑此页'
     },
 

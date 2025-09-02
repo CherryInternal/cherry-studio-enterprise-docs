@@ -21,7 +21,7 @@
 
 ```bash
 # 下载最新版本
-wget https://github.com/CherryHQ/cherry-studio-enterprise-helm/archive/refs/heads/main.zip
+wget https://github.com/CherryInternal/cherry-studio-enterprise-helm/archive/refs/heads/main.zip
 unzip main.zip
 cd cherry-studio-enterprise-helm-main
 
@@ -33,14 +33,14 @@ helm install cherry-studio-enterprise ./helm
 
 ```bash
 # 克隆最新版本
-git clone https://github.com/CherryHQ/cherry-studio-enterprise-helm.git
+git clone https://github.com/CherryInternal/cherry-studio-enterprise-helm.git
 cd cherry-studio-enterprise-helm
 
 # 安装
 helm install cherry-studio-enterprise ./helm
 ```
 
-📦 **Helm Chart 发布页面**: [cherry-studio-enterprise-helm/releases](https://github.com/CherryHQ/cherry-studio-enterprise-helm/releases)
+📦 **Helm Chart 发布页面**: [cherry-studio-enterprise-helm/releases](https://github.com/CherryInternal/cherry-studio-enterprise-helm/releases)
 
 🐳 **Docker 镜像**: [cherrystudio/cherry-studio-enterprise-api](https://hub.docker.com/repository/docker/cherrystudio/cherry-studio-enterprise-api) - 查看可用的镜像标签
 
