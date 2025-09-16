@@ -81,6 +81,7 @@ export default defineConfig({
         collapsed: false,
         items: [
           { text: '部署概览', link: '/setup/' },
+          { text: '☁️ 云应用部署（推荐）', link: '/setup/cloud-app' },
           { text: 'Docker 安装', link: '/setup/docker' },
           { text: 'Helm 安装', link: '/setup/helm' },
           { text: '数据库配置', link: '/setup/database' },
