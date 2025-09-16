@@ -52,6 +52,23 @@ Cherry Studio Enterprise 提供多种灵活的部署方案，满足不同规模�
 
 根据您的需求选择合适的部署方案：
 
+### [☁️ 云应用一键部署（推荐）](/setup/cloud-app)
+
+**适用场景**：
+
+- 快速上手，零配置部署
+- 中小型企业快速试用
+- 不熟悉技术运维的用户
+
+**优势**：
+
+- 一键部署，无需技术门槛
+- 自动化配置网络和安全组
+- 包含数据库和管理面板
+- 云端资源弹性扩容
+
+[查看完整云应用部署指南 →](/setup/cloud-app)
+
 ### [🐳 Docker 部署](/setup/docker)
 
 **适用场景**：
@@ -127,6 +144,12 @@ Cherry Studio Enterprise 提供多种灵活的部署方案，满足不同规模�
 选择您的部署方式，开始安装：
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 2rem;">
+  <a href="/setup/cloud-app" style="text-decoration: none;">
+    <div style="padding: 1.5rem; border: 2px solid #42b883; border-radius: 8px; transition: all 0.3s; background: linear-gradient(135deg, #42b88320, #42b88310);">
+      <h3>☁️ 云应用部署（推荐）</h3>
+      <p>一键部署，零技术门槛</p>
+    </div>
+  </a>
   <a href="/setup/docker" style="text-decoration: none;">
     <div style="padding: 1.5rem; border: 1px solid var(--vp-c-divider); border-radius: 8px; transition: all 0.3s;">
       <h3>🐳 Docker 部署</h3>
@@ -143,12 +166,6 @@ Cherry Studio Enterprise 提供多种灵活的部署方案，满足不同规模�
     <div style="padding: 1.5rem; border: 1px solid var(--vp-c-divider); border-radius: 8px; transition: all 0.3s;">
       <h3>🗄️ 数据库配置</h3>
       <p>配置 PostgreSQL 数据库</p>
-    </div>
-  </a>
-  <a href="/setup/casdoor" style="text-decoration: none;">
-    <div style="padding: 1.5rem; border: 1px solid var(--vp-c-divider); border-radius: 8px; transition: all 0.3s;">
-      <h3>🔐 SSO 认证</h3>
-      <p>配置 Casdoor 单点登录</p>
     </div>
   </a>
 </div>
