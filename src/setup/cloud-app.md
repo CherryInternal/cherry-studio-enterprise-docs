@@ -4,6 +4,10 @@
 
 Cherry Studio 企业版现已上线腾讯云应用市场，支持一键部署，无需复杂配置即可快速体验完整的企业级 AI 平台。
 
+::: warning 注意
+目前云应用一键部署仅支持腾讯云平台。我们正在积极拓展其他云服务商支持，敬请期待。
+:::
+
 **腾讯云应用市场链接**：[https://app.cloud.tencent.com/detail/SPU_BHFHEJFDEE4965](https://app.cloud.tencent.com/detail/SPU_BHFHEJFDEE4965)
 
 ## 📋 部署流程
