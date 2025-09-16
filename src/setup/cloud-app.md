@@ -15,25 +15,25 @@ Cherry Studio 企业版现已上线腾讯云应用市场，支持一键部署，
 3. 点击**安装**按钮，进行资源选购
 4. 选择就近的服务器区域进行部署
 
-![启动安装](../assets/images/cloudappinstall/17579023125922.jpg)
+![启动安装](../assets/images/cloudappinstall/17579023125922.webp)
 
 ### 第二步：配置部署参数
 
 系统会自动检测您的网络环境，如果您已有合适的网络和安全组配置，可直接进入下一步。
 
-![生成应用](../assets/images/cloudappinstall/17579059506041.jpg)
+![生成应用](../assets/images/cloudappinstall/17579059506041.webp)
 
 ### 第三步：等待创建完成
 
 应用创建过程需要几分钟时间，请耐心等待。
 
-![创建等待](../assets/images/cloudappinstall/17579075417655.jpg)
+![创建等待](../assets/images/cloudappinstall/17579075417655.webp)
 
 ### 第四步：获取访问入口
 
 创建完成后，进入应用设置页面获取访问入口：
 
-![应用设置入口](../assets/images/cloudappinstall/17579075847068.jpg)
+![应用设置入口](../assets/images/cloudappinstall/17579075847068.webp)
 
 点击**后台管理页面入口（公网）**，即可直接访问 Cherry Studio 企业后台。
 
@@ -44,17 +44,17 @@ Cherry Studio 企业版现已上线腾讯云应用市场，支持一键部署，
 - 初始用户名：见应用设置页面
 - 初始密码：见应用设置页面
 
-![后台管理入口](../assets/images/cloudappinstall/17579076770749.jpg)
+![后台管理入口](../assets/images/cloudappinstall/17579076770749.webp)
 
 ### 第六步：修改默认密码
 
 **强烈建议**首次登录后立即修改默认管理员密码：
 
-![修改密码1](../assets/images/cloudappinstall/17579077250676.jpg)
+![修改密码1](../assets/images/cloudappinstall/17579077250676.webp)
 
-![修改密码2](../assets/images/cloudappinstall/17579077573416.jpg)
+![修改密码2](../assets/images/cloudappinstall/17579077573416.webp)
 
-![修改密码3](../assets/images/cloudappinstall/17579079312441.jpg)
+![修改密码3](../assets/images/cloudappinstall/17579079312441.webp)
 
 ## ✅ 部署完成
 
@@ -75,11 +75,11 @@ Cherry Studio 企业版现已上线腾讯云应用市场，支持一键部署，
 
 如果您没有合适的私有网络，可以参考以下步骤创建：
 
-![新建私有网络设置1](../assets/images/cloudappinstall/17579046919582.jpg)
+![新建私有网络设置1](../assets/images/cloudappinstall/17579046919582.webp)
 
-![新建私有网络设置2](../assets/images/cloudappinstall/17579058693624.jpg)
+![新建私有网络设置2](../assets/images/cloudappinstall/17579058693624.webp)
 
-![新建私有网络设置3](../assets/images/cloudappinstall/17579058898409.jpg)
+![新建私有网络设置3](../assets/images/cloudappinstall/17579058898409.webp)
 
 #### 安全组配置说明
 
@@ -90,11 +90,11 @@ Cherry Studio 企业版现已上线腾讯云应用市场，支持一键部署，
 
 新建过程：
 
-![新建安全组过程](../assets/images/cloudappinstall/17579025304834.jpg)
+![新建安全组过程](../assets/images/cloudappinstall/17579025304834.webp)
 
 新建模板参考：
 
-![新建模板参考](../assets/images/cloudappinstall/17579045676416.jpg)
+![新建模板参考](../assets/images/cloudappinstall/17579045676416.webp)
 
 **重要**：需要额外开放以下端口，允许 0.0.0.0 访问：
 
@@ -104,25 +104,25 @@ Cherry Studio 企业版现已上线腾讯云应用市场，支持一键部署，
 
 利用模板创建后，进入修改页面进行端口配置：
 
-![端口配置1](../assets/images/cloudappinstall/17579080497271.jpg)
+![端口配置1](../assets/images/cloudappinstall/17579080497271.webp)
 
-![端口配置2](../assets/images/cloudappinstall/17579080735339.jpg)
+![端口配置2](../assets/images/cloudappinstall/17579080735339.webp)
 
-![端口配置3](../assets/images/cloudappinstall/17579080886847.jpg)
+![端口配置3](../assets/images/cloudappinstall/17579080886847.webp)
 
 ### 1Panel 服务器管理（可选）
 
 系统还提供了 1Panel 面板用于数据库和服务器管理：
 
-![1panel管理页面](../assets/images/cloudappinstall/17579081724093.jpg)
+![1panel管理页面](../assets/images/cloudappinstall/17579081724093.webp)
 
 1Panel 访问入口：
 
-![1panel访问入口](../assets/images/cloudappinstall/17579081125820.jpg)
+![1panel访问入口](../assets/images/cloudappinstall/17579081125820.webp)
 
 **强烈建议**：修改 1Panel 的初始密码
 
-![1panel密码修改](../assets/images/cloudappinstall/17579082746447.jpg)
+![1panel密码修改](../assets/images/cloudappinstall/17579082746447.webp)
 
 ## ❓ 常见问题
 
