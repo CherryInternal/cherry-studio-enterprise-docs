@@ -4,113 +4,133 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is the VitePress-based documentation site for Cherry Studio Enterprise. It provides comprehensive documentation for the Cherry Studio Enterprise platform, including setup guides, admin features, client usage, and deployment instructions.
+This is the documentation site for Cherry Studio Enterprise API, built with Fumadocs - a React-based documentation framework. The site is configured as a **fully static website** using React Router 7 with static prerendering (no server-side rendering or API routes).
 
 ## Technology Stack
 
-- **Framework**: VitePress 1.6.4 (Vue-powered static site generator)
-- **Language**: Markdown with Vue components support
+- **Framework**: React Router 7 (static mode, SSR disabled)
+- **Documentation**: Fumadocs (fumadocs-core, fumadocs-mdx, fumadocs-ui)
+- **Content Format**: MDX (Markdown with JSX components)
+- **Styling**: Tailwind CSS 4 (via @tailwindcss/vite)
+- **Build Tool**: Vite 7
+- **Code Quality**: Biome (linting and formatting)
+- **Language**: TypeScript
 - **Package Manager**: Yarn
-- **Build Tool**: Vite
 
 ## Essential Commands
 
 ### Development
 
 ```bash
-yarn dev         # Start development server at localhost:5173
+yarn dev              # Start development server (hot reload)
 ```
 
-### Build & Preview
+### Build & Production
 
 ```bash
-yarn build       # Build static site to src/.vitepress/dist
-yarn preview     # Preview production build locally
+yarn build            # Build for production (generates SSR + static pages)
+yarn start            # Start production server
+yarn typecheck        # Type check with TypeScript
+```
+
+### Code Quality
+
+```bash
+yarn lint             # Run Biome linter
+yarn format           # Format code with Biome
+```
+
+### Content Management
+
+```bash
+yarn postinstall      # Process MDX files (runs automatically after install)
 ```
 
 ## Architecture & Structure
 
-### Directory Layout
+### Directory Structure
 
-```
-docs/
-├── src/                      # Documentation source files
-│   ├── .vitepress/          # VitePress configuration and build output
-│   │   ├── config.mts       # VitePress configuration file
-│   │   └── dist/            # Built static site output
-│   ├── assets/              # Static assets
-│   │   └── images/          # Documentation images
-│   ├── setup/               # Deployment and setup guides
-│   │   ├── docker.md        # Docker deployment guide
-│   │   ├── helm.md          # Kubernetes Helm deployment
-│   │   ├── database.md      # Database configuration
-│   │   └── casdoor.md       # SSO authentication setup
-│   ├── index.md             # Homepage (uses VitePress home layout)
-│   ├── docs.md              # Main documentation entry point
-│   ├── admin.md             # Admin panel documentation
-│   ├── client.md            # Client application guide
-│   └── pricing.md           # Pricing information
-├── package.json             # Project dependencies and scripts
-└── yarn.lock               # Dependency lock file
-```
+- **app/** - React Router application code
+  - `routes/` - Route components
+  - `lib/` - Shared utilities and configuration (source.ts for docs loader)
+  - `root.tsx` - Root app component
+  - `routes.ts` - Route definitions
+- **content/docs/** - MDX documentation files (Chinese content)
+  - `meta.json` - Navigation structure and page ordering
+  - `setup/` - Setup and deployment guides
+  - Individual MDX files for each documentation page
+- **public/** - Static assets
+- **.source/** - Generated files from fumadocs-mdx (auto-generated, gitignored)
 
-### VitePress Configuration
+### Configuration Files
 
-The site configuration is defined in `src/.vitepress/config.mts`:
+- **source.config.ts** - Fumadocs MDX configuration
+  - Defines docs directory as `content/docs`
+  - Configures git-based last modified time tracking
+- **react-router.config.ts** - React Router configuration
+  - Enables SSR
+  - Configures static prerendering for all MDX pages
+  - Base URL set to `/docs`
+- **vite.config.ts** - Vite build configuration with plugins:
+  - `fumadocs-mdx` - MDX processing
+  - `@tailwindcss/vite` - Tailwind CSS integration
+  - `@react-router/dev/vite` - React Router integration
+  - `vite-tsconfig-paths` - TypeScript path mapping
+- **biome.json** - Code quality rules and formatting
 
-- **Localization**: Chinese (zh-CN) with translated UI elements
-- **Search**: Local search provider with Chinese translations
-- **Navigation**: Top nav bar with Home, Docs, and Pricing sections
-- **Sidebar**: Two-level sidebar with Introduction and Setup sections
-- **Theme**: Default VitePress theme with custom Chinese labels
+### Content Management Workflow
 
-### Content Organization
+1. **Creating New Pages**:
+   - Add new `.mdx` files to `content/docs/` or subdirectories
+   - Update `meta.json` to include the page in navigation
+   - Use frontmatter for title and description:
+     ```yaml
+     ---
+     title: Page Title
+     description: Page description
+     ---
+     ```
 
-1. **Introduction Section** (`/docs`, `/admin`, `/client`, `/pricing`)
-   - Overview of Cherry Studio Enterprise features
-   - Admin backend capabilities and demo access
-   - Client application features
-   - Pricing plans and comparisons
+2. **Navigation Structure**:
+   - Controlled by `content/docs/meta.json`
+   - Use `"---"` for separators in navigation
+   - Folder names become navigation sections
 
-2. **Setup Guides** (`/setup/*`)
-   - Docker deployment with docker-compose examples
-   - Kubernetes deployment using Helm charts
-   - PostgreSQL/SQLite database configuration
-   - Casdoor SSO integration
+3. **MDX Processing**:
+   - MDX files are processed by fumadocs-mdx during `postinstall`
+   - Generated TypeScript files are placed in `.source/` directory
+   - The source loader in `app/lib/source.ts` loads processed content
 
-### Key Documentation Pages
+### Build & Deployment
 
-- `index.md`: Landing page with hero section and feature cards
-- `docs.md`: Main documentation hub with links to all sections
-- `admin.md`: Detailed admin panel features and usage
-- `client.md`: Client application installation and features
-- `setup/docker.md`: Complete Docker deployment guide with environment variables
+- **Static Site Generation**: The build process generates a fully static site with all pages pre-rendered at build time
+- **No Server Required**: All pages are static HTML/CSS/JS - can be deployed to any static hosting (GitHub Pages, Cloudflare Pages, Vercel, etc.)
+- **Prerendering**: All MDX documentation pages are statically generated during build for optimal performance and SEO
+- **Client-Side Only**: No server-side rendering or API routes - the site runs entirely in the browser after initial page load
+
+### Documentation Language
+
+- Primary language: Chinese (Simplified)
+- Content targets enterprise users deploying Cherry Studio Enterprise API
 
 ## Development Workflow
 
 ### Adding New Documentation
 
-1. Create new `.md` file in appropriate directory
-2. Add page to sidebar in `src/.vitepress/config.mts`
-3. Use Markdown with optional Vue components for rich content
-4. Place images in `src/assets/images/`
+1. Create new `.mdx` file in appropriate `content/docs/` subdirectory
+2. Add frontmatter with title and description
+3. Update `content/docs/meta.json` to include the page
+4. The page will be automatically processed on next build
+5. Development server will hot-reload changes
 
-### Updating Navigation
+### Modifying Existing Pages
 
-Edit `src/.vitepress/config.mts`:
-- `nav`: Top navigation bar items
-- `sidebar`: Side navigation structure
-- `socialLinks`: Social media links
+1. Edit `.mdx` files directly in `content/docs/`
+2. Save - hot reload will update the page immediately
+3. No build step needed during development
 
-### Building for Production
+### Adding Custom Components
 
-1. Run `yarn build` to generate static site
-2. Output is in `src/.vitepress/dist/`
-3. Deploy dist folder to any static hosting service
-
-## Important Notes
-
-- All documentation is in Chinese
-- Images use WebP format for optimization
-- Site includes demo links to live environments
-- Contact information and feedback forms are provided
+1. Create React components in `app/` directory
+2. Import and use them in MDX files
+3. Fumadocs UI components are available by default
