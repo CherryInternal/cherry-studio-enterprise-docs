@@ -1,4 +1,5 @@
 {
   "title": "安装与部署",
-  "pages": ["index", "cloud-app", "docker", "helm", "database", "casdoor"]
+  "defaultOpen": true,
+  "pages": ["index", "cloud-app", "docker", "helm"]
 }

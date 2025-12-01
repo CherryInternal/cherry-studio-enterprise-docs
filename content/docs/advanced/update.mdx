@@ -1,0 +1,180 @@
+---
+title: 软件更新
+description: Cherry Studio Enterprise 软件更新指南
+---
+
+<Callout type="info" title="版本要求">
+  一键更新功能需要 **v0.3.3** 或更高版本。如果您当前版本低于 v0.3.3，请先通过手动方式更新到
+  v0.3.3，之后即可使用一键更新功能。
+</Callout>
+
+本文档介绍如何更新 Cherry Studio Enterprise 到最新版本。系统支持通过管理后台一键更新（Docker Compose 部署）或手动更新。
+
+## 更新方式
+
+### 方式一：管理后台一键更新（推荐）
+
+如果您使用 Docker Compose 方式部署，可以通过管理后台直接进行更新。
+
+#### 前置条件
+
+为了启用一键更新功能，您需要在 `docker-compose.yml` 中配置以下内容：
+
+1. **挂载 Docker Socket**：允许容器内部控制 Docker
+2. **挂载 docker-compose.yml 文件**：允许容器读取和更新配置文件
+3. **配置环境变量**（可选）：自定义路径
+
+#### 配置示例
+
+```yaml
+services:
+  api:
+    image: cherrystudio/cherry-studio-enterprise-api:v0.3.2
+    container_name: cherry-studio-enterprise-api
+    ports:
+      - '3670:3670'
+      - '3680:3680'
+    environment:
+      # ... 其他环境变量 ...
+    volumes:
+      # 应用数据
+      - ./data:/app/data
+
+      # 一键更新必需的挂载
+      - /var/run/docker.sock:/var/run/docker.sock # 挂载 Docker Socket
+      - ./docker-compose.yml:/app/docker-compose.yml # 挂载 docker-compose.yml
+    restart: unless-stopped
+```
+
+#### 使用步骤
+
+1. 登录管理后台
+2. 进入「关于我们」页面
+3. 在「版本信息」区域，点击「检查更新」按钮
+4. 如果有新版本可用，会显示「立即更新」按钮和可用版本列表
+5. 选择要更新的版本，点击「更新」按钮
+6. 系统会自动：
+   - 拉取新版本镜像
+   - 更新 docker-compose.yml 中的镜像版本
+   - 停止旧容器
+   - 启动新容器
+7. 更新完成后，页面会自动刷新
+
+#### 注意事项
+
+- 更新过程中服务会短暂中断（通常 10-30 秒）
+- 更新过程中请勿关闭浏览器或刷新页面
+- 如果更新失败，请查看容器日志排查问题
+
+### 方式二：手动更新
+
+如果您没有配置一键更新，或更喜欢手动控制更新过程，可以按以下步骤操作：
+
+#### 1. 拉取新版本镜像
+
+```bash
+# 拉取最新版本
+docker pull cherrystudio/cherry-studio-enterprise-api:latest
+
+# 或拉取指定版本
+docker pull cherrystudio/cherry-studio-enterprise-api:v0.3.2
+```
+
+#### 2. 更新 docker-compose.yml
+
+修改 `docker-compose.yml` 中的镜像版本：
+
+```yaml
+services:
+  api:
+    image: cherrystudio/cherry-studio-enterprise-api:v0.3.2 # 更新版本号
+    # ... 其他配置保持不变 ...
+```
+
+#### 3. 重启服务
+
+```bash
+# 停止并重新创建容器
+docker-compose down
+docker-compose up -d
+
+# 查看日志确认启动成功
+docker-compose logs -f
+```
+
+#### 4. 验证更新
+
+- 访问管理后台，在「关于我们」页面查看版本号
+- 检查服务是否正常运行：`curl http://localhost:3670/health`
+
+## 查看版本信息
+
+### 查看当前版本
+
+- **管理后台**：登录后进入「关于我们」页面
+- **API 接口**：访问 `/health` 端点
+- **命令行**：
+  ```bash
+  docker inspect cherry-studio-enterprise-api | grep "Image"
+  ```
+
+### 查看更新日志
+
+- **管理后台**：在「关于我们」>「更新日志」查看
+- **在线文档**：访问 [CHANGELOG](https://releases.enterprise.cherry-ai.com/api/changelog)
+
+## 常见问题
+
+### 1. 一键更新按钮不显示
+
+**可能原因**：
+
+- 未挂载 Docker Socket
+- 未挂载 docker-compose.yml 文件
+- Docker Socket 权限不足
+
+**解决方案**：
+
+- 确认 `docker-compose.yml` 中包含必要的 volumes 挂载
+- 确认 Docker Socket 文件存在：`ls -la /var/run/docker.sock`
+- 检查容器是否有权限访问 Docker Socket
+
+### 2. 镜像拉取失败
+
+**可能原因**：
+
+- 网络连接问题
+- Docker Hub 访问受限
+
+**解决方案**：
+
+- 检查网络连接
+- 配置 Docker 镜像加速器
+- 手动拉取镜像后再更新
+
+### 3. 更新后服务无法启动
+
+**排查步骤**：
+
+```bash
+# 查看容器日志
+docker logs cherry-studio-enterprise-api
+
+# 检查容器状态
+docker ps -a
+
+# 检查端口占用
+netstat -tulpn | grep -E '3670|3680'
+```
+
+**常见原因**：
+
+- 数据库连接配置错误
+- 端口被占用
+- 环境变量配置缺失
+
+## 相关文档
+
+- [Docker 部署指南](../setup/docker) - Docker 环境部署详细配置
+- [数据库配置指南](./database) - PostgreSQL 详细配置
+- [Helm 部署指南](../setup/helm) - Kubernetes 环境部署

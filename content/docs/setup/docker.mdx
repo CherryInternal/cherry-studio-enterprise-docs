@@ -334,41 +334,6 @@ services:
         tag: 'cherry-studio'
 ```
 
-## 备份与恢复
-
-### 数据备份
-
-#### PostgreSQL 备份
-
-```bash
-# 使用 docker-compose 备份
-docker-compose exec postgres \
-  pg_dump -U cherry-studio-enterprise cherry-studio-enterprise > backup.sql
-```
-
-#### 完整数据目录备份
-
-```bash
-# 停止容器
-docker stop cherry-studio-enterprise
-
-# 备份数据目录
-tar -czf cherry-backup-$(date +%Y%m%d).tar.gz ./data
-
-# 重启容器
-docker start cherry-studio-enterprise
-```
-
-### 数据恢复
-
-#### PostgreSQL 恢复
-
-```bash
-# 使用 docker-compose 恢复
-docker-compose exec -T postgres \
-  psql -U cherry-studio-enterprise cherry-studio-enterprise < backup.sql
-```
-
 ## 监控与维护
 
 ### 查看日志
@@ -468,8 +433,6 @@ deploy:
 2. **数据持久化**：
 
    - 始终挂载数据卷到宿主机
-   - 定期备份重要数据
-   - 测试恢复流程
 
 3. **性能考虑**：
 
@@ -484,6 +447,6 @@ deploy:
 
 ## 相关文档
 
-- [Helm 部署指南](./helm.md) - Kubernetes 环境部署
-- [数据库配置指南](./database.md) - PostgreSQL 详细配置
-- [Casdoor 集成指南](./casdoor.md) - SSO 单点登录配置
+- [Helm 部署指南](./helm) - Kubernetes 环境部署
+- [数据库配置指南](../advanced/database) - PostgreSQL 详细配置
+- [单点登录配置](../advanced/sso) - SSO 单点登录配置
