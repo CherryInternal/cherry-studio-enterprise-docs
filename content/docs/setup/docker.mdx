@@ -27,14 +27,12 @@ description: 使用 Docker 和 Docker Compose 部署 Cherry Studio Enterprise
 services:
   api:
     image: cherrystudio/cherry-studio-enterprise-api:latest
-    container_name: cherry-studio-enterprise-api
+    container_name: cherry-studio-enterprise
     ports:
-      - '36700:3670'
-      - '36800:3680'
+      - '3670:3670'
+      - '3680:3680'
     environment:
-      - API_PORT=3670
       - API_URL=https://api.demo.cherry-ai.com
-      - ADMIN_PORT=3680
       - JWT_SECRET=your-secure-jwt-secret-at-least-32-characters
       - DB_HOST=1Panel-postgresql-UmXp
       - DB_PORT=5432
@@ -43,11 +41,6 @@ services:
       - DB_NAME=cherry-studio-enterprise
       - DB_TYPE=postgres
       - DB_SSL=false
-      - CASDOOR_ENDPOINT=https://auth.cherry-ai.com
-      - CASDOOR_APP_ID=d29cf4a499060d916d5e
-      - CASDOOR_APP_SECRET=your-casdoor-app-secret
-      - CASDOOR_ORGANIZATION_NAME=cherry-studio
-      - CASDOOR_APPLICATION_NAME=cherry-studio-enterprise
     volumes:
       - ./data:/app/data
     restart: unless-stopped
@@ -79,7 +72,7 @@ services:
   # Cherry Studio API
   api:
     image: cherrystudio/cherry-studio-enterprise-api:latest
-    container_name: cherry-studio-api
+    container_name: cherry-studio-enterprise
     depends_on:
       postgres:
         condition: service_healthy
@@ -88,8 +81,6 @@ services:
       - '3680:3680'
     environment:
       # 服务配置
-      - API_PORT=3670
-      - ADMIN_PORT=3680
       - API_URL=https://api.your-domain.com
       - ADMIN_APP_NAME=Cherry Studio Enterprise
 
@@ -104,13 +95,6 @@ services:
       - DB_PASSWORD=${POSTGRES_PASSWORD}
       - DB_NAME=cherry-studio-enterprise
       - DB_SSL=false
-
-      # Casdoor 配置（可选）
-      - CASDOOR_ENDPOINT=${CASDOOR_ENDPOINT}
-      - CASDOOR_APP_ID=${CASDOOR_APP_ID}
-      - CASDOOR_APP_SECRET=${CASDOOR_APP_SECRET}
-      - CASDOOR_ORGANIZATION_NAME=${CASDOOR_ORGANIZATION_NAME}
-      - CASDOOR_APPLICATION_NAME=${CASDOOR_APPLICATION_NAME}
 
     volumes:
       - ./data:/app/data
@@ -181,21 +165,12 @@ docker-compose down -v
 | `DB_NAME`     | 数据库名称   | -          | PostgreSQL 必填     |
 | `DB_SSL`      | 是否启用 SSL | `false`    | PostgreSQL SSL 连接 |
 
-#### Casdoor SSO 配置（可选）
-
-| 变量名                      | 描述             | 默认值 |
-| --------------------------- | ---------------- | ------ |
-| `CASDOOR_ENDPOINT`          | Casdoor 服务地址 | -      |
-| `CASDOOR_APP_ID`            | 应用 ID          | -      |
-| `CASDOOR_APP_SECRET`        | 应用密钥         | -      |
-| `CASDOOR_ORGANIZATION_NAME` | 组织名称         | -      |
-| `CASDOOR_APPLICATION_NAME`  | 应用名称         | -      |
+> 如需配置 Casdoor 单点登录 (SSO)，请参阅 [单点登录配置](../advanced/sso)。
 
 ### 数据持久化
 
 应用数据存储在 `/app/data` 目录，包括：
 
-- SQLite 数据库文件（如果使用 SQLite）
 - 上传的文件
 - 知识库数据
 - 应用配置
@@ -217,24 +192,6 @@ volumes:
 ```bash
 # 生成强随机密钥
 openssl rand -base64 32
-
-# 使用环境文件管理敏感信息
-echo "JWT_SECRET=$(openssl rand -base64 32)" >> .env
-```
-
-**使用 Docker Secrets**（Swarm 模式）：
-
-```bash
-# 创建 secret
-echo "your-secure-password" | docker secret create db_password -
-
-# 在 compose 中引用
-services:
-  api:
-    secrets:
-      - db_password
-    environment:
-      DB_PASSWORD_FILE: /run/secrets/db_password
 ```
 
 ### 2. 网络配置
@@ -320,18 +277,6 @@ services:
       options:
         max-size: '10m'
         max-file: '3'
-```
-
-**集中日志管理**：
-
-```yaml
-services:
-  api:
-    logging:
-      driver: syslog
-      options:
-        syslog-address: 'tcp://192.168.0.42:514'
-        tag: 'cherry-studio'
 ```
 
 ## 监控与维护
