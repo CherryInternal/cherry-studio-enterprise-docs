@@ -15,35 +15,35 @@ This is the documentation site for Cherry Studio Enterprise API, built with Fuma
 - **Build Tool**: Vite 7
 - **Code Quality**: Biome (linting and formatting)
 - **Language**: TypeScript
-- **Package Manager**: Yarn
+- **Package Manager**: pnpm
 
 ## Essential Commands
 
 ### Development
 
 ```bash
-yarn dev              # Start development server (hot reload)
+pnpm dev              # Start development server (hot reload)
 ```
 
 ### Build & Production
 
 ```bash
-yarn build            # Build for production (generates SSR + static pages)
-yarn start            # Start production server
-yarn typecheck        # Type check with TypeScript
+pnpm build            # Build for production (generates SSR + static pages)
+pnpm start            # Start production server
+pnpm typecheck        # Type check with TypeScript
 ```
 
 ### Code Quality
 
 ```bash
-yarn lint             # Run Biome linter
-yarn format           # Format code with Biome
+pnpm lint             # Run Biome linter
+pnpm format           # Format code with Biome
 ```
 
 ### Content Management
 
 ```bash
-yarn postinstall      # Process MDX files (runs automatically after install)
+pnpm postinstall      # Process MDX files (runs automatically after install)
 ```
 
 ## Architecture & Structure

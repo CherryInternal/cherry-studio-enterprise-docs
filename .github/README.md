@@ -32,12 +32,14 @@ To enable FTP deployment, you need to configure the following secrets in your Gi
 The GitHub Actions workflow (`build-and-deploy.yml`) will:
 
 1. **Trigger on**:
+
    - Push to `main` or `develop` branches
    - Pull requests to `main` branch
 
 2. **Build Process**:
+
    - Install Node.js 18
-   - Install dependencies with Yarn
+   - Install dependencies with pnpm
    - Run linting
    - Run tests
    - Build the application

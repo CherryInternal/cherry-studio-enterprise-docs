@@ -18,18 +18,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'yarn'
 
-      - name: Setup Yarn
+      - name: Setup pnpm
         run: |
           corepack enable
-          corepack enable && corepack prepare yarn@4.7.0 --activate
+          corepack prepare pnpm@latest --activate
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Build application
-        run: yarn build
+        run: pnpm build
 
       - name: Deploy to FTP server
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
