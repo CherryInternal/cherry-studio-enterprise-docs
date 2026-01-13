@@ -9,9 +9,7 @@
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
-    "postinstall": "fumadocs-mdx",
-    "lint": "biome check",
-    "format": "biome format --write"
+    "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
     "@react-router/node": "^7.9.4",
@@ -25,7 +23,6 @@
     "react-router": "^7.9.4"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.2",
     "@react-router/dev": "^7.9.4",
     "@tailwindcss/vite": "^4.1.16",
     "@types/mdx": "^2.0.13",

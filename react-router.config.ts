@@ -1,5 +1,4 @@
 import { glob } from 'node:fs/promises'
-
 import type { Config } from '@react-router/dev/config'
 import { createGetUrl, getSlugs } from 'fumadocs-core/source'
 
