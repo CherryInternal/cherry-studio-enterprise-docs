@@ -1,0 +1,206 @@
+---
+title: Database Configuration
+description: PostgreSQL connection and configuration guide
+---
+
+Cherry Studio Enterprise uses PostgreSQL as the database system. This document explains how to configure the database connection.
+
+## Recommended Options
+
+### Option 1: Use a Managed Cloud Database (Recommended)
+
+Use a managed database service from a cloud provider to avoid self-maintenance:
+
+- **Alibaba Cloud RDS PostgreSQL**
+- **Tencent Cloud PostgreSQL**
+- **Huawei Cloud RDS for PostgreSQL**
+- **AWS RDS PostgreSQL**
+- **Azure Database for PostgreSQL**
+
+### Option 2: Use an Existing PostgreSQL Server
+
+If your organization already has a PostgreSQL server, you can use it directly.
+
+## Database Preparation
+
+Regardless of the option, prepare the following:
+
+1. **Create database**: Create a database named `cherry-studio-enterprise`
+2. **Create user**: Create a dedicated database user and grant permissions
+3. **Get connection details**:
+   - Host
+   - Port (default 5432)
+   - Database name
+   - Username
+   - Password
+
+## Environment Variable Configuration
+
+Based on the [Docker deployment guide](./docker.md), configure the following database-related variables:
+
+### Required Configuration
+
+```bash
+# Database type
+DB_TYPE=postgres
+
+# Database connection details
+DB_HOST=your-database-host.com             # Database host
+DB_PORT=5432                               # Database port, default 5432
+DB_USERNAME=cherry-studio-enterprise       # Database username
+DB_PASSWORD=your_secure_password           # Database password
+DB_NAME=cherry-studio-enterprise           # Database name
+
+# SSL connection (often required by cloud services)
+DB_SSL=true                                # Enable SSL
+```
+
+## Configuration Examples
+
+### Example 1: Alibaba Cloud RDS
+
+```bash
+DB_TYPE=postgres
+DB_HOST=rm-xxxxxx.pg.rds.aliyuncs.com
+DB_PORT=5432
+DB_USERNAME=cherry-studio-enterprise
+DB_PASSWORD=Al1yun_Secure_Pwd_2024
+DB_NAME=cherry-studio-enterprise
+DB_SSL=true
+```
+
+### Example 2: Tencent Cloud PostgreSQL
+
+```bash
+DB_TYPE=postgres
+DB_HOST=postgres-xxxxxx.ap-shanghai.postgres.tencentcloudmysql.com
+DB_PORT=5432
+DB_USERNAME=cherry-studio-enterprise
+DB_PASSWORD=Tencent_DB_Pwd_2024
+DB_NAME=cherry-studio-enterprise
+DB_SSL=true
+```
+
+### Example 3: Private PostgreSQL Server
+
+```bash
+DB_TYPE=postgres
+DB_HOST=192.168.1.100
+DB_PORT=5432
+DB_USERNAME=cherry-studio-enterprise
+DB_PASSWORD=Internal_Secure_Pwd
+DB_NAME=cherry-studio-enterprise
+DB_SSL=false    # SSL can be disabled for internal networks
+```
+
+## Docker Compose Configuration
+
+Configure in `docker-compose.yml`:
+
+```yaml
+services:
+  cherry-studio-enterprise-api:
+    image: cherrystudio/cherry-studio-enterprise-api:latest
+    container_name: cherry-studio-enterprise-api
+    environment:
+      # Database configuration
+      - DB_TYPE=postgres
+      - DB_HOST=your-database-host.com
+      - DB_PORT=5432
+      - DB_USERNAME=cherry-studio-enterprise
+      - DB_PASSWORD=${DB_PASSWORD} # Recommended to use env vars or .env file
+      - DB_NAME=cherry-studio-enterprise
+      - DB_SSL=true
+      # Other required configuration omitted here
+    ports:
+      - '3670:3670'
+      - '3680:3680'
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    restart: unless-stopped
+```
+
+## Use a .env File (Recommended)
+
+Create a `.env` file to manage sensitive information:
+
+```bash
+# .env file
+DB_TYPE=postgres
+DB_HOST=your-database-host.com
+DB_PORT=5432
+DB_USERNAME=cherry-studio-enterprise
+DB_PASSWORD=your_secure_password
+DB_NAME=cherry-studio-enterprise
+DB_SSL=true
+# Other required configuration omitted here
+```
+
+Then reference it in `docker-compose.yml`:
+
+```yaml
+services:
+  cherry-studio-enterprise-api:
+    image: cherrystudio/cherry-studio-enterprise-api:latest
+    container_name: cherry-studio-enterprise-api
+    env_file:
+      - .env
+    ports:
+      - '3670:3670'
+      - '3680:3680'
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    restart: unless-stopped
+```
+
+## Connection Testing
+
+After starting the service, verify the database connection:
+
+```bash
+# View container logs
+docker logs cherry-studio-enterprise-api
+
+# Successful connection will show similar messages:
+# [Database] Connected to PostgreSQL successfully
+# [Database] Database initialized
+```
+
+## Notes
+
+1. **Database naming convention**: Use `cherry-studio-enterprise` for database name and username
+2. **Strong password policy**: Use strong passwords and avoid defaults
+3. **SSL connection**:
+   - Cloud services usually require SSL (`DB_SSL=true`)
+   - For internal networks, decide based on security requirements
+4. **Data backup**: Back up databases regularly, especially in production
+5. **Version requirement**: PostgreSQL 12.0 or later (15.x recommended)
+
+## Troubleshooting
+
+### Connection failures
+
+- Check host and port
+- Verify username and password
+- Confirm firewall allows connections
+- For cloud services, check IP allowlist/whitelist settings
+
+### SSL connection issues
+
+- Cloud services often require SSL, ensure `DB_SSL=true`
+- Some cloud services require downloading SSL certificates
+- For internal networks, set `DB_SSL=false` if not needed
+
+### Insufficient permissions
+
+Ensure the database user has:
+
+- CREATE (create tables)
+- SELECT, INSERT, UPDATE, DELETE (data operations)
+- ALTER (modify table schema)
+
+---
+
+For technical support, contact: xinming.wang@cherry-ai.com

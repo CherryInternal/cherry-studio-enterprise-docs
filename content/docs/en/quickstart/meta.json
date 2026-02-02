@@ -1,0 +1,10 @@
+{
+  "title": "Quickstart",
+  "pages": [
+    "purchase",
+    "deploy",
+    "admin-setup",
+    "client-setup",
+    "first-message"
+  ]
+}

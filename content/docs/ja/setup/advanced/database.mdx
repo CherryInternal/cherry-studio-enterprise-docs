@@ -1,0 +1,206 @@
+---
+title: データベース設定
+description: PostgreSQL 接続と設定ガイド
+---
+
+Cherry Studio Enterprise は PostgreSQL をデータベースとして使用します。本ドキュメントでは接続設定を説明します。
+
+## 推奨案
+
+### 案 1：マネージド DB サービス（推奨）
+
+クラウドプロバイダーのマネージド DB を使用すると、運用が不要です：
+
+- **Alibaba Cloud RDS PostgreSQL**
+- **Tencent Cloud PostgreSQL**
+- **Huawei Cloud RDS for PostgreSQL**
+- **AWS RDS PostgreSQL**
+- **Azure Database for PostgreSQL**
+
+### 案 2：既存の PostgreSQL サーバーを利用
+
+組織内に PostgreSQL サーバーがある場合は、そのまま利用できます。
+
+## データベース準備
+
+いずれの方法でも、以下を準備してください：
+
+1. **データベース作成**：`cherry-studio-enterprise` という名前の DB を作成
+2. **ユーザー作成**：専用ユーザーを作成し権限を付与
+3. **接続情報の取得**：
+   - Host
+   - Port（既定 5432）
+   - Database
+   - Username
+   - Password
+
+## 環境変数の設定
+
+[Docker 導入ガイド](./docker.md) を参考に、以下の DB 変数を設定します：
+
+### 必須設定
+
+```bash
+# DB 種別
+DB_TYPE=postgres
+
+# DB 接続情報
+DB_HOST=your-database-host.com             # DB ホスト
+DB_PORT=5432                               # DB ポート（既定 5432）
+DB_USERNAME=cherry-studio-enterprise       # DB ユーザー名
+DB_PASSWORD=your_secure_password           # DB パスワード
+DB_NAME=cherry-studio-enterprise           # DB 名
+
+# SSL 接続（クラウドでは有効化が一般的）
+DB_SSL=true                                # SSL を有効
+```
+
+## 設定例
+
+### 例 1：Alibaba Cloud RDS
+
+```bash
+DB_TYPE=postgres
+DB_HOST=rm-xxxxxx.pg.rds.aliyuncs.com
+DB_PORT=5432
+DB_USERNAME=cherry-studio-enterprise
+DB_PASSWORD=Al1yun_Secure_Pwd_2024
+DB_NAME=cherry-studio-enterprise
+DB_SSL=true
+```
+
+### 例 2：Tencent Cloud PostgreSQL
+
+```bash
+DB_TYPE=postgres
+DB_HOST=postgres-xxxxxx.ap-shanghai.postgres.tencentcloudmysql.com
+DB_PORT=5432
+DB_USERNAME=cherry-studio-enterprise
+DB_PASSWORD=Tencent_DB_Pwd_2024
+DB_NAME=cherry-studio-enterprise
+DB_SSL=true
+```
+
+### 例 3：社内 PostgreSQL サーバー
+
+```bash
+DB_TYPE=postgres
+DB_HOST=192.168.1.100
+DB_PORT=5432
+DB_USERNAME=cherry-studio-enterprise
+DB_PASSWORD=Internal_Secure_Pwd
+DB_NAME=cherry-studio-enterprise
+DB_SSL=false    # 内部ネットワークは SSL を無効化可能
+```
+
+## Docker Compose の設定
+
+`docker-compose.yml` の設定例：
+
+```yaml
+services:
+  cherry-studio-enterprise-api:
+    image: cherrystudio/cherry-studio-enterprise-api:latest
+    container_name: cherry-studio-enterprise-api
+    environment:
+      # DB 設定
+      - DB_TYPE=postgres
+      - DB_HOST=your-database-host.com
+      - DB_PORT=5432
+      - DB_USERNAME=cherry-studio-enterprise
+      - DB_PASSWORD=${DB_PASSWORD} # 環境変数または .env の利用を推奨
+      - DB_NAME=cherry-studio-enterprise
+      - DB_SSL=true
+      # その他の必須設定は省略
+    ports:
+      - '3670:3670'
+      - '3680:3680'
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    restart: unless-stopped
+```
+
+## .env ファイルの利用（推奨）
+
+機密情報を `.env` にまとめます：
+
+```bash
+# .env ファイル
+DB_TYPE=postgres
+DB_HOST=your-database-host.com
+DB_PORT=5432
+DB_USERNAME=cherry-studio-enterprise
+DB_PASSWORD=your_secure_password
+DB_NAME=cherry-studio-enterprise
+DB_SSL=true
+# その他の必須設定は省略
+```
+
+`docker-compose.yml` で参照：
+
+```yaml
+services:
+  cherry-studio-enterprise-api:
+    image: cherrystudio/cherry-studio-enterprise-api:latest
+    container_name: cherry-studio-enterprise-api
+    env_file:
+      - .env
+    ports:
+      - '3670:3670'
+      - '3680:3680'
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    restart: unless-stopped
+```
+
+## 接続テスト
+
+起動後に以下で接続確認できます：
+
+```bash
+# コンテナログを確認
+docker logs cherry-studio-enterprise-api
+
+# 成功時の例：
+# [Database] Connected to PostgreSQL successfully
+# [Database] Database initialized
+```
+
+## 注意事項
+
+1. **命名規則**：DB 名とユーザー名は `cherry-studio-enterprise` を推奨
+2. **強力なパスワード**：弱い/既定のパスワードは避ける
+3. **SSL 接続**：
+   - クラウドでは SSL を有効化（`DB_SSL=true`）
+   - 社内ネットワークは要件に応じて判断
+4. **データバックアップ**：本番は定期バックアップ必須
+5. **バージョン要件**：PostgreSQL 12.0 以上（推奨 15.x）
+
+## トラブルシューティング
+
+### 接続失敗
+
+- DB アドレス/ポートを確認
+- ユーザー名/パスワードを確認
+- ファイアウォールで接続が許可されているか確認
+- クラウドの場合はホワイトリストを確認
+
+### SSL 接続の問題
+
+- クラウドは SSL が必須の場合が多い（`DB_SSL=true`）
+- SSL 証明書のダウンロードが必要な場合がある
+- 社内環境は `DB_SSL=false` で運用可能
+
+### 権限不足
+
+DB ユーザーに以下権限があることを確認：
+
+- CREATE（テーブル作成）
+- SELECT、INSERT、UPDATE、DELETE（データ操作）
+- ALTER（テーブル構造変更）
+
+---
+
+技術サポート：xinming.wang@cherry-ai.com

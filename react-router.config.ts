@@ -2,7 +2,9 @@ import { glob } from 'node:fs/promises'
 import type { Config } from '@react-router/dev/config'
 import { createGetUrl, getSlugs } from 'fumadocs-core/source'
 
-const getUrl = createGetUrl('/docs')
+import { i18n, locales } from './app/lib/i18n'
+
+const getUrl = createGetUrl('/docs', i18n)
 
 export default {
   ssr: false,
@@ -13,8 +15,10 @@ export default {
       paths.push(path)
     }
 
-    for await (const entry of glob('**/*.mdx', { cwd: 'content/docs' })) {
-      paths.push(getUrl(getSlugs(entry)))
+    for (const lang of locales) {
+      for await (const entry of glob('**/*.mdx', { cwd: `content/docs/${lang}` })) {
+        paths.push(getUrl(getSlugs(entry), lang))
+      }
     }
 
     return paths

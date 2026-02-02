@@ -1,0 +1,53 @@
+---
+title: Introduction
+description: Cherry Studio Enterprise - an AI productivity and management platform built for modern teams and enterprises
+---
+
+import { Card, Cards } from 'fumadocs-ui/components/card'
+import { KeyRound, BookText, Users, Server, RefreshCw, ShieldCheck } from 'lucide-react'
+
+![Cherry Studio Enterprise](/assets/images/zh/intro-hero.png)
+
+![Cherry Studio Admin Console](/assets/images/zh/intro-admin.png)
+
+## Core Advantages
+
+<Cards>
+  <Card icon={<KeyRound />} title="Unified Model Management" description="Centralized access and management of cloud LLMs, with support for private on-prem deployment so employees can use it without configuration" />
+  <Card icon={<BookText />} title="Enterprise Knowledge Base" description="Build and manage shared team knowledge bases, grounding AI interactions in unified knowledge to improve answer quality" />
+  <Card icon={<Users />} title="Fine-Grained Access Control" description="A unified admin console with role-based permissions and flexible resource access control" />
+  <Card icon={<Server />} title="Fully Private Deployment" description="Supports on-prem server deployment and private cloud environments; data is 100% private and controllable" />
+  <Card icon={<RefreshCw />} title="Reliable Backend Services" description="Stable API services and enterprise-grade backup and recovery to ensure business continuity" />
+  <Card icon={<ShieldCheck />} title="Security and Compliance" description="Meets strict security and compliance requirements, supports audit logs, and keeps data usage traceable" />
+</Cards>
+
+## Quick Experience
+
+<ExperienceCards>
+  <ExperienceCard
+    step={1}
+    title="Try the Admin Console"
+    description="Log in to the admin console to explore Enterprise management features"
+    items={[
+      { label: "Admin Console", value: "https://admin.demo.cherry-ai.com" },
+      { label: "Username", value: "admin" },
+      { label: "Password", value: "password" }
+    ]}
+    buttonText="Open Admin Console"
+    buttonHref="https://admin.demo.cherry-ai.com"
+    buttonIcon="external"
+  />
+  <ExperienceCard
+    step={2}
+    title="Download the Enterprise Client"
+    description="Install the client and set the server address to get started"
+    items={[
+      { label: "Server URL", value: "https://api.demo.cherry-ai.com" },
+      { label: "Username", value: "user" },
+      { label: "Password", value: "password" }
+    ]}
+    buttonText="Download Client"
+    buttonHref="https://www.cherry-ai.com/enterprise/download"
+    buttonIcon="download"
+  />
+</ExperienceCards>

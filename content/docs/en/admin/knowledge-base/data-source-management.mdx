@@ -1,0 +1,45 @@
+---
+title: "Data Source Management"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 2. Data Source Management
+
+After creation, click **View** in the list to open details. Cherry Studio supports mixed imports of multiple formats.
+
+#### A. File Import
+
+![](/assets/images/zh/admin/knowledge-base-data-source-1_zh.png)
+
+Use for bulk uploading existing enterprise documents.
+
+* **Path:** Sidebar **Files** > **Add File**.
+* **Supported formats:** `.md`, `.txt`, `.pdf`, `.docx`, etc.
+* **Status meanings:**
+  * `Processing`: The system is chunking and vectorizing.
+  * `Completed`: Data is indexed and searchable.
+  * `Failed`: File may be corrupted or encrypted; check and retry.
+
+<Callout type="error">
+**File privacy warning:** Ensure uploaded PDFs or documents are not password-protected; otherwise indexing will fail.
+</Callout>
+
+#### B. URL & Site
+
+![](/assets/images/zh/admin/knowledge-base-data-source-2_zh.png)
+
+Use for crawling online data.
+
+* **URL:** Crawl a single page (e.g., a news article).
+* **Site:** Enter a root domain; the system crawls related pages under the site.
+
+#### C. Notes
+
+![](/assets/images/zh/admin/knowledge-base-data-source-3_zh.png)
+
+Use for quick, fragmented knowledge without creating files.
+
+* **Path:** Sidebar **Notes** > **Add Note**.
+* **Use cases:** Temporary meeting notes, urgent business change notices, internal QA pairs.
+* **Action:** Paste text or Markdown directly and save.

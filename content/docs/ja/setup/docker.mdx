@@ -1,0 +1,397 @@
+---
+title: Docker 導入
+description: Docker と Docker Compose を使って Cherry Studio Enterprise を導入
+---
+
+このドキュメントでは、Docker と Docker Compose を使って Cherry Studio Enterprise API を導入する方法を説明します。
+
+## 特長
+
+- **二重サービス統合**：1 つのコンテナで API（3670）と管理コンソール（3680）を同時に実行
+- **データ永続化**：ボリュームマウントに対応し、データを安全に保持
+- **環境設定**：柔軟な環境変数設定
+- **ヘルスチェック**：内蔵のヘルスチェック機構
+- **自動再起動**：コンテナの自動再起動ポリシーをサポート
+
+## クイックスタート
+
+### 前提条件
+
+- Docker 20.10+
+- Docker Compose 2.0+（任意）
+- PostgreSQL データベース（本番環境）
+
+### Docker Compose を使用
+
+```yaml
+services:
+  api:
+    image: cherrystudio/cherry-studio-enterprise-api:latest
+    container_name: cherry-studio-enterprise
+    ports:
+      - '3670:3670'
+      - '3680:3680'
+    environment:
+      - API_URL=https://api.demo.cherry-ai.com
+      - JWT_SECRET=your-secure-jwt-secret-at-least-32-characters
+      - DB_HOST=1Panel-postgresql-UmXp
+      - DB_PORT=5432
+      - DB_USERNAME=cherry-studio-enterprise
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=cherry-studio-enterprise
+      - DB_TYPE=postgres
+      - DB_SSL=false
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+```
+
+#### 本番環境の完全構成（DB 付き）
+
+```yaml
+services:
+  # PostgreSQL データベース
+  postgres:
+    image: postgres:15-alpine
+    container_name: cherry-studio-enterprise-postgres
+    environment:
+      POSTGRES_USER: cherry-studio-enterprise
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: cherry-studio-enterprise
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U cherry-studio-enterprise']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Cherry Studio API
+  api:
+    image: cherrystudio/cherry-studio-enterprise-api:latest
+    container_name: cherry-studio-enterprise
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - '3670:3670'
+      - '3680:3680'
+    environment:
+      # サービス設定
+      - API_URL=https://api.your-domain.com
+      - ADMIN_APP_NAME=Cherry Studio Enterprise
+
+      # セキュリティ設定
+      - JWT_SECRET=${JWT_SECRET:-your-secure-jwt-secret-at-least-32-characters}
+
+      # データベース設定
+      - DB_TYPE=postgres
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USERNAME=cherry-studio-enterprise
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_NAME=cherry-studio-enterprise
+      - DB_SSL=false
+
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+
+    restart: unless-stopped
+
+    healthcheck:
+      test: ['CMD', 'wget', '--quiet', '--tries=1', '--spider', 'http://localhost:3670/health']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  postgres_data:
+    driver: local
+```
+
+### 起動と管理
+
+```bash
+# サービス起動
+docker-compose up -d
+
+# ログ表示
+docker-compose logs -f
+
+# サービス停止
+docker-compose down
+
+# 停止してボリューム削除（危険）
+docker-compose down -v
+```
+
+## 設定説明
+
+### ポートマッピング
+
+| コンテナポート | サービス | 説明 |
+| -------- | ---------- | -------------------------------- |
+| 3670 | API サービス | クライアントが呼び出す RESTful API |
+| 3680 | 管理コンソール | システム設定・管理の Web UI |
+
+### 環境変数
+
+#### コア設定
+
+| 変数 | 説明 | デフォルト | 必須 |
+| -------------------- | ----------------- | --------------- | ---- |
+| `API_PORT` | API サービスのポート | `3670` | いいえ |
+| `ADMIN_PORT` | 管理コンソールのポート | `3680` | いいえ |
+| `API_URL` | API ベース URL | - | はい |
+| `JWT_SECRET` | JWT 秘密鍵 | - | はい |
+| `ADMIN_APP_NAME` | 管理コンソール名 | `Cherry Studio` | いいえ |
+| `ADMIN_APP_LOGO_URL` | 管理コンソールのロゴ URL | - | いいえ |
+| `ADMIN_BASE_PATH` | 管理コンソールのベースパス | `/` | いいえ |
+
+#### データベース設定
+
+| 変数 | 説明 | デフォルト | 備考 |
+| ------------- | ------------ | ---------- | ------------------- |
+| `DB_TYPE` | データベース種別 | `postgres` | postgres のみ対応 |
+| `DB_HOST` | データベースホスト | - | PostgreSQL 必須 |
+| `DB_PORT` | データベースポート | `5432` | PostgreSQL 既定ポート |
+| `DB_USERNAME` | データベースユーザー名 | - | PostgreSQL 必須 |
+| `DB_PASSWORD` | データベースパスワード | - | PostgreSQL 必須 |
+| `DB_NAME` | データベース名 | - | PostgreSQL 必須 |
+| `DB_SSL` | SSL 有効化 | `false` | PostgreSQL SSL 接続 |
+
+> Casdoor SSO の設定は [SSO 設定](../advanced/sso) を参照してください。
+
+### データ永続化
+
+アプリケーションデータは `/app/data` に保存されます：
+
+- アップロードされたファイル
+- 知識ベースデータ
+- アプリ設定
+
+永続化のため、ホストにマウントすることを推奨します：
+
+```yaml
+volumes:
+  - ./data:/app/data # アプリデータ
+  - ./logs:/app/logs # ログ（任意）
+```
+
+## 導入のベストプラクティス
+
+### 1. セキュリティ設定
+
+**JWT 秘密鍵の管理**：
+
+```bash
+# 強力なランダム文字列を生成
+openssl rand -base64 32
+```
+
+### 2. ネットワーク設定
+
+**カスタムネットワークを使用**：
+
+```yaml
+services:
+  api:
+    networks:
+      - cherry-network
+
+networks:
+  cherry-network:
+    driver: bridge
+```
+
+**リバースプロキシ（Nginx）の設定**：
+
+```nginx
+server {
+    listen 80;
+    server_name api.your-domain.com;
+
+    location / {
+        proxy_pass http://localhost:3670;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+server {
+    listen 80;
+    server_name admin.your-domain.com;
+
+    location / {
+        proxy_pass http://localhost:3680;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+```
+
+### 3. パフォーマンス最適化
+
+**リソース制限**：
+
+```yaml
+services:
+  api:
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+```
+
+**ヘルスチェック設定**：
+
+```yaml
+healthcheck:
+  test: ['CMD', 'curl', '-f', 'http://localhost:3670/health']
+  interval: 30s
+  timeout: 10s
+  retries: 3
+  start_period: 40s
+```
+
+### 4. ログ管理
+
+**ログドライバ設定**：
+
+```yaml
+services:
+  api:
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '10m'
+        max-file: '3'
+```
+
+## 監視とメンテナンス
+
+### ログの確認
+
+```bash
+# リアルタイムでログを表示
+docker logs -f cherry-studio-enterprise
+
+# 直近 100 行を表示
+docker logs --tail 100 cherry-studio-enterprise
+
+# 期間を指定してログを表示
+docker logs --since 2024-01-01 --until 2024-01-02 cherry-studio-enterprise
+```
+
+### パフォーマンス監視
+
+```bash
+# コンテナのリソース使用状況
+docker stats cherry-studio-enterprise
+
+# コンテナの詳細情報
+docker inspect cherry-studio-enterprise
+
+# コンテナに入ってデバッグ
+docker exec -it cherry-studio-enterprise sh
+```
+
+### 更新とアップグレード
+
+```bash
+# 最新イメージを取得
+docker-compose pull
+
+# サービス停止と再起動
+docker-compose down
+docker-compose up -d
+```
+
+## トラブルシューティング
+
+### よくある問題
+
+#### 1. コンテナが起動しない
+
+```bash
+# コンテナログを確認
+docker logs cherry-studio-enterprise
+
+# ポート競合を確認
+netstat -tulpn | grep -E '3670|3680'
+
+# Docker デーモンを確認
+systemctl status docker
+```
+
+#### 2. データベース接続に失敗
+
+- データベースサービスが起動しているか確認
+- ネットワーク接続とファイアウォールを確認
+- データベース認証情報を確認
+- データベースが作成済みで権限が正しいか確認
+
+#### 3. 権限の問題
+
+```bash
+# データディレクトリ権限を修正
+sudo chown -R 1000:1000 ./data
+
+# もしくはコンテナ内で修正
+docker exec cherry-studio-enterprise \
+  chown -R node:node /app/data
+```
+
+#### 4. メモリ不足
+
+```bash
+# Docker のメモリ上限を増加
+docker update --memory 4g cherry-studio-enterprise
+
+# または docker-compose.yml で設定
+deploy:
+  resources:
+    limits:
+      memory: 4G
+```
+
+## 注意事項
+
+1. **本番環境のセキュリティ**：
+
+   - 既定の JWT_SECRET を必ず変更
+   - データベースは強力なパスワードで保護
+   - HTTPS/TLS を有効化
+   - イメージを定期的に更新
+
+2. **データ永続化**：
+
+   - 常にデータボリュームをホストにマウント
+
+3. **性能面の考慮**：
+
+   - 負荷に応じてリソース制限を調整
+   - 外部 PostgreSQL を使用すると性能向上
+   - ヘルスチェックのパラメータを適切に設定
+
+4. **ネットワークセキュリティ**：
+   - 必要なポートのみ公開
+   - ファイアウォールでアクセスを制限
+   - 本番環境ではリバースプロキシを使用
+
+## 関連ドキュメント
+
+- [Helm 導入ガイド](./helm) - Kubernetes 環境の導入
+- [データベース設定ガイド](../advanced/database) - PostgreSQL の詳細設定
+- [SSO 設定](../advanced/sso) - SSO 導入

@@ -1,7 +1,10 @@
 import './app.css'
 
-import { RootProvider } from 'fumadocs-ui/provider/react-router'
-import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router'
+import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from 'react-router'
+
+import { getLocaleFromPath, i18n } from '@/lib/i18n'
+import { Providers } from '@/lib/providers'
+import { getTranslations } from '@/lib/translations'
 
 import type { Route } from './+types/root'
 
@@ -20,7 +23,7 @@ export const links: Route.LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={i18n.defaultLanguage} suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -28,7 +31,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className="flex flex-col min-h-screen">
-        <RootProvider>{children}</RootProvider>
+        <Providers>{children}</Providers>
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -41,13 +44,17 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = 'Oops!'
-  let details = 'An unexpected error occurred.'
+  const location = useLocation()
+  const lang = getLocaleFromPath(location.pathname)
+  const t = getTranslations(lang)
+
+  let message = t.error.oops
+  let details = t.error.unexpected
   let stack: string | undefined
 
   if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? '404' : 'Error'
-    details = error.status === 404 ? 'The requested page could not be found.' : error.statusText || details
+    message = error.status === 404 ? t.error.notFound : t.error.error
+    details = error.status === 404 ? t.error.notFoundMessage : error.statusText || details
   } else if (import.meta.env.DEV && error && error instanceof Error) {
     details = error.message
     stack = error.stack

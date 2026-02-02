@@ -1,0 +1,9 @@
+{
+  "title": "インストールとデプロイ",
+  "pages": [
+    "cloud-app",
+    "docker",
+    "helm",
+    "advanced"
+  ]
+}

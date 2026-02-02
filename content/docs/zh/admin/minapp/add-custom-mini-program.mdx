@@ -1,0 +1,25 @@
+---
+title: "添加自定义小程序"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 2. 添加自定义小程序
+
+管理员可以将任何符合标准的 Web URL 封装为小程序。
+
+#### 操作步骤
+
+1. 点击页面右上角的 **+ 添加小程序** 按钮。
+
+![](/assets/images/zh/admin/mini-program-add-custom_zh.png)
+
+2. 在弹出的对话框中完成以下配置：
+
+<table><thead><tr><th width="91.7421875">参数模块</th><th width="94.125">字段</th><th>说明</th></tr></thead><tbody><tr><td><strong>视觉识别</strong></td><td><strong>上传 Logo</strong></td><td>建议上传 <strong>PNG</strong> 或 <strong>WebP</strong> 格式，背景透明为佳。<br />推荐尺寸：<code>200x200px</code>，最大不超过 <code>200KB</code>。</td></tr><tr><td></td><td><strong>名称</strong></td><td>显示在图标下方的文字（建议不超过 4 个汉字以保持美观）。</td></tr><tr><td><strong>核心配置</strong></td><td><strong>URL</strong></td><td><strong>必须包含协议头</strong>（如 <code>https://</code>）。<br />示例：<code>https://docs.cherry-ai.com</code></td></tr><tr><td><strong>样式微调</strong></td><td><strong>边框</strong></td><td>开启后，图标周围会增加一圈细微的描边，适用于 Logo 颜色与侧边栏底色相近的情况。</td></tr><tr><td></td><td><strong>背景颜色</strong></td><td>为 Logo 设置底色（支持 Hex 色值，如 <code>#FFFFFF</code>）。若 Logo 为透明 PNG，设置背景色可增加辨识度。</td></tr></tbody></table>
+
+3. 点击 **添加小程序** 确认保存。
+
+<Callout type="warn">
+**关于 URL 的限制** 请务必使用 `https://` 开头的安全链接。由于客户端的安全策略，普通的 `http://` 链接可能会被拦截或无法加载。
+</Callout>

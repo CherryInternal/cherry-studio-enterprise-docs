@@ -1,0 +1,34 @@
+---
+title: "Group Management"
+description: >-
+  In Cherry Studio Enterprise, Group Management is the core module for enterprise RBAC. With groups, admins can map
+  org structure (departments, project teams) into the system to finely control access to AI resources.
+icon: FolderTree
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# Group Management
+
+### Why Group Management?
+
+<Callout type="info">
+**Core value:** Group management is not just for categorizing people; it is a firewall for **cost control** and **data security**.
+</Callout>
+
+* **🛡️ Data and permission isolation** ensures sensitive departments (finance, legal) have isolated environments and access only specific **Assistants**, preventing cross-department data leakage.
+* **💰 Fine-grained cost control** restricts expensive models (GPT-4, Claude 3.5 Sonnet) to core R&D or high-priority groups; regular groups can use cost-effective models (gpt-5.1-mini, DeepSeek) to reduce token spend.
+* **🚀 Collaboration efficiency** predefines assistant lists for each team. New employees added to a group immediately get the required AI tools without manual setup.
+
+### UI Overview
+
+In the admin console, select **Group Management** in the left navigation to see the group list page.
+
+![Group management list page](/assets/images/zh/admin/group-management-list-page_zh.png)
+
+The list includes:
+
+* **Group name**: Business identifier (e.g., R&D Center).
+* **Description**: Notes about the group's purpose.
+* **Members**: Number of users in the group.
+* **Actions**: Includes **Edit** and **Delete**.

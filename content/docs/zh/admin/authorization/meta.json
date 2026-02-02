@@ -1,0 +1,8 @@
+{
+  "title": "授权管理",
+  "pages": [
+    "authorization-parameters",
+    "authorization-status-overview",
+    "maintenance-operations"
+  ]
+}

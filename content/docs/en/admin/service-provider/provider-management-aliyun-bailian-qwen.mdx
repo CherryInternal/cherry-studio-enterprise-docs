@@ -1,0 +1,111 @@
+---
+title: "Provider Management (Aliyun Bailian/Qwen)"
+description: This section is based on the latest model list screenshots for Cherry Studio Enterprise.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 3. Provider Management (Aliyun Bailian/Qwen)
+
+### Overview
+
+**Path:** Admin console sidebar > **Provider Management**
+
+Cherry Studio Enterprise integrates **Aliyun Bailian** as the core model engine by default. It ships with OpenAI-compatible presets, so enterprises can unlock the full Qwen series and Bailian-hosted open-source models by simply entering an API key.
+
+<Callout type="info">
+**Default strategy and extensibility**
+
+* **Default state**: Only the "Aliyun Bailian" provider is shown initially.
+* **Extensibility**: Admins can manually add other providers (e.g., local Ollama) to aggregate multiple channels.
+</Callout>
+
+***
+
+### 1. Activate the Default Provider
+
+The list already includes an **"Aliyun Bailian"** card.
+
+![](/assets/images/zh/admin/provider-management-aliyun-bailian-qwen-1_zh.png)
+
+1. Click the **⚙️ Settings** button on the card.
+2. **API Key**: Enter the key from the Aliyun Bailian console (starts with `sk-`).
+3. **API Host**: Keep the default value.
+   * _Address_: `https://dashscope.aliyuncs.com/compatible-mode/v1`
+4. Click **Check Connection** to confirm "API Key valid".
+5. Click **Save**.
+
+***
+
+### 2. Model System Details
+
+Based on Bailian's latest API policy, Cherry Studio groups models into two categories. Understanding the difference helps allocate resources by department.
+
+#### A. Qwen (Commercial/Closed)
+
+_At the top of the model list, representing Aliyun's strongest models._
+
+<table><thead><tr><th width="138.00390625">Series</th><th width="129.8046875">Typical ID (Snapshot)</th><th width="325.71875">Use cases</th><th>Recommendation</th></tr></thead><tbody><tr><td><strong>Flagship (Max)</strong></td><td><code>qwen-max</code><br /><code>qwen-max-2025-01-25</code></td><td><strong>Complex tasks</strong>. Reasoning, long-form writing, instruction following. Comparable to GPT-4o.</td><td>✅ Recommended as default model for executives.</td></tr><tr><td><strong>Balanced (Plus)</strong></td><td><code>qwen-plus</code><br /><code>qwen-plus-latest</code></td><td><strong>Best value</strong>. Faster than Max and lower cost, ideal for daily office use.</td><td>✅ Recommended as a company-wide default.</td></tr><tr><td><strong>Long context (Long)</strong></td><td><code>qwen-long</code></td><td><strong>Document analysis</strong>. Very long context for full PDF summarization or Q&A.</td><td>🔧 Use with the Knowledge Base feature.</td></tr><tr><td><strong>Reasoning (QwQ)</strong></td><td><code>qwq-plus</code></td><td><strong>Deep thinking</strong>. Optimized for math, code, and complex reasoning.</td><td>🧠 Suitable for R&D or data teams.</td></tr></tbody></table>
+
+#### B. Qwen Open-Source Series (Hosted)
+
+_Aliyun Bailian hosts selected open-source models on enterprise GPU clusters, no local GPUs required._
+
+<table><thead><tr><th width="124.9921875">Series</th><th width="207.57421875">Typical ID</th><th>Notes</th></tr></thead><tbody><tr><td><strong>Qwen 2.5</strong></td><td><code>qwen2.5-72b-instruct</code><br /><code>qwen2.5-32b-instruct</code></td><td><strong>Best open-source</strong>. The 72B model surpasses GPT-4 on multiple benchmarks with low cost.</td></tr><tr><td><strong>Coder</strong></td><td><code>qwen-coder-plus</code><br /><code>codeqwen1.5-7b-chat</code></td><td><strong>Code-focused</strong>. Fine-tuned on large code corpora, ideal for IDE plugins or code review assistants.</td></tr><tr><td><strong>Math</strong></td><td><code>qwen-math-plus</code></td><td><strong>STEM-focused</strong>. Enhanced math reasoning and derivations.</td></tr><tr><td><strong>Qwen 2 / 1.5</strong></td><td><code>qwen2-72b-instruct</code><br /><code>qwen1.5-110b-chat</code></td><td><strong>Legacy versions</strong>. Compatibility for specific version-dependent workloads.</td></tr></tbody></table>
+
+<Callout type="warn">
+**About version suffixes (dates)** You may see IDs like `qwen-max-2024-09-19`.
+
+* **Best practice:** Unless you depend on a specific date's behavior, use IDs without dates (e.g., `qwen-max`, `qwen-plus`). The system will point to the latest stable (`latest`).
+</Callout>
+
+***
+
+### 3. Manage the Model List
+
+![](/assets/images/zh/admin/provider-management-aliyun-bailian-qwen-2_zh.png)
+
+Bailian provides a long model list. To avoid overwhelming users, admins should trim it.
+
+1. Click **𝌡 Manage Models** under the Bailian card.
+2. **Suggested filtering:**
+   * Keep `qwen-max` and `qwen-plus` (non-dated IDs).
+   * Keep `qwq-plus` (for reasoning tasks).
+   * Keep `qwen2.5-72b-instruct` (high value).
+   * Keep `qwen-coder-plus` (R&D focused).
+3. **Hide redundancy:** Click **-** to hide dated versions (e.g., `2024-04-28`) or tiny models (`0.5b`, `1.5b`).
+4. Click **Save**.
+
+***
+
+### 4. Add Other Providers (Custom)
+
+Although Bailian is the default, Cherry Studio supports other channels.
+
+**Example scenarios:**
+
+* You want to use native **OpenAI** `gpt-4o`.
+* You run **Ollama** on a local server.
+
+**Steps:**
+
+1. Click **+ Add Provider** at the bottom of the list.
+2. **Provider type**:
+   * **OpenAI** (generic compatibility)
+   * **Anthropic** (Claude series)
+   * **Ollama** (local models)
+3. Fill in **API Key** and **API Host**.
+   * _Example local Ollama host_: `http://192.168.1.5:11434/v1`
+4. The provider's models will appear alongside Bailian models in the client model list.
+
+***
+
+### 5. FAQ
+
+**Q: What's the difference between `qwq-32b-preview` and `qwq-plus`?**
+
+A: `qwq-32b` is an open-weight reasoning model, while `qwq-plus` is Aliyun's commercial closed-source model. The latter usually provides better reasoning and safety at higher cost.
+
+**Q: Should I choose `qwen-max` or `qwen-max-latest`?**
+
+A: In Aliyun Bailian, `qwen-max` typically points to the stable version, while `qwen-max-latest` may include experimental optimizations. For production, `qwen-max` is safest.

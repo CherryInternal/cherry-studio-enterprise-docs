@@ -1,0 +1,124 @@
+---
+title: "Provider Management (Express/Hosted)"
+description: Unlike Standard, Express focuses on one-stop aggregation and unified quota management.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 2. Provider Management (Express/Hosted)
+
+### Overview
+
+**Path:** Admin console sidebar > **Model Management** (or Provider Management > Express)
+
+![](/assets/images/zh/admin/provider-management-express-1_zh.png)
+
+**Cherry Studio Express** is an enterprise-grade, one-stop model aggregation service. Unlike Standard, where you apply for API keys from OpenAI/Anthropic, Express provides a unified quota pool and direct access to top global models (e.g., Claude 3.5, GPT-4o) as well as popular open-source models.
+
+<Callout type="info">
+**Core value**:
+
+* **No ops**: No need to manage dozens of API keys and accounts.
+* **Network-free**: Use global models directly within enterprise networks without overseas proxies.
+* **Unified billing**: All model usage is deducted from the enterprise balance.
+</Callout>
+
+***
+
+### 1. Balance Dashboard and Top-up
+
+At the top of the page, you can see enterprise usage:
+
+![](/assets/images/zh/admin/provider-management-express-2_zh.png)
+
+* **Total balance**: Total funds in the enterprise account.
+* **Used**: Amount and percentage consumed in the current period.
+* **Available**: Remaining balance available for model calls.
+* **Requests**: Total API call count.
+
+**💰 How to top up?** Click **🏦 Corporate payment** in the top right. Supports bank transfer or QR code payments. Balance can be used across all Express models.
+
+***
+
+### 2. Model Categories (Closed vs Open Source)
+
+Express splits models into two categories, switchable via tabs:
+
+![](/assets/images/zh/admin/provider-management-express-3_zh.png)
+
+#### 🌍 Express Closed Models
+
+Aggregates the strongest closed-source commercial models.
+
+* **Providers**: OpenAI (GPT), Anthropic (Claude), Google (Gemini), X-AI (Grok), etc.
+* **Use cases**: Complex reasoning, creative writing, multilingual translation.
+
+#### 🐧 Express Open-Source Models
+
+Aggregates high-cost-performance domestic and open-source models.
+
+* **Providers**: DeepSeek, Alibaba Qwen, Moonshot (Kimi), Z-AI (GLM), etc.
+* **Use cases**: Office assistants, Chinese-language tasks, large-scale text analysis at low cost.
+
+***
+
+### 3. Model Publishing and Management
+
+The system provides many models by default. Admins can decide which are visible to employees.
+
+![](/assets/images/zh/admin/provider-management-express-4_zh.png)
+
+#### Enable/Disable Models
+
+1. Click **𝌡 Manage Models** at the bottom.
+2. In the pop-up list, use **+/-** or toggles:
+   * **+ (Add)**: Add to available list (visible to employees).
+   * **- (Remove)**: Hide from employees.
+3. Click **Save**.
+
+#### Manually Add New Models
+
+![](/assets/images/zh/admin/provider-management-express-5_zh.png)
+
+If a new model (e.g., `gpt-5`) is announced but not yet in the list, you can add it manually:
+
+1. Click **+ Add Model**.
+2. Enter the official **Model ID** (e.g., `gpt-5-preview`).
+3. Click **Add** to use it immediately.
+
+***
+
+### 4. Understanding Capability Tags
+
+In the Express list, each model name includes colored icons indicating capability. These matter when distributing models.
+
+<table data-header-hidden><thead><tr><th width="88.21484375">Meaning</th><th>Description</th></tr></thead><tbody><tr><td><strong>Reasoning</strong></td><td><strong>High-IQ mode</strong>. Models like <code>Claude 3.7 Sonnet</code> or <code>o1</code> provide deep reasoning, suitable for math contests or complex code architecture.</td></tr><tr><td><strong>Vision</strong></td><td><strong>Image understanding</strong>. Models can parse images. If the model lacks this icon, image uploads will fail.</td></tr><tr><td><strong>Web</strong></td><td><strong>Native browsing</strong>. Some models (e.g., <code>Gemini</code>) have native search integration (note: Cherry Studio typically uses MCP for web access).</td></tr><tr><td><strong>Tools</strong></td><td><strong>Plugin support</strong>. **Most important icon**. Only models with the wrench icon support knowledge base (RAG), chart generation, or MCP tools.</td></tr><tr><td><strong>Free</strong></td><td><strong>Cost control</strong>. Calls do not consume balance. Often appears on local models (Ollama) or official free trials. Suitable for debugging or simple chats.</td></tr><tr><td><strong>Embedding</strong></td><td><strong>Knowledge base foundation</strong>. These models are **not for chat**. They convert text into vectors to build knowledge base indexes. Selecting them in chat will error.</td></tr><tr><td><strong>Rerank</strong></td><td><strong>Accuracy optimization</strong>. These models are **not for chat**. They rescore and rerank retrieval results to improve answer accuracy.</td></tr></tbody></table>
+
+<Callout type="warn">
+**Configuration tip:** For the **default assistant model**, choose a model with the 🔧 (Tools) icon; otherwise the assistant cannot use the knowledge base.
+</Callout>
+
+***
+
+### 5. Billing and Cost Control
+
+**Action:** Click the **⚙️ Settings** icon next to a model.
+
+![](/assets/images/zh/admin/provider-management-express-6_zh.png)
+
+Although Express uses unified billing, admins can set **internal pricing** to generate department-level cost reports.
+
+* **Input/Output pricing**: You can copy official prices, or set markups/internal prices.
+* **Currency**: Switch between USD/CNY. Usage Analytics will calculate costs using this price.
+
+***
+
+### FAQ
+
+**Q: Why do I see "Balance Insufficient" even with balance?**
+
+A: The model might be extremely expensive (e.g., preview models), or your enterprise has a daily spending limit.
+
+**Q: Why did a model suddenly become gray or disappear?**
+
+A: If an upstream provider (e.g., OpenAI) has a major outage, Express will automatically fuse/disable the service to protect stability. It will return after recovery.

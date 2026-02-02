@@ -1,5 +1,0 @@
-{
-  "title": "安装与部署",
-  "defaultOpen": true,
-  "pages": ["index", "cloud-app", "docker", "helm"]
-}

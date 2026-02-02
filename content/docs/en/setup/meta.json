@@ -1,0 +1,9 @@
+{
+  "title": "Installation and Deployment",
+  "pages": [
+    "cloud-app",
+    "docker",
+    "helm",
+    "advanced"
+  ]
+}

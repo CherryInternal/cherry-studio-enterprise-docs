@@ -1,0 +1,33 @@
+---
+title: "作成と基本設定"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 1. 作成と基本設定
+
+知識ベース一覧で右上の **+ 知識ベース追加** をクリックして作成します。ここでデータの「理解」と「保存」の方法が決まります。
+
+![](/assets/images/zh/admin/knowledge-base-create-basic-config_zh.png)
+
+#### 基本パラメータ
+
+<table><thead><tr><th width="123.7421875">項目</th><th width="65.84765625">必須</th><th>説明</th></tr></thead><tbody><tr><td><strong>知識ベース名</strong></td><td>はい</td><td>業務が分かる名称を推奨（例：<code>製品技術ドキュメント</code>、<code>社員ハンドブック 2024</code>）。</td></tr><tr><td><strong>説明</strong></td><td>いいえ</td><td>範囲のメモ。共同管理に役立ちます。</td></tr><tr><td><strong>埋め込みモデル (Embedding)</strong></td><td><strong>はい</strong></td><td><strong>中核パラメータ</strong>。テキストをベクトル化します。多言語・高次元モデル（<code>bge-m3</code>、<code>text-embedding-v3</code>）を推奨。</td></tr></tbody></table>
+
+<Callout type="warn">
+**注意:** 知識ベース作成後、**埋め込みモデル** は原則変更できません。ベクトル空間が互換でないため、変更する場合は再作成と再インデックスが必要です。
+</Callout>
+
+#### 高度な設定 (Advanced Settings)
+
+**高度な設定** を開くと、検索の粒度と精度に影響する項目を設定できます。
+
+<table><thead><tr><th width="171.5234375">パラメータ</th><th width="112.96484375">推奨値</th><th>詳細</th></tr></thead><tbody><tr><td><strong>リランキングモデル (Rerank)</strong></td><td><em>必要に応じて</em></td><td><strong>二段階精査</strong>。Embedding が高速検索、Rerank が精密評価を担います。<br /><strong>推奨:</strong> 法務・医療など高精度が必要な場面で有効。</td></tr><tr><td><strong>チャンクサイズ</strong></td><td><code>800</code> - <code>1500</code></td><td>1 回に読む文字数。小さすぎると文脈が欠け、大きすぎるとノイズが増える。</td></tr><tr><td><strong>オーバーラップ</strong></td><td><code>100</code> - <code>200</code></td><td>チャンク間の重複文字数。文脈を切らないために必要。<br /><strong>推奨:</strong> チャンクサイズの 10%-15%。</td></tr></tbody></table>
+
+<Callout type="info">
+**設定の目安:**
+
+* **一般文書:** Chunk 1000 / Overlap 100
+* **コード/技術文書:** Chunk 1500 / Overlap 200
+* **断片的 Q&A:** Chunk 500 / Overlap 50
+</Callout>

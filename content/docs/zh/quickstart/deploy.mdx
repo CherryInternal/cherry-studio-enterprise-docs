@@ -1,0 +1,37 @@
+---
+title: 部署服务
+description: 选择部署方式并完成 Cherry Studio 企业版安装
+---
+
+# 部署服务
+
+Cherry Studio 企业版支持多种部署方式，请根据您的基础设施选择：
+
+## 部署方式对比
+
+| 方式 | 难度 | 适用场景 | 详细文档 |
+|------|------|----------|----------|
+| 云应用市场 | ⭐ 简单 | 快速体验、小型团队 | [查看](/zh/setup/cloud-app) |
+| Docker Compose | ⭐⭐ 中等 | 单机部署、开发测试 | [查看](/zh/setup/docker) |
+| Kubernetes (Helm) | ⭐⭐⭐ 复杂 | 生产环境、高可用 | [查看](/zh/setup/helm) |
+
+## 快速部署 (Docker)
+
+如果您只是想快速体验，推荐使用 Docker Compose：
+
+```bash
+# 克隆配置
+git clone https://github.com/CherryHQ/cherry-studio-enterprise
+cd cherry-studio-enterprise
+
+# 启动服务
+docker compose up -d
+```
+
+服务启动后：
+- 管理后台：`http://localhost:3680`
+- API 服务：`http://localhost:3670`
+
+## 下一步
+
+部署完成后，请继续 [管理后台配置](/zh/quickstart/admin-setup)。

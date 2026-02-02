@@ -1,0 +1,39 @@
+---
+title: "API Key Management"
+description: Cherry Studio Enterprise includes an API gateway. Besides the client UI, users can call integrated model capabilities via API keys. Admins distribute these credentials here.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 4. API Key Management
+
+#### Create and Manage Keys
+
+1. In the user list, click the **⋮** icon next to the target user.
+2. Select **Keys** (Key icon).
+
+![Key settings modal](/assets/images/zh/admin/user-management-api-key-settings-modal_zh.png)
+
+3. Configure settings in the **Key Settings** panel:
+
+![API Key and expiration settings](/assets/images/zh/admin/user-management-api-key-expiration-settings_zh.png)
+
+**Configuration details**
+
+<table><thead><tr><th width="111.69921875">Field</th><th width="369.5078125">Description</th><th>Example/Action</th></tr></thead><tbody><tr><td><strong>Key</strong></td><td>System-generated high-strength random string starting with <code>sk-</code>.</td><td>Click the <strong>copy icon</strong> on the right.</td></tr><tr><td><strong>Description</strong></td><td>Note the purpose of this key for audit.</td><td>Example: <code>Dev Environment CI/CD</code></td></tr><tr><td><strong>Expiration time</strong></td><td>Set the key lifetime. Requests will be rejected after expiration.</td><td>Select date and time.</td></tr><tr><td><strong>Enabled status</strong></td><td>Control activation or suspension.</td><td>Toggle on/off.</td></tr></tbody></table>
+
+4. Click **Save** to apply.
+
+#### Verification and Troubleshooting
+
+After configuration, the user can call Cherry Studio APIs with this key.
+
+* **How to verify?** Send a standard Chat Completion request with the key. If you receive a streaming response, the setup is successful.
+* **Common errors `401 Unauthorized` or `Key Expired`:**
+  1. Check whether **Expiration time** has passed.
+  2. Check if **Enabled status** is off.
+  3. Check whether the user's **Group** has valid model channels configured.
+
+<Callout type="info">
+**Note:** An API key represents the user's identity and billing permissions. Remind users to keep it safe and never expose it in public code repositories.
+</Callout>

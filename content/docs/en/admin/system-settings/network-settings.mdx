@@ -1,0 +1,35 @@
+---
+title: "Network Settings"
+description: This configuration is critical. If your network cannot directly access overseas model providers (OpenAI, Claude, Google Gemini) or external APIs, you must configure a proxy here.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 2. Network Settings
+
+#### Configuration Steps
+
+1. Go to **System Settings** > **Network Settings**.
+2. Ensure your local proxy software (Clash, v2rayN, Surge, etc.) is running.
+3. Enter the proxy address below.
+
+![](/assets/images/zh/admin/system-settings-network_zh.png)
+
+#### Parameter Details
+
+<table><thead><tr><th width="122.96875">Parameter</th><th width="300.38671875">Description</th><th>Example</th></tr></thead><tbody><tr><td><strong>System proxy</strong></td><td>Global HTTP/HTTPS proxy. Core chat and model list updates go through this channel.</td><td><code>http://127.0.0.1:7890</code></td></tr><tr><td><strong>Mini program proxy</strong></td><td>(Optional) Proxy for built-in mini programs or plugin services. Typically same as system proxy.</td><td><code>http://127.0.0.1:7890</code></td></tr></tbody></table>
+
+#### Common Proxy Port References
+
+Default ports vary by software; check the local listening port in your proxy client:
+
+* **Clash / CFW**: `7890`
+* **v2rayN**: `10809`
+* **Surge**: `6152`
+
+<Callout type="warn">
+**Note**:
+
+1. Do not use `socks5://` — Cherry Studio currently supports mainly `http://` proxies.
+2. After configuration, go to **Model Management** and click **Check** to verify connectivity.
+</Callout>

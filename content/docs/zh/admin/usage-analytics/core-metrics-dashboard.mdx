@@ -1,0 +1,28 @@
+---
+title: "核心指标看板"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 2. 核心指标看板
+
+位于页面上部的 8 张卡片展示了当前筛选范围内的关键 KPI。
+
+![](/assets/images/zh/admin/usage-analytics-core-metrics_zh.png)
+
+### 指标详解
+
+* **总请求数 (Total Requests):** 成功发起到模型服务商的 API 调用次数。
+* **总 Token (Total Tokens):** 消耗的 Token 总和（输入 + 输出）。这是成本核算的最直接依据。
+* **输入 Token (Input):** 发送给 AI 的提示词（Prompt）与上下文长度。
+* **输出 Token (Output):** AI 生成的回复内容长度。
+* **活跃用户 (Active Users):** 在选定时间内实际产生过调用的用户去重数。
+* **活跃模型 (Active Models):** 被调用过的 AI 模型种类数量。
+* **中断请求 (Interrupted):** 用户手动停止生成或因网络/超时导致的失败请求。
+* **平均 Token/请求:** 反映了对话的平均复杂度。数值越高，说明任务越复杂或上下文越长。
+
+<Callout type="warn">
+**运维建议：** 如果 **中断请求** 的比例异常升高，建议立即检查 **系统设置 > Model Provider** 中的连接状态，或确认外部网络环境是否稳定。
+</Callout>
+
+***

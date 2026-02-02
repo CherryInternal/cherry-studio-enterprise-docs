@@ -1,0 +1,9 @@
+{
+  "title": "高度な設定",
+  "pages": [
+    "database",
+    "sso",
+    "backup",
+    "update"
+  ]
+}

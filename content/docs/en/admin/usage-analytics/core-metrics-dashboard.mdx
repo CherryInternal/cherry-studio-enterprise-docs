@@ -1,0 +1,28 @@
+---
+title: "Core Metrics Dashboard"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 2. Core Metrics Dashboard
+
+The eight cards at the top show key KPIs for the current filter scope.
+
+![](/assets/images/zh/admin/usage-analytics-core-metrics_zh.png)
+
+### Metric Details
+
+* **Total Requests:** Successful API calls to providers.
+* **Total Tokens:** Total tokens consumed (input + output). The most direct cost indicator.
+* **Input Tokens:** Prompt and context length sent to AI.
+* **Output Tokens:** Length of AI responses.
+* **Active Users:** Unique users who made calls in the selected time range.
+* **Active Models:** Number of AI models invoked.
+* **Interrupted:** Requests stopped by users or failed due to network/timeouts.
+* **Avg Tokens/Request:** Indicates average conversation complexity. Higher means more complex or longer context.
+
+<Callout type="warn">
+**Ops tip:** If **Interrupted** spikes, check **System Settings > Model Provider** connectivity or external network stability.
+</Callout>
+
+***

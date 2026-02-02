@@ -1,0 +1,80 @@
+---
+title: "深度配置详解"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 3. 深度配置详解
+
+创建完成后，点击 **编辑** 进入详细配置界面。左侧导航栏将其划分为四个核心维度。
+
+#### 3.1 提示词设置 (Prompt Settings)
+
+此处管理助手的“人设”与权限。
+
+![](/assets/images/zh/admin/assistant-management-advanced-config-1_zh.png)
+
+* **提示词编辑器：** 支持 Markdown 格式，可随时优化系统指令。
+*   **提示词可见性：**
+
+    * **开启 (On)：** 允许终端用户在对话详情中查看该助手的系统提示词。
+    * **关闭 (Off)：** 仅管理员可见。适用于保护企业核心 Prompt 资产不外泄。
+
+    ![](/assets/images/zh/admin/assistant-management-advanced-config-2_zh.png)
+
+#### 3.2 模型设置 (Model Settings)
+
+精细控制 AI 的推理行为与资源消耗。
+
+![](/assets/images/zh/admin/assistant-management-advanced-config-3_zh.png)
+
+![](/assets/images/zh/admin/assistant-management-advanced-config-4_zh.png)
+
+<table><thead><tr><th>配置项</th><th width="344.203125">详细描述</th><th>推荐配置</th></tr></thead><tbody><tr><td><strong>模型 (Model)</strong></td><td>允许随时切换底座模型（如从 GPT-4 切换至 DeepSeek）。</td><td>根据任务复杂度选择</td></tr><tr><td><strong>模型温度 (Temperature)</strong></td><td>控制输出的随机性。<code>0</code> 为最确定（适合代码/逻辑），<code>1+</code> 为最发散（适合创意）。</td><td>逻辑类: 0.1 / 创意类: 0.8</td></tr><tr><td><strong>上下文数 (Context)</strong></td><td>每次对话携带的历史消息轮数。数值越大，记忆越长，但 Token 消耗越高。</td><td>默认为 5-10</td></tr><tr><td><strong>设置 Top P</strong></td><td>核采样参数，控制词汇选择的多样性。</td><td>保持默认或与温度配合调整</td></tr><tr><td><strong>最大 Token 数</strong></td><td>限制单次回复的最大长度，防止模型输出过长内容耗尽额度。</td><td>默认或 4096</td></tr><tr><td><strong>流式输出 (Stream)</strong></td><td>是否开启打字机效果。强烈建议开启以降低用户感知的延迟。</td><td>✅ 开启</td></tr><tr><td><strong>MCP 调用方式</strong></td><td>指定模型如何触发工具。推荐使用 <code>函数调用 (Function)</code> 以获得更高准确率。</td><td>函数调用</td></tr></tbody></table>
+
+<Callout type="error">
+**成本预警：** 调大 **上下文数** 会显著增加每次对话的 Token 消耗量，请根据实际业务需求平衡成本与体验。
+</Callout>
+
+#### 3.3 知识库设置 (Knowledge Base)
+
+为助手挂载“外脑”。在此列表中，您可以勾选预先在 \[知识库管理] 模块中索引好的数据集。
+
+* **运作机制：** 启用后，助手在回答用户问题前，会先在选中的知识库中 工具示例：\*\*
+* **Playwright：** 允许助手访问互联网，读取网页内容。
+* **Filesystem：** 允许助手读取或写入服务器上的特定文件目录。
+
+![](/assets/images/zh/admin/assistant-management-advanced-config-5_zh.png)
+
+#### 3.4 MCP 服务器 (MCP Servers)
+
+此模块是助手的“工具箱”。通过启用 MCP (Model Context Protocol) 服务器，您可以赋予助手执行实际操作的能力（如联网搜索、生成图表、读写文件等），使其从单纯的“对话者”进化为“执行者”。
+
+![](/assets/images/zh/admin/assistant-management-advanced-config-6_zh.png)
+
+在此页面中，系统会列出 **全局配置** 中已添加的所有可用 MCP 服务。管理员只需通过开关即可完成能力挂载。
+
+| 字段                   | 说明                                             |
+| -------------------- | ---------------------------------------------- |
+| **名称 (Name)**        | MCP 服务的唯一标识符（例如 `fetch` 或 `mcp-server-chart`）。 |
+| **类型 (Type)**        | 服务的连接类型（通常为 `stdio` 或 `sse`）。                  |
+| **描述 (Description)** | 该服务的功能简介。                                      |
+| **启用 (Enable)**      | **\[核心操作]** 切换开关。开启后，该助手在对话中即可自动调用此工具。         |
+
+**典型应用场景示例**
+
+* **联网能力 (`fetch` / `search`):** 开启后，助手可以实时访问网页链接，总结新闻或抓取数据。
+* **数据可视化 (`mcp-server-chart`):** 允许助手接收用户的数据（如 CSV），并直接绘制出柱状图、折线图等可视化图表。
+* **文件操作 (`filesystem`):** 允许助手读取服务器上的特定日志文件或代码库进行分析。
+
+<Callout type="info">
+**前置条件：** 此列表中的服务必须先在 **MCP 服务器 (全局)** 模块中完成安装和配置。如果列表为空，请先联系系统管理员添加相应的 MCP 服务。
+</Callout>
+
+<Callout type="info">
+**配置建议：** 虽然 Cherry Studio 支持为一个助手开启多个 MCP 服务，但建议遵循 **“最小够用原则”**。
+
+* 例如：给“数据分析助手”仅开启 `mcp-server-chart` 和 `filesystem`。
+* 原因：过多的工具可能会分散模型的注意力，导致工具调用失败或产生幻觉。
+</Callout>
+

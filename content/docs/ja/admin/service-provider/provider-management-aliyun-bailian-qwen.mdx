@@ -1,0 +1,111 @@
+---
+title: "プロバイダー管理（阿里云百炼/Qwen）"
+description: Cherry Studio Enterprise の最新モデル一覧のスクリーンショットに基づいています。
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 3. プロバイダー管理（阿里云百炼/Qwen）
+
+### 概要
+
+**パス：** 管理コンソールサイドバー > **プロバイダー管理**
+
+Cherry Studio Enterprise は既定で **阿里云百炼 (Aliyun Bailian)** を中核エンジンとして統合しています。OpenAI 互換プロトコルがプリセットされているため、API Key を入力するだけで Qwen 全系列と百炼ホストの高性能 OSS モデルを利用できます。
+
+<Callout type="info">
+**既定戦略と拡張性**
+
+* **既定状態**：初期状態では「阿里云百炼」のみが表示されます。
+* **拡張**：管理者が他のプロバイダー（例：ローカル Ollama）を追加し、複数チャネルを統合できます。
+</Callout>
+
+***
+
+### 1. 既定プロバイダーを有効化
+
+一覧には **"阿里云百炼"** カードが表示されています。
+
+![](/assets/images/zh/admin/provider-management-aliyun-bailian-qwen-1_zh.png)
+
+1. カード右側の **⚙️ 設定** をクリック。
+2. **API Key**：阿里云百炼のコンソールで取得したキーを入力（`sk-` で始まる）。
+3. **API Host**：既定値のまま。
+   * _アドレス_: `https://dashscope.aliyuncs.com/compatible-mode/v1`
+4. **接続確認** をクリックし「API Key 有効」を確認。
+5. **保存**。
+
+***
+
+### 2. モデル体系の理解
+
+百炼の最新 API 方針により、Cherry Studio はモデルを 2 つのカテゴリーに分けています。部門別にリソース配分する際の参考になります。
+
+#### A. 通義千問（商用/クローズド）
+
+_一覧上部にある阿里云の最強モデル領域。_
+
+<table><thead><tr><th width="138.00390625">シリーズ</th><th width="129.8046875">代表 ID（スナップショット）</th><th width="325.71875">用途</th><th>推奨設定</th></tr></thead><tbody><tr><td><strong>旗舰版 (Max)</strong></td><td><code>qwen-max</code><br /><code>qwen-max-2025-01-25</code></td><td><strong>複雑タスクの主力</strong>。推論・長文生成・指示追従。GPT-4o に近い性能。</td><td>✅ 役員/経営層の既定モデルに推奨。</td></tr><tr><td><strong>均衡版 (Plus)</strong></td><td><code>qwen-plus</code><br /><code>qwen-plus-latest</code></td><td><strong>コスパ最優先</strong>。Max より高速で低コスト。日常業務向き。</td><td>✅ 全社員の既定モデルに推奨。</td></tr><tr><td><strong>長文 (Long)</strong></td><td><code>qwen-long</code></td><td><strong>ドキュメント解析</strong>。超長文に対応し、PDF 丸ごとの要約/QA が可能。</td><td>🔧 知識ベースと併用。</td></tr><tr><td><strong>推論版 (QwQ)</strong></td><td><code>qwq-plus</code></td><td><strong>深い思考</strong>。数学・コード・複雑推論に最適化。</td><td>🧠 開発/分析部門向き。</td></tr></tbody></table>
+
+#### B. 通義千問 OSS 系列（ホスト版）
+
+_阿里云百炼がホストする OSS モデル。ローカル GPU は不要です。_
+
+<table><thead><tr><th width="124.9921875">シリーズ</th><th width="207.57421875">代表 ID</th><th>特徴</th></tr></thead><tbody><tr><td><strong>Qwen 2.5</strong></td><td><code>qwen2.5-72b-instruct</code><br /><code>qwen2.5-32b-instruct</code></td><td><strong>OSS 最強</strong>。72B は多くのベンチで GPT-4 を超えつつ低コスト。</td></tr><tr><td><strong>Coder</strong></td><td><code>qwen-coder-plus</code><br /><code>codeqwen1.5-7b-chat</code></td><td><strong>プログラミング特化</strong>。大量コードで微調整され、IDE/レビューに最適。</td></tr><tr><td><strong>Math</strong></td><td><code>qwen-math-plus</code></td><td><strong>理数系特化</strong>。数学解法と推論を強化。</td></tr><tr><td><strong>Qwen 2 / 1.5</strong></td><td><code>qwen2-72b-instruct</code><br /><code>qwen1.5-110b-chat</code></td><td><strong>旧版</strong>。特定バージョンが必要な業務向け互換。</td></tr></tbody></table>
+
+<Callout type="warn">
+**バージョン末尾（日時）について** `qwen-max-2024-09-19` のような日付付き ID が表示されます。
+
+* **ベストプラクティス:** 特定日付に依存しない限り、日付なし ID（`qwen-max`, `qwen-plus`）を使用してください。システムが最新安定版（`latest`）へ自動で解決します。
+</Callout>
+
+***
+
+### 3. モデル一覧の管理
+
+![](/assets/images/zh/admin/provider-management-aliyun-bailian-qwen-2_zh.png)
+
+モデルが多いため、従業員が迷わないよう整理を推奨します。
+
+1. 百炼カード下の **𝌡 モデル管理** をクリック。
+2. **推奨フィルタ**：
+   * `qwen-max` と `qwen-plus`（日付なし）を残す。
+   * `qwq-plus`（推論向け）を残す。
+   * `qwen2.5-72b-instruct`（高コスパ）を残す。
+   * `qwen-coder-plus`（開発向け）を残す。
+3. **冗長モデルの非表示**：古い日付（`2024-04-28` など）や小パラメータ（`0.5b`, `1.5b`）を **-** で非表示。
+4. **保存**。
+
+***
+
+### 4. 他プロバイダーの追加（カスタム）
+
+百炼が既定ですが、Cherry Studio は他チャネルも統合できます。
+
+**例：**
+
+* **OpenAI** の `gpt-4o` を使いたい。
+* ローカルで **Ollama** を運用している。
+
+**手順：**
+
+1. 一覧下部の **+ プロバイダー追加** をクリック。
+2. **プロバイダー種別**：
+   * **OpenAI**（汎用互換）
+   * **Anthropic**（Claude 系）
+   * **Ollama**（ローカル）
+3. **API Key** と **API Host** を入力。
+   * _例: ローカル Ollama Host_: `http://192.168.1.5:11434/v1`
+4. 追加したプロバイダーのモデルは、百炼モデルと同じ一覧に表示されます。
+
+***
+
+### 5. FAQ
+
+**Q: `qwq-32b-preview` と `qwq-plus` の違いは？**
+
+A: `qwq-32b` は OSS 重みの推論モデル、`qwq-plus` は阿里云の商用クローズド推論モデルです。後者の方が性能/安全性が高い一方、コストも高めです。
+
+**Q: `qwen-max` と `qwen-max-latest` のどちらを使うべき？**
+
+A: `qwen-max` は安定版を指すエイリアスで、`qwen-max-latest` は最新の実験的最適化が含まれる場合があります。本番では `qwen-max` が安全です。

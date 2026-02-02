@@ -1,0 +1,39 @@
+---
+title: "API Key 管理"
+description: Cherry Studio Enterprise には API ゲートウェイ機能があります。クライアント UI 以外にも、API Key を使ってモデル機能を呼び出せます。管理者はここで認証情報を配布します。
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 4. API Key 管理
+
+#### キーの作成と管理
+
+1. ユーザー一覧で対象ユーザーの **⋮** をクリック。
+2. **キー**（Key アイコン）を選択。
+
+![キー設定モーダル](/assets/images/zh/admin/user-management-api-key-settings-modal_zh.png)
+
+3. **キー設定** パネルで設定：
+
+![API Key と有効期限設定](/assets/images/zh/admin/user-management-api-key-expiration-settings_zh.png)
+
+**設定項目の説明**
+
+<table><thead><tr><th width="111.69921875">項目</th><th width="369.5078125">説明</th><th>例/操作</th></tr></thead><tbody><tr><td><strong>キー</strong></td><td>システムが生成する <code>sk-</code> で始まる高強度ランダム文字列。</td><td>右側の <strong>コピー</strong> アイコンで複製。</td></tr><tr><td><strong>説明</strong></td><td>キー用途のメモ。監査に役立ちます。</td><td>例：<code>Dev Environment CI/CD</code></td></tr><tr><td><strong>有効期限</strong></td><td>キーの有効期間。期限切れ後は拒否されます。</td><td>日時を選択。</td></tr><tr><td><strong>有効状態</strong></td><td>キーの有効化/凍結。</td><td>トグルを ON/OFF。</td></tr></tbody></table>
+
+4. **保存** をクリックして適用。
+
+#### 検証とトラブルシューティング
+
+設定完了後、ユーザーはこのキーで Cherry Studio API を利用できます。
+
+* **成功の確認方法**：キーで標準の Chat Completion リクエストを送信し、ストリーミング応答が返れば成功。
+* **よくあるエラー `401 Unauthorized` または `Key Expired`：**
+  1. **有効期限** が過ぎていないか。
+  2. **有効状態** がオフになっていないか。
+  3. **グループ** に有効なモデルチャネルが設定されているか。
+
+<Callout type="info">
+**Note:** API Key はユーザーのデジタル ID であり、課金権限を持ちます。公開リポジトリ等での漏えいは厳禁です。
+</Callout>

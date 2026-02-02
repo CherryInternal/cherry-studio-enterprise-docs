@@ -1,0 +1,71 @@
+---
+title: "よく使う設定テンプレート"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 3. よく使う設定テンプレート
+
+素早く始められるよう、検証済みの MCP サーバー設定例を紹介します。
+
+#### 🌐 Playwright（Web 自動化）
+
+Web の閲覧、スクリーンショット、データ取得が可能になります。
+
+* **依存**：Node.js
+* **用途**：Web 検索アシスタント、ニュース要約。
+
+```json
+{
+  "name": "Playwright",
+  "type": "stdio",
+  "command": "npx",
+  "args": [
+    "-y",
+    "@modelcontextprotocol/server-playwright"
+  ]
+}
+```
+
+#### 📂 Filesystem（ローカルファイル）
+
+特定ディレクトリの読み書きが可能になります。
+
+* **依存**：Node.js
+* **用途**：コード監査、ログ分析。
+
+<Callout type="error">
+**セキュリティ警告:** `args` には必ず **安全なディレクトリ** を指定してください（例：`/Users/admin/desktop`）。ルート `/` の付与は禁止です。
+</Callout>
+
+```json
+{
+  "name": "Filesystem",
+  "type": "stdio",
+  "command": "npx",
+  "args": [
+    "-y",
+    "@modelcontextprotocol/server-filesystem",
+    "/Users/username/desktop/allowed-folder"
+  ]
+}
+```
+
+#### 📡 Fetch（HTTP リクエスト）
+
+HTTP リクエストの送信が可能になります。
+
+* **依存**：Python（uv）または Node.js
+* **用途**：API テスト、簡易データ取得。
+
+```json
+{
+  "name": "Fetch",
+  "type": "stdio",
+  "command": "uv",
+  "args": [
+    "x",
+    "mcp-server-fetch"
+  ]
+}
+```

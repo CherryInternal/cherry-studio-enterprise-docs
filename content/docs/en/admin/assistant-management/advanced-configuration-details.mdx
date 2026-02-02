@@ -1,0 +1,81 @@
+---
+title: "Advanced Configuration Details"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 3. Advanced Configuration Details
+
+After creation, click **Edit** to enter the detailed configuration page. The left navigation is divided into four core areas.
+
+#### 3.1 Prompt Settings
+
+Manage the assistant's persona and permissions here.
+
+![](/assets/images/zh/admin/assistant-management-advanced-config-1_zh.png)
+
+* **Prompt editor:** Supports Markdown; update system instructions anytime.
+* **Prompt visibility:**
+
+  * **On:** End users can view the system prompt in chat details.
+  * **Off:** Only admins can view it, protecting core prompt assets.
+
+  ![](/assets/images/zh/admin/assistant-management-advanced-config-2_zh.png)
+
+#### 3.2 Model Settings
+
+Fine-tune reasoning behavior and resource usage.
+
+![](/assets/images/zh/admin/assistant-management-advanced-config-3_zh.png)
+
+![](/assets/images/zh/admin/assistant-management-advanced-config-4_zh.png)
+
+<table><thead><tr><th>Setting</th><th width="344.203125">Description</th><th>Recommendation</th></tr></thead><tbody><tr><td><strong>Model</strong></td><td>Switch base model at any time (e.g., GPT-4 to DeepSeek).</td><td>Choose based on task complexity</td></tr><tr><td><strong>Temperature</strong></td><td>Controls randomness. <code>0</code> is deterministic (code/logic), <code>1+</code> is more creative.</td><td>Logic: 0.1 / Creative: 0.8</td></tr><tr><td><strong>Context</strong></td><td>Number of historical turns to include. Larger means more memory, higher token cost.</td><td>Default 5-10</td></tr><tr><td><strong>Top P</strong></td><td>Nucleus sampling parameter, controls diversity.</td><td>Keep default or adjust with temperature</td></tr><tr><td><strong>Max tokens</strong></td><td>Max response length to prevent overlong outputs.</td><td>Default or 4096</td></tr><tr><td><strong>Stream</strong></td><td>Enable streaming typing effect. Strongly recommended to reduce perceived latency.</td><td>✅ On</td></tr><tr><td><strong>MCP call mode</strong></td><td>How the model triggers tools. Recommend <code>Function</code> for accuracy.</td><td>Function calling</td></tr></tbody></table>
+
+<Callout type="error">
+**Cost warning:** Increasing **Context** significantly raises token usage per chat. Balance cost and experience.
+</Callout>
+
+#### 3.3 Knowledge Base Settings
+
+Attach an "external brain". Here you can select datasets indexed in **[Knowledge Base Management]**.
+
+* **How it works:** When enabled, the assistant will search selected knowledge bases before answering.
+
+**Tool examples:**
+* **Playwright:** Allows web access to read pages.
+* **Filesystem:** Allows reading/writing specific server directories.
+
+![](/assets/images/zh/admin/assistant-management-advanced-config-5_zh.png)
+
+#### 3.4 MCP Servers
+
+This module is the assistant's "toolbox". By enabling MCP (Model Context Protocol) servers, you can grant assistants real-world capabilities (web search, chart generation, file IO, etc.), evolving them from "talkers" to "doers".
+
+![](/assets/images/zh/admin/assistant-management-advanced-config-6_zh.png)
+
+This page lists all MCP services added in **Global Configuration**. Admins can toggle them on/off per assistant.
+
+| Field | Description |
+| -------------------- | ---------------------------------------------- |
+| **Name** | Unique MCP identifier (e.g., `fetch` or `mcp-server-chart`). |
+| **Type** | Connection type (usually `stdio` or `sse`). |
+| **Description** | Summary of the service. |
+| **Enable** | **[Core action]** Toggle. When enabled, the assistant can call the tool. |
+
+**Typical scenarios**
+
+* **Web access (`fetch` / `search`)**: Access live web pages to summarize news or scrape data.
+* **Data visualization (`mcp-server-chart`)**: Generate charts directly from user data (CSV, etc.).
+* **File operations (`filesystem`)**: Read server logs or code repositories for analysis.
+
+<Callout type="info">
+**Prerequisite:** These services must be installed and configured in **MCP Servers (Global)** first. If the list is empty, contact a system admin.
+</Callout>
+
+<Callout type="info">
+**Configuration suggestion:** Although multiple MCP services can be enabled, follow the **"minimum necessary"** principle.
+
+* Example: For a "Data Analysis Assistant", enable only `mcp-server-chart` and `filesystem`.
+* Reason: Too many tools can distract the model and increase tool-call failures or hallucinations.
+</Callout>

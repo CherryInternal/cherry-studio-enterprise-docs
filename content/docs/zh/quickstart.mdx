@@ -1,0 +1,120 @@
+---
+title: 快速开始
+description: 20 分钟上手 Cherry Studio 企业版，从部署到发送第一条消息
+---
+
+import { DynamicLink } from 'fumadocs-core/dynamic-link'
+import { Step, Steps } from 'fumadocs-ui/components/steps'
+import { Callout } from 'fumadocs-ui/components/callout'
+
+## 第一步：部署
+
+选择适合您的部署方式：
+
+<Cards>
+  <Card title="云应用部署" href="/[lang]/docs/setup/cloud-app" description="一键部署，零技术门槛，无运维成本" />
+  <Card title="Docker 部署" href="/[lang]/docs/setup/docker" description="使用 Docker Compose 快速部署" />
+  <Card title="K8s 部署" href="/[lang]/docs/setup/helm" description="使用 Helm 在 Kubernetes 上部署" />
+</Cards>
+
+
+## 第二步：获取授权
+
+我们提供 **14 天免费试用期**，部署完成后可直接体验全部功能。您也可以直接购买正式授权。
+
+<div style={{margin:'12px 0',display:'flex',gap:'12px',flexWrap:'wrap'}}>
+  <a href="https://enterprise.cherry-ai.com/signin?redirect=%2Fconsole%2Fproducts" target="_blank" style={{display:'inline-flex',alignItems:'center',gap:'6px',height:'36px',padding:'0 14px',backgroundColor:'#1a6eff',color:'white',borderRadius:'6px',fontSize:'14px',fontWeight:500,textDecoration:'none'}}>
+    <svg style={{flexShrink:0}} xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    <span style={{lineHeight:1}}>购买授权</span>
+  </a>
+</div>
+
+<Callout type="info">
+  <DynamicLink href="/[lang]/docs/pricing">查看完整定价方案 →</DynamicLink>
+</Callout>
+
+
+## 第三步：配置系统
+
+<Steps>
+<Step>
+
+### 添加服务商
+
+登录管理后台，进入「服务商管理」添加 AI 服务商（如 OpenAI、Anthropic 等），配置 API Key。
+
+![添加服务商](/assets/images/zh/admin/provider-management-standard-1_zh.png)
+
+<Callout type="info">
+  <DynamicLink href="/[lang]/docs/admin/service-provider">查看完整服务商配置文档 →</DynamicLink>
+</Callout>
+
+</Step>
+
+<Step>
+
+### 设置默认模型
+
+进入「模型管理」，为添加的服务商配置可用模型，并设置默认模型。
+
+![设置默认模型](/assets/images/zh/admin/default-model-settings-overview_zh.png)
+
+<Callout type="info">
+  <DynamicLink href="/[lang]/docs/admin/model-settings">查看完整模型配置文档 →</DynamicLink>
+</Callout>
+
+</Step>
+
+<Step>
+
+### 添加用户
+
+进入「用户管理」，为团队成员创建账号。
+
+![添加用户](/assets/images/zh/admin/user-management-add-user-modal_zh.png)
+
+<Callout type="info">
+  <DynamicLink href="/[lang]/docs/admin/user-management">查看完整用户管理文档 →</DynamicLink>
+</Callout>
+
+</Step>
+
+<Step>
+
+### 下载客户端
+
+下载并安装 Cherry Studio 企业版客户端。
+
+<div style={{margin:'12px 0'}}>
+  <a href="https://github.com/CherryHQ/cherry-studio/releases" target="_blank" style={{display:'inline-flex',alignItems:'center',gap:'6px',height:'36px',padding:'0 14px',backgroundColor:'#1a6eff',color:'white',borderRadius:'6px',fontSize:'14px',fontWeight:500,textDecoration:'none'}}>
+    <svg style={{flexShrink:0}} xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+    <span style={{lineHeight:1}}>下载客户端</span>
+  </a>
+</div>
+
+</Step>
+
+<Step>
+
+### 登录并发送第一条消息
+
+使用管理员创建的账号登录客户端，即可开始使用 Cherry Studio 企业版客户端的全部功能。
+
+![客户端聊天](/assets/images/zh/client-chat-demo.png)
+
+<Callout type="info">
+  <DynamicLink href="/[lang]/docs/client">查看完整客户端文档 →</DynamicLink>
+</Callout>
+
+</Step>
+
+<Step>
+
+### 完成
+
+恭喜！您已完成 Cherry Studio 企业版的部署和配置。
+
+</Step>
+</Steps>
+
+<div style={{height:'200px'}} />

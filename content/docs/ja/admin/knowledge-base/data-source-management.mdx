@@ -1,0 +1,45 @@
+---
+title: "データソース管理"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 2. データソース管理
+
+作成後、一覧の **表示** をクリックすると詳細ページに入ります。Cherry Studio は複数形式の混在インポートに対応します。
+
+#### A. ファイルインポート
+
+![](/assets/images/zh/admin/knowledge-base-data-source-1_zh.png)
+
+企業の既存ドキュメントを一括アップロードします。
+
+* **操作パス:** サイドバー **ファイル** > **ファイル追加**。
+* **対応形式:** `.md`, `.txt`, `.pdf`, `.docx` など。
+* **ステータス:**
+  * `Processing`：分割・ベクトル化中。
+  * `Completed`：インデックス化完了。
+  * `Failed`：ファイル破損や暗号化の可能性。
+
+<Callout type="error">
+**ファイルプライバシー警告:** パスワード付き PDF/文書は読み取れず失敗します。解除して再アップロードしてください。
+</Callout>
+
+#### B. URL & Site
+
+![](/assets/images/zh/admin/knowledge-base-data-source-2_zh.png)
+
+オンラインデータの取得に使用します。
+
+* **URL:** 単一ページの本文を取得。
+* **Site:** ルートドメインを入力すると関連ページを巡回取得。
+
+#### C. メモ
+
+![](/assets/images/zh/admin/knowledge-base-data-source-3_zh.png)
+
+ファイル不要で断片的な知識を補完します。
+
+* **操作パス:** サイドバー **メモ** > **メモ追加**。
+* **用途:** 会議メモ、緊急通知、社内 QA など。
+* **操作:** テキスト/Markdown を貼り付けて保存。

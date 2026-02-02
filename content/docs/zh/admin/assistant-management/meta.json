@@ -1,0 +1,9 @@
+{
+  "title": "助手管理",
+  "pages": [
+    "advanced-configuration-details",
+    "assistant-list-overview",
+    "create-new-assistant",
+    "validation-and-publishing"
+  ]
+}

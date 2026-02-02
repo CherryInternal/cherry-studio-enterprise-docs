@@ -1,0 +1,9 @@
+{
+  "title": "助手库",
+  "pages": [
+    "list-management",
+    "create-and-edit-assistants",
+    "template-market-import",
+    "grouping-strategy"
+  ]
+}

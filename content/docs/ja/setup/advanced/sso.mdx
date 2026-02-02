@@ -1,0 +1,114 @@
+---
+title: シングルサインオン
+description: Casdoor SSO 設定ガイド
+---
+
+Cherry Studio Enterprise は統合認証として Casdoor を採用し、エンタープライズ向け SSO を提供します。
+
+## 機能
+
+- **統合認証**：一度のログインで関連アプリにアクセス
+- **ユーザー管理**：企業ユーザーと権限を一元管理
+- **多様なログイン方式**：ID/パスワード、サードパーティログインなど
+- **セキュリティ**：OAuth 2.0 ベースの認証フロー
+
+## 環境変数の設定
+
+Docker もしくは環境変数に以下を設定します：
+
+```bash
+# Casdoor サービス設定
+CASDOOR_ENDPOINT=https://auth.cherry-ai.com          # Casdoor エンドポイント
+CASDOOR_APP_ID=d29cf4a499060d916d5e                  # アプリ ID
+CASDOOR_APP_SECRET=your-casdoor-app-secret                     # アプリシークレット
+CASDOOR_ORGANIZATION_NAME=cherry-studio               # 組織名
+CASDOOR_APPLICATION_NAME=cherry-studio-enterprise    # アプリ名
+```
+
+## Docker Compose 設定
+
+`docker-compose.yml` に Casdoor の設定を追加します：
+
+```yaml
+services:
+  cherry-studio-enterprise-api:
+    image: cherrystudio/cherry-studio-enterprise-api:latest
+    container_name: cherry-studio-enterprise-api
+    environment:
+      # その他の必須設定は省略
+      # Casdoor SSO 設定
+      - CASDOOR_ENDPOINT=https://auth.cherry-ai.com
+      - CASDOOR_APP_ID=d29cf4a499060d916d5e
+      - CASDOOR_APP_SECRET=your-casdoor-app-secret
+      - CASDOOR_ORGANIZATION_NAME=cherry-studio
+      - CASDOOR_APPLICATION_NAME=cherry-studio-enterprise
+    ports:
+      - '3670:3670'
+      - '3680:3680'
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    restart: unless-stopped
+```
+
+## 設定リファレンス
+
+| 環境変数 | 説明 | 例 |
+| --------------------------- | -------------------------- | ---------------------------- |
+| `CASDOOR_ENDPOINT` | Casdoor サーバーアドレス | `https://auth.cherry-ai.com` |
+| `CASDOOR_APP_ID` | Casdoor 内のアプリ ID | `d29cf4a499060d916d5e` |
+| `CASDOOR_APP_SECRET` | 安全通信に使うアプリシークレット | `your-casdoor-app-secret` |
+| `CASDOOR_ORGANIZATION_NAME` | Casdoor の組織名 | `cherry-studio` |
+| `CASDOOR_APPLICATION_NAME` | Casdoor のアプリ名 | `cherry-studio-enterprise` |
+
+## 利用フロー
+
+### クライアントログイン
+
+![Casdoor ログイン画面](/assets/images/zh/carsdoor-login.webp)
+
+1. Cherry Studio Enterprise クライアントを起動
+2. ログイン画面で「ワンクリック認証ログイン」を選択
+3. サーバーアドレスを入力：`https://api.your-domain.com`
+4. Casdoor 認証ページへ自動的に遷移
+5. 認証後、自動ログイン
+
+## ユーザー管理
+
+### ユーザー追加
+
+Casdoor 管理コンソールで：
+
+1. **ユーザー管理** を開く
+2. **ユーザー追加** をクリック
+3. ユーザー情報を入力：
+   - ユーザー名
+   - メール
+   - 氏名
+   - パスワード（任意、ユーザー自身で設定可能）
+4. 組織 `cherry-studio` に割り当て
+
+## セキュリティ注意事項
+
+1. **アプリシークレットの保護**：`CASDOOR_APP_SECRET` は機密情報
+2. **HTTPS の使用**：本番環境は必ず HTTPS
+3. **定期更新**：アプリシークレットは定期的に更新
+4. **アクセス制御**：Casdoor 側で適切なアクセス制御を設定
+
+## トラブルシューティング
+
+### リダイレクト失敗
+
+- `CASDOOR_ENDPOINT` が到達可能か確認
+- `API_URL` の設定が正しいか確認
+- ネットワーク接続とファイアウォール設定を確認
+
+### 認証失敗
+
+- `CASDOOR_APP_ID` と `CASDOOR_APP_SECRET` を確認
+- 組織名とアプリ名が一致しているか確認
+- アプリログで詳細エラーを確認
+
+---
+
+技術サポート：xinming.wang@cherry-ai.com

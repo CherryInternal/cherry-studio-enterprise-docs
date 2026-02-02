@@ -1,0 +1,123 @@
+---
+title: Backup and Restore
+description: Cherry Studio Enterprise backup and restore guide
+---
+
+This document explains how to back up and restore Cherry Studio Enterprise data, including the PostgreSQL database and application data directory.
+
+## Backup for Docker Deployment
+
+### PostgreSQL Database Backup
+
+```bash
+# Backup with docker-compose
+docker-compose exec postgres \
+  pg_dump -U cherry-studio-enterprise cherry-studio-enterprise > backup.sql
+```
+
+### Application Data Directory Backup
+
+```bash
+# Stop container
+docker stop cherry-studio-enterprise
+
+# Backup data directory
+tar -czf cherry-backup-$(date +%Y%m%d).tar.gz ./data
+
+# Restart container
+docker start cherry-studio-enterprise
+```
+
+### PostgreSQL Restore
+
+```bash
+# Restore with docker-compose
+docker-compose exec -T postgres \
+  psql -U cherry-studio-enterprise cherry-studio-enterprise < backup.sql
+```
+
+## Backup for Kubernetes (Helm) Deployment
+
+### PostgreSQL Database Backup
+
+**Method 1: Use pg_dump (recommended)**
+
+```bash
+# Connect to PostgreSQL and dump database
+kubectl exec -it deployment/cherry-studio-enterprise -- pg_dump -h $DB_HOST -U $DB_USERNAME $DB_NAME > backup.sql
+```
+
+**Method 2: Backup via application data directory**
+
+If you need to back up other application data, it is stored in the PVC:
+
+```bash
+# Create a backup pod
+kubectl run backup-pod --image=busybox --restart=Never \
+  --overrides='{"spec":{"containers":[{"name":"backup","image":"busybox","command":["sleep","3600"],"volumeMounts":[{"name":"data","mountPath":"/backup"}]}],"volumes":[{"name":"data","persistentVolumeClaim":{"claimName":"cherry-studio-enterprise-data"}}]}}'
+
+# Wait for pod to be ready
+kubectl wait --for=condition=ready pod/backup-pod --timeout=60s
+
+# Create archive inside the pod
+kubectl exec backup-pod -- tar -czf /tmp/backup.tar.gz -C /backup .
+
+# Copy backup file to local
+kubectl cp backup-pod:/tmp/backup.tar.gz ./backup.tar.gz
+
+# Delete backup pod
+kubectl delete pod backup-pod
+```
+
+### Backup Script (Recommended)
+
+To simplify the process, use the script: `helm/scripts/backup-database.sh`
+
+## Backup Troubleshooting
+
+If you see "timed out waiting for the condition":
+
+### 1. Check PVC name
+
+```bash
+kubectl get pvc
+```
+
+### 2. Check pod status
+
+```bash
+kubectl get pod backup-pod
+kubectl describe pod backup-pod
+```
+
+### 3. Manually clean up failed pods
+
+```bash
+kubectl delete pod backup-pod --force --grace-period=0
+```
+
+### 4. Use a step-by-step backup
+
+```bash
+# Create pod (without --rm)
+kubectl run backup-pod --image=busybox --restart=Never \
+  --overrides='{"spec":{"containers":[{"name":"backup","image":"busybox","command":["sleep","300"],"volumeMounts":[{"name":"data","mountPath":"/backup"}]}],"volumes":[{"name":"data","persistentVolumeClaim":{"claimName":"cherry-studio-enterprise-data"}}]}}'
+
+# Wait for pod to be ready
+kubectl wait --for=condition=ready pod/backup-pod --timeout=60s
+
+# Run backup
+kubectl exec backup-pod -- tar -czf /tmp/backup.tar.gz -C /backup .
+
+# Copy file
+kubectl cp backup-pod:/tmp/backup.tar.gz ./backup.tar.gz
+
+# Delete pod
+kubectl delete pod backup-pod
+```
+
+## Related Documents
+
+- [Docker deployment guide](../setup/docker) - Docker deployment details
+- [Helm deployment guide](../setup/helm) - Kubernetes deployment
+- [Database configuration guide](./database) - PostgreSQL configuration details

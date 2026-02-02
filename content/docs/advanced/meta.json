@@ -1,5 +1,0 @@
-{
-  "title": "进阶使用",
-  "defaultOpen": true,
-  "pages": ["database", "sso", "backup", "update"]
-}

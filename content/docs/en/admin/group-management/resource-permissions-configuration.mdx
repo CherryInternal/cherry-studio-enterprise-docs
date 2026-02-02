@@ -1,0 +1,53 @@
+---
+title: "Resource Permission Configuration"
+description: This is the most critical step in group management. By configuring Assistant and Model allowlists, you can precisely define the AI workspace for this group.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 2. Resource Permission Configuration
+
+### 1. Configure Assistant Permissions
+
+Control which preset agents appear in the left "Assistants" sidebar of the Cherry Studio client.
+
+* **All assistants**: If selected, users can access all public assistants in the enterprise library.
+* **Specific assistants**: **(Recommended)** Select only the assistants needed by the business line to keep the UI clean.
+
+**Steps:**
+
+1. In the create/edit dialog, find **Available assistants**.
+2. Select **Specific assistants**.
+3. Check target assistants in the dropdown (e.g., `Translation Assistant`, `Code Reviewer`).
+
+![](/assets/images/zh/admin/group-management-resource-permissions-1_zh.png)
+
+### 2. Configure Model Permissions
+
+Control which LLMs are available in the model dropdown at the top of the chat window.
+
+<Callout type="warn">
+**Cost control tip:** Proper model permissions are the most effective way to control API spending. Allow expensive models (GPT-4, etc.) only for core R&D or management teams.
+</Callout>
+
+**Steps:**
+
+1. Find **Available models**.
+2. Select **Specific models**.
+3. The system lists all configured **Model Providers**.
+4. You can:
+   * **Select all by provider:** Check the box next to `OpenAI` or `DeepSeek` to authorize all models under that provider.
+   * **Select individual models:** Expand the provider and select specific Model IDs (e.g., `gpt-5`, `deepseek-coder`).
+5. Use search to quickly find model names.
+6. Check **Show selected only** to verify the assigned list.
+
+![Model selector UI](/assets/images/zh/admin/group-management-model-selector-ui_zh.png)
+
+### 3. Validate Permission Configuration
+
+To ensure correct configuration, run a quick smoke test:
+
+1. Create a test user and assign them to the new group.
+2. Sign in to the Cherry Studio client with the test account.
+3. **Checkpoint A:** Start a new chat and open the model list. Confirm it **only contains** selected models.
+4. **Checkpoint B:** Go to the assistant library and confirm only authorized assistants are shown.

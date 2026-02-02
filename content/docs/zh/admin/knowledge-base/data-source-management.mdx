@@ -1,0 +1,45 @@
+---
+title: "数据源管理"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 2. 数据源管理
+
+创建完成后，点击列表中的 **查看** 进入详情页。Cherry Studio 支持多种格式的数据混合导入。
+
+#### A. 文件导入 (Files)
+
+![](/assets/images/zh/admin/knowledge-base-data-source-1_zh.png)
+
+适用于批量上传企业现存的文档资产。
+
+* **操作路径：** 侧边栏 **文件** > **添加文件**。
+* **支持格式：** `.md`, `.txt`, `.pdf`, `.docx` 等。
+* **状态说明：**
+  * `处理中`：系统正在进行分块和向量化。
+  * `处理完成`：数据已入库，可被检索。
+  * `失败`：文件可能损坏或被加密，请检查后重试。
+
+<Callout type="error">
+**文件隐私警告：** 请确保上传的 PDF 或文档不包含受密码保护的加密措施，否则系统无法读取内容导致索引失败。
+</Callout>
+
+#### B. 网址与网站 (URL & Site)
+
+![](/assets/images/zh/admin/knowledge-base-data-source-2_zh.png)
+
+适用于抓取在线数据。
+
+* **网址 (URL)：** 抓取单个页面的正文内容（如一篇新闻报道）。
+* **网站 (Site)：** 输入根域名，系统会尝试爬取该站点下的相关页面。
+
+#### C. 笔记 (Notes)
+
+![](/assets/images/zh/admin/knowledge-base-data-source-3_zh.png)
+
+适用于快速补充碎片化知识，无需创建文件。
+
+* **操作路径：** 侧边栏 **笔记** > **添加笔记**。
+* **应用场景：** 临时记录的会议纪要、紧急的业务变更通知、内部 QA 问答对。
+* **操作：** 直接在弹出的文本框中粘贴文本或 Markdown 内容并保存。

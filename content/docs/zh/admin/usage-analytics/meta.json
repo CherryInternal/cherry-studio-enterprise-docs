@@ -1,0 +1,11 @@
+{
+  "title": "用量统计",
+  "pages": [
+    "api-call-logs",
+    "core-metrics-dashboard",
+    "dimension-stats-and-comparison",
+    "filters-and-controls",
+    "leaderboard",
+    "trend-and-distribution-visualization"
+  ]
+}

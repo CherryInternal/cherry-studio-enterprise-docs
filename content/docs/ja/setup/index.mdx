@@ -1,0 +1,154 @@
+---
+title: インストールとデプロイ
+description: Cherry Studio Enterprise 導入ガイド - 柔軟なデプロイ方法
+---
+
+import { DynamicLink } from 'fumadocs-core/dynamic-link'
+
+Cherry Studio Enterprise は、企業規模に応じた柔軟な導入方式を提供します。本ガイドでは、適切な導入方法の選択とインストール手順を案内します。
+
+## 🚀 事前準備
+
+### システム要件
+
+#### ハードウェア要件
+
+- **CPU**: 2 コア以上
+- **メモリ**: 4GB RAM（推奨 8GB）
+- **ストレージ**: 20GB の空き容量（データ量に応じて調整）
+- **ネットワーク**: 安定したネットワーク接続
+
+#### ソフトウェア要件
+
+- **OS**: Linux (Ubuntu 20.04+, CentOS 7+)、macOS、Windows
+- **コンテナ環境**: Docker 20.10+（Docker 導入）
+- **Kubernetes**: 1.19+（Helm 導入）
+- **データベース**: PostgreSQL 12+
+
+### 準備チェックリスト
+
+導入前に以下を準備してください：
+
+#### 1. 基本環境
+
+- 導入方式を選択（Docker / Kubernetes）
+- サーバーまたはクラウドインスタンスを用意
+- 必要なランタイムをインストール
+
+#### 2. データベース設定
+
+- PostgreSQL を選択
+- データベース接続情報を準備
+- データベースとユーザーを作成
+
+#### 3. 認証設定（任意）
+
+- SSO を利用するか決定
+- Casdoor 設定情報を準備（必要な場合）
+- 企業認証システムとの連携を設定
+
+#### 4. ネットワーク設定
+
+- サービスのドメイン名を決定
+- SSL 証明書を設定（本番環境）
+- 必要なポートを開放（3670 API、3680 Admin）
+
+## 📦 導入方式の選択
+
+要件に合った導入方式を選んでください：
+
+### ☁️ クラウドアプリのワンクリック導入（推奨）
+
+**利用シーン**：
+
+- 設定不要で素早く導入したい
+- 中小企業の迅速なトライアル
+- 運用に不慣れなユーザー
+
+**メリット**：
+
+- ワンクリック導入で技術的な障壁が不要
+- ネットワークやセキュリティグループを自動設定
+- データベースと管理パネルを含む
+- クラウドリソースの弾力的な拡張
+
+<DynamicLink href="/[lang]/docs/setup/cloud-app">クラウドアプリ導入ガイドを見る →</DynamicLink>
+
+### 🐳 Docker 導入
+
+**利用シーン**：
+
+- 迅速な体験・テスト
+- 中小規模チーム
+- 単一ノード導入
+
+**メリット**：
+
+- 導入が簡単でワンクリック起動
+- 環境分離で保守が容易
+- Docker Compose に対応
+
+<DynamicLink href="/[lang]/docs/setup/docker">Docker 導入ガイドを見る →</DynamicLink>
+
+### ☸️ Kubernetes Helm 導入
+
+**利用シーン**：
+
+- 大規模企業の本番環境
+- 高可用性と自動スケーリングが必要
+- 既存の Kubernetes クラスター
+
+**メリット**：
+
+- 運用の自動化
+- 水平スケーリング
+- 充実したヘルスチェックと障害復旧
+
+<DynamicLink href="/[lang]/docs/setup/helm">Helm 導入ガイドを見る →</DynamicLink>
+
+## 📋 導入手順の概要
+
+### ステップ 1: 導入方式を選択
+
+上記ガイドから最適な方法を選択します。
+
+### ステップ 2: データベースを設定
+
+1. PostgreSQL をインストール
+2. データベースとユーザーを作成
+3. 接続パラメータを設定
+
+<DynamicLink href="/[lang]/docs/advanced/database">データベース設定ガイドを見る →</DynamicLink>
+
+### ステップ 3: アプリケーションを導入
+
+選択した導入方式に応じて手順を実行します：
+
+- Docker: docker-compose で起動
+- Kubernetes: Helm でインストール
+
+### ステップ 4: 認証を設定（任意）
+
+企業 SSO が必要な場合：
+
+1. Casdoor を導入
+2. アプリと組織を設定
+3. Cherry Studio に統合
+
+<DynamicLink href="/[lang]/docs/advanced/sso">SSO 設定ガイドを見る →</DynamicLink>
+
+### ステップ 5: 導入確認
+
+1. API ヘルスチェックにアクセス：`http://your-domain:3670/health`
+2. 管理コンソールにアクセス：`http://your-domain:3680`
+3. 既定の管理者アカウントでログイン
+4. 初期設定を完了
+
+## 次のステップ
+
+導入方法を選び、インストールを開始してください：
+
+- <DynamicLink href="/[lang]/docs/setup/cloud-app">☁️ クラウドアプリ導入（推奨）</DynamicLink> - ワンクリック導入、技術的な障壁なし
+- <DynamicLink href="/[lang]/docs/setup/docker">🐳 Docker 導入</DynamicLink> - Docker で素早く導入
+- <DynamicLink href="/[lang]/docs/setup/helm">☸️ Helm 導入</DynamicLink> - Kubernetes に導入
+- <DynamicLink href="/[lang]/docs/advanced/database">🗄️ データベース設定</DynamicLink> - PostgreSQL を設定

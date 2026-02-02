@@ -1,0 +1,157 @@
+---
+title: クラウドアプリ導入
+description: Tencent Cloud Marketplace で Cherry Studio Enterprise をワンクリック導入
+---
+
+## 🚀 クイックスタート
+
+Cherry Studio Enterprise は Tencent Cloud Marketplace に登場しました。ワンクリック導入に対応し、複雑な設定なしでエンタープライズ AI プラットフォームを素早く体験できます。
+
+::: warning 注意
+現在、クラウドアプリのワンクリック導入は Tencent Cloud のみ対応しています。他のクラウドプロバイダーにも順次対応予定です。
+:::
+
+**Tencent Cloud Marketplace リンク**: [https://app.cloud.tencent.com/detail/SPU_BHFHEJFDEE4965](https://app.cloud.tencent.com/detail/SPU_BHFHEJFDEE4965)
+
+## 📋 導入フロー
+
+### ステップ 1: インストール開始
+
+1. [Tencent Cloud Cherry Studio インストールページ](https://app.cloud.tencent.com/detail/SPU_BHFHEJFDEE4965) にアクセス
+2. Tencent Cloud アカウントでログイン
+3. **インストール** ボタンをクリックしてリソースを選択
+4. 近いリージョンを選んで導入
+
+![インストール開始](/assets/images/zh/cloudappinstall/17579023125922.webp)
+
+### ステップ 2: 導入パラメータの設定
+
+システムがネットワーク環境を自動検出します。適切なネットワーク/セキュリティグループがある場合は次へ進みます。
+
+![アプリ生成](/assets/images/zh/cloudappinstall/17579059506041.webp)
+
+### ステップ 3: 作成完了まで待機
+
+アプリ作成には数分かかります。しばらくお待ちください。
+
+![作成待機](/assets/images/zh/cloudappinstall/17579075417655.webp)
+
+### ステップ 4: アクセス入口を取得
+
+作成完了後、アプリ設定ページからアクセス入口を取得します：
+
+![アプリ設定入口](/assets/images/zh/cloudappinstall/17579075847068.webp)
+
+**管理コンソール入口（パブリック）** をクリックすると、Cherry Studio Enterprise 管理コンソールにアクセスできます。
+
+### ステップ 5: 初回ログイン
+
+アプリ設定ページに表示される **Cherry Studio Enterprise 管理者アカウント** でログインします：
+
+- 初期ユーザー名：アプリ設定ページに表示
+- 初期パスワード：アプリ設定ページに表示
+
+![管理コンソール入口](/assets/images/zh/cloudappinstall/17579076770749.webp)
+
+### ステップ 6: 既定パスワードの変更
+
+**強く推奨**：初回ログイン後すぐに管理者パスワードを変更してください。
+
+![パスワード変更 1](/assets/images/zh/cloudappinstall/17579077250676.webp)
+
+![パスワード変更 2](/assets/images/zh/cloudappinstall/17579077573416.webp)
+
+![パスワード変更 3](/assets/images/zh/cloudappinstall/17579079312441.webp)
+
+## ✅ 導入完了
+
+これで Cherry Studio Enterprise の導入が完了です。以下が可能になります：
+
+- AI プロバイダーとモデルの設定
+- ユーザーとロール権限の作成
+- 知識ベース文書のアップロード
+- AI アシスタント機能の利用
+
+## 🔧 高度な設定の参考
+
+導入中にネットワーク設定の問題が発生した場合や、サーバー管理が必要な場合は以下を参照してください：
+
+### ネットワーク設定
+
+#### 新規 VPC の作成
+
+適切なプライベートネットワークがない場合、以下の手順で作成できます：
+
+![VPC 作成 1](/assets/images/zh/cloudappinstall/17579046919582.webp)
+
+![VPC 作成 2](/assets/images/zh/cloudappinstall/17579058693624.webp)
+
+![VPC 作成 3](/assets/images/zh/cloudappinstall/17579058898409.webp)
+
+#### セキュリティグループ設定
+
+セキュリティグループがない場合は以下を参考にしてください：
+
+- サーバーのリージョンにある **セキュリティ/セキュリティグループ** で設定
+- ネットワーク設定に不慣れな場合はネットワーク担当者へ相談
+
+作成手順：
+
+![セキュリティグループ作成](/assets/images/zh/cloudappinstall/17579025304834.webp)
+
+テンプレート参考：
+
+![テンプレート参考](/assets/images/zh/cloudappinstall/17579045676416.webp)
+
+**重要**：以下のポートを追加で開放し、0.0.0.0 からのアクセスを許可してください：
+
+- 36700（API サービスのポート）
+- 36800（管理コンソールのポート）
+- 32811（システム管理ポート）
+
+テンプレートから作成後、編集画面でポート設定を行います：
+
+![ポート設定 1](/assets/images/zh/cloudappinstall/17579080497271.webp)
+
+![ポート設定 2](/assets/images/zh/cloudappinstall/17579080735339.webp)
+
+![ポート設定 3](/assets/images/zh/cloudappinstall/17579080886847.webp)
+
+### 1Panel サーバー管理（任意）
+
+システムには 1Panel 管理画面が用意されており、データベースやサーバー管理ができます：
+
+![1panel 管理画面](/assets/images/zh/cloudappinstall/17579081724093.webp)
+
+1Panel のアクセス入口：
+
+![1panel アクセス入口](/assets/images/zh/cloudappinstall/17579081125820.webp)
+
+**強く推奨**：1Panel の初期パスワードを変更してください。
+
+![1panel パスワード変更](/assets/images/zh/cloudappinstall/17579082746447.webp)
+
+## ❓ よくある質問
+
+### Q: 可用区を選んだときにマシン一覧が表示されません。
+
+A: Tencent Cloud サポートに問い合わせ、利用可能なゾーンを確認してください。例えば広州 6/7 にリソースがあり、2 ゾーンにはない場合があります。利用可能なゾーンで新しい VPC とサブネットを作成してください。
+
+### Q: 導入後にアクセスできません。
+
+A: 以下を確認してください：
+
+1. セキュリティグループのポート設定が正しいか（36700、36800、32811）
+2. ネットワーク接続が正常か
+3. 正しいアクセスアドレスとポートを使用しているか
+
+### Q: 管理者パスワードを忘れました。
+
+A: 1Panel でリセットするか、技術サポートにお問い合わせください。
+
+## 📞 技術サポート
+
+技術サポートが必要な場合は、以下までご連絡ください：
+
+- 公式サイト：[Cherry Studio](https://cherry-ai.com)
+- メール：support@cherry-ai.com

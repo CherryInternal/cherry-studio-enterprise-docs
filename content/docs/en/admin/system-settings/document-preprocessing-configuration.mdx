@@ -1,0 +1,34 @@
+---
+title: "Document Preprocessing Configuration"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 4. Document Preprocessing Configuration
+
+This module enhances **Knowledge Base** parsing. Default text parsers may fail on complex PDF tables, formulas, or scanned images. Integrating OCR services significantly improves recognition.
+
+#### Why configure this?
+
+* **Without configuration**: Only the PDF text layer is extracted. Scanned/image PDFs cannot be read.
+* **With configuration**: The system calls external OCR and layout analysis APIs, preserving tables and formulas.
+
+#### Configuration Steps
+
+1. Go to **System Settings** > **Document Preprocessing**.
+2. Choose a provider (`MinerU` or `Doc2x`).
+3. Enter API information.
+
+![](/assets/images/zh/admin/system-settings-document-preprocessing_zh.png)
+
+#### Parameter Details
+
+| Parameter | Description | Example |
+| ------------ | -------------- | ------------------------------------ |
+| **Preprocessing provider** | Backend engine for parsing | `MinerU` / `Doc2x` |
+| **API Host** | Provider endpoint | MinerU default: `https://minerU.net` (example) |
+| **API Key** | Authentication key | `sk-...` |
+
+<Callout type="info">
+**Use case:** After configuration, no extra steps are required. When you upload PDFs to the knowledge base, the system will apply these settings automatically.
+</Callout>

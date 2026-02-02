@@ -1,0 +1,26 @@
+---
+title: "Maintenance and Tuning"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 3. Maintenance and Tuning
+
+#### Modify Configuration
+
+Click **Settings** in the knowledge base list to edit name, description, and rerank model strategy.
+
+![](/assets/images/zh/admin/knowledge-base-maintenance-tuning_zh.png)
+
+<Callout type="info">
+**When to change chunk size?** If AI responses often quote partial content with missing context, the **chunk size** may be too small. If responses include lots of irrelevant text, the **chunk size** may be too large. Changing this usually requires re-uploading/processing documents.
+</Callout>
+
+#### Validate Retrieval Quality
+
+To ensure the knowledge base is configured correctly:
+
+1. Go to **Assistant Management** and create a test assistant.
+2. In **Knowledge Base Settings**, associate the newly created knowledge base.
+3. In the preview panel or client, ask a question that exists only in this knowledge base (e.g., "What is our late-arrival deduction policy?").
+4. **Success indicator:** The assistant answers correctly and hovering over the answer shows a **citation** pointing to your document.

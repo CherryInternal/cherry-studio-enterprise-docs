@@ -1,0 +1,33 @@
+---
+title: "FAQ"
+---
+
+# 3. FAQ
+
+## ❓ Common Questions and Best Practices
+
+### About the "Default Group"
+
+A **Default Group** is created automatically during system initialization.
+
+* **Auto assignment:** New users registered via SSO, invite links, or bulk import will be assigned to the default group if no group is specified.
+* **Best practice:**
+
+    <div data-gb-custom-block data-tag="hint" data-style="info" class="hint hint-info"><p>Set the default group's permissions to the <strong>minimum viable set</strong> (e.g., only free/low-cost models and basic assistants). This prevents new users from generating high API costs before being assigned to an official department.</p></div>
+
+### Troubleshooting
+
+#### Q: I selected models in the group, but they are not visible in the client.
+
+**A:** Check the following:
+
+1. **Global switch:** Go to **Model Management** and confirm the model is **Enabled**. If the model is globally disabled, group permissions will not apply.
+2. **Sync delay:** Ensure the client has synced settings. Ask users to click **Settings > Check for updates** or restart the client.
+
+#### Q: Can a user belong to multiple groups?
+
+**A:** **No.** In Cherry Studio, a user can belong to only one group at a time. If you need combined permissions (e.g., both "R&D" and "Management"), create a new group that includes the combined permissions (e.g., "R&D Director Group").
+
+#### Q: Why can't I find a specific model in the list?
+
+**A:** The model list in Group Management comes from **Model Management**. If a model is missing, it is not registered yet. Go to **Model Management** > **Add Model** and ensure the Model ID is added and saved.

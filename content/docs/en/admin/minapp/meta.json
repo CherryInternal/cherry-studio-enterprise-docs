@@ -1,0 +1,9 @@
+{
+  "title": "Mini Program Management",
+  "pages": [
+    "add-custom-mini-program",
+    "edit-and-maintain",
+    "troubleshooting",
+    "ui-overview-and-system-presets"
+  ]
+}

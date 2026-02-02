@@ -1,0 +1,157 @@
+---
+title: Cloud App Deployment
+description: One-click deployment of Cherry Studio Enterprise in Tencent Cloud Marketplace
+---
+
+## 🚀 Quick Start
+
+Cherry Studio Enterprise is now available in the Tencent Cloud Marketplace with one-click deployment, allowing you to experience the full enterprise AI platform without complex configuration.
+
+::: warning Note
+Currently, one-click cloud app deployment is only supported on Tencent Cloud. We are actively expanding support for other cloud providers.
+:::
+
+**Tencent Cloud Marketplace link**: [https://app.cloud.tencent.com/detail/SPU_BHFHEJFDEE4965](https://app.cloud.tencent.com/detail/SPU_BHFHEJFDEE4965)
+
+## 📋 Deployment Flow
+
+### Step 1: Start Installation
+
+1. Visit the [Tencent Cloud Cherry Studio installation page](https://app.cloud.tencent.com/detail/SPU_BHFHEJFDEE4965)
+2. Sign in with your Tencent Cloud account
+3. Click **Install** to select resources
+4. Choose the nearest region for deployment
+
+![Start installation](/assets/images/zh/cloudappinstall/17579023125922.webp)
+
+### Step 2: Configure Deployment Parameters
+
+The system will automatically detect your network environment. If you already have suitable network and security group settings, proceed to the next step.
+
+![Generate app](/assets/images/zh/cloudappinstall/17579059506041.webp)
+
+### Step 3: Wait for Creation
+
+App creation takes a few minutes. Please wait.
+
+![Creation in progress](/assets/images/zh/cloudappinstall/17579075417655.webp)
+
+### Step 4: Get the Access Entry
+
+After creation, open the app settings page to get the access entry:
+
+![App settings entry](/assets/images/zh/cloudappinstall/17579075847068.webp)
+
+Click **Admin Console Entry (Public)** to access the Cherry Studio Enterprise admin console.
+
+### Step 5: First Login
+
+Use the **Cherry Studio Enterprise admin account** shown on the app settings page:
+
+- Initial username: see the app settings page
+- Initial password: see the app settings page
+
+![Admin console entry](/assets/images/zh/cloudappinstall/17579076770749.webp)
+
+### Step 6: Change the Default Password
+
+**Strongly recommended** to change the default admin password after first login:
+
+![Change password 1](/assets/images/zh/cloudappinstall/17579077250676.webp)
+
+![Change password 2](/assets/images/zh/cloudappinstall/17579077573416.webp)
+
+![Change password 3](/assets/images/zh/cloudappinstall/17579079312441.webp)
+
+## ✅ Deployment Complete
+
+Cherry Studio Enterprise has been successfully deployed. You can now:
+
+- Configure AI providers and models
+- Create users and role permissions
+- Upload knowledge base documents
+- Start using AI assistants
+
+## 🔧 Advanced Configuration Reference
+
+If you encounter network configuration issues or need server management, see the notes below:
+
+### Network Configuration
+
+#### Create a New VPC
+
+If you do not have a suitable private network, follow these steps to create one:
+
+![Create VPC 1](/assets/images/zh/cloudappinstall/17579046919582.webp)
+
+![Create VPC 2](/assets/images/zh/cloudappinstall/17579058693624.webp)
+
+![Create VPC 3](/assets/images/zh/cloudappinstall/17579058898409.webp)
+
+#### Security Group Configuration
+
+If you do not have a security group, you can use the following setup:
+
+- Configure security groups in **Security/Security Groups** for your server region
+- If you are unfamiliar with network configuration, ask a network engineer for assistance
+
+Creation process:
+
+![Create security group](/assets/images/zh/cloudappinstall/17579025304834.webp)
+
+Template reference:
+
+![Template reference](/assets/images/zh/cloudappinstall/17579045676416.webp)
+
+**Important**: Open the following ports and allow access from 0.0.0.0:
+
+- 36700 (API service port)
+- 36800 (Admin console port)
+- 32811 (System management port)
+
+After creating from the template, open the edit page to configure ports:
+
+![Port configuration 1](/assets/images/zh/cloudappinstall/17579080497271.webp)
+
+![Port configuration 2](/assets/images/zh/cloudappinstall/17579080735339.webp)
+
+![Port configuration 3](/assets/images/zh/cloudappinstall/17579080886847.webp)
+
+### 1Panel Server Management (Optional)
+
+The system provides a 1Panel console for database and server management:
+
+![1panel admin page](/assets/images/zh/cloudappinstall/17579081724093.webp)
+
+1Panel access entry:
+
+![1panel access entry](/assets/images/zh/cloudappinstall/17579081125820.webp)
+
+**Strongly recommended**: change the default 1Panel password
+
+![1panel password change](/assets/images/zh/cloudappinstall/17579082746447.webp)
+
+## ❓ FAQ
+
+### Q: What if there is no machine list when selecting an availability zone?
+
+A: Contact Tencent Cloud support to ask which zones have available resources. For example, Guangzhou 6/7 may have capacity while zone 2 may not. You can create a new VPC and subnet in a zone with available machines.
+
+### Q: What if I cannot access the service after deployment?
+
+A: Check the following:
+
+1. Make sure the security group ports are correctly configured (36700, 36800, 32811)
+2. Check network connectivity
+3. Confirm you are using the correct access address and port
+
+### Q: What if I forget the admin password?
+
+A: You can reset it via 1Panel or contact technical support for help.
+
+## 📞 Technical Support
+
+If you need technical support, contact us:
+
+- Website: [Cherry Studio](https://cherry-ai.com)
+- Email: support@cherry-ai.com

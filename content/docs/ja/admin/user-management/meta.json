@@ -1,0 +1,9 @@
+{
+  "title": "ユーザー管理",
+  "pages": [
+    "overview",
+    "add-new-user",
+    "edit-and-maintain",
+    "api-key-management"
+  ]
+}

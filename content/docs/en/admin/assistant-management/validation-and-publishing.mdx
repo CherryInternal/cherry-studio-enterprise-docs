@@ -1,0 +1,18 @@
+---
+title: "Validation and Publishing"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 4. Validation and Publishing
+
+Before distributing assistants to everyone, perform the following validation steps:
+
+1. **Functional test:** In admin view, open a chat and select the assistant.
+2. **RAG validation:** Ask a question that only exists in the knowledge base and confirm the assistant cites documents.
+3. **Tool validation:** If MCP is enabled (e.g., web access), try: `Please search for the latest Cherry Studio version` and verify tool invocation.
+4. **Authorize distribution:** When verified, go to **[Group Management]** and grant the assistant to target user groups.
+
+<Callout type="info">
+**Best practice:** Create a "Beta Test Group" and distribute complex assistants (especially with MCP tools) to that group first. Roll out to everyone after stabilization.
+</Callout>

@@ -1,0 +1,38 @@
+---
+title: "User Management"
+description: >-
+  User Management is a core module of the Cherry Studio Enterprise admin console, helping administrators efficiently
+  maintain the org structure, assign resource permissions, and manage API access credentials. It centralizes the user
+  lifecycle from account creation to API key distribution and revocation.
+icon: Users
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# User Management
+
+**User Management** is the command center of the Cherry Studio Enterprise admin console. As a system administrator, you configure and govern the digital identities of enterprise members here.
+
+This module is not just CRUD for accounts, but the foundation of **resource allocation** and **security control**. By associating users with specific **groups**, you can precisely control which AI models (Model Providers) and assistant resources different departments or roles can access, effectively managing compute costs and data permissions.
+
+#### Core Capabilities
+
+In this module, you can perform the following tasks:
+
+* **Full lifecycle management**: Create accounts, update information (email, password, phone), and deactivate/delete accounts.
+* **Fine-grained permission assignment**: Bind users to specific **Groups** so you can configure policies like "R&D uses Claude, Marketing uses GPT-4".
+* **Security blocking**: Toggle **Active/Inactive** status to instantly block login and API access for offboarded or anomalous accounts.
+* **API gateway credentials**: Generate dedicated **API Keys** for developers or automation scripts to access model capabilities without the client UI.
+* **Multi-dimensional auditing**: Provide a list view with search by username and filters by status or group to quickly locate users.
+
+#### Use Cases
+
+<table><thead><tr><th width="107.89453125">Scenario</th><th>Guidance</th></tr></thead><tbody><tr><td><strong>New employee onboarding</strong></td><td>Create a new account and assign the appropriate department group.</td></tr><tr><td><strong>Role transfer</strong></td><td>Edit user info and change group membership to update model access.</td></tr><tr><td><strong>Dev testing</strong></td><td>Generate a dedicated API key for developers to test backend model endpoints.</td></tr><tr><td><strong>Account freeze</strong></td><td>Disable the Active status immediately when abnormal behavior or offboarding occurs.</td></tr></tbody></table>
+
+#### Quick Start
+
+In the admin console left navigation, choose **User Management** to enter the main page.
+
+<Callout type="warn">
+**Important:** A user's **permission scope** depends entirely on their **group**. Before adding users, plan your org structure and model authorization strategy in **Group Management**.
+</Callout>
