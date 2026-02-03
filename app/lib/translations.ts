@@ -45,6 +45,12 @@ export const translations = {
     nav: {
       docs: 'Documentation'
     },
+    imageSteps: {
+      step: 'Step',
+      prev: 'Previous',
+      next: 'Next',
+      goToStep: 'Go to step'
+    },
     error: {
       oops: 'Oops!',
       unexpected: 'An unexpected error occurred.',
@@ -93,6 +99,12 @@ export const translations = {
     },
     nav: {
       docs: '文档'
+    },
+    imageSteps: {
+      step: '步骤',
+      prev: '上一步',
+      next: '下一步',
+      goToStep: '跳转到步骤'
     },
     error: {
       oops: '出错了!',
@@ -147,6 +159,12 @@ export const translations = {
     },
     nav: {
       docs: 'ドキュメント'
+    },
+    imageSteps: {
+      step: 'ステップ',
+      prev: '前へ',
+      next: '次へ',
+      goToStep: 'ステップに移動'
     },
     error: {
       oops: 'エラー!',

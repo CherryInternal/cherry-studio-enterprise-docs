@@ -13,11 +13,20 @@ export default {
 
     for (const path of getStaticPaths()) {
       paths.push(path)
+      // 同时生成带尾部斜线的路径
+      if (!path.endsWith('/')) {
+        paths.push(path + '/')
+      }
     }
 
     for (const lang of locales) {
       for await (const entry of glob('**/*.mdx', { cwd: `content/docs/${lang}` })) {
-        paths.push(getUrl(getSlugs(entry), lang))
+        const url = getUrl(getSlugs(entry), lang)
+        paths.push(url)
+        // 同时生成带尾部斜线的路径
+        if (!url.endsWith('/')) {
+          paths.push(url + '/')
+        }
       }
     }
 

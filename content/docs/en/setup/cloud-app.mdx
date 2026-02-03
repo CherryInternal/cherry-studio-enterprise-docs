@@ -3,6 +3,9 @@ title: Cloud App Deployment
 description: One-click deployment of Cherry Studio Enterprise in Tencent Cloud Marketplace
 ---
 
+import {DynamicLink} from "fumadocs-core/dynamic-link";
+import {Callout} from "fumadocs-ui/components/callout";
+
 ## 🚀 Quick Start
 
 Cherry Studio Enterprise is now available in the Tencent Cloud Marketplace with one-click deployment, allowing you to experience the full enterprise AI platform without complex configuration.
@@ -21,6 +24,10 @@ Currently, one-click cloud app deployment is only supported on Tencent Cloud. We
 2. Sign in with your Tencent Cloud account
 3. Click **Install** to select resources
 4. Choose the nearest region for deployment
+
+<Callout type="info">
+    No servers available in the selected region? <a href="#no-machine">See solution</a>
+</Callout>
 
 ![Start installation](/assets/images/zh/cloudappinstall/17579023125922.webp)
 
@@ -43,6 +50,10 @@ After creation, open the app settings page to get the access entry:
 ![App settings entry](/assets/images/zh/cloudappinstall/17579075847068.webp)
 
 Click **Admin Console Entry (Public)** to access the Cherry Studio Enterprise admin console.
+
+<Callout type="info">
+    Can't access the admin console? The security group may not allow the request. <a href="#set-acl">See solution</a>
+</Callout>
 
 ### Step 5: First Login
 
@@ -72,13 +83,17 @@ Cherry Studio Enterprise has been successfully deployed. You can now:
 - Upload knowledge base documents
 - Start using AI assistants
 
+<Callout type="info">
+    <DynamicLink href="/[lang]/docs/quickstart">Quickstart docs →</DynamicLink>
+</Callout>
+
 ## 🔧 Advanced Configuration Reference
 
 If you encounter network configuration issues or need server management, see the notes below:
 
 ### Network Configuration
 
-#### Create a New VPC
+#### Create a New VPC [#create-vpc]
 
 If you do not have a suitable private network, follow these steps to create one:
 
@@ -88,7 +103,7 @@ If you do not have a suitable private network, follow these steps to create one:
 
 ![Create VPC 3](/assets/images/zh/cloudappinstall/17579058898409.webp)
 
-#### Security Group Configuration
+#### Security Group Configuration [#set-acl]
 
 If you do not have a security group, you can use the following setup:
 
@@ -103,11 +118,13 @@ Template reference:
 
 ![Template reference](/assets/images/zh/cloudappinstall/17579045676416.webp)
 
-**Important**: Open the following ports and allow access from 0.0.0.0:
+<Callout type="warning">
+    **Important**: Open the following ports and allow access from 0.0.0.0:
 
-- 36700 (API service port)
-- 36800 (Admin console port)
-- 32811 (System management port)
+    - 36700 (API service port)
+    - 36800 (Admin console port)
+    - 32811 (System management port)
+</Callout>
 
 After creating from the template, open the edit page to configure ports:
 
@@ -116,6 +133,10 @@ After creating from the template, open the edit page to configure ports:
 ![Port configuration 2](/assets/images/zh/cloudappinstall/17579080735339.webp)
 
 ![Port configuration 3](/assets/images/zh/cloudappinstall/17579080886847.webp)
+
+<Callout type="info">
+    <a href="#bind-acl">How to bind a security group to the app</a>
+</Callout>
 
 ### 1Panel Server Management (Optional)
 
@@ -133,9 +154,13 @@ The system provides a 1Panel console for database and server management:
 
 ## ❓ FAQ
 
-### Q: What if there is no machine list when selecting an availability zone?
+### Q: What if there is no machine list when selecting an availability zone? [#no-machine]
 
 A: Contact Tencent Cloud support to ask which zones have available resources. For example, Guangzhou 6/7 may have capacity while zone 2 may not. You can create a new VPC and subnet in a zone with available machines.
+
+<Callout type="info">
+    <a href="#create-vpc">How to create a VPC and subnet</a>
+</Callout>
 
 ### Q: What if I cannot access the service after deployment?
 
@@ -144,6 +169,54 @@ A: Check the following:
 1. Make sure the security group ports are correctly configured (36700, 36800, 32811)
 2. Check network connectivity
 3. Confirm you are using the correct access address and port
+
+<Callout type="info">
+    <a href="#set-acl">How to configure the security group</a>
+</Callout>
+
+### Q: How do I find the security group settings page? [#find-acl]
+
+<ImageSteps
+  basePath="cloudappinstall"
+  steps={[
+    { title: "Switch to \"Resource View\" in the console", image: "find-acl-1.png" },
+    { title: "Click \"VPC\" to open the network console", image: "find-acl-2.png" },
+    { title: "In the left menu, expand \"Security\" and click \"Security Groups\"", image: "find-acl-3.png" },
+    { title: "Click \"Create\" to create a security group", image: "find-acl-4.png" }
+  ]}
+/>
+
+<Callout type="info">
+    <a href="#set-acl">How to configure the security group</a>
+</Callout>
+<Callout type="info">
+    <a href="#bind-acl">How to bind a security group to the app</a>
+</Callout>
+
+### Q: What if I can't find the app after deployment? [#find-app]
+
+<ImageSteps
+  basePath="cloudappinstall"
+  steps={[
+    { title: "Go to the Tencent Cloud website and click \"Console\"", image: "find-app-1.png" },
+    { title: "In the console, click the \"Application View\" tab", image: "find-app-2.png" },
+    { title: "Find the Cherry Studio Enterprise app card and open it", image: "find-app-3.png" },
+    { title: "Click \"Open App\" to enter the Cherry Studio Enterprise admin console", image: "find-app-4.png" }
+  ]}
+/>
+
+### Q: How do I bind a security group to the app? [#bind-acl]
+
+<ImageSteps
+  basePath="cloudappinstall"
+  steps={[
+    { title: "On the app details page, click the \"App Resources\" tab", image: "bind-acl-1.png" },
+    { title: "Find the \"Cloud Server Instance\" resource and open it", image: "bind-acl-2.png" },
+    { title: "On the instance details page, click the \"Security Groups\" tab", image: "bind-acl-3.png" },
+    { title: "Click \"Configure\"", image: "bind-acl-4.png" },
+    { title: "Select the security group to bind and click \"OK\"", image: "bind-acl-5.png" }
+  ]}
+/>
 
 ### Q: What if I forget the admin password?
 

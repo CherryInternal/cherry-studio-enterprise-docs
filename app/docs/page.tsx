@@ -13,6 +13,7 @@ import { baseOptions } from '@/lib/layout.shared'
 import { getSource } from '@/lib/source'
 
 import type { Route } from './+types/page'
+import {ImageSteps} from "@/components/image-steps";
 
 export async function loader({ params }: Route.LoaderArgs) {
   const source = await getSource()
@@ -36,7 +37,7 @@ const renderer = toClientRenderer(docs.doc, ({ toc, default: Mdx, frontmatter })
       <DocsTitle>{frontmatter.title}</DocsTitle>
       <DocsDescription>{frontmatter.description}</DocsDescription>
       <DocsBody>
-        <Mdx components={{ ...defaultMdxComponents, Card, Cards, ExperienceCard, ExperienceCards }} />
+        <Mdx components={{ ...defaultMdxComponents, Card, Cards, ExperienceCard, ExperienceCards, ImageSteps }} />
       </DocsBody>
     </DocsPage>
   )
