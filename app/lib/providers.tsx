@@ -39,6 +39,17 @@ export function Providers({ children }: { children: React.ReactNode }) {
     setIsReady(true)
   }, [location.pathname, currentLocale, navigate])
 
+  // Handle hash scroll (ScrollRestoration conflicts with native hash scrolling)
+  useEffect(() => {
+    if (location.hash) {
+      setTimeout(() => {
+        const id = decodeURIComponent(location.hash.slice(1))
+        const el = document.getElementById(id)
+        el?.scrollIntoView({ behavior: 'smooth' })
+      }, 100)
+    }
+  }, [location.hash, location.pathname])
+
   if (!isReady) {
     return null
   }
