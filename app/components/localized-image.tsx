@@ -55,9 +55,9 @@ export function LocalizedImage({ src, alt, className, width, height }: Localized
  * Shared image component (no locale prefix)
  *
  * Usage:
- * <SharedImage src="logo.png" alt="Logo" />
+ * <SharedImage src="logo.webp" alt="Logo" />
  *
- * Loads from: /assets/images/shared/logo.png
+ * Loads from: /assets/images/shared/logo.webp
  */
 export function SharedImage({ src, alt, className, width, height }: LocalizedImageProps) {
   return (

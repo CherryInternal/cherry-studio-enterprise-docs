@@ -12,7 +12,7 @@ After creation, click **Edit** to enter the detailed configuration page. The lef
 
 Manage the assistant's persona and permissions here.
 
-![](/assets/images/zh/admin/assistant-management-advanced-config-1_zh.png)
+![](/assets/images/zh/admin/assistant-management-advanced-config-1_zh.webp)
 
 * **Prompt editor:** Supports Markdown; update system instructions anytime.
 * **Prompt visibility:**
@@ -20,15 +20,15 @@ Manage the assistant's persona and permissions here.
   * **On:** End users can view the system prompt in chat details.
   * **Off:** Only admins can view it, protecting core prompt assets.
 
-  ![](/assets/images/zh/admin/assistant-management-advanced-config-2_zh.png)
+  ![](/assets/images/zh/admin/assistant-management-advanced-config-2_zh.webp)
 
 #### 3.2 Model Settings
 
 Fine-tune reasoning behavior and resource usage.
 
-![](/assets/images/zh/admin/assistant-management-advanced-config-3_zh.png)
+![](/assets/images/zh/admin/assistant-management-advanced-config-3_zh.webp)
 
-![](/assets/images/zh/admin/assistant-management-advanced-config-4_zh.png)
+![](/assets/images/zh/admin/assistant-management-advanced-config-4_zh.webp)
 
 <table><thead><tr><th>Setting</th><th width="344.203125">Description</th><th>Recommendation</th></tr></thead><tbody><tr><td><strong>Model</strong></td><td>Switch base model at any time (e.g., GPT-4 to DeepSeek).</td><td>Choose based on task complexity</td></tr><tr><td><strong>Temperature</strong></td><td>Controls randomness. <code>0</code> is deterministic (code/logic), <code>1+</code> is more creative.</td><td>Logic: 0.1 / Creative: 0.8</td></tr><tr><td><strong>Context</strong></td><td>Number of historical turns to include. Larger means more memory, higher token cost.</td><td>Default 5-10</td></tr><tr><td><strong>Top P</strong></td><td>Nucleus sampling parameter, controls diversity.</td><td>Keep default or adjust with temperature</td></tr><tr><td><strong>Max tokens</strong></td><td>Max response length to prevent overlong outputs.</td><td>Default or 4096</td></tr><tr><td><strong>Stream</strong></td><td>Enable streaming typing effect. Strongly recommended to reduce perceived latency.</td><td>✅ On</td></tr><tr><td><strong>MCP call mode</strong></td><td>How the model triggers tools. Recommend <code>Function</code> for accuracy.</td><td>Function calling</td></tr></tbody></table>
 
@@ -46,13 +46,13 @@ Attach an "external brain". Here you can select datasets indexed in **[Knowledge
 * **Playwright:** Allows web access to read pages.
 * **Filesystem:** Allows reading/writing specific server directories.
 
-![](/assets/images/zh/admin/assistant-management-advanced-config-5_zh.png)
+![](/assets/images/zh/admin/assistant-management-advanced-config-5_zh.webp)
 
 #### 3.4 MCP Servers
 
 This module is the assistant's "toolbox". By enabling MCP (Model Context Protocol) servers, you can grant assistants real-world capabilities (web search, chart generation, file IO, etc.), evolving them from "talkers" to "doers".
 
-![](/assets/images/zh/admin/assistant-management-advanced-config-6_zh.png)
+![](/assets/images/zh/admin/assistant-management-advanced-config-6_zh.webp)
 
 This page lists all MCP services added in **Global Configuration**. Admins can toggle them on/off per assistant.
 
