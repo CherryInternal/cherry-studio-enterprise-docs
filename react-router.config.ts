@@ -15,7 +15,7 @@ export default {
       paths.push(path)
       // 同时生成带尾部斜线的路径
       if (!path.endsWith('/')) {
-        paths.push(path + '/')
+        paths.push(`${path}/`)
       }
     }
 
@@ -25,7 +25,7 @@ export default {
         paths.push(url)
         // 同时生成带尾部斜线的路径
         if (!url.endsWith('/')) {
-          paths.push(url + '/')
+          paths.push(`${url}/`)
         }
       }
     }
