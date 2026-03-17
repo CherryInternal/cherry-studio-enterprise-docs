@@ -4,6 +4,7 @@
     "overview",
     "add-new-user",
     "edit-and-maintain",
-    "api-key-management"
+    "api-key-management",
+    "external-app-access"
   ]
 }

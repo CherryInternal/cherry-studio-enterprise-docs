@@ -1,0 +1,183 @@
+---
+title: "外部アプリ接続（Express モデル）"
+description: Cherry Studio Enterprise API を使って、外部アプリから Enterprise Express のクローズドモデルとオープンソースモデルを呼び出す方法を説明します。
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 5. 外部アプリ接続（Express モデル）
+
+このガイドは、外部アプリ、IDE プラグイン、自動化スクリプト、または自社サービスから Cherry Studio Enterprise **Express** モデルを直接呼び出したい開発者向けです。
+
+## 前提条件
+
+開始前に、以下を確認してください：
+
+1. 管理者が対象ユーザーに **API Key** を作成し、有効化していること
+2. 対象モデルが **Express クローズドモデル** または **Express オープンソースモデル** で有効化されていること
+3. 現在のユーザーが所属するグループに、そのモデルへのアクセス権が付与されていること
+4. 企業版 API アドレスを取得済みであること。例：`https://api.enterprise.cherry-ai.com`
+
+関連ドキュメント：
+
+- [API Key 管理](/ja/admin/user-management/api-key-management)
+- [プロバイダー管理（Express/托管）](/ja/admin/service-provider/provider-management-express-hosted)
+
+## 必須設定
+
+OpenAI プロトコル対応の多くの外部アプリでは、次の 3 つの設定だけで利用できます：
+
+| 項目 | 設定値 | 説明 |
+| --- | --- | --- |
+| Base URL / サーバーアドレス | 企業版 API アドレス | 例：`https://api.enterprise.cherry-ai.com` |
+| API Key | ユーザー自身の API Key | 通常は `sk-` で始まる |
+| Model | `model-id@provider_id` | Express モデルはプロバイダー接尾辞が必須 |
+
+<Callout type="info">
+**Base URL の補足：**
+
+- 外部アプリが自動で `/v1/chat/completions` を付与する場合は、通常 `https://api.enterprise.cherry-ai.com` のようなルート URL を入力します
+- OpenAI 公式 SDK を使う場合は、`baseURL` を `https://api.enterprise.cherry-ai.com/v1` に設定してください
+</Callout>
+
+## モデル命名ルール
+
+外部アプリから Express モデルを呼び出す場合、`model` フィールドは `model-id@provider_id` の形式で指定する必要があります。
+
+### クローズドモデル
+
+形式：
+
+```text
+model-name@x-express-internal
+```
+
+例：
+
+```text
+anthropic/claude-sonnet-4.5@x-express-internal
+```
+
+### オープンソースモデル
+
+形式：
+
+```text
+model-name@x-express-opensource
+```
+
+例：
+
+```text
+your-model@x-express-opensource
+```
+
+### どの接尾辞を使えばよいですか？
+
+- 管理画面の **Express クローズドモデル** タブにあるモデルなら `@x-express-internal`
+- **Express オープンソースモデル** タブにあるモデルなら `@x-express-opensource`
+
+<Callout type="warn">
+**注意：** UI 上の表示名ではなく、実際の **Model ID** を使用してください。また、`@x-express-internal` または `@x-express-opensource` を必ず付けてください。付いていない場合、API は `Provider is required` を返します。
+</Callout>
+
+## リクエスト例
+
+### cURL
+
+```bash
+curl https://api.enterprise.cherry-ai.com/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer sk-your-api-key" \
+  -d '{
+    "model": "anthropic/claude-sonnet-4.5@x-express-internal",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Cherry Studio Enterprise Express の役割を3文で紹介してください。"
+      }
+    ],
+    "stream": false
+  }'
+```
+
+### Node.js（OpenAI SDK）
+
+```ts
+import OpenAI from 'openai'
+
+const client = new OpenAI({
+  apiKey: process.env.CHERRY_API_KEY,
+  baseURL: 'https://api.enterprise.cherry-ai.com/v1'
+})
+
+const completion = await client.chat.completions.create({
+  model: 'anthropic/claude-sonnet-4.5@x-express-internal',
+  messages: [{ role: 'user', content: 'こんにちは。自己紹介をお願いします。' }]
+})
+
+console.log(completion.choices[0]?.message?.content)
+```
+
+### Python（OpenAI SDK）
+
+```python
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="sk-your-api-key",
+    base_url="https://api.enterprise.cherry-ai.com/v1",
+)
+
+resp = client.chat.completions.create(
+    model="anthropic/claude-sonnet-4.5@x-express-internal",
+    messages=[{"role": "user", "content": "こんにちは。自己紹介をお願いします。"}],
+)
+
+print(resp.choices[0].message.content)
+```
+
+## 外部アプリでの推奨設定
+
+チャットクライアント、IDE プラグイン、その他のサードパーティアプリでは、通常次の設定で利用できます：
+
+| 項目 | 推奨値 |
+| --- | --- |
+| Provider Type | `OpenAI Compatible` / `OpenAI` |
+| Base URL | `https://api.enterprise.cherry-ai.com` |
+| API Key | ユーザー自身の `sk-...` |
+| Model | `anthropic/claude-sonnet-4.5@x-express-internal` |
+
+<Callout type="info">
+**互換性について：** この接続方法は、カスタムモデル名を手動で入力できる外部アプリで最も使いやすいです。標準の自動モデル一覧取得に強く依存するアプリでは、モデル名を手動入力する必要がある場合があります。
+</Callout>
+
+## よくある質問
+
+### 1. `Provider is required` と表示されるのはなぜですか？
+
+通常、`model` にプロバイダー接尾辞が付いていないことが原因です。次の形式になっているか確認してください：
+
+```text
+anthropic/claude-sonnet-4.5@x-express-internal
+```
+
+### 2. `401 Unauthorized` または `Key Expired` と表示されるのはなぜですか？
+
+次を確認してください：
+
+1. API Key が正しいか
+2. API Key の有効期限が切れていないか
+3. API Key が管理者によって無効化されていないか
+
+### 3. モデルが存在しない、またはアクセス権がないと表示されるのはなぜですか？
+
+次を確認してください：
+
+1. 対象モデルが Express モデル一覧で有効化されているか
+2. 現在のユーザーのグループにそのモデルの利用権限があるか
+3. モデル接尾辞が正しい Express カテゴリに対応しているか
+
+### 4. `Balance Insufficient` と表示されるのはなぜですか？
+
+通常、企業 Express 残高が不足しているか、そのモデルにクォータ制限があることを意味します。管理者に **プロバイダー管理 > Express** で残高とモデル状態を確認してもらってください。
