@@ -1,0 +1,123 @@
+---
+title: 备份与恢复
+description: Cherry Studio Enterprise 数据备份与恢复指南
+---
+
+本文档介绍如何备份和恢复 Cherry Studio Enterprise 的数据，包括 PostgreSQL 数据库和应用数据目录。
+
+## Docker 部署备份
+
+### PostgreSQL 数据库备份
+
+```bash
+# 使用 docker-compose 备份
+docker-compose exec postgres \
+  pg_dump -U cherry-studio-enterprise cherry-studio-enterprise > backup.sql
+```
+
+### 应用数据目录备份
+
+```bash
+# 停止容器
+docker stop cherry-studio-enterprise
+
+# 备份数据目录
+tar -czf cherry-backup-$(date +%Y%m%d).tar.gz ./data
+
+# 重启容器
+docker start cherry-studio-enterprise
+```
+
+### PostgreSQL 数据恢复
+
+```bash
+# 使用 docker-compose 恢复
+docker-compose exec -T postgres \
+  psql -U cherry-studio-enterprise cherry-studio-enterprise < backup.sql
+```
+
+## Kubernetes (Helm) 部署备份
+
+### PostgreSQL 数据库备份
+
+**方法一：使用 pg_dump（推荐）**
+
+```bash
+# 连接到 PostgreSQL 并备份数据库
+kubectl exec -it deployment/cherry-studio-enterprise -- pg_dump -h $DB_HOST -U $DB_USERNAME $DB_NAME > backup.sql
+```
+
+**方法二：通过应用数据目录备份**
+
+如果需要备份应用的其他数据文件，数据存储在 PVC 中：
+
+```bash
+# 创建备份 pod
+kubectl run backup-pod --image=busybox --restart=Never \
+  --overrides='{"spec":{"containers":[{"name":"backup","image":"busybox","command":["sleep","3600"],"volumeMounts":[{"name":"data","mountPath":"/backup"}]}],"volumes":[{"name":"data","persistentVolumeClaim":{"claimName":"cherry-studio-enterprise-data"}}]}}'
+
+# 等待 pod 启动
+kubectl wait --for=condition=ready pod/backup-pod --timeout=60s
+
+# 在备份 pod 中打包数据
+kubectl exec backup-pod -- tar -czf /tmp/backup.tar.gz -C /backup .
+
+# 复制备份文件到本地
+kubectl cp backup-pod:/tmp/backup.tar.gz ./backup.tar.gz
+
+# 删除备份 pod
+kubectl delete pod backup-pod
+```
+
+### 备份脚本（推荐）
+
+为了简化备份过程，可以使用以下脚本：`helm/scripts/backup-database.sh`
+
+## 备份故障排除
+
+如果遇到 "timed out waiting for the condition" 错误：
+
+### 1. 检查 PVC 名称是否正确
+
+```bash
+kubectl get pvc
+```
+
+### 2. 检查 pod 状态
+
+```bash
+kubectl get pod backup-pod
+kubectl describe pod backup-pod
+```
+
+### 3. 手动清理失败的 pod
+
+```bash
+kubectl delete pod backup-pod --force --grace-period=0
+```
+
+### 4. 使用分步备份
+
+```bash
+# 创建 pod（不使用 --rm 参数）
+kubectl run backup-pod --image=busybox --restart=Never \
+  --overrides='{"spec":{"containers":[{"name":"backup","image":"busybox","command":["sleep","300"],"volumeMounts":[{"name":"data","mountPath":"/backup"}]}],"volumes":[{"name":"data","persistentVolumeClaim":{"claimName":"cherry-studio-enterprise-data"}}]}}'
+
+# 等待 pod 就绪
+kubectl wait --for=condition=ready pod/backup-pod --timeout=60s
+
+# 执行备份
+kubectl exec backup-pod -- tar -czf /tmp/backup.tar.gz -C /backup .
+
+# 复制文件
+kubectl cp backup-pod:/tmp/backup.tar.gz ./backup.tar.gz
+
+# 删除 pod
+kubectl delete pod backup-pod
+```
+
+## 相关文档
+
+- [Docker 部署指南](../setup/docker) - Docker 环境部署详细配置
+- [Helm 部署指南](../setup/helm) - Kubernetes 环境部署
+- [数据库配置指南](./database) - PostgreSQL 详细配置

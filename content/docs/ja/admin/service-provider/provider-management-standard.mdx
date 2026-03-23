@@ -1,0 +1,95 @@
+---
+title: "プロバイダー管理（Standard/BYOK）"
+description: 標準プロトコル（OpenAI、Anthropic、Google など）で主要プロバイダーを接続する手順です。
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 1. プロバイダー管理（Standard/BYOK）
+
+### 概要
+
+**パス：** 管理コンソールサイドバー > **プロバイダー管理**
+
+<img src="/assets/images/zh/admin/provider-management-standard-1_zh.webp" alt="" />
+このモジュールでは、企業が利用する AI モデルのソースを統合的に管理できます。Cherry Studio は主要プロバイダー用のプリセットを備えており、OpenAI、Anthropic（Claude）、Google（Gemini）に加え、OpenAI 互換の国内中継プロバイダー（SiliconFlow、DeepSeek、OpenRouter など）にも対応します。
+
+<Callout type="info">
+**Standard 版の範囲**：標準の API Key と API Host で接続する商用モデルサービスを指します。
+</Callout>
+
+***
+
+### 1. 新規プロバイダー追加
+
+**操作：** 一覧下部の **+ プロバイダー追加** をクリック。
+
+<img src="/assets/images/zh/admin/provider-management-standard-2_zh.webp" alt="" />
+プリセットテンプレートで主要プロバイダーを素早く接続できます。
+
+#### 設定パラメータ
+
+<table><thead><tr><th width="114.1875">項目</th><th width="385.765625">説明</th><th>例</th></tr></thead><tbody><tr><td><strong>プロバイダー名</strong></td><td>表示用の名称。識別しやすい名前を設定。</td><td><code>SiliconFlow</code> / <code>DeepSeek 公式</code></td></tr><tr><td><strong>有効</strong></td><td>このプロバイダー配下のモデルをユーザーに表示するか制御。</td><td>🟢 ON</td></tr><tr><td><strong>プロバイダー種別</strong></td><td><strong>[重要]</strong> 対応プロトコルを選択。<br />• 国内モデル（通義千問、DeepSeek）通常は <code>OpenAI</code>。<br />• Claude は <code>Anthropic</code>。</td><td><code>OpenAI</code></td></tr><tr><td><strong>API Key</strong></td><td>プロバイダー管理画面で取得したキー（sk-...）。</td><td><code>sk-rwkj...</code></td></tr><tr><td><strong>API Host</strong></td><td>API エンドポイント。種別選択で自動入力されるが、中継事業者は手動変更が必要。</td><td><code>https://api.siliconflow.cn</code></td></tr></tbody></table>
+
+<Callout type="info">
+**Tip**：阿里云百炼、腾讯混元、硅基流动など多くの国内プロバイダーは `OpenAI` 互換です。**OpenAI** を選択し、プロバイダーの `Base URL` を **API Host** に入力します。
+</Callout>
+
+***
+
+### 2. モデル一覧と能力タグ
+
+プロバイダー追加後、カードをクリックしてモデル一覧を展開します。システムが自動取得を試みますが、手動追加も可能です。
+
+<img src="/assets/images/zh/admin/provider-management-standard-3_zh.webp" alt="" />
+#### 🏷️ 能力タグ
+
+モデル名の右側のアイコンは特殊能力を示します。アシスタントに適したモデルを選ぶ上で重要です。
+
+<table><thead><tr><th width="66.87890625">アイコン</th><th width="239.375">名称</th><th>意味と用途</th></tr></thead><tbody><tr><td>🧠</td><td><strong>推論 (Reasoning)</strong></td><td><strong>思考力</strong>。<code>DeepSeek-R1</code> や <code>OpenAI o1</code> などは回答前に深い推論を行います。"考え中..." が表示され、数学/論理/コードに適します。</td></tr><tr><td>🔧</td><td><strong>ツール呼び出し (Function Calling)</strong></td><td><strong>プラグイン/MCP 対応</strong>。このアイコンがあるモデルのみ、知識ベース検索や Web 検索、MCP ツールが利用可能です。</td></tr><tr><td>👁️</td><td><strong>視覚 (Vision)</strong></td><td><strong>画像理解</strong>。画像の解析/説明/文字抽出が可能です。</td></tr></tbody></table>
+
+***
+
+### 3. モデルパラメータと課金設定
+
+**操作：** モデル右側の **⚙️ 設定** アイコンをクリック。
+
+企業の運用コストを正確に計算するため、モデルごとの価格を設定してください。
+
+<img src="/assets/images/zh/admin/provider-management-standard-4_zh.webp" alt="" />
+#### モデル設定の編集
+
+* **モデル ID**：API 呼び出しに使用される文字列（変更不可、公式ドキュメントと一致必須）。
+* **コンテキスト長**：最大メモリウィンドウ（例：`32k`, `128k`）。
+* **入力/出力価格**：
+  * **入力価格**：100 万トークンあたりの入力料金。
+  * **出力価格**：100 万トークンあたりの出力料金。
+  * **通貨**：`CNY` または `USD`。
+
+<Callout type="warn">
+**価格設定が重要な理由**：ここでの単価は **用量統計** に反映されます。空欄だとコスト計算ができず、財務レポートが欠落します。
+</Callout>
+
+***
+
+### 4. 接続確認
+
+API Key と接続性の検証を行います：
+
+<img src="/assets/images/zh/admin/provider-management-standard-5_zh.webp" alt="" />
+1. プロバイダー右側の **接続確認** をクリック。
+2. ダイアログでモデルを選択（例：`deepseek-chat`）。
+3. **確認** をクリック。
+4. **成功表示**：右下に「チェック成功、API Key 有効」。
+
+***
+
+### FAQ
+
+**Q: プロバイダーを追加したがモデル一覧が空です。**
+
+A: OpenAI 互換の一部プロバイダーは `/v1/models` に未対応です。下部の **+ モデル追加** で Model ID（例：`qwen-max`）を手動入力してください。
+
+**Q: アシスタントが知識ベースを使えません。**
+
+A: 使用中のモデルに 🔧（ツール）アイコンがあるか確認してください。軽量モデルや旧モデルはツール呼び出し非対応のため、知識ベース検索が実行できません。

@@ -1,0 +1,183 @@
+---
+title: "External App Access (Express Models)"
+description: Use Cherry Studio Enterprise APIs to call Enterprise Express closed-source and open-source models from external applications.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 5. External App Access (Express Models)
+
+This guide is for developers who need to call Cherry Studio Enterprise **Express** models directly from external applications, IDE plugins, automation scripts, or self-built services.
+
+## Prerequisites
+
+Before you start, make sure the following requirements are met:
+
+1. An admin has created and enabled an **API Key** for the current user.
+2. The target model has been enabled under **Express Closed Models** or **Express Open-Source Models**.
+3. The current user's group has permission to access the target model.
+4. You have the enterprise API address, for example `https://api.enterprise.cherry-ai.com`.
+
+Related docs:
+
+- [API Key Management](/en/admin/user-management/api-key-management)
+- [Provider Management (Express/Hosted)](/en/admin/service-provider/provider-management-express-hosted)
+
+## Required Configuration
+
+In most third-party applications that support the OpenAI protocol, you only need these 3 core settings:
+
+| Field | Value | Notes |
+| --- | --- | --- |
+| Base URL / Server Address | Enterprise API address | Example: `https://api.enterprise.cherry-ai.com` |
+| API Key | The user's own API key | Usually starts with `sk-` |
+| Model | `model-id@provider_id` | Express models must include the provider suffix |
+
+<Callout type="info">
+**Base URL tips:**
+
+- If the external app automatically appends `/v1/chat/completions`, you can usually enter the root URL, such as `https://api.enterprise.cherry-ai.com`
+- If you use the official OpenAI SDK, set `baseURL` to `https://api.enterprise.cherry-ai.com/v1`
+</Callout>
+
+## Model Naming Rules
+
+When calling Express models from external applications, the `model` field must use the format `model-id@provider_id`.
+
+### Closed-Source Models
+
+Format:
+
+```text
+model-name@x-express-internal
+```
+
+Example:
+
+```text
+anthropic/claude-sonnet-4.5@x-express-internal
+```
+
+### Open-Source Models
+
+Format:
+
+```text
+model-name@x-express-opensource
+```
+
+Example:
+
+```text
+your-model@x-express-opensource
+```
+
+### How do I know which suffix to use?
+
+- If the model comes from the **Express Closed Models** tab in the admin console, use `@x-express-internal`
+- If the model comes from the **Express Open-Source Models** tab, use `@x-express-opensource`
+
+<Callout type="warn">
+**Important:** Use the actual **Model ID**, not the display name shown in the UI. You must also append `@x-express-internal` or `@x-express-opensource`, otherwise the API will return `Provider is required`.
+</Callout>
+
+## Common Request Examples
+
+### cURL
+
+```bash
+curl https://api.enterprise.cherry-ai.com/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer sk-your-api-key" \
+  -d '{
+    "model": "anthropic/claude-sonnet-4.5@x-express-internal",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Introduce Cherry Studio Enterprise Express in three sentences."
+      }
+    ],
+    "stream": false
+  }'
+```
+
+### Node.js (OpenAI SDK)
+
+```ts
+import OpenAI from 'openai'
+
+const client = new OpenAI({
+  apiKey: process.env.CHERRY_API_KEY,
+  baseURL: 'https://api.enterprise.cherry-ai.com/v1'
+})
+
+const completion = await client.chat.completions.create({
+  model: 'anthropic/claude-sonnet-4.5@x-express-internal',
+  messages: [{ role: 'user', content: 'Hello, please introduce yourself.' }]
+})
+
+console.log(completion.choices[0]?.message?.content)
+```
+
+### Python (OpenAI SDK)
+
+```python
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="sk-your-api-key",
+    base_url="https://api.enterprise.cherry-ai.com/v1",
+)
+
+resp = client.chat.completions.create(
+    model="anthropic/claude-sonnet-4.5@x-express-internal",
+    messages=[{"role": "user", "content": "Hello, please introduce yourself."}],
+)
+
+print(resp.choices[0].message.content)
+```
+
+## Recommended Settings in External Apps
+
+If you are using a chat client, IDE plugin, or another third-party application, the following settings usually work:
+
+| Field | Recommended Value |
+| --- | --- |
+| Provider Type | `OpenAI Compatible` / `OpenAI` |
+| Base URL | `https://api.enterprise.cherry-ai.com` |
+| API Key | The user's own `sk-...` key |
+| Model | `anthropic/claude-sonnet-4.5@x-express-internal` |
+
+<Callout type="info">
+**Compatibility note:** This integration works best with applications that support manually entering a custom model name. If an app strictly depends on standard automatic model listing, you may still need to enter the model name manually.
+</Callout>
+
+## FAQ
+
+### 1. Why do I get `Provider is required`?
+
+This usually means the `model` value does not include the provider suffix. Make sure it looks like this:
+
+```text
+anthropic/claude-sonnet-4.5@x-express-internal
+```
+
+### 2. Why do I get `401 Unauthorized` or `Key Expired`?
+
+Please check:
+
+1. Whether the API key is correct
+2. Whether the API key has expired
+3. Whether the API key has been disabled by an admin
+
+### 3. Why does the API say the model does not exist or I do not have access?
+
+Please check:
+
+1. Whether the target model has been enabled in the Express model list
+2. Whether the current user's group has permission to use the model
+3. Whether the model suffix matches the correct Express category
+
+### 4. Why do I get `Balance Insufficient`?
+
+This usually means the enterprise Express balance is insufficient, or the model is limited by quota settings. Ask an admin to check the balance and model status in **Provider Management > Express**.

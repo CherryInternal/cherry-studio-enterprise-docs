@@ -1,0 +1,37 @@
+---
+title: "Create and Edit Assistants"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 2. Create and Edit Assistants
+
+This is the core module of the Assistant Library. You can define an assistant's behavior from scratch.
+
+<img src="/assets/images/zh/admin/assistant-library-create-edit_zh.webp" alt="" />
+#### Configuration Parameters
+
+After clicking **+ New Assistant Template** or **Edit**, a configuration dialog appears. Use the table below:
+
+<table><thead><tr><th width="151.15234375">Module</th><th width="205.03515625">Description</th><th>Best Practice</th></tr></thead><tbody><tr><td><strong>Assistant name</strong></td><td>Unique identifier for the assistant.</td><td>Use "verb + noun" format, e.g., "Webpage Builder".</td></tr><tr><td><strong>Emoji</strong></td><td>Assistant avatar/logo.</td><td>Select an emoji that matches the role, e.g., 🧑‍💻 for developers.</td></tr><tr><td><strong>Group</strong></td><td>Used for client-side categorization.</td><td>Select at least one group (e.g., Office, Code, Featured).</td></tr><tr><td><strong>Prompt</strong></td><td><strong>Core configuration</strong>. Defines persona, tone, and tasks.</td><td>Use structured prompts (role + goal + constraints).</td></tr><tr><td><strong>Description</strong></td><td>Short summary shown to users.</td><td>Summarize in one sentence, e.g., "Turn requirements into HTML code".</td></tr></tbody></table>
+
+#### Prompt Writing Tips (Prompt Engineering)
+
+When writing **Prompt**, follow this structure for best results:
+
+```markdown
+# Role
+You are a senior frontend engineer.
+
+# Goal
+Create beautiful webpages using HTML/JS/CSS/TailwindCSS.
+
+# Constraints
+1. All code must be in a single HTML file.
+2. Style should be modern and clean.
+3. If the code is long, explain in sections.
+```
+
+<Callout type="info">
+**Validation:** After creating, log in to the Cherry Studio client, find the assistant in "Assistant Library", and run a test chat to ensure it follows your constraints.
+</Callout>

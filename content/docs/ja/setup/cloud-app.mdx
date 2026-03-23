@@ -1,0 +1,211 @@
+---
+title: クラウドアプリ導入
+description: Tencent Cloud Marketplace で Cherry Studio Enterprise をワンクリック導入
+---
+
+import {DynamicLink} from "fumadocs-core/dynamic-link";
+import {Callout} from "fumadocs-ui/components/callout";
+
+## 🚀 クイックスタート
+
+Cherry Studio Enterprise は Tencent Cloud Marketplace に登場しました。ワンクリック導入に対応し、複雑な設定なしでエンタープライズ AI プラットフォームを素早く体験できます。
+
+::: warning 注意
+現在、クラウドアプリのワンクリック導入は Tencent Cloud のみ対応しています。他のクラウドプロバイダーにも順次対応予定です。
+:::
+
+**Tencent Cloud Marketplace リンク**: [https://app.cloud.tencent.com/detail/SPU_BHFHEJFDEE4965](https://app.cloud.tencent.com/detail/SPU_BHFHEJFDEE4965)
+
+## 📋 導入フロー
+
+### ステップ 1: インストール開始
+
+1. [Tencent Cloud Cherry Studio インストールページ](https://app.cloud.tencent.com/detail/SPU_BHFHEJFDEE4965) にアクセス
+2. Tencent Cloud アカウントでログイン
+3. **インストール** ボタンをクリックしてリソースを選択
+4. 近いリージョンを選んで導入
+
+<Callout type="info">
+    選択したリージョンにサーバーがありませんか？<a href="#no-machine">対処方法を見る</a>
+</Callout>
+
+<img src="/assets/images/zh/cloudappinstall/17579023125922.webp" alt="インストール開始" />
+### ステップ 2: 導入パラメータの設定
+
+システムがネットワーク環境を自動検出します。適切なネットワーク/セキュリティグループがある場合は次へ進みます。
+
+<img src="/assets/images/zh/cloudappinstall/17579059506041.webp" alt="アプリ生成" />
+### ステップ 3: 作成完了まで待機
+
+アプリ作成には数分かかります。しばらくお待ちください。
+
+<img src="/assets/images/zh/cloudappinstall/17579075417655.webp" alt="作成待機" />
+### ステップ 4: アクセス入口を取得
+
+作成完了後、アプリ設定ページからアクセス入口を取得します：
+
+<img src="/assets/images/zh/cloudappinstall/17579075847068.webp" alt="アプリ設定入口" />
+**管理コンソール入口（パブリック）** をクリックすると、Cherry Studio Enterprise 管理コンソールにアクセスできます。
+
+<Callout type="info">
+    管理コンソールにアクセスできませんか？セキュリティグループがリクエストを許可していない可能性があります。<a href="#set-acl">対処方法を見る</a>
+</Callout>
+
+### ステップ 5: 初回ログイン
+
+アプリ設定ページに表示される **Cherry Studio Enterprise 管理者アカウント** でログインします：
+
+- 初期ユーザー名：アプリ設定ページに表示
+- 初期パスワード：アプリ設定ページに表示
+
+<img src="/assets/images/zh/cloudappinstall/17579076770749.webp" alt="管理コンソール入口" />
+### ステップ 6: 既定パスワードの変更
+
+**強く推奨**：初回ログイン後すぐに管理者パスワードを変更してください。
+
+<img src="/assets/images/zh/cloudappinstall/17579077250676.webp" alt="パスワード変更 1" />
+<img src="/assets/images/zh/cloudappinstall/17579077573416.webp" alt="パスワード変更 2" />
+<img src="/assets/images/zh/cloudappinstall/17579079312441.webp" alt="パスワード変更 3" />
+## ✅ 導入完了
+
+これで Cherry Studio Enterprise の導入が完了です。以下が可能になります：
+
+- AI プロバイダーとモデルの設定
+- ユーザーとロール権限の作成
+- 知識ベース文書のアップロード
+- AI アシスタント機能の利用
+
+<Callout type="info">
+    <DynamicLink href="/[lang]/docs/quickstart">クイックスタートドキュメント →</DynamicLink>
+</Callout>
+
+## 🔧 高度な設定の参考
+
+導入中にネットワーク設定の問題が発生した場合や、サーバー管理が必要な場合は以下を参照してください：
+
+### ネットワーク設定
+
+#### 新規 VPC の作成 [#create-vpc]
+
+適切なプライベートネットワークがない場合、以下の手順で作成できます：
+
+<img src="/assets/images/zh/cloudappinstall/17579046919582.webp" alt="VPC 作成 1" />
+<img src="/assets/images/zh/cloudappinstall/17579058693624.webp" alt="VPC 作成 2" />
+<img src="/assets/images/zh/cloudappinstall/17579058898409.webp" alt="VPC 作成 3" />
+#### セキュリティグループ設定 [#set-acl]
+
+セキュリティグループがない場合は以下を参考にしてください：
+
+- サーバーのリージョンにある **セキュリティ/セキュリティグループ** で設定
+- ネットワーク設定に不慣れな場合はネットワーク担当者へ相談
+
+作成手順：
+
+<img src="/assets/images/zh/cloudappinstall/17579025304834.webp" alt="セキュリティグループ作成" />
+テンプレート参考：
+
+<img src="/assets/images/zh/cloudappinstall/17579045676416.webp" alt="テンプレート参考" />
+<Callout type="warning">
+    **重要**：以下のポートを追加で開放し、0.0.0.0 からのアクセスを許可してください：
+
+    - 36700（API サービスのポート）
+    - 36800（管理コンソールのポート）
+    - 32811（システム管理ポート）
+</Callout>
+
+テンプレートから作成後、編集画面でポート設定を行います：
+
+<img src="/assets/images/zh/cloudappinstall/17579080497271.webp" alt="ポート設定 1" />
+<img src="/assets/images/zh/cloudappinstall/17579080735339.webp" alt="ポート設定 2" />
+<img src="/assets/images/zh/cloudappinstall/17579080886847.webp" alt="ポート設定 3" />
+<Callout type="info">
+    <a href="#bind-acl">セキュリティグループをアプリに紐付ける方法</a>
+</Callout>
+
+### 1Panel サーバー管理（任意）
+
+システムには 1Panel 管理画面が用意されており、データベースやサーバー管理ができます：
+
+<img src="/assets/images/zh/cloudappinstall/17579081724093.webp" alt="1panel 管理画面" />
+1Panel のアクセス入口：
+
+<img src="/assets/images/zh/cloudappinstall/17579081125820.webp" alt="1panel アクセス入口" />
+**強く推奨**：1Panel の初期パスワードを変更してください。
+
+<img src="/assets/images/zh/cloudappinstall/17579082746447.webp" alt="1panel パスワード変更" />
+## ❓ よくある質問
+
+### Q: 可用区を選んだときにマシン一覧が表示されません。 [#no-machine]
+
+A: Tencent Cloud サポートに問い合わせ、利用可能なゾーンを確認してください。例えば広州 6/7 にリソースがあり、2 ゾーンにはない場合があります。利用可能なゾーンで新しい VPC とサブネットを作成してください。
+
+<Callout type="info">
+    <a href="#create-vpc">VPC とサブネットの作成方法</a>
+</Callout>
+
+### Q: 導入後にアクセスできません。
+
+A: 以下を確認してください：
+
+1. セキュリティグループのポート設定が正しいか（36700、36800、32811）
+2. ネットワーク接続が正常か
+3. 正しいアクセスアドレスとポートを使用しているか
+
+<Callout type="info">
+    <a href="#set-acl">セキュリティグループの設定方法</a>
+</Callout>
+
+### Q: セキュリティグループの設定画面はどこですか？ [#find-acl]
+
+<ImageSteps
+  basePath="cloudappinstall"
+  steps={[
+    { title: "コンソールで「リソースビュー」に切り替える", image: "find-acl-1.webp" },
+    { title: "「VPC」をクリックしてネットワークコンソールを開く", image: "find-acl-2.webp" },
+    { title: "左メニューで「セキュリティ」を展開し「セキュリティグループ」をクリック", image: "find-acl-3.webp" },
+    { title: "「新規作成」をクリックしてセキュリティグループを作成", image: "find-acl-4.webp" }
+  ]}
+/>
+
+<Callout type="info">
+    <a href="#set-acl">セキュリティグループの設定方法</a>
+</Callout>
+<Callout type="info">
+    <a href="#bind-acl">セキュリティグループをアプリに紐付ける方法</a>
+</Callout>
+
+### Q: 導入したアプリが見つかりません。 [#find-app]
+
+<ImageSteps
+  basePath="cloudappinstall"
+  steps={[
+    { title: "Tencent Cloud のサイトにアクセスし、右上の「コンソール」をクリック", image: "find-app-1.webp" },
+    { title: "コンソールで「アプリケーションビュー」タブをクリック", image: "find-app-2.webp" },
+    { title: "Cherry Studio Enterprise のアプリカードを見つけて開く", image: "find-app-3.webp" },
+    { title: "「アプリを開く」をクリックして管理コンソールへ", image: "find-app-4.webp" }
+  ]}
+/>
+
+### Q: セキュリティグループをアプリに紐付けるには？ [#bind-acl]
+
+<ImageSteps
+  basePath="cloudappinstall"
+  steps={[
+    { title: "アプリ詳細ページで「アプリリソース」タブをクリック", image: "bind-acl-1.webp" },
+    { title: "「クラウドサーバーインスタンス」を見つけて開く", image: "bind-acl-2.webp" },
+    { title: "インスタンス詳細で「セキュリティグループ」タブをクリック", image: "bind-acl-3.webp" },
+    { title: "「設定」をクリック", image: "bind-acl-4.webp" },
+    { title: "紐付けたいセキュリティグループを選択して「OK」をクリック", image: "bind-acl-5.webp" }
+  ]}
+/>
+
+### Q: 管理者パスワードを忘れました。
+
+A: 1Panel でリセットするか、技術サポートにお問い合わせください。
+
+## 📞 技術サポート
+
+技術サポートが必要な場合は、以下までご連絡ください：
+
+- 公式サイト：[Cherry Studio](https://cherry-ai.com)
+- メール：support@cherry-ai.com

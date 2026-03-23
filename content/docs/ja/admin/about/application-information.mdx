@@ -1,0 +1,30 @@
+---
+title: "アプリ情報"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 1. アプリ情報
+
+**パス：** **About** > **アプリ情報**
+
+このパネルは現在の稼働状況とダウンロード入口を提供し、システム健康状態の一次ダッシュボードです。
+
+<img src="/assets/images/zh/admin/about-us-application-info_zh.webp" alt="" />
+#### バージョンと状態監視
+
+上部に現在の「健康状態」が表示されます：
+
+<table><thead><tr><th width="104.90625">項目</th><th width="265.25390625">説明</th><th>用途</th></tr></thead><tbody><tr><td><strong>現在のバージョン</strong></td><td>メジャーバージョン（例：<code>0.3.8</code>）。</td><td>互換性や新機能対応の確認。</td></tr><tr><td><strong>ビルドバージョン</strong></td><td>分単位の内部ビルド時刻（例：<code>202512230648</code>）。</td><td><strong>障害調査の鍵</strong>。バグ報告時に必ず提示。</td></tr><tr><td><strong>サービス状態</strong></td><td>バックエンド接続のリアルタイム確認。</td><td>● 正常稼働なら健康。赤表示なら Docker ログを確認。</td></tr><tr><td><strong>システム更新</strong></td><td>新バージョンの有無を確認。</td><td>「最新」なら不要、更新があれば Docker イメージを取得。</td></tr></tbody></table>
+
+<Callout type="warn">
+**注意:** **サービス状態** が異常でもフロントは表示される場合がありますが、モデル呼び出しやファイル解析などのバックエンド機能は失敗します。
+</Callout>
+
+#### リソースダウンロード
+
+クライアント/サーバーのバージョン整合のため、以下を利用できます：
+
+* **クライアントダウンロード:** Windows / macOS クライアント。
+* **ドキュメント:** 公式マニュアル（本ドキュメント）。
+* **Docker イメージ:** Docker Hub へのリンク。

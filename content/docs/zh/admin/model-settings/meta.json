@@ -1,0 +1,9 @@
+{
+  "title": "默认模型设置",
+  "pages": [
+    "default-assistant-model",
+    "recommended-configurations",
+    "topic-naming-model",
+    "translation-model"
+  ]
+}

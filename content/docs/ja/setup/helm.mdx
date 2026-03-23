@@ -1,0 +1,437 @@
+---
+title: Helm 導入
+description: Helm を使って Cherry Studio Enterprise を Kubernetes に導入
+---
+
+この Helm Chart は、API サービスと管理コンソールを含む Cherry Studio Enterprise のフル構成を Kubernetes クラスターに導入します。
+
+## 特長
+
+- **二重サービス導入**：API と Admin を同時に導入
+- **API サービス**：PostgreSQL を基盤とした企業向けバックエンド API
+- **管理コンソール**：Web ベースの管理 UI
+- **データベース対応**：PostgreSQL をサポートし、高可用性と拡張性を提供
+- **独立設定**：各サービスは個別に有効化/無効化・設定可能
+- **自動スケール**：HPA（Horizontal Pod Autoscaler）に対応
+- **ヘルスチェック**：liveness と readiness プローブを含む
+- **Ingress 対応**：各サービスに独立した Ingress ルールを設定
+
+## Helm Chart の取得
+
+### 方法 1：リリース版をダウンロード（推奨）
+
+GitHub Releases から最新の Helm Chart を取得します：
+
+```bash
+# 最新版をダウンロード
+wget https://github.com/CherryInternal/cherry-studio-enterprise-helm/archive/refs/heads/main.zip
+unzip main.zip
+cd cherry-studio-enterprise-helm-main
+
+# インストール
+helm install cherry-studio-enterprise ./helm
+```
+
+### 方法 2：Git Clone
+
+```bash
+# 最新版をクローン
+git clone https://github.com/CherryInternal/cherry-studio-enterprise-helm.git
+cd cherry-studio-enterprise-helm
+
+# インストール
+helm install cherry-studio-enterprise ./helm
+```
+
+📦 **Helm Chart のリリース**: [cherry-studio-enterprise-helm/releases](https://github.com/CherryInternal/cherry-studio-enterprise-helm/releases)
+
+🐳 **Docker イメージ**: [cherrystudio/cherry-studio-enterprise-api](https://hub.docker.com/repository/docker/cherrystudio/cherry-studio-enterprise-api) - 利用可能なタグを確認
+
+## インストール
+
+### 前提条件
+
+- Kubernetes 1.16+
+- Helm 3.0+
+- クラスターで PVC を使用可能
+
+### 基本インストール
+
+Helm Chart の取得方法に応じてインストールします：
+
+**リリース版をダウンロードした場合：**
+
+```bash
+# 解凍したディレクトリへ移動
+cd cherry-studio-enterprise-helm-main
+
+# chart をインストール（./helm ディレクトリを指定）
+helm install cherry-studio-enterprise ./helm
+
+# もしくは名前空間を指定
+helm install cherry-studio-enterprise ./helm --namespace cherry-studio --create-namespace
+```
+
+**git clone を使用した場合：**
+
+```bash
+# クローンしたディレクトリへ移動
+cd cherry-studio-enterprise-helm
+
+# chart をインストール
+helm install cherry-studio-enterprise ./helm
+
+# もしくは名前空間を指定
+helm install cherry-studio-enterprise ./helm --namespace cherry-studio --create-namespace
+```
+
+### カスタムインストール
+
+`values-custom.yaml` を作成してデフォルト設定を上書きします：
+
+```yaml
+app:
+  # API サービス設定
+  api:
+    ingress:
+      enabled: true
+      annotations:
+        nginx.ingress.kubernetes.io/proxy-body-size: '20m'
+      hosts:
+        - host: api.your-domain.com
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+
+  # 管理コンソール設定
+  admin:
+    ingress:
+      enabled: true
+      annotations:
+        nginx.ingress.kubernetes.io/proxy-body-size: '20m'
+      hosts:
+        - host: admin.your-domain.com
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+
+  # ストレージ設定（任意）
+  persistence:
+    size: 20Gi
+
+  # 環境設定（本番環境は必須）
+  env:
+    API_URL: http://cherry-studio-enterprise-api.test # バックエンド API へ変更
+    JWT_SECRET: 'your-secure-jwt-secret-at-least-32-characters-long'
+    DB_HOST: database.host
+    DB_PORT: 5432
+    DB_USERNAME: username
+    DB_PASSWORD: password
+    DB_NAME: database
+    DB_TYPE: postgres
+
+  # リソース設定（任意）
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+    requests:
+      cpu: 200m
+      memory: 256Mi
+```
+
+カスタム設定でインストール：
+
+```bash
+helm install cherry-studio-enterprise ./helm -f values-custom.yaml
+```
+
+## 設定説明
+
+### よくある設定シーン
+
+| シーン | 設定要点 | 例 |
+| -------------- | ------------------------------- | ---------------------------------------------- |
+| **開発/テスト** | 既定設定 + port-forward | `helm install cherry-studio-enterprise ./helm` |
+| **クラウド導入** | LoadBalancer を使用 | `service.type: LoadBalancer` |
+| **ローカルクラスター** | NodePort を使用 | `service.type: NodePort` |
+| **本番環境** | Ingress + カスタム JWT | 上記の完全構成を参照 |
+| **大量データ** | ストレージ拡張 | `persistence.size: 50Gi` |
+| **高可用性** | リソース制限とプローブ | 既定で設定済み、必要に応じて調整 |
+
+### 詳細パラメータ
+
+#### アプリケーションサービス設定
+
+| パラメータ | 説明 | デフォルト |
+| ------------------------------- | --------------------------------------- | ------------------------------------------- |
+| `app.enabled` | アプリサービスを有効化 | `true` |
+| `app.replicaCount` | レプリカ数（データ整合性のため 1 推奨） | `1` |
+| `app.image.repository` | イメージリポジトリ | `cherrystudio/cherry-studio-enterprise-api` |
+| `app.image.tag` | イメージタグ | `latest` |
+| `app.api.service.type` | API Service 種別 | `ClusterIP` |
+| `app.api.service.port` | API サービスポート | `3670` |
+| `app.api.service.targetPort` | API コンテナポート | `3670` |
+| `app.admin.service.type` | Admin Service 種別 | `ClusterIP` |
+| `app.admin.service.port` | Admin サービスポート | `3680` |
+| `app.admin.service.targetPort` | Admin コンテナポート | `3680` |
+| `app.persistence.enabled` | 永続化の有効化 | `true` |
+| `app.persistence.size` | ストレージサイズ | `10Gi` |
+| `app.persistence.accessMode` | アクセスモード | `ReadWriteOnce` |
+| `app.persistence.mountPath` | マウントパス | `/app/data` |
+| `app.api.ingress.enabled` | API Ingress の有効化 | `true` |
+| `app.admin.ingress.enabled` | Admin Ingress の有効化 | `true` |
+| `app.resources.limits.cpu` | CPU 上限 | `500m` |
+| `app.resources.limits.memory` | メモリ上限 | `512Mi` |
+| `app.resources.requests.cpu` | CPU リクエスト | `100m` |
+| `app.resources.requests.memory` | メモリリクエスト | `128Mi` |
+| `app.env.*` | 環境変数 | 下記参照 |
+
+#### ポート説明
+
+本アプリは 1 つのコンテナで 2 つのサービスを動作させます：
+
+| ポート | サービス | 説明 |
+| ---- | ---------- | ------------------------------------ |
+| 3670 | API サービス | データ連携のための RESTful API |
+| 3680 | 管理コンソール | システム管理・設定のための UI |
+
+### 環境変数
+
+Chart には必要な環境変数が含まれています。主な変数は以下です：
+
+#### API サービス環境変数
+
+| 環境変数 | 説明 | デフォルト |
+| -------------------- | ------------------ | -------------------------------------------------------- |
+| `API_URL` | 管理コンソールの API ベース URL | `http://cherry-studio-enterprise-api.test` |
+| `API_PORT` | API サービスポート | `3670` |
+| `ADMIN_PORT` | Admin ポート | `3680` |
+| `ADMIN_APP_NAME` | 管理コンソール名 | `Cherry Studio` |
+| `ADMIN_APP_LOGO_URL` | 管理コンソールのロゴ URL | `https://img.picui.cn/free/2025/07/07/686ab9a2b7825.webp` |
+| `ADMIN_BASE_PATH` | 管理コンソールのベースパス | `/` |
+| `JWT_SECRET` | JWT 秘密鍵 | `your-secure-jwt-secret-at-least-32-characters` |
+
+#### データベース環境変数
+
+| 環境変数 | 説明 | デフォルト |
+| ------------- | -------------- | -------------------------- |
+| `DB_HOST` | DB ホスト | `1panel.cherry-ai.com` |
+| `DB_PORT` | DB ポート | `5432` |
+| `DB_USERNAME` | DB ユーザー名 | `cherry-studio-enterprise` |
+| `DB_PASSWORD` | DB パスワード | `your-secure-password` |
+| `DB_NAME` | DB 名 | `cherry-studio-enterprise` |
+| `DB_TYPE` | DB 種別 | `postgres` |
+| `DB_SSL` | SSL 有効化 | `false` |
+
+**⚠️ 重要**：
+
+- 本番環境では必ず既定の JWT_SECRET を変更
+- 本番環境では自社の PostgreSQL 接続情報を設定
+- DB パスワードなどの機密情報は Kubernetes Secret で管理
+
+`app.env` で上書きできます。例：
+
+```yaml
+app:
+  env:
+    JWT_SECRET: 'your-custom-jwt-secret'
+    ADMIN_APP_NAME: 'アプリ名'
+    DB_HOST: 'your-postgres-host'
+    DB_USERNAME: 'your-username'
+    DB_PASSWORD: 'your-password'
+    DB_NAME: 'your-database'
+```
+
+**注意**：本番環境では Kubernetes Secret の利用を推奨します。
+
+## 導入確認
+
+インストール後、以下のコマンドで導入を確認できます：
+
+```bash
+# Pod の状態確認
+kubectl get pods -l app.kubernetes.io/name=cherry-studio-enterprise
+
+# Service の状態確認
+kubectl get svc -l app.kubernetes.io/name=cherry-studio-enterprise
+
+# PVC の確認
+kubectl get pvc
+
+# 接続テスト
+helm test cherry-studio-enterprise
+```
+
+### 導入チェックリスト
+
+- **Pod 状態**：すべて Running
+- **Service 状態**：Service が作成され Endpoint が存在
+- **PVC 状態**：PVC が PV にバインド済み
+- **Ingress 状態**：Ingress 有効時はルール作成済み
+- **ヘルスチェック**：API がヘルスチェックに応答
+- **データ永続化**：Pod 再起動後もデータが保持
+- **JWT 設定**：本番で既定 JWT_SECRET を置き換え済み
+
+## アプリへのアクセス
+
+### Port-Forward を使用（テスト向け推奨）
+
+**API サービス：**
+
+```bash
+kubectl port-forward svc/cherry-studio-enterprise-api 3670:3670
+```
+
+`http://localhost:3670` にアクセス
+
+**管理コンソール：**
+
+```bash
+kubectl port-forward svc/cherry-studio-enterprise-admin 3680:3680
+```
+
+`http://localhost:3680` にアクセス
+
+### LoadBalancer を使用
+
+LoadBalancer の Service を設定した場合：
+
+**API サービス：**
+
+```bash
+kubectl get svc cherry-studio-enterprise-api
+```
+
+`http://EXTERNAL-IP:3670` にアクセス
+
+**管理コンソール：**
+
+```bash
+kubectl get svc cherry-studio-enterprise-admin
+```
+
+`http://EXTERNAL-IP:3680` にアクセス
+
+### Ingress を使用
+
+Ingress 有効時は設定したドメインでアクセスできます：
+
+- API サービス：`app.api.ingress.hosts` で指定したドメイン
+- 管理コンソール：`app.admin.ingress.hosts` で指定したドメイン
+
+## アップグレード
+
+```bash
+# 新バージョンへアップグレード
+helm upgrade cherry-studio-enterprise ./helm
+
+# 設定を更新してアップグレード
+helm upgrade cherry-studio-enterprise ./helm -f values-custom.yaml
+```
+
+## アンインストール
+
+```bash
+# chart の削除
+helm uninstall cherry-studio-enterprise
+
+# PVC を手動削除（必要な場合）
+kubectl delete pvc cherry-studio-enterprise-data
+```
+
+## トラブルシューティング
+
+### よくある問題
+
+1. **Pod が Pending のまま**
+
+   - ノードのリソースが十分か確認
+   - PVC が作成・バインドできるか確認
+
+2. **サービスにアクセスできない**
+
+   - Service と Endpoints を確認
+   - ファイアウォール設定を確認
+
+3. **データが消える**
+   - PVC 設定を確認
+   - ストレージクラスが永続化をサポートしているか確認
+
+### ログ
+
+```bash
+# Pod ログを表示
+kubectl logs -l app.kubernetes.io/name=cherry-studio-enterprise
+
+# Pod 詳細を表示
+kubectl describe pod -l app.kubernetes.io/name=cherry-studio-enterprise
+```
+
+## クラスター構成の参考
+
+企業規模に応じた推奨構成は以下の通りです：
+
+### 推奨スペック
+
+| ユーザー規模 | ノード構成 | ノード数 | Pod レプリカ数 | ストレージ |
+|---------|---------|---------|-----------|----------|
+| **0-50 人** | 2 vCPU, 4GB RAM | 1-2 台 | 1 | 10-20GB |
+| **50-200 人** | 4 vCPU, 8GB RAM | 2-3 台 | 1-2 | 20-50GB |
+| **200-1000 人** | 8 vCPU, 16GB RAM | 3-5 台 | 2-3 | 50-100GB |
+| **2000 人以上** | 16 vCPU, 32GB RAM | 5+ 台 | 3-5 | 100GB+ |
+
+### リソース使用量の目安
+
+Cherry Studio Enterprise は軽量です：
+- **メモリ使用量**：起動後 100-150MB 程度
+- **CPU 使用量**：通常稼働で < 100m
+- **DB 負荷**：非常に低く、主に設定データ
+- **ストレージ**：主にログと一時ファイル
+
+小規模クラスターでも多くのユーザーを支えられます。実際の監視データに応じてリソースを調整してください。
+
+### データベース構成
+
+DB 要件は低めです。推奨構成：
+- **小規模導入（< 200 人）**：単一 PostgreSQL インスタンス（2 vCPU, 4GB RAM）
+- **大規模導入（> 200 人）**：可用性向上のためのプライマリ/レプリカ
+
+## 注意事項
+
+1. **インスタンス推奨**：PostgreSQL を使用しますが、データ整合性と状態管理のため Pod は単一運用を推奨。高可用性が必要な場合は PostgreSQL の主従構成を推奨。
+
+2. **データ永続化**：クラスターが永続ストレージをサポートしていないと、Pod 再起動でデータが失われます。
+
+3. **JWT 秘密鍵の安全性**：
+
+   - 本番環境では既定の JWT_SECRET を置き換え
+   - 機密情報は Kubernetes Secret で管理
+   - JWT 秘密鍵は強力なランダム文字列（最低 32 文字）
+
+4. **ネットワークセキュリティ**：
+   - 本番環境では Ingress + TLS を推奨
+   - ネットワークアクセスを制限
+   - イメージを定期的に更新
+
+### 本番環境 JWT 設定例
+
+```yaml
+# Secret で JWT 秘密鍵を管理
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cherry-studio-jwt-secret
+type: Opaque
+data:
+  jwt-secret: <base64-encoded-strong-random-string>
+---
+# values.yaml で参照
+app:
+  env:
+    JWT_SECRET:
+      valueFrom:
+        secretKeyRef:
+          name: cherry-studio-jwt-secret
+          key: jwt-secret
+```

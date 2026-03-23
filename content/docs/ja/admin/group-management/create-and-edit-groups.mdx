@@ -1,0 +1,54 @@
+---
+title: "グループの作成と編集"
+description: 新しい業務グループの作成と基本情報の管理方法を説明します。
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 1. グループの作成と編集
+
+### 前提条件
+
+* Cherry Studio Enterprise 管理コンソールの **管理者** 権限が必要です。
+* **モデル管理** で利用可能なモデルを設定済みであること（API Key と Base URL の検証完了）。
+
+### 新規グループ作成
+
+1. Cherry Studio Enterprise 管理コンソールにログイン。
+2. **グループ管理** に移動。
+3. 右上の **+ グループ追加** をクリック。
+4. モーダルで基本情報を入力：
+
+<img src="/assets/images/zh/admin/group-management-create-edit-1_zh.webp" alt="" />
+<table><thead><tr><th width="111.23046875">項目</th><th width="73.9609375">必須</th><th width="402.95703125">説明</th><th>例</th></tr></thead><tbody><tr><td><strong>グループ名</strong></td><td>はい</td><td>グループの一意識別子。推奨形式は「部門-機能」。</td><td><code>開発部-バックエンド</code></td></tr><tr><td><strong>グループ説明</strong></td><td>いいえ</td><td>担当範囲やリソース制限のメモ。</td><td><code>コーディング系モデルを全て利用可能</code></td></tr></tbody></table>
+
+5. リソース設定（次の章を参照）を完了したら **保存** をクリック。
+
+<Callout type="info">
+**成功の目安:** 作成後すぐに一覧に表示され、**メンバー数** は `0` になります。
+</Callout>
+
+### 編集と管理
+
+業務要件が変わった場合（例：一時的にモデル権限を追加）、いつでも編集できます。
+
+1. 一覧から対象グループを探す。
+2. **編集** アイコン（鉛筆）をクリック。
+3. 設定を変更して **保存**。
+
+<img src="/assets/images/zh/admin/group-management-create-edit-2_zh.webp" alt="" />
+<Callout type="info">
+**反映タイミング:** 変更（モデル権限の追加など）は通常 **即時反映** されます。ユーザーは再ログインまたは更新で反映されます。
+</Callout>
+
+### グループ削除
+
+<img src="/assets/images/zh/admin/group-management-create-edit-3_zh.webp" alt="" />
+<Callout type="error">
+**危険操作の警告**
+
+**削除** 前に、**メンバー数** が `0` であることを確認してください。
+
+* **ユーザーが残っている場合:** 強制削除すると既定グループに戻り、リソース権限を失い業務が停止する可能性があります。
+* **推奨:** 先に **ユーザー管理** で別グループへ移動してから削除してください。
+</Callout>

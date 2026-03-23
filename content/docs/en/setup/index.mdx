@@ -1,0 +1,156 @@
+---
+title: Installation and Deployment
+description: Cherry Studio Enterprise deployment guide - flexible deployment options
+---
+
+import { DynamicLink } from 'fumadocs-core/dynamic-link'
+
+Cherry Studio Enterprise provides flexible deployment options to meet the needs of organizations of different sizes. This guide helps you choose the right method and complete installation.
+
+## 🚀 Before You Start
+
+### System Requirements
+
+#### Hardware Requirements
+
+- **CPU**: 2 cores or more
+- **Memory**: 4GB RAM (8GB recommended)
+- **Storage**: 20GB available space (adjust based on data volume)
+- **Network**: Stable network connection
+
+#### Software Requirements
+
+- **OS**: Linux (Ubuntu 20.04+, CentOS 7+), macOS, Windows
+- **Container runtime**: Docker 20.10+ (Docker deployment)
+- **Kubernetes**: 1.19+ (Helm deployment)
+- **Database**: PostgreSQL 12+
+
+### Preparation Checklist
+
+Before deploying, make sure you have the following ready:
+
+#### 1. Base Environment
+
+- Choose a deployment method (Docker / Kubernetes)
+- Prepare servers or cloud instances
+- Install required runtime dependencies
+
+#### 2. Database Configuration
+
+- Choose PostgreSQL
+- Prepare database connection details
+- Create the database and user
+
+#### 3. Authentication Configuration (Optional)
+
+- Decide whether to use SSO
+- Prepare Casdoor configuration (if needed)
+- Configure enterprise identity system integration
+
+#### 4. Network Configuration
+
+- Determine service domain names
+- Configure SSL certificates (production)
+- Open required ports (3670 API, 3680 Admin)
+
+## 📦 Deployment Options
+
+Choose the right deployment option based on your needs:
+
+### ☁️ Cloud App One-Click Deployment (Recommended)
+
+**Use cases**:
+
+- Quick onboarding with zero configuration
+- Fast trials for small and mid-sized teams
+- Users unfamiliar with ops
+
+**Advantages**:
+
+- One-click deployment, no technical barrier
+- Automated network and security group configuration
+- Includes database and admin panel
+- Elastic cloud resource scaling
+
+<DynamicLink href="/[lang]/docs/setup/cloud-app">View the full cloud app deployment guide →</DynamicLink>
+
+### 🐳 Docker Deployment
+
+**Use cases**:
+
+- Quick trials and testing
+- Small and mid-sized teams
+- Single-node deployment
+
+**Advantages**:
+
+- Simple deployment, one command to start
+- Environment isolation, easy maintenance
+- Docker Compose orchestration supported
+
+<DynamicLink href="/[lang]/docs/setup/docker">View the full Docker deployment guide →</DynamicLink>
+
+### ☸️ Kubernetes Helm Deployment
+
+**Use cases**:
+
+- Production environments for large organizations
+- High availability and auto scaling
+- Existing Kubernetes clusters
+
+**Advantages**:
+
+- Automated ops management
+- Horizontal scaling
+- Robust health checks and failover
+
+<DynamicLink href="/[lang]/docs/setup/helm">View the full Helm deployment guide →</DynamicLink>
+
+## 📋 Deployment Steps Overview
+
+### Step 1: Choose a Deployment Option
+
+Select the deployment option that fits your needs.
+
+### Step 2: Configure the Database
+
+1. Install PostgreSQL
+2. Create the database and user
+3. Configure connection parameters
+
+<DynamicLink href="/[lang]/docs/advanced/database">View the database configuration guide →</DynamicLink>
+
+### Step 3: Deploy the Application
+
+Follow the steps for your chosen deployment method:
+
+- Docker: start with docker-compose
+- Kubernetes: install with Helm
+
+### Step 4: Configure Authentication (Optional)
+
+If you need enterprise SSO:
+
+1. Deploy Casdoor
+2. Configure the application and organization
+3. Integrate with Cherry Studio
+
+<DynamicLink href="/[lang]/docs/advanced/sso">View the SSO configuration guide →</DynamicLink>
+
+### Step 5: Verify Deployment
+
+1. Check API health: `http://your-domain:3670/health`
+2. Access the admin console: `http://your-domain:3680`
+3. Sign in with the default admin account
+4. Complete initial setup
+
+> A fresh self-hosted deployment initializes the admin account with username `admin` and password `secret`. If you are using cloud app deployment, use the admin account information shown on the app settings page, and change the password immediately after first sign-in.
+
+## Next Step
+
+Choose your deployment option and begin installation:
+
+- <DynamicLink href="/[lang]/docs/setup/cloud-app">☁️ Cloud app deployment (recommended)</DynamicLink> - One-click deployment, zero technical barrier
+- <DynamicLink href="/[lang]/docs/setup/docker">🐳 Docker deployment</DynamicLink> - Quick deployment with Docker
+- <DynamicLink href="/[lang]/docs/setup/helm">☸️ Helm deployment</DynamicLink> - Deploy on Kubernetes
+- <DynamicLink href="/[lang]/docs/advanced/database">🗄️ Database configuration</DynamicLink> - Configure PostgreSQL

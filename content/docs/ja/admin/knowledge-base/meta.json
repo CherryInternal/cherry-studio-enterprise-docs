@@ -1,0 +1,8 @@
+{
+  "title": "知識ベース管理",
+  "pages": [
+    "create-and-basic-configuration",
+    "data-source-management",
+    "maintenance-and-tuning"
+  ]
+}

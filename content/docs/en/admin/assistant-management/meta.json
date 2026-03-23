@@ -1,0 +1,9 @@
+{
+  "title": "Assistant Management",
+  "pages": [
+    "advanced-configuration-details",
+    "assistant-list-overview",
+    "create-new-assistant",
+    "validation-and-publishing"
+  ]
+}

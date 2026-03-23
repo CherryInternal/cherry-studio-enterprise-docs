@@ -1,0 +1,39 @@
+---
+title: "趋势与分布可视化"
+---
+
+# 3. 趋势与分布可视化
+
+#### 1. 使用趋势 (Usage Trend)
+
+<img src="/assets/images/zh/admin/usage-analytics-trend-distribution-1_zh.webp" alt="" />
+{/* TODO: 补充额外截图，见 MISSING_IMAGES.md */}
+
+通过折线图展示 Token 消耗的时间序列变化。
+
+* **蓝色曲线：** 总 Token 消耗。
+* **绿色曲线：** 某具体维度的参照（通常为输出 Token）。
+* **价值：** 识别业务高峰期（Peak Time），辅助管理员合理规划并发配额。
+
+#### 2. 按服务商分布 (Provider Distribution)
+
+<img src="/assets/images/zh/admin/usage-analytics-trend-distribution-2_zh.webp" alt="" />
+{/* TODO: 补充额外截图，见 MISSING_IMAGES.md */}
+
+饼图展示了不同模型供应商的流量占比。
+
+* **场景：** 监控闭源模型（付费）与开源模型（免费/自建）的使用比例，优化成本结构。
+
+#### 3. 按模型分布 (Model Distribution)
+
+<img src="/assets/images/zh/admin/usage-analytics-trend-distribution-3_zh.webp" alt="" />
+{/* TODO: 补充额外截图，见 MISSING_IMAGES.md */}
+
+条形图展示了消耗量最大的 Top 模型。
+
+* **交互：** 悬停在条形图上可查看具体数值。
+* **价值：** 了解员工偏好。例如，如果 `gpt-4` 消耗极高，可考虑引导员工在非关键任务中使用更经济的 `gpt-4o-mini` 或 `deepseek-chat`。
+
+***
+
+###

@@ -1,0 +1,23 @@
+---
+title: "Troubleshooting"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 4. Troubleshooting
+
+When embedding webpages in mini programs, you may encounter pages failing to load. Use the guidance below.
+
+<Callout type="error">
+**Error: Refused to connect** This typically means the target site has restrictive security policies.
+</Callout>
+
+* **Cause:** The target site sets `X-Frame-Options: SAMEORIGIN` or `DENY` in HTTP headers, which forbids iframe embedding (including Cherry Studio's container).
+* **Solutions:**
+  1. **Contact the site owner:** For internal systems, ask ops to allow embedding from the Cherry Studio domain or Electron container.
+  2. **Use an embed URL:** Some AI providers offer specific embed links.
+  3. **Check protocol:** Ensure the URL starts with `https`.
+
+<Callout type="info">
+**Best practice** Before rolling out to everyone, create a test mini program and verify the link opens and works in the client. If it works, rename and enable it for production use.
+</Callout>

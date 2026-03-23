@@ -1,0 +1,22 @@
+---
+title: "MCP サーバー"
+description: >-
+  MCP (Model Context Protocol) は Cherry Studio Enterprise が外部世界と接続するための橋渡しです。Anthropic が提案した
+  オープン標準で、LLM とデータ/ツールの接続断片化を解決します。
+icon: SquareTerminal
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# MCP サーバー
+
+<img src="/assets/images/zh/admin/mcp-server-overview_zh.webp" alt="" />
+MCP サーバーを設定すると、アシスタントに以下の能力を付与できます：
+
+* **Web アクセス**：リアルタイムで検索。
+* **ファイル操作**：ローカルのコードやログの読み書き。
+* **システム連携**：DB、API、社内システムとの接続。
+
+<Callout type="info">
+**コア優位性:** 一度設定すれば全員で共有できます。管理者が設定した MCP サーバーは複数アシスタントに割り当て可能で、ツールコードの再実装が不要です。
+</Callout>

@@ -1,0 +1,9 @@
+{
+  "title": "Assistant Library",
+  "pages": [
+    "list-management",
+    "create-and-edit-assistants",
+    "template-market-import",
+    "grouping-strategy"
+  ]
+}

@@ -1,0 +1,54 @@
+---
+title: "Create and Edit Groups"
+description: This section guides you to create new business groups and maintain basic information.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 1. Create and Edit Groups
+
+### Prerequisites
+
+* You must have **Admin** privileges in the Cherry Studio Enterprise console.
+* Configure available models in **Model Management** (API Key and Base URL validated).
+
+### Create a New Group
+
+1. Sign in to the Cherry Studio Enterprise admin console.
+2. Navigate to **Group Management**.
+3. Click **+ Add Group** in the top-right.
+4. In the modal, fill in the basic information:
+
+<img src="/assets/images/zh/admin/group-management-create-edit-1_zh.webp" alt="" />
+<table><thead><tr><th width="111.23046875">Field</th><th width="73.9609375">Required</th><th width="402.95703125">Description</th><th>Example</th></tr></thead><tbody><tr><td><strong>Group name</strong></td><td>Yes</td><td>Unique identifier; recommended format: "Department-Function".</td><td><code>R&D-Backend</code></td></tr><tr><td><strong>Group description</strong></td><td>No</td><td>Notes about group scope or resource limits.</td><td><code>Can use all coding models</code></td></tr></tbody></table>
+
+5. After completing resource configuration (see next section), click **Save**.
+
+<Callout type="info">
+**Success:** The new group appears in the list immediately, with **Members** showing `0`.
+</Callout>
+
+### Edit and Manage
+
+When business needs change (e.g., temporarily add model access), you can edit the group anytime.
+
+1. Find the target group in the list.
+2. Click the **Edit** icon (usually a pencil).
+3. Modify settings and click **Save**.
+
+<img src="/assets/images/zh/admin/group-management-create-edit-2_zh.webp" alt="" />
+<Callout type="info">
+**Effective immediately:** Group changes (like adding model permissions) usually take effect in real time. Users only need to refresh or re-login to see updates.
+</Callout>
+
+### Delete a Group
+
+<img src="/assets/images/zh/admin/group-management-create-edit-3_zh.webp" alt="" />
+<Callout type="error">
+**Dangerous operation warning**
+
+Before clicking **Delete**, make sure **Members** is `0`.
+
+* **If users still belong to the group:** Forcing deletion may move them to the default group, causing loss of resource access and workflow interruption.
+* **Recommended:** First move group members to another group in **User Management**, then delete.
+</Callout>

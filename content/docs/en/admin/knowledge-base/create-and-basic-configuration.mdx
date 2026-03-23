@@ -1,0 +1,32 @@
+---
+title: "Create and Basic Configuration"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 1. Create and Basic Configuration
+
+On the knowledge base list page, click **+ Add Knowledge Base** in the top right to start. This step determines how data is "understood" and "stored".
+
+<img src="/assets/images/zh/admin/knowledge-base-create-basic-config_zh.webp" alt="" />
+#### Basic Parameters
+
+<table><thead><tr><th width="123.7421875">Field</th><th width="65.84765625">Required</th><th>Description</th></tr></thead><tbody><tr><td><strong>Knowledge base name</strong></td><td>Yes</td><td>Use business-identifiable names like <code>Product Technical Docs</code> or <code>Employee Handbook 2024</code>.</td></tr><tr><td><strong>Description</strong></td><td>No</td><td>Brief scope notes to help admins collaborate.</td></tr><tr><td><strong>Embedding model</strong></td><td><strong>Yes</strong></td><td><strong>Core parameter</strong>. Converts text into vectors. Choose multilingual, high-dimension models (e.g., <code>bge-m3</code> or <code>text-embedding-v3</code>).</td></tr></tbody></table>
+
+<Callout type="warn">
+**Note:** After creation, the **Embedding model** usually cannot be changed directly. Different models have incompatible vector spaces, so switching requires rebuilding the knowledge base and reindexing documents.
+</Callout>
+
+#### Advanced Settings
+
+Click **Advanced Settings** to expand. These parameters directly affect retrieval granularity and accuracy.
+
+<table><thead><tr><th width="171.5234375">Parameter</th><th width="112.96484375">Recommended</th><th>Details</th></tr></thead><tbody><tr><td><strong>Rerank model</strong></td><td><em>Enable as needed</em></td><td><strong>Second-pass ranking</strong>. The embedding model does fast recall; rerank models rescore results for accuracy.<br /><strong>Recommendation:</strong> Enable for high-accuracy scenarios (legal, medical).</td></tr><tr><td><strong>Chunk size</strong></td><td><code>800</code> - <code>1500</code></td><td>Characters per chunk. Too small loses context; too large adds noise.</td></tr><tr><td><strong>Overlap</strong></td><td><code>100</code> - <code>200</code></td><td>Overlap between chunks to preserve semantic continuity.<br /><strong>Recommendation:</strong> 10%-15% of chunk size.</td></tr></tbody></table>
+
+<Callout type="info">
+**Configuration recommendations:**
+
+* **General docs:** Chunk 1000 / Overlap 100
+* **Code/technical docs:** Chunk 1500 / Overlap 200
+* **Fragmented Q&A:** Chunk 500 / Overlap 50
+</Callout>

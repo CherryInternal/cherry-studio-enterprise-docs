@@ -1,0 +1,10 @@
+{
+  "title": "系统设置",
+  "pages": [
+    "basic-settings",
+    "network-settings",
+    "search-engine-configuration",
+    "document-preprocessing-configuration",
+    "cache-management"
+  ]
+}

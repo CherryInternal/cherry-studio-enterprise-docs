@@ -1,0 +1,120 @@
+---
+title: クイックスタート
+description: 20 分で Cherry Studio エンタープライズ版を開始。デプロイから最初のメッセージ送信まで
+---
+
+import { DynamicLink } from 'fumadocs-core/dynamic-link'
+import { Step, Steps } from 'fumadocs-ui/components/steps'
+import { Callout } from 'fumadocs-ui/components/callout'
+
+## ステップ 1: デプロイ
+
+用途に合った導入方法を選択してください:
+
+<Cards>
+  <Card title="クラウドアプリ導入" href="/[lang]/docs/setup/cloud-app" description="ワンクリック導入、技術要件なし、運用コストゼロ" />
+  <Card title="Docker 導入" href="/[lang]/docs/setup/docker" description="Docker Compose で素早く導入" />
+  <Card title="K8s 導入" href="/[lang]/docs/setup/helm" description="Helm を使って Kubernetes に導入" />
+</Cards>
+
+
+## ステップ 2: ライセンスを取得
+
+**14 日間の無料トライアル** を提供しています。デプロイ完了後、すべての機能を体験できます。正式ライセンスの購入も可能です。
+
+<div style={{margin:'12px 0',display:'flex',gap:'12px',flexWrap:'wrap'}}>
+  <a href="https://enterprise.cherry-ai.com/signin?redirect=%2Fconsole%2Fproducts" target="_blank" style={{display:'inline-flex',alignItems:'center',gap:'6px',height:'36px',padding:'0 14px',backgroundColor:'#1a6eff',color:'white',borderRadius:'6px',fontSize:'14px',fontWeight:500,textDecoration:'none'}}>
+    <svg style={{flexShrink:0}} xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    <span style={{lineHeight:1}}>ライセンスを購入</span>
+  </a>
+</div>
+
+<Callout type="info">
+  <DynamicLink href="/[lang]/docs/pricing">料金プランを見る →</DynamicLink>
+</Callout>
+
+
+## ステップ 3: システム設定
+
+<Steps>
+<Step>
+
+### プロバイダーを追加
+
+管理コンソールにログインし、「サービスプロバイダー管理」で AI プロバイダー（OpenAI、Anthropic など）を追加し、API Key を設定します。
+
+<Callout type="info">
+  初回ログイン時の管理者アカウント情報が必要な場合は、先に <DynamicLink href="/[lang]/docs/setup">インストールとデプロイガイド</DynamicLink> を確認してください。クラウドアプリ導入では、アプリ設定ページに表示されるアカウント情報を使用します。
+</Callout>
+
+<img src="/assets/images/zh/admin/provider-management-standard-1_zh.webp" alt="プロバイダーを追加" />
+<Callout type="info">
+  <DynamicLink href="/[lang]/docs/admin/service-provider">プロバイダー設定の詳細を見る →</DynamicLink>
+</Callout>
+
+</Step>
+
+<Step>
+
+### 既定モデルを設定
+
+「モデル管理」で追加したプロバイダーの利用可能モデルを設定し、既定モデルを指定します。
+
+<img src="/assets/images/zh/admin/default-model-settings-overview_zh.webp" alt="既定モデルを設定" />
+<Callout type="info">
+  <DynamicLink href="/[lang]/docs/admin/model-settings">モデル設定の詳細を見る →</DynamicLink>
+</Callout>
+
+</Step>
+
+<Step>
+
+### ユーザーを追加
+
+「ユーザー管理」でチームメンバーのアカウントを作成します。
+
+<img src="/assets/images/zh/admin/user-management-add-user-modal_zh.webp" alt="ユーザーを追加" />
+<Callout type="info">
+  <DynamicLink href="/[lang]/docs/admin/user-management">ユーザー管理の詳細を見る →</DynamicLink>
+</Callout>
+
+</Step>
+
+<Step>
+
+### クライアントをダウンロード
+
+Cherry Studio エンタープライズ版クライアントをダウンロードしてインストールします。
+
+<div style={{margin:'12px 0'}}>
+  <a href="https://github.com/CherryHQ/cherry-studio/releases" target="_blank" style={{display:'inline-flex',alignItems:'center',gap:'6px',height:'36px',padding:'0 14px',backgroundColor:'#1a6eff',color:'white',borderRadius:'6px',fontSize:'14px',fontWeight:500,textDecoration:'none'}}>
+    <svg style={{flexShrink:0}} xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+    <span style={{lineHeight:1}}>クライアントをダウンロード</span>
+  </a>
+</div>
+
+</Step>
+
+<Step>
+
+### ログインして最初のメッセージを送信
+
+管理者が作成したアカウントでクライアントにログインし、すべての機能を利用できます。
+
+<img src="/assets/images/zh/client-chat-demo.webp" alt="クライアントチャット" />
+<Callout type="info">
+  <DynamicLink href="/[lang]/docs/client">クライアントの詳細を見る →</DynamicLink>
+</Callout>
+
+</Step>
+
+<Step>
+
+### 完了
+
+おめでとうございます。Cherry Studio エンタープライズ版の導入と設定が完了しました。
+
+</Step>
+</Steps>
+
+<div style={{height:'200px'}} />

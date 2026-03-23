@@ -1,0 +1,9 @@
+{
+  "title": "License Management",
+  "pages": [
+    "activate-license",
+    "authorization-parameters",
+    "authorization-status-overview",
+    "maintenance-operations"
+  ]
+}

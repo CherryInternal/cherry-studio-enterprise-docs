@@ -1,0 +1,71 @@
+---
+title: "Common Configuration Templates"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 3. Common Configuration Templates
+
+To help you get started quickly, here are validated MCP server configurations.
+
+#### 🌐 Playwright (Web Automation)
+
+Enables browsing webpages, taking screenshots, and scraping data.
+
+* **Dependencies**: Node.js
+* **Use cases**: Web search assistants, news summary assistants.
+
+```json
+{
+  "name": "Playwright",
+  "type": "stdio",
+  "command": "npx",
+  "args": [
+    "-y",
+    "@modelcontextprotocol/server-playwright"
+  ]
+}
+```
+
+#### 📂 Filesystem (Local Filesystem)
+
+Enables reading and writing to specific server directories.
+
+* **Dependencies**: Node.js
+* **Use cases**: Code audit assistants, log analysis assistants.
+
+<Callout type="error">
+**Security warning:** Always specify a **safe directory** in `args` (e.g., `/Users/admin/desktop`). Never grant root `/` access to avoid accidental deletion.
+</Callout>
+
+```json
+{
+  "name": "Filesystem",
+  "type": "stdio",
+  "command": "npx",
+  "args": [
+    "-y",
+    "@modelcontextprotocol/server-filesystem",
+    "/Users/username/desktop/allowed-folder"
+  ]
+}
+```
+
+#### 📡 Fetch (HTTP Requests)
+
+Enables HTTP requests.
+
+* **Dependencies**: Python (uv) or Node.js
+* **Use cases**: API testing, simple data scraping.
+
+```json
+{
+  "name": "Fetch",
+  "type": "stdio",
+  "command": "uv",
+  "args": [
+    "x",
+    "mcp-server-fetch"
+  ]
+}
+```

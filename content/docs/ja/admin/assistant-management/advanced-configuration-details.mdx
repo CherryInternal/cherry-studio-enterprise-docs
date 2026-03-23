@@ -1,0 +1,75 @@
+---
+title: "詳細設定"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 3. 詳細設定
+
+作成後に **編集** をクリックすると詳細設定画面に入ります。左ナビで 4 つの主要領域に分かれています。
+
+#### 3.1 プロンプト設定 (Prompt Settings)
+
+アシスタントの「人格」と権限を管理します。
+
+<img src="/assets/images/zh/admin/assistant-management-advanced-config-1_zh.webp" alt="" />
+* **プロンプトエディタ:** Markdown 対応。システム指令を随時更新。
+* **プロンプト可視性:**
+
+  * **On:** ユーザーが対話詳細でシステムプロンプトを確認可能。
+  * **Off:** 管理者のみ閲覧可。企業のコア Prompt 資産を保護。
+
+  <img src="/assets/images/zh/admin/assistant-management-advanced-config-2_zh.webp" alt="" />
+#### 3.2 モデル設定 (Model Settings)
+
+推論挙動とリソース消費を細かく制御します。
+
+<img src="/assets/images/zh/admin/assistant-management-advanced-config-3_zh.webp" alt="" />
+<img src="/assets/images/zh/admin/assistant-management-advanced-config-4_zh.webp" alt="" />
+<table><thead><tr><th>設定</th><th width="344.203125">説明</th><th>推奨</th></tr></thead><tbody><tr><td><strong>モデル (Model)</strong></td><td>基盤モデルを随時切替（例：GPT-4 → DeepSeek）。</td><td>タスクの難易度で選択</td></tr><tr><td><strong>温度 (Temperature)</strong></td><td>出力のランダム性。<code>0</code> は決定的（コード/論理向き）、<code>1+</code> は創造的。</td><td>論理: 0.1 / クリエイティブ: 0.8</td></tr><tr><td><strong>コンテキスト数 (Context)</strong></td><td>会話に含める履歴ターン数。多いほど記憶は長いがコスト増。</td><td>既定 5-10</td></tr><tr><td><strong>Top P</strong></td><td>核サンプリングの多様性パラメータ。</td><td>既定または温度と調整</td></tr><tr><td><strong>最大 Token 数</strong></td><td>回答最大長を制限し、過剰出力を防ぐ。</td><td>既定または 4096</td></tr><tr><td><strong>ストリーム出力</strong></td><td>タイプライター効果の有効化。体感遅延を減らすため推奨。</td><td>✅ On</td></tr><tr><td><strong>MCP 呼び出し方式</strong></td><td>ツール呼び出し方法。精度の高い <code>Function</code> を推奨。</td><td>Function Calling</td></tr></tbody></table>
+
+<Callout type="error">
+**コスト警告:** **コンテキスト数** を増やすとトークン消費が大幅に増えます。コストと体験のバランスを取ってください。
+</Callout>
+
+#### 3.3 知識ベース設定 (Knowledge Base)
+
+アシスタントに「外部知識」を付与します。**[知識ベース管理]** で作成済みのデータセットを選択できます。
+
+* **動作:** 有効化すると、回答前に選択した知識ベースを検索します。
+
+**ツール例:**
+* **Playwright:** Web へアクセスしてページを読み取り。
+* **Filesystem:** サーバー内の特定ディレクトリを読み書き。
+
+<img src="/assets/images/zh/admin/assistant-management-advanced-config-5_zh.webp" alt="" />
+#### 3.4 MCP サーバー (MCP Servers)
+
+このモジュールはアシスタントの「ツールボックス」です。MCP (Model Context Protocol) サーバーを有効化することで、Web 検索、チャート生成、ファイル IO などの実行能力を持たせ、単なる対話者から実行者へ進化させます。
+
+<img src="/assets/images/zh/admin/assistant-management-advanced-config-6_zh.webp" alt="" />
+このページには **グローバル設定** で追加済みの MCP サービスが表示されます。スイッチで付与できます。
+
+| 項目 | 説明 |
+| -------------------- | ---------------------------------------------- |
+| **名称 (Name)** | MCP サービスの一意 ID（例：`fetch`、`mcp-server-chart`）。 |
+| **タイプ (Type)** | 接続方式（通常 `stdio` または `sse`）。 |
+| **説明 (Description)** | サービスの概要。 |
+| **有効 (Enable)** | **[中核操作]** スイッチ。ON でツール呼び出しが可能。 |
+
+**代表的な利用シーン**
+
+* **Web アクセス (`fetch` / `search`)**：ニュース要約やデータ取得。
+* **可視化 (`mcp-server-chart`)**：CSV などのデータからグラフ生成。
+* **ファイル操作 (`filesystem`)**：ログやコードの読み取り分析。
+
+<Callout type="info">
+**前提条件:** これらのサービスは **MCP サーバー（グローバル）** で事前に設定されている必要があります。空の場合は管理者に依頼してください。
+</Callout>
+
+<Callout type="info">
+**設定の推奨:** 複数 MCP を有効化できますが、**「最小限」** を推奨します。
+
+* 例：「データ分析アシスタント」には `mcp-server-chart` と `filesystem` のみ。
+* 理由：ツールが多すぎると注意が分散し、ツール呼び出し失敗や幻覚が増える可能性があります。
+</Callout>

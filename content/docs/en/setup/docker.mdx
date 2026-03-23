@@ -1,0 +1,397 @@
+---
+title: Docker Deployment
+description: Deploy Cherry Studio Enterprise using Docker and Docker Compose
+---
+
+This document describes how to deploy the Cherry Studio Enterprise API service using Docker and Docker Compose.
+
+## Features
+
+- **Dual service integration**: API service (port 3670) and admin console (port 3680) run in a single container
+- **Data persistence**: Supports volume mounts to keep data safe
+- **Environment configuration**: Flexible environment variable configuration
+- **Health checks**: Built-in health check mechanism
+- **Auto restart**: Supports container auto-restart policy
+
+## Quick Start
+
+### Prerequisites
+
+- Docker 20.10+
+- Docker Compose 2.0+ (optional)
+- PostgreSQL database (production)
+
+### Using Docker Compose
+
+```yaml
+services:
+  api:
+    image: cherrystudio/cherry-studio-enterprise-api:latest
+    container_name: cherry-studio-enterprise
+    ports:
+      - '3670:3670'
+      - '3680:3680'
+    environment:
+      - API_URL=https://api.demo.cherry-ai.com
+      - JWT_SECRET=your-secure-jwt-secret-at-least-32-characters
+      - DB_HOST=1Panel-postgresql-UmXp
+      - DB_PORT=5432
+      - DB_USERNAME=cherry-studio-enterprise
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=cherry-studio-enterprise
+      - DB_TYPE=postgres
+      - DB_SSL=false
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+```
+
+#### Full Production Configuration (with Database)
+
+```yaml
+services:
+  # PostgreSQL database
+  postgres:
+    image: postgres:15-alpine
+    container_name: cherry-studio-enterprise-postgres
+    environment:
+      POSTGRES_USER: cherry-studio-enterprise
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: cherry-studio-enterprise
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U cherry-studio-enterprise']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Cherry Studio API
+  api:
+    image: cherrystudio/cherry-studio-enterprise-api:latest
+    container_name: cherry-studio-enterprise
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - '3670:3670'
+      - '3680:3680'
+    environment:
+      # Service configuration
+      - API_URL=https://api.your-domain.com
+      - ADMIN_APP_NAME=Cherry Studio Enterprise
+
+      # Security configuration
+      - JWT_SECRET=${JWT_SECRET:-your-secure-jwt-secret-at-least-32-characters}
+
+      # Database configuration
+      - DB_TYPE=postgres
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USERNAME=cherry-studio-enterprise
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_NAME=cherry-studio-enterprise
+      - DB_SSL=false
+
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+
+    restart: unless-stopped
+
+    healthcheck:
+      test: ['CMD', 'wget', '--quiet', '--tries=1', '--spider', 'http://localhost:3670/health']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  postgres_data:
+    driver: local
+```
+
+### Start and Manage
+
+```bash
+# Start services
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+
+# Stop and remove volumes (dangerous)
+docker-compose down -v
+```
+
+## Configuration Details
+
+### Port Mapping
+
+| Container Port | Service | Description |
+| -------- | ---------- | -------------------------------- |
+| 3670 | API service | RESTful API for client calls |
+| 3680 | Admin console | Web management UI for system configuration |
+
+### Environment Variables
+
+#### Core Configuration
+
+| Variable | Description | Default | Required |
+| -------------------- | ----------------- | --------------- | ---- |
+| `API_PORT` | API service port | `3670` | No |
+| `ADMIN_PORT` | Admin console port | `3680` | No |
+| `API_URL` | API base URL | - | Yes |
+| `JWT_SECRET` | JWT secret | - | Yes |
+| `ADMIN_APP_NAME` | Admin app name | `Cherry Studio` | No |
+| `ADMIN_APP_LOGO_URL` | Admin logo URL | - | No |
+| `ADMIN_BASE_PATH` | Admin base path | `/` | No |
+
+#### Database Configuration
+
+| Variable | Description | Default | Notes |
+| ------------- | ------------ | ---------- | ------------------- |
+| `DB_TYPE` | Database type | `postgres` | Only postgres supported |
+| `DB_HOST` | Database host | - | Required for PostgreSQL |
+| `DB_PORT` | Database port | `5432` | Default PostgreSQL port |
+| `DB_USERNAME` | Database username | - | Required for PostgreSQL |
+| `DB_PASSWORD` | Database password | - | Required for PostgreSQL |
+| `DB_NAME` | Database name | - | Required for PostgreSQL |
+| `DB_SSL` | Enable SSL | `false` | PostgreSQL SSL connection |
+
+> For Casdoor SSO configuration, see [SSO configuration](../advanced/sso).
+
+### Data Persistence
+
+Application data is stored under `/app/data`, including:
+
+- Uploaded files
+- Knowledge base data
+- Application configuration
+
+We recommend mounting this directory to the host to ensure persistence:
+
+```yaml
+volumes:
+  - ./data:/app/data # Application data
+  - ./logs:/app/logs # Log files (optional)
+```
+
+## Deployment Best Practices
+
+### 1. Security Configuration
+
+**JWT secret management**:
+
+```bash
+# Generate a strong random secret
+openssl rand -base64 32
+```
+
+### 2. Network Configuration
+
+**Use a custom network**:
+
+```yaml
+services:
+  api:
+    networks:
+      - cherry-network
+
+networks:
+  cherry-network:
+    driver: bridge
+```
+
+**Configure a reverse proxy (Nginx)**:
+
+```nginx
+server {
+    listen 80;
+    server_name api.your-domain.com;
+
+    location / {
+        proxy_pass http://localhost:3670;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+server {
+    listen 80;
+    server_name admin.your-domain.com;
+
+    location / {
+        proxy_pass http://localhost:3680;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+```
+
+### 3. Performance Optimization
+
+**Resource limits**:
+
+```yaml
+services:
+  api:
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+```
+
+**Health check configuration**:
+
+```yaml
+healthcheck:
+  test: ['CMD', 'curl', '-f', 'http://localhost:3670/health']
+  interval: 30s
+  timeout: 10s
+  retries: 3
+  start_period: 40s
+```
+
+### 4. Log Management
+
+**Configure log driver**:
+
+```yaml
+services:
+  api:
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '10m'
+        max-file: '3'
+```
+
+## Monitoring and Maintenance
+
+### View Logs
+
+```bash
+# Tail logs in real time
+docker logs -f cherry-studio-enterprise
+
+# View last 100 lines
+docker logs --tail 100 cherry-studio-enterprise
+
+# View logs for a specific time range
+docker logs --since 2024-01-01 --until 2024-01-02 cherry-studio-enterprise
+```
+
+### Performance Monitoring
+
+```bash
+# View container resource usage
+docker stats cherry-studio-enterprise
+
+# View container details
+docker inspect cherry-studio-enterprise
+
+# Enter container for debugging
+docker exec -it cherry-studio-enterprise sh
+```
+
+### Update and Upgrade
+
+```bash
+# Pull latest image
+docker-compose pull
+
+# Stop and restart services
+docker-compose down
+docker-compose up -d
+```
+
+## Troubleshooting
+
+### Common Issues
+
+#### 1. Container fails to start
+
+```bash
+# Check container logs
+docker logs cherry-studio-enterprise
+
+# Check port usage
+netstat -tulpn | grep -E '3670|3680'
+
+# Check Docker daemon
+systemctl status docker
+```
+
+#### 2. Database connection failure
+
+- Ensure the database service is running
+- Check network connectivity and firewall rules
+- Verify database credentials
+- Ensure the database is created and permissions are correct
+
+#### 3. Permission issues
+
+```bash
+# Fix data directory permissions
+sudo chown -R 1000:1000 ./data
+
+# Or fix inside the container
+docker exec cherry-studio-enterprise \
+  chown -R node:node /app/data
+```
+
+#### 4. Out of memory
+
+```bash
+# Increase Docker memory limit
+docker update --memory 4g cherry-studio-enterprise
+
+# Or configure in docker-compose.yml
+deploy:
+  resources:
+    limits:
+      memory: 4G
+```
+
+## Notes
+
+1. **Production security**:
+
+   - You must change the default JWT_SECRET
+   - Protect the database with strong passwords
+   - Enable HTTPS/TLS
+   - Regularly update image versions
+
+2. **Data persistence**:
+
+   - Always mount data volumes to the host
+
+3. **Performance considerations**:
+
+   - Adjust resource limits based on load
+   - Use an external PostgreSQL for better performance
+   - Configure appropriate health check parameters
+
+4. **Network security**:
+   - Expose only necessary ports
+   - Use firewall rules to restrict access
+   - Use a reverse proxy in production
+
+## Related Documents
+
+- [Helm deployment guide](./helm) - Deploy to Kubernetes
+- [Database configuration guide](../advanced/database) - PostgreSQL configuration details
+- [SSO configuration](../advanced/sso) - SSO setup

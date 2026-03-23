@@ -1,0 +1,23 @@
+---
+title: "トラブルシューティング"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 4. トラブルシューティング
+
+ミニプログラムに Web ページを埋め込む際、ページが読み込めない場合があります。以下を確認してください。
+
+<Callout type="error">
+**エラー：接続拒否 / Refused to connect** 多くの場合、対象サイトのセキュリティポリシーが原因です。
+</Callout>
+
+* **原因:** 対象サイトが HTTP ヘッダに `X-Frame-Options: SAMEORIGIN` または `DENY` を設定し、iframe 埋め込みを拒否している。
+* **対処:**
+  1. **サイト管理者に連絡:** 社内システムの場合、Cherry Studio ドメイン/Electron での埋め込み許可を依頼。
+  2. **埋め込み専用 URL を使用:** 一部の AI サービスは Embed 用 URL を提供。
+  3. **プロトコル確認:** `https` で始まっているか再確認。
+
+<Callout type="info">
+**ベストプラクティス** 全体公開前にテスト用ミニプログラムを作成し、クライアントで正常に開けるか確認してから本番名称に変更/公開してください。
+</Callout>

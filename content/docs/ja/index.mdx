@@ -1,0 +1,51 @@
+---
+title: 紹介
+description: Cherry Studio エンタープライズ版 - 現代のチームと企業向けに設計された AI 生産性・管理プラットフォーム
+---
+
+import { Card, Cards } from 'fumadocs-ui/components/card'
+import { KeyRound, BookText, Users, Server, RefreshCw, ShieldCheck } from 'lucide-react'
+
+<img src="/assets/images/zh/intro-hero.webp" alt="Cherry Studio エンタープライズ版" />
+<img src="/assets/images/zh/intro-admin.webp" alt="Cherry Studio 管理コンソール" />
+## 主な特長
+
+<Cards>
+  <Card icon={<KeyRound />} title="統合モデル管理" description="各種クラウド LLM の接続と管理を集中化し、オンプレ/私有化にも対応。従業員は設定不要で利用できます" />
+  <Card icon={<BookText />} title="エンタープライズ知識ベース" description="チーム共有の知識ベースを構築・管理し、統一知識に基づく AI 対話で回答品質を向上します" />
+  <Card icon={<Users />} title="きめ細かな権限制御" description="統合管理コンソールで役割ベースの権限付与と柔軟なリソースアクセス制御を実現します" />
+  <Card icon={<Server />} title="完全なプライベート導入" description="社内サーバーやプライベートクラウドに導入可能。データは 100% プライベートに管理されます" />
+  <Card icon={<RefreshCw />} title="信頼できるバックエンドサービス" description="安定した API サービスとエンタープライズ級のバックアップ/復旧で事業継続性を確保します" />
+  <Card icon={<ShieldCheck />} title="セキュリティとコンプライアンス" description="厳格なセキュリティ/コンプライアンス要件に対応し、監査ログで利用履歴を追跡できます" />
+</Cards>
+
+## クイック体験
+
+<ExperienceCards>
+  <ExperienceCard
+    step={1}
+    title="管理コンソールを体験"
+    description="管理コンソールにログインして、エンタープライズ版の管理機能を確認します"
+    items={[
+      { label: "管理コンソール", value: "https://admin.demo.cherry-ai.com" },
+      { label: "アカウント", value: "admin" },
+      { label: "パスワード", value: "password" }
+    ]}
+    buttonText="管理コンソールを開く"
+    buttonHref="https://admin.demo.cherry-ai.com"
+    buttonIcon="external"
+  />
+  <ExperienceCard
+    step={2}
+    title="エンタープライズクライアントをダウンロード"
+    description="クライアントをインストールし、サーバーアドレスを設定して体験できます"
+    items={[
+      { label: "サーバーURL", value: "https://api.demo.cherry-ai.com" },
+      { label: "アカウント", value: "user" },
+      { label: "パスワード", value: "password" }
+    ]}
+    buttonText="クライアントをダウンロード"
+    buttonHref="https://www.cherry-ai.com/enterprise/download"
+    buttonIcon="download"
+  />
+</ExperienceCards>

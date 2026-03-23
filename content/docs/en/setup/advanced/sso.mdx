@@ -1,0 +1,113 @@
+---
+title: Single Sign-On
+description: Casdoor SSO configuration guide
+---
+
+Cherry Studio Enterprise integrates Casdoor as the unified identity system to provide enterprise-grade SSO.
+
+## Features
+
+- **Unified authentication**: Sign in once to access all related apps
+- **User management**: Centralized enterprise user and permission management
+- **Multiple login methods**: Username/password, third-party login, and more
+- **Security**: OAuth 2.0-based authentication for secure flows
+
+## Environment Variable Configuration
+
+Configure the following Casdoor parameters in Docker or environment variables:
+
+```bash
+# Casdoor service configuration
+CASDOOR_ENDPOINT=https://auth.cherry-ai.com          # Casdoor endpoint
+CASDOOR_APP_ID=d29cf4a499060d916d5e                  # App ID
+CASDOOR_APP_SECRET=your-casdoor-app-secret                     # App secret
+CASDOOR_ORGANIZATION_NAME=cherry-studio               # Organization name
+CASDOOR_APPLICATION_NAME=cherry-studio-enterprise    # Application name
+```
+
+## Docker Compose Configuration
+
+Add Casdoor configuration in `docker-compose.yml`:
+
+```yaml
+services:
+  cherry-studio-enterprise-api:
+    image: cherrystudio/cherry-studio-enterprise-api:latest
+    container_name: cherry-studio-enterprise-api
+    environment:
+      # Other required configuration omitted
+      # Casdoor SSO configuration
+      - CASDOOR_ENDPOINT=https://auth.cherry-ai.com
+      - CASDOOR_APP_ID=d29cf4a499060d916d5e
+      - CASDOOR_APP_SECRET=your-casdoor-app-secret
+      - CASDOOR_ORGANIZATION_NAME=cherry-studio
+      - CASDOOR_APPLICATION_NAME=cherry-studio-enterprise
+    ports:
+      - '3670:3670'
+      - '3680:3680'
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    restart: unless-stopped
+```
+
+## Configuration Reference
+
+| Environment Variable | Description | Example |
+| --------------------------- | -------------------------- | ---------------------------- |
+| `CASDOOR_ENDPOINT` | Casdoor server address | `https://auth.cherry-ai.com` |
+| `CASDOOR_APP_ID` | App ID in Casdoor | `d29cf4a499060d916d5e` |
+| `CASDOOR_APP_SECRET` | App secret for secure communication | `your-casdoor-app-secret` |
+| `CASDOOR_ORGANIZATION_NAME` | Organization name in Casdoor | `cherry-studio` |
+| `CASDOOR_APPLICATION_NAME` | Application name in Casdoor | `cherry-studio-enterprise` |
+
+## Usage Flow
+
+### Client Login
+
+<img src="/assets/images/zh/carsdoor-login.webp" alt="Casdoor login" />
+1. Launch the Cherry Studio Enterprise client
+2. On the login page, select "One-click SSO"
+3. Enter the server address: `https://api.your-domain.com`
+4. The system will redirect to the Casdoor authentication page
+5. After authentication, the client signs in automatically
+
+## User Management
+
+### Add Users
+
+In the Casdoor admin console:
+
+1. Go to **User Management**
+2. Click **Add User**
+3. Fill in user information:
+   - Username
+   - Email
+   - Name
+   - Password (optional, users can set their own)
+4. Assign to the organization: `cherry-studio`
+
+## Security Notes
+
+1. **Protect app secrets**: `CASDOOR_APP_SECRET` is sensitive information
+2. **Use HTTPS**: Production must use HTTPS
+3. **Rotate regularly**: Update app secrets regularly
+4. **Access control**: Configure proper access control in Casdoor
+
+## Troubleshooting
+
+### Redirect failure
+
+- Check `CASDOOR_ENDPOINT` reachability
+- Confirm `API_URL` is configured correctly
+- Verify network connectivity and firewall rules
+
+### Authentication failure
+
+- Check `CASDOOR_APP_ID` and `CASDOOR_APP_SECRET`
+- Confirm organization and application names match
+- Check application logs for details
+
+---
+
+For more technical support, contact: xinming.wang@cherry-ai.com

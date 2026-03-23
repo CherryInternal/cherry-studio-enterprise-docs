@@ -1,0 +1,9 @@
+{
+  "title": "小程序管理",
+  "pages": [
+    "add-custom-mini-program",
+    "edit-and-maintain",
+    "troubleshooting",
+    "ui-overview-and-system-presets"
+  ]
+}

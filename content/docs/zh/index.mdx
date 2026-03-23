@@ -1,0 +1,52 @@
+---
+title: 介绍
+description: Cherry Studio 企业版 - 专为现代团队和企业打造的 AI 生产力与管理平台
+---
+
+import { Card, Cards } from 'fumadocs-ui/components/card'
+import { KeyRound, BookText, Users, Server, RefreshCw, ShieldCheck } from 'lucide-react'
+
+<img src="/assets/images/zh/intro-hero.webp" alt="Cherry Studio 企业版" />
+<img src="/assets/images/zh/intro-admin.webp" alt="Cherry Studio 管理后台" />
+## 核心优势
+
+<Cards>
+  <Card icon={<KeyRound />} title="统一模型管理" description="集中接入和管理各类云端大模型，支持本地私有化部署，员工无需配置即可使用" />
+  <Card icon={<BookText />} title="企业级知识库" description="构建和管理团队共享知识库，基于统一知识进行 AI 交互，提升回答质量" />
+  <Card icon={<Users />} title="精细化权限控制" description="统一的管理后台，基于角色的权限分配，灵活的资源访问控制" />
+  <Card icon={<Server />} title="完全私有化部署" description="支持企业内部服务器部署，私有云环境部署，数据 100% 私有可控" />
+  <Card icon={<RefreshCw />} title="可靠的后端服务" description="提供稳定的 API 服务、企业级数据备份与恢复机制，保障业务连续性" />
+  <Card icon={<ShieldCheck />} title="安全合规保障" description="满足最严格的数据安全与合规要求，支持审计日志，确保数据使用可追溯" />
+</Cards>
+
+## 快速体验
+
+<ExperienceCards>
+  <ExperienceCard
+    step={1}
+    title="体验后台管理系统"
+    description="登录管理后台，了解企业版的管理功能"
+    items={[
+      { label: "管理后台", value: "https://admin.demo.cherry-ai.com" },
+      { label: "账号", value: "admin" },
+      { label: "密码", value: "password" }
+    ]}
+    buttonText="打开管理后台"
+    buttonHref="https://admin.demo.cherry-ai.com"
+    buttonIcon="external"
+  />
+  <ExperienceCard
+    step={2}
+    title="下载企业客户端"
+    description="下载安装客户端，配置服务端地址后即可体验"
+    items={[
+      { label: "服务端地址", value: "https://api.demo.cherry-ai.com" },
+      { label: "账号", value: "user" },
+      { label: "密码", value: "password" }
+    ]}
+    buttonText="下载客户端"
+    buttonHref="https://www.cherry-ai.com/enterprise/download"
+    buttonIcon="download"
+  />
+</ExperienceCards>
+

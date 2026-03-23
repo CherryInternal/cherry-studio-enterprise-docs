@@ -1,0 +1,24 @@
+---
+title: "添加新用户"
+description: 管理员可通过后台手动录入信息，为新入职员工或系统对接方创建 Cherry Studio 访问账号。
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 2. 添加新用户
+
+#### 操作流程 <a href="#heading8ca0746f50e147119c6c47d6dded5dd2-cao-zuo-liu-cheng-0" id="heading8ca0746f50e147119c6c47d6dded5dd2-cao-zuo-liu-cheng-0"></a>
+
+1. 在用户管理主界面右上角，点击 **+ 添加用户** 按钮。
+2. 在弹出的侧滑/模态窗口中，依次完成以下配置：
+
+<img src="/assets/images/zh/admin/user-management-add-user-modal_zh.webp" alt="添加新用户弹窗" />
+#### 配置参数详解 <a href="#heading8ca0746f50e147119c6c47d6dded5dd2-pei-zhi-can-shu-xiang-jie-0" id="heading8ca0746f50e147119c6c47d6dded5dd2-pei-zhi-can-shu-xiang-jie-0"></a>
+
+<table><thead><tr><th width="105.7265625">参数项</th><th width="76.95703125">必填</th><th width="139.546875">格式要求</th><th>说明</th></tr></thead><tbody><tr><td><strong>所属分组</strong></td><td><strong>是</strong></td><td>下拉选择</td><td><strong>核心配置</strong>。选择用户所属的逻辑分组，此项直接决定用户登录后能看到哪些模型（Model Provider）和助手。</td></tr><tr><td><strong>用户名</strong></td><td><strong>是</strong></td><td>至少 3 个字符</td><td>建议使用员工姓名拼音或工号，需保证系统内唯一。</td></tr><tr><td><strong>邮箱</strong></td><td><strong>是</strong></td><td>有效 Email 格式</td><td>必须真实有效，用于后续系统通知。</td></tr><tr><td><strong>密码</strong></td><td><strong>是</strong></td><td>至少 6 个字符</td><td>初始登录密码。</td></tr><tr><td><strong>手机号</strong></td><td>否</td><td>数字格式</td><td>选填，用于补充联系方式。</td></tr><tr><td><strong>激活状态</strong></td><td><strong>是</strong></td><td>开关 (默认开启)</td><td>若关闭，用户创建后暂时无法登录，需管理员手动激活。</td></tr></tbody></table>
+
+3. 点击 **创建用户** 完成操作。
+
+<Callout type="info">
+**Tip:** 出于安全考虑，建议在分发账号后，通知用户并在首次登录后修改初始密码。
+</Callout>

@@ -1,0 +1,34 @@
+---
+title: "Search Engine Configuration"
+description: After configuration, assistants can access real-time info (news, weather, stock prices) via web search, i.e., RAG mode.
+---
+
+# 3. Search Engine Configuration
+
+#### Supported Providers
+
+Cherry Studio integrates multiple mainstream search APIs. Choose based on your needs:
+
+* **Tavily** (recommended): AI-optimized with low noise and direct content extraction.
+* **Zhipu**: Good for Chinese-language search.
+* **SearxNG**: For privacy-focused self-hosted deployments.
+* **ExaSearch / Bocha**: Other neural search providers.
+
+#### Configuration Steps
+
+1. In **Default search provider**, select a provider for which you have an API key (e.g., `Tavily`).
+2. Fill in the authentication details below.
+
+<img src="/assets/images/zh/admin/system-settings-search-engine_zh.webp" alt="" />
+#### Parameter Details
+
+| Parameter | Description | How to get/fill |
+| ------------- | ------------------------ | --------------------------------------- |
+| **Default search provider** | **Required**. The provider actually used for web search. | Choose from dropdown (e.g., `Tavily`). |
+| **API Host** | Provider endpoint. | Usually default. For self-hosted (SearxNG), enter your server address. |
+| **API Key** | Your private access key. | Obtain from provider console. |
+| **Username** | Only required for `SearxNG`. | Fill in if basic auth is enabled. |
+
+#### Validation and Troubleshooting
+
+After configuration, create an assistant with **Web Search** enabled and ask: "What are the latest AI news today?" If the answer includes cited links, the configuration is successful.

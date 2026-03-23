@@ -1,0 +1,19 @@
+{
+  "title": "管理コンソール",
+  "defaultOpen": true,
+  "pages": [
+    "user-management",
+    "group-management",
+    "service-provider",
+    "model-settings",
+    "assistant-library",
+    "assistant-management",
+    "minapp",
+    "knowledge-base",
+    "mcp-server",
+    "usage-analytics",
+    "system-settings",
+    "authorization",
+    "about"
+  ]
+}

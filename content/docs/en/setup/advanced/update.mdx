@@ -1,0 +1,181 @@
+---
+title: Software Updates
+description: Cherry Studio Enterprise update guide
+---
+
+import { DynamicLink } from 'fumadocs-core/dynamic-link'
+
+<Callout type="info" title="Version Requirement">
+  One-click update requires **v0.3.3** or later. If your current version is lower than v0.3.3, update manually to
+  v0.3.3 first, then you can use one-click update.
+</Callout>
+
+This document explains how to update Cherry Studio Enterprise to the latest version. The system supports one-click updates in the admin console (Docker Compose deployments) or manual updates.
+
+## Update Methods
+
+### Method 1: One-Click Update in Admin Console (Recommended)
+
+If you deployed with Docker Compose, you can update directly from the admin console.
+
+#### Prerequisites
+
+To enable one-click update, configure the following in `docker-compose.yml`:
+
+1. **Mount Docker Socket**: Allow the container to control Docker
+2. **Mount docker-compose.yml**: Allow the container to read and update the config file
+
+#### Configuration Example
+
+```yaml
+services:
+  api:
+    image: cherrystudio/cherry-studio-enterprise-api:v0.3.2
+    container_name: cherry-studio-enterprise-api
+    ports:
+      - '3670:3670'
+      - '3680:3680'
+    environment:
+      # ... other environment variables ...
+    volumes:
+      # Application data
+      - ./data:/app/data
+
+      # Required for one-click update
+      - /var/run/docker.sock:/var/run/docker.sock # Mount Docker Socket
+      - ./docker-compose.yml:/app/docker-compose.yml # Mount docker-compose.yml
+    restart: unless-stopped
+```
+
+#### Steps
+
+1. Sign in to the admin console
+2. Go to the **About** page
+3. In the **Version Info** section, click **Check for updates**
+4. If a new version is available, an **Update now** button and version list will appear
+5. Select the version and click **Update**
+6. The system will automatically:
+   - Pull the new image
+   - Update the image version in docker-compose.yml
+   - Stop old containers
+   - Start new containers
+7. The page will refresh after the update completes
+
+#### Notes
+
+- Service will be briefly interrupted (typically 10-30 seconds)
+- Do not close the browser or refresh during the update
+- If update fails, check container logs
+
+### Method 2: Manual Update
+
+If you did not configure one-click update or prefer manual control, follow these steps:
+
+#### 1. Pull the new image
+
+```bash
+# Pull latest version
+docker pull cherrystudio/cherry-studio-enterprise-api:latest
+
+# Or pull a specific version
+docker pull cherrystudio/cherry-studio-enterprise-api:v0.3.2
+```
+
+#### 2. Update docker-compose.yml
+
+Modify the image tag in `docker-compose.yml`:
+
+```yaml
+services:
+  api:
+    image: cherrystudio/cherry-studio-enterprise-api:v0.3.2 # Update version
+    # ... other configuration unchanged ...
+```
+
+#### 3. Restart services
+
+```bash
+# Stop and recreate containers
+docker-compose down
+docker-compose up -d
+
+# View logs to confirm startup
+docker-compose logs -f
+```
+
+#### 4. Verify the update
+
+- Check the version on the **About** page in the admin console
+- Verify the service is running: `curl http://localhost:3670/health`
+
+## View Version Information
+
+### Check current version
+
+- **Admin console**: Sign in and open the **About** page
+- **API**: Visit the `/health` endpoint
+- **CLI**:
+  ```bash
+  docker inspect cherry-studio-enterprise-api | grep "Image"
+  ```
+
+### View release notes
+
+- **Admin console**: **About** > **Release Notes**
+- **Online docs**: [CHANGELOG](https://releases.enterprise.cherry-ai.com/api/changelog)
+
+## FAQ
+
+### 1. One-click update button does not appear
+
+**Possible causes**:
+
+- Docker Socket not mounted
+- docker-compose.yml not mounted
+- Insufficient Docker Socket permissions
+
+**Solutions**:
+
+- Confirm required volumes are mounted in `docker-compose.yml`
+- Verify Docker Socket exists: `ls -la /var/run/docker.sock`
+- Check container permissions to access Docker Socket
+
+### 2. Image pull failure
+
+**Possible causes**:
+
+- Network connectivity issues
+- Docker Hub access restricted
+
+**Solutions**:
+
+- Check network connectivity
+- Configure a Docker registry mirror
+- Pull the image manually, then update
+
+### 3. Service fails to start after update
+
+**Troubleshooting steps**:
+
+```bash
+# Check container logs
+docker logs cherry-studio-enterprise-api
+
+# Check container status
+docker ps -a
+
+# Check port usage
+netstat -tulpn | grep -E '3670|3680'
+```
+
+**Common causes**:
+
+- Database connection configuration error
+- Port conflicts
+- Missing environment variables
+
+## Related Documents
+
+- <DynamicLink href="/[lang]/docs/setup/docker">Docker deployment guide</DynamicLink> - Docker deployment details
+- <DynamicLink href="/[lang]/docs/setup/database">Database configuration guide</DynamicLink> - PostgreSQL configuration
+- <DynamicLink href="/[lang]/docs/setup/helm">Helm deployment guide</DynamicLink> - Kubernetes deployment

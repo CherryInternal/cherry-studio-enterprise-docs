@@ -1,0 +1,29 @@
+---
+title: "缓存管理"
+description: 随着使用时间的增加，Cherry Studio 会在本地产生临时文件。此页面用于监控存储占用并清理不再使用的垃圾文件，释放磁盘空间。
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 5. 缓存管理
+
+#### 状态指标说明
+
+<table><thead><tr><th width="141.5234375">指标</th><th>含义</th></tr></thead><tbody><tr><td><strong>总文件数 / 大小</strong></td><td>当前数据目录下的所有文件统计。</td></tr><tr><td><strong>有效文件</strong></td><td>正在被知识库引用、或属于活跃对话记录的文件。<strong>系统会保护这些文件不被删除。</strong></td></tr><tr><td><strong>无效文件</strong></td><td>数据库记录已删除，但物理文件仍残留在硬盘中的"孤立文件"。</td></tr></tbody></table>
+
+#### 清理操作
+
+1. 点击 **刷新统计** 按钮，获取最新的磁盘扫描结果。
+2. 查看 **无效文件** 的数量和大小。
+3. 点击 **清理无效文件 (0)** 按钮执行清理。
+
+<img src="/assets/images/zh/admin/system-settings-cache_zh.webp" alt="" />
+#### ⚠️ 风险警告
+
+<Callout type="error">
+**数据安全警告**：
+
+* 清理操作将**永久删除**被标记为"无效"的物理文件。
+* 该操作不可逆。
+* 虽然系统通过数据库比对来识别无效文件，但在执行清理前，**强烈建议**您备份 Cherry Studio 的数据目录，以防因软件逻辑边缘情况导致的重要附件丢失。
+</Callout>

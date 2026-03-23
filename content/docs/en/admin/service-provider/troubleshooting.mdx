@@ -1,0 +1,52 @@
+---
+title: "Troubleshooting"
+---
+
+# 4. Troubleshooting
+
+When users encounter issues calling models with API keys, it typically falls into the following categories. Diagnose based on error codes or messages.
+
+#### Q1: "Insufficient Balance" or "Quota Exceeded"
+
+**Symptoms:** API returns `402 Payment Required` or `429 Too Many Requests` with balance errors.
+
+* **Causes:**
+  1. **Upstream balance exhausted:** The enterprise provider account (e.g., OpenAI, DeepSeek official) is out of credit.
+  2. **Gateway rate limit:** Cherry Studio rate limits may trigger short-term throttling.
+* **Solutions:**
+  * Check in **Model Management** that the provider API Key is valid.
+  * Log in to the upstream provider (e.g., OpenAI Platform) to check credit balance.
+  * **Temporary workaround:** In **Group Management**, switch the group's default model to a provider with balance.
+
+#### Q2: "Model Not Found"
+
+**Symptoms:** API returns `404 Not Found` with `The model 'xxx' does not exist`.
+
+* **Causes:**
+  * The model name (e.g., `gpt-4-turbo`) is not in the user's group's allowed models.
+* **Solutions:**
+  1. **Check request body:** Verify the `model` parameter in the user's code.
+  2. **Check group permissions:** Go to **Group Management** > select the user's group > check **Model routing** to ensure the model is selected.
+  3. **Alias mapping:** Verify whether model names are remapped (e.g., `gpt-4` mapped to `gpt-4-0613`).
+
+#### Q3: "401 Unauthorized"
+
+**Symptoms:** API rejects the connection.
+
+* **Causes:**
+  * Key is incorrect (extra spaces).
+  * Key is disabled or expired.
+* **Solutions:**
+  * In **Key Settings**, ensure **Enabled** is on.
+  * Check **Expiration time**.
+  * If needed, delete the old key and generate a new `sk-` key.
+
+#### Q4: "No Healthy Upstream"
+
+**Symptoms:** API returns `502 Bad Gateway` or `503 Service Unavailable`.
+
+* **Causes:**
+  * All model channels configured for the user's group are offline or timed out.
+* **Solutions:**
+  * Go to **Model Management** and click **Check** to test connectivity.
+  * Verify the server's network can reach external APIs (e.g., api.openai.com).

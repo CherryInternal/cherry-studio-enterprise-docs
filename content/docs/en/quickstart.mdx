@@ -1,0 +1,120 @@
+---
+title: Quickstart
+description: Get started with Cherry Studio Enterprise in 20 minutes, from deployment to your first message
+---
+
+import { DynamicLink } from 'fumadocs-core/dynamic-link'
+import { Step, Steps } from 'fumadocs-ui/components/steps'
+import { Callout } from 'fumadocs-ui/components/callout'
+
+## Step 1: Deploy
+
+Choose a deployment method that suits you:
+
+<Cards>
+  <Card title="Cloud App Deployment" href="/[lang]/docs/setup/cloud-app" description="One-click deployment, zero technical barrier, no ops cost" />
+  <Card title="Docker Deployment" href="/[lang]/docs/setup/docker" description="Deploy quickly with Docker Compose" />
+  <Card title="K8s Deployment" href="/[lang]/docs/setup/helm" description="Deploy on Kubernetes with Helm" />
+</Cards>
+
+
+## Step 2: Obtain a License
+
+We provide a **14-day free trial**. After deployment, you can experience all features. You can also purchase a full license directly.
+
+<div style={{margin:'12px 0',display:'flex',gap:'12px',flexWrap:'wrap'}}>
+  <a href="https://enterprise.cherry-ai.com/signin?redirect=%2Fconsole%2Fproducts" target="_blank" style={{display:'inline-flex',alignItems:'center',gap:'6px',height:'36px',padding:'0 14px',backgroundColor:'#1a6eff',color:'white',borderRadius:'6px',fontSize:'14px',fontWeight:500,textDecoration:'none'}}>
+    <svg style={{flexShrink:0}} xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    <span style={{lineHeight:1}}>Buy License</span>
+  </a>
+</div>
+
+<Callout type="info">
+  <DynamicLink href="/[lang]/docs/pricing">View full pricing →</DynamicLink>
+</Callout>
+
+
+## Step 3: Configure the System
+
+<Steps>
+<Step>
+
+### Add a Provider
+
+Log in to the admin console and go to "Provider Management" to add AI providers (such as OpenAI or Anthropic) and configure API keys.
+
+<Callout type="info">
+  If you need the first-login admin account details, check the <DynamicLink href="/[lang]/docs/setup">installation and deployment guide</DynamicLink> first. For cloud app deployment, use the account information provided on the app settings page.
+</Callout>
+
+<img src="/assets/images/zh/admin/provider-management-standard-1_zh.webp" alt="Add provider" />
+<Callout type="info">
+  <DynamicLink href="/[lang]/docs/admin/service-provider">View the full provider configuration guide →</DynamicLink>
+</Callout>
+
+</Step>
+
+<Step>
+
+### Set the Default Model
+
+Go to "Model Management" to configure available models for the provider and set a default model.
+
+<img src="/assets/images/zh/admin/default-model-settings-overview_zh.webp" alt="Set default model" />
+<Callout type="info">
+  <DynamicLink href="/[lang]/docs/admin/model-settings">View the full model configuration guide →</DynamicLink>
+</Callout>
+
+</Step>
+
+<Step>
+
+### Add Users
+
+Go to "User Management" and create accounts for team members.
+
+<img src="/assets/images/zh/admin/user-management-add-user-modal_zh.webp" alt="Add users" />
+<Callout type="info">
+  <DynamicLink href="/[lang]/docs/admin/user-management">View the full user management guide →</DynamicLink>
+</Callout>
+
+</Step>
+
+<Step>
+
+### Download the Client
+
+Download and install the Cherry Studio Enterprise client.
+
+<div style={{margin:'12px 0'}}>
+  <a href="https://github.com/CherryHQ/cherry-studio/releases" target="_blank" style={{display:'inline-flex',alignItems:'center',gap:'6px',height:'36px',padding:'0 14px',backgroundColor:'#1a6eff',color:'white',borderRadius:'6px',fontSize:'14px',fontWeight:500,textDecoration:'none'}}>
+    <svg style={{flexShrink:0}} xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+    <span style={{lineHeight:1}}>Download Client</span>
+  </a>
+</div>
+
+</Step>
+
+<Step>
+
+### Sign In and Send Your First Message
+
+Sign in to the client with the account created by the admin to start using all features.
+
+<img src="/assets/images/zh/client-chat-demo.webp" alt="Client chat" />
+<Callout type="info">
+  <DynamicLink href="/[lang]/docs/client">View the full client guide →</DynamicLink>
+</Callout>
+
+</Step>
+
+<Step>
+
+### Done
+
+Congratulations! You have completed deployment and configuration for Cherry Studio Enterprise.
+
+</Step>
+</Steps>
+
+<div style={{height:'200px'}} />

@@ -1,0 +1,123 @@
+---
+title: バックアップと復旧
+description: Cherry Studio Enterprise のバックアップ/復旧ガイド
+---
+
+本ドキュメントでは、PostgreSQL とアプリデータを含む Cherry Studio Enterprise のバックアップ/復旧方法を説明します。
+
+## Docker 導入のバックアップ
+
+### PostgreSQL データベースのバックアップ
+
+```bash
+# docker-compose を使ったバックアップ
+docker-compose exec postgres \
+  pg_dump -U cherry-studio-enterprise cherry-studio-enterprise > backup.sql
+```
+
+### アプリデータディレクトリのバックアップ
+
+```bash
+# コンテナ停止
+docker stop cherry-studio-enterprise
+
+# データディレクトリをバックアップ
+tar -czf cherry-backup-$(date +%Y%m%d).tar.gz ./data
+
+# コンテナ再起動
+docker start cherry-studio-enterprise
+```
+
+### PostgreSQL の復元
+
+```bash
+# docker-compose を使った復元
+docker-compose exec -T postgres \
+  psql -U cherry-studio-enterprise cherry-studio-enterprise < backup.sql
+```
+
+## Kubernetes (Helm) 導入のバックアップ
+
+### PostgreSQL データベースのバックアップ
+
+**方法 1：pg_dump を使用（推奨）**
+
+```bash
+# PostgreSQL に接続してバックアップ
+kubectl exec -it deployment/cherry-studio-enterprise -- pg_dump -h $DB_HOST -U $DB_USERNAME $DB_NAME > backup.sql
+```
+
+**方法 2：アプリデータのバックアップ**
+
+アプリの他データをバックアップする場合、データは PVC に保存されています：
+
+```bash
+# バックアップ用 pod を作成
+kubectl run backup-pod --image=busybox --restart=Never \
+  --overrides='{"spec":{"containers":[{"name":"backup","image":"busybox","command":["sleep","3600"],"volumeMounts":[{"name":"data","mountPath":"/backup"}]}],"volumes":[{"name":"data","persistentVolumeClaim":{"claimName":"cherry-studio-enterprise-data"}}]}}'
+
+# pod 起動待ち
+kubectl wait --for=condition=ready pod/backup-pod --timeout=60s
+
+# pod 内でアーカイブ作成
+kubectl exec backup-pod -- tar -czf /tmp/backup.tar.gz -C /backup .
+
+# バックアップファイルをローカルへコピー
+kubectl cp backup-pod:/tmp/backup.tar.gz ./backup.tar.gz
+
+# backup pod を削除
+kubectl delete pod backup-pod
+```
+
+### バックアップスクリプト（推奨）
+
+バックアップ手順を簡略化するため、`helm/scripts/backup-database.sh` を利用できます。
+
+## バックアップのトラブルシューティング
+
+"timed out waiting for the condition" が発生した場合：
+
+### 1. PVC 名の確認
+
+```bash
+kubectl get pvc
+```
+
+### 2. pod 状態の確認
+
+```bash
+kubectl get pod backup-pod
+kubectl describe pod backup-pod
+```
+
+### 3. 失敗した pod の手動削除
+
+```bash
+kubectl delete pod backup-pod --force --grace-period=0
+```
+
+### 4. 段階的バックアップ
+
+```bash
+# pod を作成（--rm を使用しない）
+kubectl run backup-pod --image=busybox --restart=Never \
+  --overrides='{"spec":{"containers":[{"name":"backup","image":"busybox","command":["sleep","300"],"volumeMounts":[{"name":"data","mountPath":"/backup"}]}],"volumes":[{"name":"data","persistentVolumeClaim":{"claimName":"cherry-studio-enterprise-data"}}]}}'
+
+# pod の準備完了を待つ
+kubectl wait --for=condition=ready pod/backup-pod --timeout=60s
+
+# バックアップ実行
+kubectl exec backup-pod -- tar -czf /tmp/backup.tar.gz -C /backup .
+
+# ファイルをコピー
+kubectl cp backup-pod:/tmp/backup.tar.gz ./backup.tar.gz
+
+# pod を削除
+kubectl delete pod backup-pod
+```
+
+## 関連ドキュメント
+
+- [Docker 導入ガイド](../setup/docker) - Docker 導入の詳細
+- [Helm 導入ガイド](../setup/helm) - Kubernetes 導入
+- [データベース設定ガイド](./database) - PostgreSQL の詳細設定
