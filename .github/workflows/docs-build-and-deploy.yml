@@ -1,0 +1,67 @@
+name: Docs Build and Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Setup pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: Process MDX files
+        run: pnpm fumadocs-mdx
+
+      - name: Build application
+        run: pnpm build
+
+      - name: Package build output
+        run: tar -czf docs-build.tar.gz -C build/client .
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DOCS_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p ${{ secrets.DOCS_SSH_PORT || 22 }} -H ${{ secrets.DOCS_SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy via SCP and SSH
+        env:
+          SSH_HOST: ${{ secrets.DOCS_SSH_HOST }}
+          SSH_USER: ${{ secrets.DOCS_SSH_USER }}
+          SSH_PORT: ${{ secrets.DOCS_SSH_PORT }}
+          DEPLOY_PATH: ${{ secrets.DOCS_DEPLOY_PATH }}
+        run: |
+          SSH_KEY="-i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new"
+          PORT="${SSH_PORT:-22}"
+          REMOTE_PATH="${DEPLOY_PATH:-/var/www/docs}"
+
+          # Upload archive (scp uses -P for port)
+          scp $SSH_KEY -P $PORT docs-build.tar.gz ${SSH_USER}@${SSH_HOST}:/tmp/docs-build.tar.gz
+
+          # Remote: backup, deploy, cleanup
+          ssh $SSH_KEY -p $PORT ${SSH_USER}@${SSH_HOST} << DEPLOY
+            set -e
+            rm -rf "${REMOTE_PATH}/.backup"
+            mkdir -p "${REMOTE_PATH}/.backup"
+            find "${REMOTE_PATH}" -maxdepth 1 -not -name '.backup' -not -path "${REMOTE_PATH}" -exec mv {} "${REMOTE_PATH}/.backup/" \;
+            tar -xzf /tmp/docs-build.tar.gz -C "${REMOTE_PATH}"
+            rm -f /tmp/docs-build.tar.gz
+          DEPLOY
