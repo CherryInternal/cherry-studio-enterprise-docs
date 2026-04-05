@@ -2,8 +2,8 @@
   "title": "Default Model Settings",
   "pages": [
     "default-assistant-model",
-    "recommended-configurations",
     "topic-naming-model",
-    "translation-model"
+    "translation-model",
+    "recommended-configurations"
   ]
 }

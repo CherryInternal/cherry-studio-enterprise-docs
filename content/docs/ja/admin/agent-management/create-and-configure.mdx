@@ -1,0 +1,73 @@
+---
+title: "エージェントの作成と設定"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# エージェントの作成と設定
+
+エージェント管理ページ右上の**新規エージェント**ボタンをクリックして作成ページに入ります。作成ページには 7 つの設定タブがあり、「クイック設定」から始めることも、各項目を順に設定することもできます。
+
+## 1. クイック設定
+
+最もシンプルな作成フロー。アバター、名前、メインモデルを入力するだけで作成できます。
+
+<img src="/assets/images/ja/admin/agent-management-create-quick_ja.webp" alt="クイック設定" />
+
+<table><thead><tr><th width="120">パラメータ</th><th>説明</th></tr></thead><tbody><tr><td><strong>アバター</strong></td><td>エージェントの絵文字アイコン。クリックで変更可能。</td></tr><tr><td><strong>名前 *</strong></td><td>エージェントの固有名称。</td></tr><tr><td><strong>メインモデル *</strong></td><td>エージェントが使用する主要 AI モデル。設定済みプロバイダーのモデルリストから選択。</td></tr></tbody></table>
+
+## 2. 基本設定
+
+エージェントの説明文とシステム指示（System Prompt）を設定します。
+
+<img src="/assets/images/ja/admin/agent-management-create-basic_ja.webp" alt="基本設定" />
+
+<table><thead><tr><th width="160">パラメータ</th><th>説明</th></tr></thead><tbody><tr><td><strong>アバター</strong></td><td>クイック設定と同様。</td></tr><tr><td><strong>名前 *</strong></td><td>クイック設定と同様。</td></tr><tr><td><strong>説明</strong></td><td>エージェントの役割と用途を簡潔に説明します。</td></tr><tr><td><strong>システム指示</strong></td><td>エージェントの動作規則と役割を定義し、毎回の会話にシステムプロンプトとして注入されます。</td></tr><tr><td><strong>指示の可視性</strong></td><td>トグルスイッチ。有効にするとユーザーがシステム指示を閲覧可能。デフォルト：有効。</td></tr></tbody></table>
+
+## 3. モデル設定
+
+タスクフェーズごとに使用する AI モデルを設定します。3 モデルアーキテクチャにより、パフォーマンスとコストの最適バランスを実現できます。
+
+<img src="/assets/images/ja/admin/agent-management-create-model_ja.webp" alt="モデル設定" />
+
+<table><thead><tr><th width="180">パラメータ</th><th width="60">必須</th><th>説明</th></tr></thead><tbody><tr><td><strong>メインモデル</strong></td><td>はい</td><td>応答生成に使用する主要モデル。最も高性能なモデル（Claude Opus、GPT-4 等）を推奨。</td></tr><tr><td><strong>プランニングモデル</strong></td><td>いいえ</td><td>複雑な計画・推論タスク用モデル。空欄の場合はメインモデルを使用。</td></tr><tr><td><strong>高速モデル</strong></td><td>いいえ</td><td>シンプルなタスク用の小型・高速モデル。空欄の場合はメインモデルを使用。低コストで応答が速いモデルに最適。</td></tr></tbody></table>
+
+<Callout type="info">
+**モデル選択のヒント：** メインモデルには Claude Opus または GPT-4 クラスを選択。プランニングモデルはメインモデルと同等か Claude Sonnet。高速モデルには Claude Haiku や GPT-4o-mini などの軽量モデルがコスト削減に有効です。
+</Callout>
+
+## 4. 権限設定
+
+エージェントの実行時権限を制御し、企業セキュリティポリシーに準拠させます。
+
+<img src="/assets/images/ja/admin/agent-management-create-permission_ja.webp" alt="権限設定" />
+
+<table><thead><tr><th width="200">パラメータ</th><th>説明</th></tr></thead><tbody><tr><td><strong>デフォルト権限モード</strong></td><td>エージェント起動時の初期権限モード。ユーザーは実行時に切り替え可能（最高権限まで）。選択肢：通常モード、計画モード、編集承認モード、権限バイパスモード。</td></tr><tr><td><strong>最高権限モード</strong></td><td>ユーザーが選択可能な最高権限モードの上限。「制限なし」に設定すると全モードが利用可能。セキュリティポリシーに従って設定してください。</td></tr></tbody></table>
+
+<Callout type="warn">
+**セキュリティに関する注意：** 「権限バイパス」モードはファイル書き込みやコマンド実行を含む全操作を許可します。信頼できるシニア開発者にのみ付与してください。
+</Callout>
+
+## 5. スキル
+
+エージェントが使用可能なスキルを選択します。スキルは**リソースライブラリ**の「エージェントスキル」モジュールから提供されます。まずリソースライブラリでスキルを追加してから、ここでバインドしてください。
+
+<img src="/assets/images/ja/admin/agent-management-create-skill_ja.webp" alt="スキル設定" />
+
+各スキルはトグルスイッチで有効/無効を切り替えます。リストが空の場合は、**リソースライブラリ → エージェントスキル** でスキルを追加してください。
+
+## 6. MCP サーバー
+
+エージェントが呼び出し可能な MCP サーバーを選択します。MCP サーバーは外部ツールやデータソースの統合機能を提供します。
+
+<img src="/assets/images/ja/admin/agent-management-create-mcp_ja.webp" alt="MCP サーバー設定" />
+
+設定済みの全 MCP サーバーがリスト表示され、トグルスイッチで有効/無効を切り替えます。
+
+## 7. 詳細設定
+
+エージェントの実行時動作パラメータを設定します。
+
+<img src="/assets/images/ja/admin/agent-management-create-advanced_ja.webp" alt="詳細設定" />
+
+<table><thead><tr><th width="160">パラメータ</th><th>説明</th></tr></thead><tbody><tr><td><strong>最大ターン数</strong></td><td>1 セッションで許可される最大ターン数（API 呼び出し回数）。デフォルト：100。無限ループを防止し、タスクごとの API コストを管理します。</td></tr></tbody></table>

@@ -10,7 +10,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 #### 3.1 提示词设置 (Prompt Settings)
 
-此处管理助手的“人设”与权限。
+此处管理助手的"人设"与权限。
 
 <img src="/assets/images/zh/admin/assistant-management-advanced-config-1_zh.webp" alt="" />
 * **提示词编辑器：** 支持 Markdown 格式，可随时优化系统指令。
@@ -34,7 +34,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 #### 3.3 知识库设置 (Knowledge Base)
 
-为助手挂载“外脑”。在此列表中，您可以勾选预先在 \[知识库管理] 模块中索引好的数据集。
+为助手挂载"外脑"。在此列表中，您可以勾选预先在 \[知识库管理] 模块中索引好的数据集。
 
 * **运作机制：** 启用后，助手在回答用户问题前，会先在选中的知识库中 工具示例：\*\*
 * **Playwright：** 允许助手访问互联网，读取网页内容。
@@ -43,7 +43,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 <img src="/assets/images/zh/admin/assistant-management-advanced-config-5_zh.webp" alt="" />
 #### 3.4 MCP 服务器 (MCP Servers)
 
-此模块是助手的“工具箱”。通过启用 MCP (Model Context Protocol) 服务器，您可以赋予助手执行实际操作的能力（如联网搜索、生成图表、读写文件等），使其从单纯的“对话者”进化为“执行者”。
+此模块是助手的"工具箱"。通过启用 MCP (Model Context Protocol) 服务器，您可以赋予助手执行实际操作的能力（如联网搜索、生成图表、读写文件等），使其从单纯的"对话者"进化为"执行者"。
 
 <img src="/assets/images/zh/admin/assistant-management-advanced-config-6_zh.webp" alt="" />
 在此页面中，系统会列出 **全局配置** 中已添加的所有可用 MCP 服务。管理员只需通过开关即可完成能力挂载。
@@ -66,9 +66,9 @@ import { Callout } from 'fumadocs-ui/components/callout'
 </Callout>
 
 <Callout type="info">
-**配置建议：** 虽然 Cherry Studio 支持为一个助手开启多个 MCP 服务，但建议遵循 **“最小够用原则”**。
+**配置建议：** 虽然 Cherry Studio 支持为一个助手开启多个 MCP 服务，但建议遵循 **"最小够用原则"**。
 
-* 例如：给“数据分析助手”仅开启 `mcp-server-chart` 和 `filesystem`。
+* 例如：给"数据分析助手"仅开启 `mcp-server-chart` 和 `filesystem`。
 * 原因：过多的工具可能会分散模型的注意力，导致工具调用失败或产生幻觉。
 </Callout>
 

@@ -1,0 +1,42 @@
+---
+title: "智能体技能"
+icon: Puzzle
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 智能体技能
+
+**智能体技能**是"资源库"中专门为智能体提供的可复用能力模块。管理员可以通过**手动添加**或**从市场下载**两种方式为企业添加技能，添加后的技能可在智能体创建/编辑时被绑定使用。
+
+<Callout type="info">
+**入口路径：** 侧边栏 → 资源库 → 智能体技能（第一个 Tab）
+</Callout>
+
+<img src="/assets/images/zh/admin/agent-skills-list_zh.webp" alt="智能体技能列表" />
+
+## 技能列表
+
+技能列表展示所有已添加的智能体技能，包含以下信息：
+
+<table><thead><tr><th width="100">字段</th><th>说明</th></tr></thead><tbody><tr><td><strong>名称</strong></td><td>技能的标识名称。</td></tr><tr><td><strong>分组</strong></td><td>技能所属的分组，决定哪些用户组可以使用该技能。</td></tr><tr><td><strong>描述</strong></td><td>技能的功能说明。</td></tr><tr><td><strong>操作</strong></td><td>编辑、查看详情、删除等操作。</td></tr></tbody></table>
+
+支持通过搜索框按名称快速查找技能。
+
+## 添加技能
+
+点击列表右上角的 **添加** 按钮，系统提供两种添加方式：
+
+<img src="/assets/images/zh/admin/agent-skills-add-menu_zh.webp" alt="添加技能菜单" />
+
+### 手动添加
+
+适用于企业自建技能或第三方自定义技能。需要上传技能文件（ZIP 或 Markdown 格式），并填写技能的名称、描述等元数据。
+
+### 从市场下载
+
+打开技能市场浏览器，从 Cherry Studio 官方技能市场中选择并下载预置技能。市场中的技能经过官方验证，可直接使用。
+
+<Callout type="info">
+**使用流程：** 在资源库中添加技能 → 在智能体创建/编辑页面的"技能"Tab 中启用该技能 → 智能体即可在运行时调用该技能的能力。
+</Callout>

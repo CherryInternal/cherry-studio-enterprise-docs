@@ -1,6 +1,6 @@
 ---
 title: "服务商管理 (Express 版/托管)"
-description: 与标准版不同，Express 版侧重于“一站式聚合服务”和“统一配额管理”。
+description: 与标准版不同，Express 版侧重于"一站式聚合服务"和"统一配额管理"。
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
@@ -87,9 +87,9 @@ Express 服务将模型资源划分为两大类，通过顶部的标签页切换
 
 ### 4. 读懂模型能力标签 (Tags)
 
-在 Express 列表中，每个模型名称后面都跟着一排彩色的小图标。这些图标代表了模型的“硬实力”，对于分发模型非常重要。
+在 Express 列表中，每个模型名称后面都跟着一排彩色的小图标。这些图标代表了模型的"硬实力"，对于分发模型非常重要。
 
-<table data-header-hidden><thead><tr><th width="88.21484375">含义</th><th>说明</th></tr></thead><tbody><tr><td><strong>推理</strong></td><td><strong>高智商模式</strong>。代表该模型（如 <code>Claude 3.7 Sonnet</code>, <code>o1</code>）具备深度思考能力，适合解决数学竞赛题或复杂代码架构。</td></tr><tr><td><strong>视觉</strong> </td><td><strong>识图能力</strong>。代表该模型可以解析图片内容。如果模型没有此图标，用户上传图片时会报错。</td></tr><tr><td><strong>联网</strong></td><td><strong>原生联网</strong>。部分模型（如 <code>Gemini</code>）具备原生的搜索整合能力（注意：大多数情况下 Cherry Studio 通过 MCP 实现联网，不依赖模型原生能力）。</td></tr><tr><td><strong>工具</strong></td><td><strong>插件支持</strong>。<strong>最重要的图标</strong>。只有带扳手图标的模型，才能支持知识库（RAG）、生成图表、或者调用 MCP 工具。</td></tr><tr><td><strong>免费</strong></td><td><strong>成本控制</strong>。代表该模型调用不消耗账户余额。通常出现在本地部署的模型（如 Ollama）或官方提供的免费测试模型上。适合用于高频调试或日常简单对话。</td></tr><tr><td><strong>嵌入</strong></td><td><strong>知识库基石</strong>。此类模型<strong>不可用于对话</strong>。它的作用是将文本转化为“向量数据”（数字），是构建知识库索引的必选项。在聊天界面选择此模型会报错。</td></tr><tr><td><strong>重排</strong></td><td><strong>精准度优化</strong>。此类模型<strong>不可用于对话</strong>。它用于知识库检索的第二阶段，对搜索结果进行二次打分和重新排序，能显著提高回答的准确性。</td></tr></tbody></table>
+<table data-header-hidden><thead><tr><th width="88.21484375">含义</th><th>说明</th></tr></thead><tbody><tr><td><strong>推理</strong></td><td><strong>高智商模式</strong>。代表该模型（如 <code>Claude 3.7 Sonnet</code>, <code>o1</code>）具备深度思考能力，适合解决数学竞赛题或复杂代码架构。</td></tr><tr><td><strong>视觉</strong> </td><td><strong>识图能力</strong>。代表该模型可以解析图片内容。如果模型没有此图标，用户上传图片时会报错。</td></tr><tr><td><strong>联网</strong></td><td><strong>原生联网</strong>。部分模型（如 <code>Gemini</code>）具备原生的搜索整合能力（注意：大多数情况下 Cherry Studio 通过 MCP 实现联网，不依赖模型原生能力）。</td></tr><tr><td><strong>工具</strong></td><td><strong>插件支持</strong>。<strong>最重要的图标</strong>。只有带扳手图标的模型，才能支持知识库（RAG）、生成图表、或者调用 MCP 工具。</td></tr><tr><td><strong>免费</strong></td><td><strong>成本控制</strong>。代表该模型调用不消耗账户余额。通常出现在本地部署的模型（如 Ollama）或官方提供的免费测试模型上。适合用于高频调试或日常简单对话。</td></tr><tr><td><strong>嵌入</strong></td><td><strong>知识库基石</strong>。此类模型<strong>不可用于对话</strong>。它的作用是将文本转化为"向量数据"（数字），是构建知识库索引的必选项。在聊天界面选择此模型会报错。</td></tr><tr><td><strong>重排</strong></td><td><strong>精准度优化</strong>。此类模型<strong>不可用于对话</strong>。它用于知识库检索的第二阶段，对搜索结果进行二次打分和重新排序，能显著提高回答的准确性。</td></tr></tbody></table>
 
 <Callout type="warn">
 **配置建议**：作为 **默认助手模型**，请务必选择带有 🔧 (工具) 图标的模型，否则助手将无法使用知识库。
@@ -104,7 +104,7 @@ Express 服务将模型资源划分为两大类，通过顶部的标签页切换
 <img src="/assets/images/zh/admin/provider-management-express-6_zh.webp" alt="" />
 虽然 Express 是统一扣费，但管理员可以在此设置**内部结算价格**，用于生成部门账单。
 
-* **输入价格 / 输出价格**：您可以照抄官方定价，也可以设置“溢价”或“内部价”。
+* **输入价格 / 输出价格**：您可以照抄官方定价，也可以设置"溢价"或"内部价"。
 * **货币类型**：支持切换 USD/CNY。设置后，未来在 **\[用量统计]** 页面将依据此价格计算各部门的消耗成本。
 
 ***

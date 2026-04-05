@@ -1,0 +1,49 @@
+---
+title: "批量导入用户"
+description: 通过 Excel 或 CSV 文件批量导入用户和分组，适合企业初始部署或大规模用户管理场景。
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# 批量导入用户
+
+当企业需要一次性创建大量用户账号时，逐个手动添加效率较低。批量导入功能支持通过 **Excel (.xlsx)** 或 **CSV (.csv)** 文件一次性导入多个用户，同时自动创建不存在的分组。
+
+<Callout type="info">
+**入口：** 用户管理页面右上角 **导入** 按钮，或分组管理页面右上角 **导入** 按钮。
+</Callout>
+
+## 操作流程
+
+导入过程分为 3 个步骤：
+
+### 步骤 1：上传文件
+
+<img src="/assets/images/zh/admin/user-management-import-step1_zh.webp" alt="批量导入 - 上传文件" />
+
+1. 点击 **下载 Excel 模板** 或 **下载 CSV 模板** 获取标准模板文件。
+2. 按模板格式填写用户数据。
+3. 将填写好的文件拖拽到上传区域，或点击选择文件。
+4. 点击 **下一步** 进入数据预览。
+
+### 字段说明
+
+<img src="/assets/images/zh/admin/user-management-import-fields_zh.webp" alt="字段说明" />
+
+<table><thead><tr><th width="160">字段名</th><th width="60">必填</th><th>说明</th></tr></thead><tbody><tr><td><code>username</code></td><td><strong>是</strong></td><td>用户的唯一标识，系统内不可重复。</td></tr><tr><td><code>password</code></td><td><strong>是</strong></td><td>用户初始密码。</td></tr><tr><td><code>email</code></td><td>否</td><td>邮箱地址。</td></tr><tr><td><code>mobile</code></td><td>否</td><td>手机号码。</td></tr><tr><td><code>nickname</code></td><td>否</td><td>显示昵称。</td></tr><tr><td><code>group</code></td><td><strong>是</strong></td><td>所属分组名称。若分组不存在，系统将自动创建。</td></tr><tr><td><code>groupDescription</code></td><td>否</td><td>分组描述。仅在分组不存在需要自动创建时使用。</td></tr><tr><td><code>isGroupAdmin</code></td><td>否</td><td>是否为组管理员。可填 <code>true</code>/<code>false</code> 或 <code>是</code>/<code>否</code>，默认 <code>false</code>。</td></tr></tbody></table>
+
+### 步骤 2：数据预览
+
+系统解析文件后展示预览表格，可在此检查数据是否正确。如有格式错误或缺失必填项，系统会高亮提示。
+
+### 步骤 3：执行导入
+
+确认无误后点击执行，系统批量创建用户和分组。导入完成后展示结果摘要（成功数、跳过数、失败数）。
+
+<Callout type="warn">
+**注意事项：**
+* 模板第一行为表头，请勿修改。
+* 若用户名已存在，可选择跳过或更新该用户信息。
+* 分组不存在时会自动创建（仅管理员有此权限）。
+* 建议首次导入前先用少量数据测试，确认格式无误后再批量操作。
+</Callout>

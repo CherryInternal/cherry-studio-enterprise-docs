@@ -9,13 +9,10 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 #### Create and Manage Keys
 
-1. In the user list, click the **⋮** icon next to the target user.
-2. Select **Keys** (Key icon).
+1. In the user list, click the **Keys** button in the **Actions** column for the target user.
+2. View and configure settings in the **Key Settings** panel:
 
-<img src="/assets/images/zh/admin/user-management-api-key-settings-modal_zh.webp" alt="Key settings modal" />
-3. Configure settings in the **Key Settings** panel:
-
-<img src="/assets/images/zh/admin/user-management-api-key-expiration-settings_zh.webp" alt="API Key and expiration settings" />
+<img src="/assets/images/en/admin/user-management-api-key-settings-modal_en.webp" alt="Key settings modal" />
 **Configuration details**
 
 <table><thead><tr><th width="111.69921875">Field</th><th width="369.5078125">Description</th><th>Example/Action</th></tr></thead><tbody><tr><td><strong>Key</strong></td><td>System-generated high-strength random string starting with <code>sk-</code>.</td><td>Click the <strong>copy icon</strong> on the right.</td></tr><tr><td><strong>Description</strong></td><td>Note the purpose of this key for audit.</td><td>Example: <code>Dev Environment CI/CD</code></td></tr><tr><td><strong>Expiration time</strong></td><td>Set the key lifetime. Requests will be rejected after expiration.</td><td>Select date and time.</td></tr><tr><td><strong>Enabled status</strong></td><td>Control activation or suspension.</td><td>Toggle on/off.</td></tr></tbody></table>

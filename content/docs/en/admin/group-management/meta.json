@@ -2,7 +2,7 @@
   "title": "Group Management",
   "pages": [
     "create-and-edit-groups",
-    "faq",
-    "resource-permissions-configuration"
+    "resource-permissions-configuration",
+    "faq"
   ]
 }

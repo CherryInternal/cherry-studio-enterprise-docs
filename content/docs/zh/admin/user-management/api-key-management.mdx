@@ -9,13 +9,10 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 #### 创建与管理密钥
 
-1. 在用户列表中，点击目标用户右侧的 **⋮** 图标。
-2. 选择 **密钥** (Key 图标)。
+1. 在用户列表中，点击目标用户右侧 **操作** 列的 **密钥** 按钮。
+2. 在弹出的 **密钥设置** 面板中查看和配置：
 
 <img src="/assets/images/zh/admin/user-management-api-key-settings-modal_zh.webp" alt="密钥设置弹窗" />
-3. 在弹出的 **密钥设置** 面板中进行配置：
-
-<img src="/assets/images/zh/admin/user-management-api-key-expiration-settings_zh.webp" alt="API Key 及过期时间设置" />
 **配置项说明**
 
 <table><thead><tr><th width="111.69921875">参数</th><th width="369.5078125">描述</th><th>示例/操作</th></tr></thead><tbody><tr><td><strong>密钥 (Key)</strong></td><td>系统自动生成的 <code>sk-</code> 开头的高强度随机字符串。</td><td>点击右侧 <strong>复制图标</strong> 一键复制。</td></tr><tr><td><strong>描述</strong></td><td>备注该 Key 的用途，便于审计。</td><td>例：<code>Dev Environment CI/CD</code></td></tr><tr><td><strong>过期时间</strong></td><td>设定 Key 的生命周期。过期后网关将拒绝请求。</td><td>选择具体的日期和时间。</td></tr><tr><td><strong>启用状态</strong></td><td>控制 Key 的即时生效与冻结。</td><td>开启/关闭开关。</td></tr></tbody></table>

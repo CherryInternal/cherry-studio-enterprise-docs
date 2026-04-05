@@ -9,29 +9,32 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 #### ユーザー情報の編集 <a href="#heading8ca0746f50e147119c6c47d6dded5dd2-bian-ji-yong-hu-xin-xi-0" id="heading8ca0746f50e147119c6c47d6dded5dd2-bian-ji-yong-hu-xin-xi-0"></a>
 
-<img src="/assets/images/zh/admin/user-management-edit-user-modal_zh.webp" alt="ユーザー編集モーダル" />
-グループ権限の変更やパスワードのリセットを行う場合：
+<img src="/assets/images/ja/admin/user-management-edit-user-modal_ja.webp" alt="ユーザー編集モーダル" />
+グループ所属やアカウント状態を変更する場合：
 
 1. ユーザー一覧で対象ユーザーを探します。
-2. **操作** 列の **⋮**（その他）をクリック。
-3. **編集** を選択。
-4. **よくある操作**：
-   * **パスワードリセット**："新しいパスワード" に入力。
+2. **操作** 列の **編集** ボタンをクリック。
+3. **ユーザー編集** パネルで変更を行います：
    * **権限変更**：**所属グループ** を変更すると即時反映。
    * **アカウント停止**：**アクティブ状態** をオフにすると即座にログイン不可。
-5. **ユーザー更新** をクリックして保存。
+   * **管理者への昇格**：**スーパー管理者** をオンにすると管理者権限が付与されます。
+4. **ユーザー更新** をクリックして保存。
+
+<Callout type="info">
+**パスワードリセット**：ユーザーの操作列にある **⋮** アイコンをクリックし、**パスワード変更** を選択して新しいパスワードを設定します。
+</Callout>
 
 #### ユーザー削除 <a href="#heading8ca0746f50e147119c6c47d6dded5dd2-shan-chu-yong-hu-0" id="heading8ca0746f50e147119c6c47d6dded5dd2-shan-chu-yong-hu-0"></a>
 
 退職者や不要なテストアカウントの場合：
 
 1. **操作** 列の **⋮** をクリック。
-2. **削除**（赤色）を選択。
+2. **ユーザー削除**（赤色）を選択。
 
-<img src="/assets/images/zh/admin/user-management-edit-user-1_zh.webp" alt="" />
+<img src="/assets/images/ja/admin/user-management-edit-user-1_ja.webp" alt="" />
 3. 確認ダイアログで削除を確定します。
 
-<img src="/assets/images/zh/admin/user-management-edit-user-2_zh.webp" alt="" />
+<img src="/assets/images/ja/admin/user-management-edit-user-2_ja.webp" alt="" />
 <Callout type="error">
 **Warning:** 削除は**取り消し不可**です。削除後、個人の知識ベース設定や会話履歴は復旧できない場合があります。
 </Callout>

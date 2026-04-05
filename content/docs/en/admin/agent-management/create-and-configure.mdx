@@ -1,0 +1,73 @@
+---
+title: "Create and Configure Agents"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# Create and Configure Agents
+
+Click the **Create Agent** button in the top-right corner of the Agent Management page. The creation page has 7 configuration tabs — start with "Quick Setup" or configure each section individually.
+
+## 1. Quick Setup
+
+The simplest creation flow — just fill in the avatar, name, and primary model.
+
+<img src="/assets/images/en/admin/agent-management-create-quick_en.webp" alt="Quick Setup" />
+
+<table><thead><tr><th width="120">Parameter</th><th>Description</th></tr></thead><tbody><tr><td><strong>Avatar</strong></td><td>An emoji identifier for the agent. Click to change.</td></tr><tr><td><strong>Name *</strong></td><td>The unique name of the agent.</td></tr><tr><td><strong>Primary Model *</strong></td><td>The main AI model for the agent, selected from configured provider models.</td></tr></tbody></table>
+
+## 2. Basic Settings
+
+Configure the agent's description and system instructions (System Prompt).
+
+<img src="/assets/images/en/admin/agent-management-create-basic_en.webp" alt="Basic Settings" />
+
+<table><thead><tr><th width="160">Parameter</th><th>Description</th></tr></thead><tbody><tr><td><strong>Avatar</strong></td><td>Same as Quick Setup.</td></tr><tr><td><strong>Name *</strong></td><td>Same as Quick Setup.</td></tr><tr><td><strong>Description</strong></td><td>A brief description of the agent's role and purpose.</td></tr><tr><td><strong>System Instructions</strong></td><td>Defines the agent's behavior rules and role, injected as the system prompt in every conversation.</td></tr><tr><td><strong>Instructions Visible</strong></td><td>Toggle control. When enabled, users can view the system instructions. Default: enabled.</td></tr></tbody></table>
+
+## 3. Model Settings
+
+Configure the AI models used at different task stages. The three-model architecture allows an optimal balance between performance and cost.
+
+<img src="/assets/images/en/admin/agent-management-create-model_en.webp" alt="Model Settings" />
+
+<table><thead><tr><th width="160">Parameter</th><th width="80">Required</th><th>Description</th></tr></thead><tbody><tr><td><strong>Primary Model</strong></td><td>Yes</td><td>The main model for generating responses. Recommended: the most capable model (e.g., Claude Opus, GPT-4).</td></tr><tr><td><strong>Planning Model</strong></td><td>No</td><td>Model for complex planning and reasoning tasks. Falls back to the primary model if empty.</td></tr><tr><td><strong>Fast Model</strong></td><td>No</td><td>A small, fast model for simple tasks. Falls back to the primary model if empty. Ideal for low-latency, cost-efficient models.</td></tr></tbody></table>
+
+<Callout type="info">
+**Model selection tips:** Choose Claude Opus or GPT-4 tier for the primary model; planning model can match the primary or use Claude Sonnet; fast model works well with Claude Haiku or GPT-4o-mini to reduce costs.
+</Callout>
+
+## 4. Permission Settings
+
+Control agent runtime permissions to comply with enterprise security policies.
+
+<img src="/assets/images/en/admin/agent-management-create-permission_en.webp" alt="Permission Settings" />
+
+<table><thead><tr><th width="200">Parameter</th><th>Description</th></tr></thead><tbody><tr><td><strong>Default Permission Mode</strong></td><td>The initial permission mode when the agent starts. Users can switch at runtime (up to the maximum). Options: Normal, Plan, Accept Edits, Bypass Permissions.</td></tr><tr><td><strong>Maximum Permission Mode</strong></td><td>The highest permission mode users can select. Set to "No Limit" to allow all modes. Configure according to your security policy.</td></tr></tbody></table>
+
+<Callout type="warn">
+**Security note:** "Bypass Permissions" mode allows the agent to perform all operations including file writes and command execution. Only grant this to trusted senior developers.
+</Callout>
+
+## 5. Skills
+
+Select skills available to the agent. Skills come from the **Resource Library's** "Agent Skills" module — add skills there first before binding them here.
+
+<img src="/assets/images/en/admin/agent-management-create-skill_en.webp" alt="Skills Settings" />
+
+Each skill is controlled by an enable/disable toggle. If the list is empty, go to **Resource Library → Agent Skills** to add skills first.
+
+## 6. MCP Servers
+
+Select MCP servers the agent can call. MCP servers provide external tool and data source integration.
+
+<img src="/assets/images/en/admin/agent-management-create-mcp_en.webp" alt="MCP Server Settings" />
+
+The list shows all configured MCP servers, each controlled by an enable/disable toggle.
+
+## 7. Advanced Settings
+
+Configure the agent's runtime behavior parameters.
+
+<img src="/assets/images/en/admin/agent-management-create-advanced_en.webp" alt="Advanced Settings" />
+
+<table><thead><tr><th width="160">Parameter</th><th>Description</th></tr></thead><tbody><tr><td><strong>Max Turns</strong></td><td>Maximum turns (API calls) allowed in a single session. Default: 100. Prevents infinite loops and controls per-task API costs.</td></tr></tbody></table>

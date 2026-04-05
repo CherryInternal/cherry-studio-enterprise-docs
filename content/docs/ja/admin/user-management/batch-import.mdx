@@ -1,0 +1,49 @@
+---
+title: "ユーザー一括インポート"
+description: Excel または CSV ファイルでユーザーとグループを一括インポート。企業の初期導入や大規模ユーザー管理に最適です。
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# ユーザー一括インポート
+
+大量のユーザーアカウントを一度に作成する必要がある場合、手動での個別追加は非効率です。一括インポート機能は **Excel (.xlsx)** または **CSV (.csv)** ファイルで複数ユーザーを一度にインポートでき、存在しないグループも自動作成されます。
+
+<Callout type="info">
+**入口：** ユーザー管理ページまたはグループ管理ページの右上にある**インポート**ボタン。
+</Callout>
+
+## 操作フロー
+
+インポートは 3 ステップで完了します：
+
+### ステップ 1：ファイルアップロード
+
+<img src="/assets/images/ja/admin/user-management-import-step1_ja.webp" alt="一括インポート - ファイルアップロード" />
+
+1. **Excel テンプレートをダウンロード**または **CSV テンプレートをダウンロード**をクリックして標準テンプレートを取得。
+2. テンプレートの形式に従ってユーザーデータを入力。
+3. 完成したファイルをアップロードエリアにドラッグ＆ドロップ、またはクリックして選択。
+4. **次へ**をクリックしてデータプレビューに進む。
+
+### フィールド説明
+
+<img src="/assets/images/ja/admin/user-management-import-fields_ja.webp" alt="フィールド説明" />
+
+<table><thead><tr><th width="160">フィールド名</th><th width="60">必須</th><th>説明</th></tr></thead><tbody><tr><td><code>username</code></td><td><strong>はい</strong></td><td>ユーザーの一意な識別子。システム内で重複不可。</td></tr><tr><td><code>password</code></td><td><strong>はい</strong></td><td>ユーザーの初期パスワード。</td></tr><tr><td><code>email</code></td><td>いいえ</td><td>メールアドレス。</td></tr><tr><td><code>mobile</code></td><td>いいえ</td><td>電話番号。</td></tr><tr><td><code>nickname</code></td><td>いいえ</td><td>表示名。</td></tr><tr><td><code>group</code></td><td><strong>はい</strong></td><td>所属グループ名。グループが存在しない場合は自動作成されます。</td></tr><tr><td><code>groupDescription</code></td><td>いいえ</td><td>グループの説明。グループの自動作成時のみ使用。</td></tr><tr><td><code>isGroupAdmin</code></td><td>いいえ</td><td>グループ管理者かどうか。<code>true</code>/<code>false</code> または <code>是</code>/<code>否</code> を使用。デフォルト：<code>false</code>。</td></tr></tbody></table>
+
+### ステップ 2：データプレビュー
+
+ファイル解析後、プレビュー表が表示されデータを確認できます。フォーマットエラーや必須項目の不足はハイライト表示されます。
+
+### ステップ 3：インポート実行
+
+確認後、実行をクリックしてユーザーとグループを一括作成。完了後、結果サマリー（成功数、スキップ数、失敗数）が表示されます。
+
+<Callout type="warn">
+**注意事項：**
+* テンプレートのヘッダー行は変更しないでください。
+* 既存のユーザー名はスキップまたは更新を選択可能。
+* 存在しないグループは自動作成されます（管理者権限が必要）。
+* 一括インポート前に、少量のデータでテストすることを推奨します。
+</Callout>

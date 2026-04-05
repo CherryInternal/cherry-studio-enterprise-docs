@@ -1,0 +1,49 @@
+---
+title: "Quota Management"
+description: Set API usage limits for users and groups to enable enterprise-level cost control and resource allocation.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# Quota Management
+
+Quota management allows admins to set API usage limits for users across four dimensions: **daily, weekly, monthly, and total**. Proper quota configuration helps enterprises control AI service costs and prevent resource overuse by individual users.
+
+## Quota Hierarchy
+
+Cherry Studio uses a two-level quota system:
+
+1. **Group-level quotas**: Configured in group settings, serving as the default limit for all group members.
+2. **User-level quotas**: Per-user custom quotas that override group defaults. Leave empty to inherit the group's default.
+
+## Setting User Quotas
+
+1. Go to the **User Management** page.
+2. Click the **Quota** button in the target user's action column.
+
+<img src="/assets/images/en/admin/user-management-quota-dialog_en.webp" alt="User Quota Settings" />
+
+3. Set limit values for each dimension:
+
+<table><thead><tr><th width="100">Dimension</th><th>Description</th></tr></thead><tbody><tr><td><strong>Daily</strong></td><td>Maximum usage allowed in the past 24 hours. Auto-resets daily.</td></tr><tr><td><strong>Weekly</strong></td><td>Maximum usage allowed in the past 7 days. Auto-resets weekly.</td></tr><tr><td><strong>Monthly</strong></td><td>Maximum usage allowed in the past 30 days. Auto-resets monthly.</td></tr><tr><td><strong>Total</strong></td><td>Cumulative total usage cap. Does not auto-reset; requires manual reset.</td></tr></tbody></table>
+
+<Callout type="info">
+**Tip:** Leave a field empty to inherit the group default. If the group has no limit either, the dimension is unrestricted.
+</Callout>
+
+## Viewing Usage and Resetting
+
+Click the expand button next to each quota dimension to view usage details:
+
+<img src="/assets/images/en/admin/user-management-quota-detail_en.webp" alt="Quota Usage Details" />
+
+* **Current usage**: Amount consumed in the current period.
+* **Limit**: The configured cap ("Unlimited" if not set).
+* **Next reset**: When the quota will auto-reset.
+* **Reset usage** button: Manually reset the current period's usage to zero.
+
+4. Click **Save** when done.
+
+<Callout type="warn">
+**Note:** When a user reaches their quota, subsequent API calls will be rejected until the quota resets or an admin adjusts it.
+</Callout>

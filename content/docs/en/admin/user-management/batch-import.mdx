@@ -1,0 +1,49 @@
+---
+title: "Batch Import Users"
+description: Import users and groups in bulk via Excel or CSV files, ideal for initial enterprise deployments or large-scale user management.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+# Batch Import Users
+
+When your organization needs to create a large number of user accounts at once, adding them one by one is inefficient. The batch import feature supports importing multiple users via **Excel (.xlsx)** or **CSV (.csv)** files, with automatic creation of new groups.
+
+<Callout type="info">
+**Entry point:** The **Import** button in the top-right corner of the User Management page, or the Group Management page.
+</Callout>
+
+## Workflow
+
+The import process has 3 steps:
+
+### Step 1: Upload File
+
+<img src="/assets/images/en/admin/user-management-import-step1_en.webp" alt="Batch Import - Upload File" />
+
+1. Click **Download Excel Template** or **Download CSV Template** to get the standard template.
+2. Fill in user data following the template format.
+3. Drag and drop the completed file to the upload area, or click to select.
+4. Click **Next** to proceed to data preview.
+
+### Field Reference
+
+<img src="/assets/images/en/admin/user-management-import-fields_en.webp" alt="Field Reference" />
+
+<table><thead><tr><th width="160">Field</th><th width="80">Required</th><th>Description</th></tr></thead><tbody><tr><td><code>username</code></td><td><strong>Yes</strong></td><td>Unique user identifier. Must be unique across the system.</td></tr><tr><td><code>password</code></td><td><strong>Yes</strong></td><td>Initial user password.</td></tr><tr><td><code>email</code></td><td>No</td><td>Email address.</td></tr><tr><td><code>mobile</code></td><td>No</td><td>Phone number.</td></tr><tr><td><code>nickname</code></td><td>No</td><td>Display name.</td></tr><tr><td><code>group</code></td><td><strong>Yes</strong></td><td>Group name. If the group doesn't exist, it will be created automatically.</td></tr><tr><td><code>groupDescription</code></td><td>No</td><td>Group description. Used only when the group is auto-created.</td></tr><tr><td><code>isGroupAdmin</code></td><td>No</td><td>Whether the user is a group admin. Accepts <code>true</code>/<code>false</code> or <code>是</code>/<code>否</code>. Default: <code>false</code>.</td></tr></tbody></table>
+
+### Step 2: Data Preview
+
+After parsing, the system displays a preview table for verification. Format errors or missing required fields are highlighted.
+
+### Step 3: Execute Import
+
+Click execute to batch-create users and groups. A results summary (successful, skipped, failed counts) is shown upon completion.
+
+<Callout type="warn">
+**Important notes:**
+* Do not modify the header row in the template.
+* Existing usernames can be skipped or updated.
+* Non-existent groups are auto-created (admin permission required).
+* Test with a small dataset first before bulk importing.
+</Callout>

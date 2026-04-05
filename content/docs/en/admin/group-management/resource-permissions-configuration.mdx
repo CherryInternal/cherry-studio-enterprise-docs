@@ -1,26 +1,31 @@
 ---
 title: "Resource Permission Configuration"
-description: This is the most critical step in group management. By configuring Assistant and Model allowlists, you can precisely define the AI workspace for this group.
+description: This is the most critical step in group management. By configuring resource visibility in the group settings page, you can precisely define the AI workspace for this group.
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
 
 # 2. Resource Permission Configuration
 
+<Callout type="info">
+**Navigation:** Group Management → Click the **Settings** button for the target group → Expand the **Resource Visibility** panel on the left.
+</Callout>
+
 ### 1. Configure Assistant Permissions
 
 Control which preset agents appear in the left "Assistants" sidebar of the Cherry Studio client.
 
-* **All assistants**: If selected, users can access all public assistants in the enterprise library.
-* **Specific assistants**: **(Recommended)** Select only the assistants needed by the business line to keep the UI clean.
+* **All**: Users can access all public assistants in the enterprise library.
+* **Specified**: **(Recommended)** Select only the assistants needed by the business line to keep the UI clean.
 
 **Steps:**
 
-1. In the create/edit dialog, find **Available assistants**.
-2. Select **Specific assistants**.
-3. Check target assistants in the dropdown (e.g., `Translation Assistant`, `Code Reviewer`).
+1. In the group settings page, expand **Resource Visibility** on the left and click the **Assistant** tab.
+2. Click the **Specified** toggle at the top.
+3. Select target assistants from the list (e.g., `Translation Assistant`, `Code Reviewer`).
 
-<img src="/assets/images/zh/admin/group-management-resource-permissions-1_zh.webp" alt="" />
+<img src="/assets/images/en/admin/group-management-resource-permissions-1_en.webp" alt="Assistant permission configuration" />
+
 ### 2. Configure Model Permissions
 
 Control which LLMs are available in the model dropdown at the top of the chat window.
@@ -31,17 +36,64 @@ Control which LLMs are available in the model dropdown at the top of the chat wi
 
 **Steps:**
 
-1. Find **Available models**.
-2. Select **Specific models**.
-3. The system lists all configured **Model Providers**.
+1. Click the **Model** tab on the left.
+2. Click the **Specified** toggle at the top.
+3. The system lists all configured model providers.
 4. You can:
-   * **Select all by provider:** Check the box next to `OpenAI` or `DeepSeek` to authorize all models under that provider.
+   * **Select all by provider:** Check the box next to the provider name to authorize all models under that provider.
    * **Select individual models:** Expand the provider and select specific Model IDs (e.g., `gpt-5`, `deepseek-coder`).
 5. Use search to quickly find model names.
 6. Check **Show selected only** to verify the assigned list.
 
-<img src="/assets/images/zh/admin/group-management-model-selector-ui_zh.webp" alt="Model selector UI" />
-### 3. Validate Permission Configuration
+<img src="/assets/images/en/admin/group-management-model-selector-ui_en.webp" alt="Model selector UI" />
+
+### 3. Other Resource Visibility Settings
+
+Beyond assistants and models, the group settings page provides visibility controls for additional resource dimensions. The configuration approach is the same as above.
+
+<img src="/assets/images/en/admin/group-settings-tabs_en.webp" alt="Full group settings tab list" />
+
+| Tab | Description |
+|---|---|
+| **Providers** | Control which model providers are visible to this group. |
+| **Assistant Templates** | Control which assistant templates are visible in the Resource Library. |
+| **Agents** | Control which agents are visible to this group. |
+| **Knowledge Base** | Control which knowledge base resources are visible. |
+| **Mini Programs** | Control which mini programs are visible. |
+| **MCP Services** | Control which MCP servers are visible. |
+
+<Callout type="info">
+Each tab supports both "All" and "Specified" modes. Follow the same steps described above for assistants and models.
+</Callout>
+
+### 4. Quota Management
+
+In the group settings page, expand **Quota Management** on the left → Click the **Token Quota** tab to set usage limits for this group.
+
+<img src="/assets/images/en/admin/group-management-token-quota_en.webp" alt="Token quota configuration" />
+
+Quotas are configured at two levels:
+
+**Group Total Quota**
+
+Sets the usage cap for the entire group. Once exceeded, all members in the group will be blocked from further usage.
+
+| Setting | Description |
+|---|---|
+| **Daily Limit** | Daily usage cap, resets automatically each day |
+| **Weekly Limit** | Weekly usage cap, resets automatically each week |
+| **Monthly Limit** | Monthly usage cap, resets automatically each month |
+| **Total Limit** | Cumulative usage cap, does not auto-reset |
+
+**Default Member Quota**
+
+Sets the default cap for members without individual quota settings. To configure different limits for a specific user, use the user management page.
+
+<Callout type="info">
+Token limits and call count limits are enforced simultaneously. Reaching either limit will block further usage. Leave empty for unlimited.
+</Callout>
+
+### 5. Validate Permission Configuration
 
 To ensure correct configuration, run a quick smoke test:
 

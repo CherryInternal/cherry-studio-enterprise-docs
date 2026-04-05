@@ -20,12 +20,12 @@ import { Callout } from 'fumadocs-ui/components/callout'
 4. 在弹出的配置窗口中，填写以下基础信息：
 
 <img src="/assets/images/zh/admin/group-management-create-edit-1_zh.webp" alt="" />
-<table><thead><tr><th width="111.23046875">参数名称</th><th width="73.9609375">必填</th><th width="402.95703125">说明</th><th>示例值</th></tr></thead><tbody><tr><td><strong>分组名称</strong></td><td>是</td><td>分组的唯一标识，建议采用“部门-职能”的命名格式。</td><td><code>研发部-后端组</code></td></tr><tr><td><strong>分组描述</strong></td><td>否</td><td>用于备注该分组的职能范围或特定的资源限制策略。</td><td><code>可以使用所有 Coding 类模型</code></td></tr></tbody></table>
+<table><thead><tr><th width="111.23046875">参数名称</th><th width="73.9609375">必填</th><th width="402.95703125">说明</th><th>示例值</th></tr></thead><tbody><tr><td><strong>分组名称</strong></td><td>是</td><td>分组的唯一标识，建议采用"部门-职能"的命名格式。</td><td><code>研发部-后端组</code></td></tr><tr><td><strong>分组描述</strong></td><td>否</td><td>用于备注该分组的职能范围或特定的资源限制策略。</td><td><code>可以使用所有 Coding 类模型</code></td></tr></tbody></table>
 
 5. 完成资源配置（详见下一章节）后，点击 **保存**。
 
 <Callout type="info">
-**验证成功：** 创建完成后，新分组将立即显示在列表中。此时“成员数”应显示为 `0`。
+**验证成功：** 创建完成后，新分组将立即显示在列表中。此时"成员数"应显示为 `0`。
 </Callout>
 
 ### 编辑与管理
@@ -49,6 +49,6 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 在点击 **删除** 按钮前，请务必检查该分组下的 **成员数** 是否为 0。
 
-* **若分组内仍有用户：** 强制删除非空分组可能导致这些用户回退到系统的“默认分组”，从而失去原有的特定资源访问权，甚至导致工作流中断。
+* **若分组内仍有用户：** 强制删除非空分组可能导致这些用户回退到系统的"默认分组"，从而失去原有的特定资源访问权，甚至导致工作流中断。
 * **建议操作：** 请先前往 **用户管理** 模块，将该组用户迁移至其他分组后，再执行删除操作。
 </Callout>
