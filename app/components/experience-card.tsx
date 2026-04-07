@@ -46,7 +46,7 @@ export function ExperienceCard({
   const Icon = buttonIcon === 'download' ? Download : ExternalLink
 
   return (
-    <div className="flex flex-col rounded-xl p-6" style={{ backgroundColor: '#f5f5f5', border: '1px solid #e5e5e5' }}>
+    <div className="flex flex-col rounded-xl p-6 bg-fd-secondary border border-fd-border">
       <div className="flex items-start gap-4 mb-6">
         <span className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-blue-500 text-white text-base font-semibold">
           {step}
