@@ -3,8 +3,6 @@ title: Docker Deployment
 description: Deploy Cherry Studio Enterprise using Docker and Docker Compose
 ---
 
-import { DynamicLink } from 'fumadocs-core/dynamic-link'
-
 This document describes how to deploy the Cherry Studio Enterprise API service using Docker and Docker Compose.
 
 ## Features
@@ -167,7 +165,7 @@ docker-compose down -v
 | `DB_NAME` | Database name | - | Required for PostgreSQL |
 | `DB_SSL` | Enable SSL | `false` | PostgreSQL SSL connection |
 
-> For Casdoor SSO configuration, see <DynamicLink href="/[lang]/docs/setup/advanced/sso">SSO configuration</DynamicLink>.
+> For Casdoor SSO configuration, see [SSO configuration](/docs/setup/advanced/sso).
 
 ### Data Persistence
 
@@ -394,6 +392,6 @@ deploy:
 
 ## Related Documents
 
-- <DynamicLink href="/[lang]/docs/setup/helm">Helm deployment guide</DynamicLink> - Deploy to Kubernetes
-- <DynamicLink href="/[lang]/docs/setup/advanced/database">Database configuration guide</DynamicLink> - PostgreSQL configuration details
-- <DynamicLink href="/[lang]/docs/setup/advanced/sso">SSO configuration</DynamicLink> - SSO setup
+- [Helm deployment guide](/docs/setup/helm) - Deploy to Kubernetes
+- [Database configuration guide](/docs/setup/advanced/database) - PostgreSQL configuration details
+- [SSO configuration](/docs/setup/advanced/sso) - SSO setup
