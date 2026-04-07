@@ -3,6 +3,8 @@ title: Docker 導入
 description: Docker と Docker Compose を使って Cherry Studio Enterprise を導入
 ---
 
+import { DynamicLink } from 'fumadocs-core/dynamic-link'
+
 このドキュメントでは、Docker と Docker Compose を使って Cherry Studio Enterprise API を導入する方法を説明します。
 
 ## 特長
@@ -165,7 +167,7 @@ docker-compose down -v
 | `DB_NAME` | データベース名 | - | PostgreSQL 必須 |
 | `DB_SSL` | SSL 有効化 | `false` | PostgreSQL SSL 接続 |
 
-> Casdoor SSO の設定は [SSO 設定](../advanced/sso) を参照してください。
+> Casdoor SSO の設定は <DynamicLink href="/[lang]/docs/setup/advanced/sso">SSO 設定</DynamicLink> を参照してください。
 
 ### データ永続化
 
@@ -392,6 +394,6 @@ deploy:
 
 ## 関連ドキュメント
 
-- [Helm 導入ガイド](./helm) - Kubernetes 環境の導入
-- [データベース設定ガイド](../advanced/database) - PostgreSQL の詳細設定
-- [SSO 設定](../advanced/sso) - SSO 導入
+- <DynamicLink href="/[lang]/docs/setup/helm">Helm 導入ガイド</DynamicLink> - Kubernetes 環境の導入
+- <DynamicLink href="/[lang]/docs/setup/advanced/database">データベース設定ガイド</DynamicLink> - PostgreSQL の詳細設定
+- <DynamicLink href="/[lang]/docs/setup/advanced/sso">SSO 設定</DynamicLink> - SSO 導入

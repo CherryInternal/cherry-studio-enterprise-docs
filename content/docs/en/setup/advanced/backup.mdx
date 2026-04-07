@@ -3,6 +3,8 @@ title: Backup and Restore
 description: Cherry Studio Enterprise backup and restore guide
 ---
 
+import { DynamicLink } from 'fumadocs-core/dynamic-link'
+
 This document explains how to back up and restore Cherry Studio Enterprise data, including the PostgreSQL database and application data directory.
 
 ## Backup for Docker Deployment
@@ -118,6 +120,6 @@ kubectl delete pod backup-pod
 
 ## Related Documents
 
-- [Docker deployment guide](../setup/docker) - Docker deployment details
-- [Helm deployment guide](../setup/helm) - Kubernetes deployment
-- [Database configuration guide](./database) - PostgreSQL configuration details
+- <DynamicLink href="/[lang]/docs/setup/docker">Docker deployment guide</DynamicLink> - Docker deployment details
+- <DynamicLink href="/[lang]/docs/setup/helm">Helm deployment guide</DynamicLink> - Kubernetes deployment
+- <DynamicLink href="/[lang]/docs/setup/advanced/database">Database configuration guide</DynamicLink> - PostgreSQL configuration details

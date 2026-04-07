@@ -3,6 +3,8 @@ title: 备份与恢复
 description: Cherry Studio Enterprise 数据备份与恢复指南
 ---
 
+import { DynamicLink } from 'fumadocs-core/dynamic-link'
+
 本文档介绍如何备份和恢复 Cherry Studio Enterprise 的数据，包括 PostgreSQL 数据库和应用数据目录。
 
 ## Docker 部署备份
@@ -118,6 +120,6 @@ kubectl delete pod backup-pod
 
 ## 相关文档
 
-- [Docker 部署指南](../setup/docker) - Docker 环境部署详细配置
-- [Helm 部署指南](../setup/helm) - Kubernetes 环境部署
-- [数据库配置指南](./database) - PostgreSQL 详细配置
+- <DynamicLink href="/[lang]/docs/setup/docker">Docker 部署指南</DynamicLink> - Docker 环境部署详细配置
+- <DynamicLink href="/[lang]/docs/setup/helm">Helm 部署指南</DynamicLink> - Kubernetes 环境部署
+- <DynamicLink href="/[lang]/docs/setup/advanced/database">数据库配置指南</DynamicLink> - PostgreSQL 详细配置

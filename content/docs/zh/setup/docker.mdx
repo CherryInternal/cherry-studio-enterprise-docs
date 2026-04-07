@@ -3,6 +3,8 @@ title: Docker 部署
 description: 使用 Docker 和 Docker Compose 部署 Cherry Studio Enterprise
 ---
 
+import { DynamicLink } from 'fumadocs-core/dynamic-link'
+
 这个文档详细介绍了如何使用 Docker 和 Docker Compose 部署 Cherry Studio Enterprise API 服务。
 
 ## 特性
@@ -165,7 +167,7 @@ docker-compose down -v
 | `DB_NAME`     | 数据库名称   | -          | PostgreSQL 必填     |
 | `DB_SSL`      | 是否启用 SSL | `false`    | PostgreSQL SSL 连接 |
 
-> 如需配置 Casdoor 单点登录 (SSO)，请参阅 [单点登录配置](../advanced/sso)。
+> 如需配置 Casdoor 单点登录 (SSO)，请参阅 <DynamicLink href="/[lang]/docs/setup/advanced/sso">单点登录配置</DynamicLink>。
 
 ### 数据持久化
 
@@ -392,6 +394,6 @@ deploy:
 
 ## 相关文档
 
-- [Helm 部署指南](./helm) - Kubernetes 环境部署
-- [数据库配置指南](../advanced/database) - PostgreSQL 详细配置
-- [单点登录配置](../advanced/sso) - SSO 单点登录配置
+- <DynamicLink href="/[lang]/docs/setup/helm">Helm 部署指南</DynamicLink> - Kubernetes 环境部署
+- <DynamicLink href="/[lang]/docs/setup/advanced/database">数据库配置指南</DynamicLink> - PostgreSQL 详细配置
+- <DynamicLink href="/[lang]/docs/setup/advanced/sso">单点登录配置</DynamicLink> - SSO 单点登录配置
