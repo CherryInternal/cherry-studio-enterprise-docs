@@ -28,7 +28,7 @@ function CopyableValue({ value }: { value: string }) {
       onClick={handleCopy}
       className="flex items-center gap-2 font-mono text-sm hover:text-blue-500 transition-colors cursor-pointer bg-transparent border-none p-0"
     >
-      <span>{value}</span>
+      <span className="whitespace-nowrap">{value}</span>
       {copied ? <Check className="w-3.5 h-3.5 text-green-500" /> : <Copy className="w-3.5 h-3.5 text-fd-muted-foreground" />}
     </button>
   )
@@ -60,7 +60,7 @@ export function ExperienceCard({
       <div className="space-y-3 mb-6 px-1">
         {items.map((item, index) => (
           <div key={index} className="flex justify-between items-center text-sm">
-            <span className="text-fd-muted-foreground">{item.label}</span>
+            <span className="text-fd-muted-foreground whitespace-pre-line">{item.label}</span>
             <CopyableValue value={item.value} />
           </div>
         ))}

@@ -6,7 +6,7 @@ title: "トラブルシューティング"
 
 API Key でモデル呼び出しが失敗する場合、主に以下の原因に分類できます。エラーコード/メッセージに沿って確認してください。
 
-#### Q1: "Insufficient Balance" または "Quota Exceeded"（残高不足）
+### Q1: "Insufficient Balance" または "Quota Exceeded"（残高不足）
 
 **症状:** `402 Payment Required` または `429 Too Many Requests` が返る。
 
@@ -18,7 +18,7 @@ API Key でモデル呼び出しが失敗する場合、主に以下の原因に
   * 上流プロバイダー（例：OpenAI Platform）で残高を確認。
   * **一時対応:** **グループ管理** でデフォルトモデルを残高のあるチャネルに切替。
 
-#### Q2: "Model Not Found"（モデルが存在しない）
+### Q2: "Model Not Found"（モデルが存在しない）
 
 **症状:** `404 Not Found` と `The model 'xxx' does not exist` が返る。
 
@@ -29,7 +29,7 @@ API Key でモデル呼び出しが失敗する場合、主に以下の原因に
   2. **グループ権限確認:** **グループ管理** > 対象グループ > **モデルルーティング** でモデルを選択済みか確認。
   3. **エイリアス確認:** `gpt-4` を `gpt-4-0613` にマップしていないか確認。
 
-#### Q3: "401 Unauthorized"（認証失敗）
+### Q3: "401 Unauthorized"（認証失敗）
 
 **症状:** API が接続を拒否。
 
@@ -41,7 +41,7 @@ API Key でモデル呼び出しが失敗する場合、主に以下の原因に
   * **有効期限** を確認。
   * 必要に応じて古い Key を削除し、新しい `sk-` Key を発行。
 
-#### Q4: "No Healthy Upstream"（有効な上流なし）
+### Q4: "No Healthy Upstream"（有効な上流なし）
 
 **症状:** `502 Bad Gateway` または `503 Service Unavailable` が返る。
 

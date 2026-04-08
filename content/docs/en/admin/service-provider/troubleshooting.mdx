@@ -6,7 +6,7 @@ title: "Troubleshooting"
 
 When users encounter issues calling models with API keys, it typically falls into the following categories. Diagnose based on error codes or messages.
 
-#### Q1: "Insufficient Balance" or "Quota Exceeded"
+### Q1: "Insufficient Balance" or "Quota Exceeded"
 
 **Symptoms:** API returns `402 Payment Required` or `429 Too Many Requests` with balance errors.
 
@@ -18,7 +18,7 @@ When users encounter issues calling models with API keys, it typically falls int
   * Log in to the upstream provider (e.g., OpenAI Platform) to check credit balance.
   * **Temporary workaround:** In **Group Management**, switch the group's default model to a provider with balance.
 
-#### Q2: "Model Not Found"
+### Q2: "Model Not Found"
 
 **Symptoms:** API returns `404 Not Found` with `The model 'xxx' does not exist`.
 
@@ -29,7 +29,7 @@ When users encounter issues calling models with API keys, it typically falls int
   2. **Check group permissions:** Go to **Group Management** > select the user's group > check **Model routing** to ensure the model is selected.
   3. **Alias mapping:** Verify whether model names are remapped (e.g., `gpt-4` mapped to `gpt-4-0613`).
 
-#### Q3: "401 Unauthorized"
+### Q3: "401 Unauthorized"
 
 **Symptoms:** API rejects the connection.
 
@@ -41,7 +41,7 @@ When users encounter issues calling models with API keys, it typically falls int
   * Check **Expiration time**.
   * If needed, delete the old key and generate a new `sk-` key.
 
-#### Q4: "No Healthy Upstream"
+### Q4: "No Healthy Upstream"
 
 **Symptoms:** API returns `502 Bad Gateway` or `503 Service Unavailable`.
 

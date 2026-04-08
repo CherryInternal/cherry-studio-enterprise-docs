@@ -12,7 +12,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 **路径：** 管理后台侧边栏 > **模型管理** (或服务商管理 > Express)
 
 <img src="/assets/images/zh/admin/provider-management-express-1_zh.webp" alt="" />
-**Cherry Studio Express** 是企业版专属的一站式模型聚合服务。与标准版需要您自行去 OpenAI、Anthropic 官网申请 API Key 不同，Express 版通过统一的额度池，直接为您打通全球主流顶尖模型（如 Claude 3.5, GPT-4o）以及热门开源模型。
+**Cherry Studio Express** 是企业版专属的一站式模型聚合服务。与标准版需要您自行去 OpenAI、Anthropic 官网申请 API Key 不同，Express 版通过统一的额度池，直接为您打通全球主流顶尖模型（如 Claude Opus 4.6、Claude Sonnet 4.6、Gemini-3.1、GPT-5.4）以及热门开源模型。
 
 <Callout type="info">
 **核心价值**：
@@ -34,7 +34,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 * **剩余可用**：当前可用于调用模型的余额。
 * **请求次数**：API 调用的总次数统计。
 
-**💰 如何充值？** 点击右上角的 **🏦 对公付款** 按钮，支持企业通过银行转账或扫码方式进行余额充值。充值后，资金可用于所有 Express 渠道的模型调用。
+**💰 如何充值？** 点击右上角的 **💳 余额充值** 按钮，支持企业通过银行转账进行余额充值。充值后，资金可用于所有 Express 渠道的模型调用。
 
 ***
 
@@ -43,14 +43,14 @@ import { Callout } from 'fumadocs-ui/components/callout'
 Express 服务将模型资源划分为两大类，通过顶部的标签页切换：
 
 <img src="/assets/images/zh/admin/provider-management-express-3_zh.webp" alt="" />
-#### 🌍 Express 闭源模型
+### 🌍 Express 闭源模型
 
 聚合了全球最强大的闭源商业模型。
 
 * **包含厂商**：OpenAI (GPT 系列), Anthropic (Claude 系列), Google (Gemini 系列), X-AI (Grok) 等。
 * **适用场景**：处理极其复杂的逻辑推理、创意写作、多语言翻译。
 
-#### 🐧 Express 开源模型
+### 🐧 Express 开源模型
 
 聚合了高性价比的国内及开源大模型。
 
@@ -64,7 +64,7 @@ Express 服务将模型资源划分为两大类，通过顶部的标签页切换
 系统默认提供了海量模型，管理员可以决定哪些模型对员工可见。
 
 <img src="/assets/images/zh/admin/provider-management-express-4_zh.webp" alt="" />
-#### 启用/禁用模型
+### 启用/禁用模型
 
 1. 点击列表底部的 **𝌡 管理模型** 按钮。
 2. 在弹出的列表中，通过右侧的 **+/-** 号或开关：
@@ -72,14 +72,14 @@ Express 服务将模型资源划分为两大类，通过顶部的标签页切换
    * **- (移除)**：隐藏该模型，员工不可见。
 3. 点击 **保存**。
 
-#### 手动添加新模型
+### 手动添加新模型
 
 <img src="/assets/images/zh/admin/provider-management-express-5_zh.webp" alt="" />
 如果 Express 官方发布了新模型（如 `gpt-5`），但列表尚未自动更新，您可以手动添加：
 
 1. 点击 **+ 添加模型**。
 2. 输入官方通告的 **模型 ID** (如 `gpt-5-preview`)。
-3. 点击 **添加** 即可立即使用。
+3. 点击 **确认** 即可立即使用。
 
 如果您希望让开发者在外部应用中直接调用这些 Express 模型，请让其使用完整格式 `模型 ID@provider_id` 作为 `model`，并参考 [外部应用接入（Express 模型）](/zh/docs/admin/user-management/external-app-access) 完成配置。
 
@@ -89,7 +89,7 @@ Express 服务将模型资源划分为两大类，通过顶部的标签页切换
 
 在 Express 列表中，每个模型名称后面都跟着一排彩色的小图标。这些图标代表了模型的"硬实力"，对于分发模型非常重要。
 
-<table data-header-hidden><thead><tr><th width="88.21484375">含义</th><th>说明</th></tr></thead><tbody><tr><td><strong>推理</strong></td><td><strong>高智商模式</strong>。代表该模型（如 <code>Claude 3.7 Sonnet</code>, <code>o1</code>）具备深度思考能力，适合解决数学竞赛题或复杂代码架构。</td></tr><tr><td><strong>视觉</strong> </td><td><strong>识图能力</strong>。代表该模型可以解析图片内容。如果模型没有此图标，用户上传图片时会报错。</td></tr><tr><td><strong>联网</strong></td><td><strong>原生联网</strong>。部分模型（如 <code>Gemini</code>）具备原生的搜索整合能力（注意：大多数情况下 Cherry Studio 通过 MCP 实现联网，不依赖模型原生能力）。</td></tr><tr><td><strong>工具</strong></td><td><strong>插件支持</strong>。<strong>最重要的图标</strong>。只有带扳手图标的模型，才能支持知识库（RAG）、生成图表、或者调用 MCP 工具。</td></tr><tr><td><strong>免费</strong></td><td><strong>成本控制</strong>。代表该模型调用不消耗账户余额。通常出现在本地部署的模型（如 Ollama）或官方提供的免费测试模型上。适合用于高频调试或日常简单对话。</td></tr><tr><td><strong>嵌入</strong></td><td><strong>知识库基石</strong>。此类模型<strong>不可用于对话</strong>。它的作用是将文本转化为"向量数据"（数字），是构建知识库索引的必选项。在聊天界面选择此模型会报错。</td></tr><tr><td><strong>重排</strong></td><td><strong>精准度优化</strong>。此类模型<strong>不可用于对话</strong>。它用于知识库检索的第二阶段，对搜索结果进行二次打分和重新排序，能显著提高回答的准确性。</td></tr></tbody></table>
+<table data-header-hidden><thead><tr><th width="88.21484375">含义</th><th>说明</th></tr></thead><tbody><tr><td><strong>推理</strong></td><td><strong>高智商模式</strong>。代表该模型（如 <code>Claude Opus 4.6</code>、<code>o3</code>）具备深度思考与推理能力，适合解决复杂逻辑、数学问题或代码架构设计。</td></tr><tr><td><strong>视觉</strong> </td><td><strong>识图能力</strong>。代表该模型可以解析图片内容。如果模型没有此图标，用户上传图片时会报错。</td></tr><tr><td><strong>联网</strong></td><td><strong>原生联网</strong>。部分模型（如 <code>Gemini</code>）具备原生的搜索整合能力（注意：大多数情况下 Cherry Studio 通过 MCP 实现联网，不依赖模型原生能力）。</td></tr><tr><td><strong>工具</strong></td><td><strong>插件支持</strong>。<strong>最重要的图标</strong>。只有带扳手图标的模型，才能支持知识库（RAG）、生成图表、或者调用 MCP 工具。</td></tr><tr><td><strong>免费</strong></td><td><strong>成本控制</strong>。代表该模型调用不消耗账户余额。通常出现在本地部署的模型（如 Ollama）或官方提供的免费测试模型上。适合用于高频调试或日常简单对话。</td></tr><tr><td><strong>嵌入</strong></td><td><strong>知识库基石</strong>。此类模型<strong>不可用于对话</strong>。它的作用是将文本转化为"向量数据"（数字），是构建知识库索引的必选项。在聊天界面选择此模型会报错。</td></tr><tr><td><strong>重排</strong></td><td><strong>精准度优化</strong>。此类模型<strong>不可用于对话</strong>。它用于知识库检索的第二阶段，对搜索结果进行二次打分和重新排序，能显著提高回答的准确性。</td></tr></tbody></table>
 
 <Callout type="warn">
 **配置建议**：作为 **默认助手模型**，请务必选择带有 🔧 (工具) 图标的模型，否则助手将无法使用知识库。
@@ -97,15 +97,41 @@ Express 服务将模型资源划分为两大类，通过顶部的标签页切换
 
 ***
 
-### 5. 计费与成本控制
+### 5. 检查连接
 
-**操作：** 点击具体模型右侧的 **⚙️ 设置** 图标。
+在使用模型前，您可以验证与服务商的连通性是否正常。
 
 <img src="/assets/images/zh/admin/provider-management-express-6_zh.webp" alt="" />
-虽然 Express 是统一扣费，但管理员可以在此设置**内部结算价格**，用于生成部门账单。
 
-* **输入价格 / 输出价格**：您可以照抄官方定价，也可以设置"溢价"或"内部价"。
-* **货币类型**：支持切换 USD/CNY。设置后，未来在 **\[用量统计]** 页面将依据此价格计算各部门的消耗成本。
+1. 点击底部的 **检查连接** 按钮。
+2. 在弹窗中选择需要检查的模型。
+3. 点击 **确认**，系统将自动测试该模型的可用性。
+4. 成功反馈：右下角弹出提示 **"检查成功 API Key 有效"**。
+
+***
+
+### 6. 编辑与删除模型
+
+管理员可以对已上架的模型进行编辑或删除操作。
+
+<img src="/assets/images/zh/admin/provider-management-express-7_zh.webp" alt="" />
+
+### 编辑模型
+
+1. 点击模型右侧的 **⚙️ 设置** 按钮，打开「编辑模型设置」弹窗。
+2. 可修改以下信息：
+   * **模型名称**：自定义显示名称。
+   * **模型描述**：为模型添加说明文字。
+   * **能力设置**：开启 **手动指定模型能力** 开关后，可勾选该模型支持的能力标签（推理、视觉、工具调用、默认模型、嵌入、重排序、免费等）。
+3. 点击 **保存**。
+
+<Callout type="warn">
+请谨慎设置能力标签，错误配置可能导致模型无法正常使用。
+</Callout>
+
+### 删除模型
+
+点击模型右侧的 **🗑️ 删除** 按钮，即可将该模型从列表中移除。
 
 ***
 

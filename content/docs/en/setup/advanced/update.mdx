@@ -16,14 +16,14 @@ This document explains how to update Cherry Studio Enterprise to the latest vers
 
 If you deployed with Docker Compose, you can update directly from the admin console.
 
-#### Prerequisites
+### Prerequisites
 
 To enable one-click update, configure the following in `docker-compose.yml`:
 
 1. **Mount Docker Socket**: Allow the container to control Docker
 2. **Mount docker-compose.yml**: Allow the container to read and update the config file
 
-#### Configuration Example
+### Configuration Example
 
 ```yaml
 services:
@@ -45,7 +45,7 @@ services:
     restart: unless-stopped
 ```
 
-#### Steps
+### Steps
 
 1. Sign in to the admin console
 2. Go to the **About** page
@@ -59,7 +59,7 @@ services:
    - Start new containers
 7. The page will refresh after the update completes
 
-#### Notes
+### Notes
 
 - Service will be briefly interrupted (typically 10-30 seconds)
 - Do not close the browser or refresh during the update
@@ -69,7 +69,7 @@ services:
 
 If you did not configure one-click update or prefer manual control, follow these steps:
 
-#### 1. Pull the new image
+### 1. Pull the new image
 
 ```bash
 # Pull latest version
@@ -79,7 +79,7 @@ docker pull cherrystudio/cherry-studio-enterprise-api:latest
 docker pull cherrystudio/cherry-studio-enterprise-api:v0.3.2
 ```
 
-#### 2. Update docker-compose.yml
+### 2. Update docker-compose.yml
 
 Modify the image tag in `docker-compose.yml`:
 
@@ -90,7 +90,7 @@ services:
     # ... other configuration unchanged ...
 ```
 
-#### 3. Restart services
+### 3. Restart services
 
 ```bash
 # Stop and recreate containers
@@ -101,7 +101,7 @@ docker-compose up -d
 docker-compose logs -f
 ```
 
-#### 4. Verify the update
+### 4. Verify the update
 
 - Check the version on the **About** page in the admin console
 - Verify the service is running: `curl http://localhost:3670/health`

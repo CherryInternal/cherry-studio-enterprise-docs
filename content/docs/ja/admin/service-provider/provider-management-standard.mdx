@@ -11,7 +11,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 **パス：** 管理コンソールサイドバー > **プロバイダー管理**
 
-<img src="/assets/images/zh/admin/provider-management-standard-1_zh.webp" alt="" />
+<img src="/assets/images/ja/admin/provider-management-standard-1_ja.webp" alt="" />
 このモジュールでは、企業が利用する AI モデルのソースを統合的に管理できます。Cherry Studio は主要プロバイダー用のプリセットを備えており、OpenAI、Anthropic（Claude）、Google（Gemini）に加え、OpenAI 互換の国内中継プロバイダー（SiliconFlow、DeepSeek、OpenRouter など）にも対応します。
 
 <Callout type="info">
@@ -24,12 +24,12 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 **操作：** 一覧下部の **+ プロバイダー追加** をクリック。
 
-<img src="/assets/images/zh/admin/provider-management-standard-2_zh.webp" alt="" />
+<img src="/assets/images/ja/admin/provider-management-standard-2_ja.webp" alt="" />
 プリセットテンプレートで主要プロバイダーを素早く接続できます。
 
-#### 設定パラメータ
+### 設定パラメータ
 
-<table><thead><tr><th width="114.1875">項目</th><th width="385.765625">説明</th><th>例</th></tr></thead><tbody><tr><td><strong>プロバイダー名</strong></td><td>表示用の名称。識別しやすい名前を設定。</td><td><code>SiliconFlow</code> / <code>DeepSeek 公式</code></td></tr><tr><td><strong>有効</strong></td><td>このプロバイダー配下のモデルをユーザーに表示するか制御。</td><td>🟢 ON</td></tr><tr><td><strong>プロバイダー種別</strong></td><td><strong>[重要]</strong> 対応プロトコルを選択。<br />• 国内モデル（通義千問、DeepSeek）通常は <code>OpenAI</code>。<br />• Claude は <code>Anthropic</code>。</td><td><code>OpenAI</code></td></tr><tr><td><strong>API Key</strong></td><td>プロバイダー管理画面で取得したキー（sk-...）。</td><td><code>sk-rwkj...</code></td></tr><tr><td><strong>API Host</strong></td><td>API エンドポイント。種別選択で自動入力されるが、中継事業者は手動変更が必要。</td><td><code>https://api.siliconflow.cn</code></td></tr></tbody></table>
+<table><thead><tr><th width="114.1875">項目</th><th width="385.765625">説明</th><th>例</th></tr></thead><tbody><tr><td><strong>プロバイダー名</strong></td><td>表示用の名称。識別しやすい名前を設定。</td><td><code>SiliconFlow</code> / <code>DeepSeek 公式</code></td></tr><tr><td><strong>有効</strong></td><td>このプロバイダー配下のモデルをユーザーに表示するか制御。</td><td>🟢 ON</td></tr><tr><td><strong>プロバイダー種別</strong></td><td><strong>[重要]</strong> 対応プロトコルを選択。<br />• 国内モデル（通義千問、DeepSeek）通常は <code>OpenAI</code>。<br />• Claude は <code>Anthropic</code>。</td><td><code>OpenAI</code></td></tr><tr><td><strong>API Key</strong></td><td>プロバイダー管理画面で取得したキー（sk-...）。</td><td><code>sk-rwkj...</code></td></tr><tr><td><strong>API Host</strong></td><td>API エンドポイント。種別選択で自動入力されるが、中継事業者は手動変更が必要。</td><td>`https://api.siliconflow.com/v1`</td></tr></tbody></table>
 
 <Callout type="info">
 **Tip**：阿里云百炼、腾讯混元、硅基流动など多くの国内プロバイダーは `OpenAI` 互換です。**OpenAI** を選択し、プロバイダーの `Base URL` を **API Host** に入力します。
@@ -41,12 +41,12 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 プロバイダー追加後、カードをクリックしてモデル一覧を展開します。システムが自動取得を試みますが、手動追加も可能です。
 
-<img src="/assets/images/zh/admin/provider-management-standard-3_zh.webp" alt="" />
-#### 🏷️ 能力タグ
+<img src="/assets/images/ja/admin/provider-management-standard-3_ja.webp" alt="" />
+### 🏷️ 能力タグ
 
 モデル名の右側のアイコンは特殊能力を示します。アシスタントに適したモデルを選ぶ上で重要です。
 
-<table><thead><tr><th width="66.87890625">アイコン</th><th width="239.375">名称</th><th>意味と用途</th></tr></thead><tbody><tr><td>🧠</td><td><strong>推論 (Reasoning)</strong></td><td><strong>思考力</strong>。<code>DeepSeek-R1</code> や <code>OpenAI o1</code> などは回答前に深い推論を行います。"考え中..." が表示され、数学/論理/コードに適します。</td></tr><tr><td>🔧</td><td><strong>ツール呼び出し (Function Calling)</strong></td><td><strong>プラグイン/MCP 対応</strong>。このアイコンがあるモデルのみ、知識ベース検索や Web 検索、MCP ツールが利用可能です。</td></tr><tr><td>👁️</td><td><strong>視覚 (Vision)</strong></td><td><strong>画像理解</strong>。画像の解析/説明/文字抽出が可能です。</td></tr></tbody></table>
+<table><thead><tr><th width="66.87890625">アイコン</th><th width="239.375">名称</th><th>意味と用途</th></tr></thead><tbody><tr><td>🧠</td><td><strong>推論 (Reasoning)</strong></td><td><strong>深い推論能力</strong>。<code>Claude Opus 4.6</code>、<code>o3</code>、<code>DeepSeek-R1</code> などは回答前に深い思考を行います。「考え中...」が表示され、複雑なロジック、数学問題やコードアーキテクチャ設計に適します。</td></tr><tr><td>🔧</td><td><strong>ツール呼び出し (Function Calling)</strong></td><td><strong>プラグイン/MCP 対応</strong>。このアイコンがあるモデルのみ、知識ベース検索や Web 検索、MCP ツールが利用可能です。</td></tr><tr><td>👁️</td><td><strong>視覚 (Vision)</strong></td><td><strong>画像理解</strong>。画像の解析/説明/文字抽出が可能です。</td></tr></tbody></table>
 
 ***
 
@@ -57,7 +57,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 企業の運用コストを正確に計算するため、モデルごとの価格を設定してください。
 
 <img src="/assets/images/zh/admin/provider-management-standard-4_zh.webp" alt="" />
-#### モデル設定の編集
+### モデル設定の編集
 
 * **モデル ID**：API 呼び出しに使用される文字列（変更不可、公式ドキュメントと一致必須）。
 * **コンテキスト長**：最大メモリウィンドウ（例：`32k`, `128k`）。
@@ -76,7 +76,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 API Key と接続性の検証を行います：
 
-<img src="/assets/images/zh/admin/provider-management-standard-5_zh.webp" alt="" />
+<img src="/assets/images/ja/admin/provider-management-standard-5_ja.webp" alt="" />
 1. プロバイダー右側の **接続確認** をクリック。
 2. ダイアログでモデルを選択（例：`deepseek-chat`）。
 3. **確認** をクリック。

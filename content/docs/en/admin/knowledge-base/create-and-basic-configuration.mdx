@@ -9,7 +9,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 On the knowledge base list page, click **+ Add Knowledge Base** in the top right to start. This step determines how data is "understood" and "stored".
 
 <img src="/assets/images/en/admin/knowledge-base-create-basic-config_en.webp" alt="" />
-#### Basic Parameters
+### Basic Parameters
 
 <table><thead><tr><th width="123.7421875">Field</th><th width="65.84765625">Required</th><th>Description</th></tr></thead><tbody><tr><td><strong>Knowledge base name</strong></td><td>Yes</td><td>Use business-identifiable names like <code>Product Technical Docs</code> or <code>Employee Handbook 2024</code>.</td></tr><tr><td><strong>Description</strong></td><td>No</td><td>Brief scope notes to help admins collaborate.</td></tr><tr><td><strong>Embedding model</strong></td><td><strong>Yes</strong></td><td><strong>Core parameter</strong>. Converts text into vectors. Choose multilingual, high-dimension models (e.g., <code>bge-m3</code> or <code>text-embedding-v3</code>).</td></tr></tbody></table>
 
@@ -17,7 +17,7 @@ On the knowledge base list page, click **+ Add Knowledge Base** in the top right
 **Note:** After creation, the **Embedding model** usually cannot be changed directly. Different models have incompatible vector spaces, so switching requires rebuilding the knowledge base and reindexing documents.
 </Callout>
 
-#### Advanced Settings
+### Advanced Settings
 
 Click **Advanced Settings** to expand. These parameters directly affect retrieval granularity and accuracy.
 
