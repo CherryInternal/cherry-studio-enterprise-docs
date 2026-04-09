@@ -45,7 +45,9 @@ helm install cherry-studio-enterprise ./helm
 
 📦 **Helm Chart 发布页面**: [cherry-studio-enterprise-helm/releases](https://github.com/CherryInternal/cherry-studio-enterprise-helm/releases)
 
-🐳 **Docker 镜像**: [cherrystudio/cherry-studio-enterprise-api](https://hub.docker.com/repository/docker/cherrystudio/cherry-studio-enterprise-api) - 查看可用的镜像标签
+🐳 **Docker 镜像**:
+- **Docker Hub**: [cherrystudio/cherry-studio-enterprise-api](https://hub.docker.com/repository/docker/cherrystudio/cherry-studio-enterprise-api)
+- **国内镜像**: `docker-registry.cherry-ai.com/public/cherry-studio-enterprise-api`（中国大陆用户推荐）
 
 ## 安装
 
@@ -167,7 +169,7 @@ helm install cherry-studio-enterprise ./helm -f values-custom.yaml
 | ------------------------------- | --------------------------------------- | ------------------------------------------- |
 | `app.enabled`                   | 是否启用应用服务                        | `true`                                      |
 | `app.replicaCount`              | 副本数量（推荐设置为1以保证数据一致性） | `1`                                         |
-| `app.image.repository`          | 应用镜像仓库                            | `cherrystudio/cherry-studio-enterprise-api` |
+| `app.image.repository`          | 应用镜像仓库（国内可改为 `docker-registry.cherry-ai.com/public/cherry-studio-enterprise-api`） | `cherrystudio/cherry-studio-enterprise-api` |
 | `app.image.tag`                 | 应用镜像标签                            | `latest`                                    |
 | `app.api.service.type`          | API Service 类型                        | `ClusterIP`                                 |
 | `app.api.service.port`          | API 服务端口                            | `3670`                                      |

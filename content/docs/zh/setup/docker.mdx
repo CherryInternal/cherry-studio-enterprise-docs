@@ -4,6 +4,7 @@ description: 使用 Docker 和 Docker Compose 部署 Cherry Studio Enterprise
 ---
 
 import { DynamicLink } from 'fumadocs-core/dynamic-link'
+import { Callout } from 'fumadocs-ui/components/callout'
 
 这个文档详细介绍了如何使用 Docker 和 Docker Compose 部署 Cherry Studio Enterprise API 服务。
 
@@ -14,6 +15,17 @@ import { DynamicLink } from 'fumadocs-core/dynamic-link'
 - **环境配置**：灵活的环境变量配置
 - **健康检查**：内置健康检查机制
 - **自动重启**：支持容器自动重启策略
+
+## 镜像地址
+
+| 线路 | 镜像地址 |
+|---|---|
+| **国内镜像**（推荐中国大陆用户使用） | `docker-registry.cherry-ai.com/public/cherry-studio-enterprise-api:v0.4.10` |
+| **Docker Hub**（海外用户） | `cherrystudio/cherry-studio-enterprise-api:v0.4.10` |
+
+<Callout type="info">
+国内用户建议使用国内镜像地址，拉取速度更快、更稳定。
+</Callout>
 
 ## 快速开始
 

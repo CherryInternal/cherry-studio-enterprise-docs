@@ -3,6 +3,9 @@ title: Software Updates
 description: Cherry Studio Enterprise update guide
 ---
 
+import { DynamicLink } from 'fumadocs-core/dynamic-link'
+import { Callout } from 'fumadocs-ui/components/callout'
+
 <Callout type="info" title="Version Requirement">
   One-click update requires **v0.3.3** or later. If your current version is lower than v0.3.3, update manually to
   v0.3.3 first, then you can use one-click update.
@@ -28,7 +31,7 @@ To enable one-click update, configure the following in `docker-compose.yml`:
 ```yaml
 services:
   api:
-    image: cherrystudio/cherry-studio-enterprise-api:v0.3.2
+    image: cherrystudio/cherry-studio-enterprise-api:v0.4.10
     container_name: cherry-studio-enterprise-api
     ports:
       - '3670:3670'
@@ -72,11 +75,14 @@ If you did not configure one-click update or prefer manual control, follow these
 ### 1. Pull the new image
 
 ```bash
-# Pull latest version
+# Pull latest version (Docker Hub)
 docker pull cherrystudio/cherry-studio-enterprise-api:latest
 
 # Or pull a specific version
-docker pull cherrystudio/cherry-studio-enterprise-api:v0.3.2
+docker pull cherrystudio/cherry-studio-enterprise-api:v0.4.10
+
+# China users: use the China mirror for faster pulls:
+docker pull docker-registry.cherry-ai.com/public/cherry-studio-enterprise-api:latest
 ```
 
 ### 2. Update docker-compose.yml
@@ -86,7 +92,7 @@ Modify the image tag in `docker-compose.yml`:
 ```yaml
 services:
   api:
-    image: cherrystudio/cherry-studio-enterprise-api:v0.3.2 # Update version
+    image: cherrystudio/cherry-studio-enterprise-api:v0.4.10 # Update version
     # ... other configuration unchanged ...
 ```
 
@@ -120,7 +126,7 @@ docker-compose logs -f
 ### View release notes
 
 - **Admin console**: **About** > **Release Notes**
-- **Online docs**: [CHANGELOG](https://releases.enterprise.cherry-ai.com/api/changelog)
+- **Online docs**: [Release Notes](/docs/admin/about/release-notes)
 
 ## FAQ
 

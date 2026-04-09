@@ -8,14 +8,25 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 这是助手库最核心的功能模块。您可以从零开始定义一个 AI 助手的行为逻辑。
 
+## 创建助手
+
+进入 **资源库 → 助手模版**，点击右上角 **操作 → 新建助手模板**，即可打开创建窗口：
+
+<img src="/assets/images/zh/admin/assistant-library-create-new_zh.webp" alt="" />
+
+## 编辑助手
+
+在助手列表中找到目标助手，点击 **编辑** 按钮即可打开编辑窗口：
+
 <img src="/assets/images/zh/admin/assistant-library-create-edit_zh.webp" alt="" />
-### 配置参数表
+
+## 配置参数表
 
 在点击 **+ 新建助手模板** 或 **编辑** 后，系统将弹出配置窗口。请参考下表填写：
 
-<table><thead><tr><th width="151.15234375">参数模块</th><th width="205.03515625">说明</th><th>最佳实践</th></tr></thead><tbody><tr><td><strong>助手名称</strong></td><td>助手的唯一标识名。</td><td>建议使用"动词+名词"结构，如"网页生成专家"。</td></tr><tr><td><strong>表情符号</strong></td><td>助手的头像 Logo。</td><td>选择符合其职业特征的 Emoji，如 🧑‍💻 代表程序员。</td></tr><tr><td><strong>所属分组</strong></td><td>用于客户端分类展示。</td><td>必须选择至少一个分组（如：办公、代码、精选）。</td></tr><tr><td><strong>提示词 (Prompt)</strong></td><td><strong>核心配置</strong>。定义 AI 的人设、语气和任务。</td><td>使用结构化提示词（角色设定+任务目标+输出限制）。</td></tr><tr><td><strong>描述</strong></td><td>展示给用户的简短介绍。</td><td>一句话概括用途，例如"一键将需求转化为 HTML 代码"。</td></tr></tbody></table>
+<table><thead><tr><th width="151.15234375">参数模块</th><th width="205.03515625">说明</th><th>最佳实践</th></tr></thead><tbody><tr><td><strong>助手名称</strong></td><td>助手的唯一标识名。</td><td>建议使用"动词+名词"结构，如"网页生成专家"。</td></tr><tr><td><strong>图标</strong></td><td>助手的头像 Emoji。</td><td>选择符合其职业特征的 Emoji，如 🧑‍💻 代表程序员。</td></tr><tr><td><strong>标签</strong></td><td>用于客户端分类展示，支持多选。</td><td>选择合适的标签（如：办公、代码、工具）。</td></tr><tr><td><strong>提示词</strong></td><td><strong>核心配置</strong>。定义助手的行为和责任。</td><td>使用结构化提示词（角色设定+任务目标+输出限制）。</td></tr><tr><td><strong>描述</strong></td><td>助手的功能和用途的简要说明。</td><td>一句话概括用途，例如"一键将需求转化为 HTML 代码"。</td></tr></tbody></table>
 
-### 提示词编写技巧 (Prompt Engineering)
+## 提示词编写技巧 (Prompt Engineering)
 
 在编写 **提示词** 字段时，建议遵循以下结构以获得最佳效果：
 

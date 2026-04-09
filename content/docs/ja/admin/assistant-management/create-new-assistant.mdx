@@ -11,7 +11,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 <img src="/assets/images/ja/admin/assistant-management-create-new_ja.webp" alt="" />
 ### 基本設定パラメータ
 
-<table><thead><tr><th width="142.01171875">項目</th><th>説明</th><th>例</th></tr></thead><tbody><tr><td><strong>絵文字 (Emoji)</strong></td><td>視覚的な識別子。職能に合わせて選択すると識別が容易。</td><td>💻（コード助手）, ⚖️（法務助手）</td></tr><tr><td><strong>名称 *</strong></td><td>一意の名前。推奨形式：<code>[部門/機能] + 役割</code>。</td><td><code>開発部-コードレビュー担当</code></td></tr><tr><td><strong>モデル *</strong></td><td>知能の基盤モデル。クラウド/ローカルを選択可能。</td><td><code>anthropic/claude-3-5-sonnet</code></td></tr><tr><td><strong>プロンプト (System Prompt) *</strong></td><td>中核指令。タスク、出力形式、制約を定義。</td><td><code>あなたは熟練の Python エンジニアです。コードのみ出力し、説明は不要...</code></td></tr></tbody></table>
+<table><thead><tr><th width="180">項目</th><th>説明</th><th>例</th></tr></thead><tbody><tr><td><strong>アイコン *</strong></td><td>視覚的な識別子。職能に合わせて選択すると識別が容易。</td><td>💻（コード助手）, ⚖️（法務助手）</td></tr><tr><td><strong>名称 *</strong></td><td>一意の名前。推奨形式：<code>[部門/機能] + 役割</code>。</td><td><code>開発部-コードレビュー担当</code></td></tr><tr><td><strong>モデル *</strong></td><td>デフォルトモデルとモデルプールを設定。デフォルトモデルは自動的にモデルプールに追加されます。「高度な設定」でモデルプールを管理できます。</td><td><code>anthropic/claude-sonnet-4-20250514</code></td></tr><tr><td><strong>プロンプト *</strong></td><td>アシスタントのシステムプロンプトと会話プロンプトを設定。タスク目標、出力形式、行動制約を定義します。</td><td><code>あなたは熟練の Python エンジニアです。コードのみ出力し、説明は不要...</code></td></tr><tr><td><strong>プロンプトの可視性</strong></td><td>ユーザーがこのアシスタントのシステムプロンプトを閲覧できるかを制御します。デフォルトでオン。</td><td>オン / オフ</td></tr></tbody></table>
 
 <Callout type="warn">
 **注意:** 初期プロンプトは下書きです。作成後に「詳細設定」で調整とテストを行ってください。

@@ -45,7 +45,9 @@ helm install cherry-studio-enterprise ./helm
 
 📦 **Helm Chart のリリース**: [cherry-studio-enterprise-helm/releases](https://github.com/CherryInternal/cherry-studio-enterprise-helm/releases)
 
-🐳 **Docker イメージ**: [cherrystudio/cherry-studio-enterprise-api](https://hub.docker.com/repository/docker/cherrystudio/cherry-studio-enterprise-api) - 利用可能なタグを確認
+🐳 **Docker イメージ**:
+- **Docker Hub**: [cherrystudio/cherry-studio-enterprise-api](https://hub.docker.com/repository/docker/cherrystudio/cherry-studio-enterprise-api)
+- **中国国内ミラー**: `docker-registry.cherry-ai.com/public/cherry-studio-enterprise-api`（中国大陸のユーザー向け）
 
 ## インストール
 
@@ -167,7 +169,7 @@ helm install cherry-studio-enterprise ./helm -f values-custom.yaml
 | ------------------------------- | --------------------------------------- | ------------------------------------------- |
 | `app.enabled` | アプリサービスを有効化 | `true` |
 | `app.replicaCount` | レプリカ数（データ整合性のため 1 推奨） | `1` |
-| `app.image.repository` | イメージリポジトリ | `cherrystudio/cherry-studio-enterprise-api` |
+| `app.image.repository` | イメージリポジトリ（中国大陸のユーザー：`docker-registry.cherry-ai.com/public/cherry-studio-enterprise-api`） | `cherrystudio/cherry-studio-enterprise-api` |
 | `app.image.tag` | イメージタグ | `latest` |
 | `app.api.service.type` | API Service 種別 | `ClusterIP` |
 | `app.api.service.port` | API サービスポート | `3670` |

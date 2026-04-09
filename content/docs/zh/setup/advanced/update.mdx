@@ -4,6 +4,7 @@ description: Cherry Studio Enterprise 软件更新指南
 ---
 
 import { DynamicLink } from 'fumadocs-core/dynamic-link'
+import { Callout } from 'fumadocs-ui/components/callout'
 
 <Callout type="info" title="版本要求">
   一键更新功能需要 **v0.3.3** 或更高版本。如果您当前版本低于 v0.3.3，请先通过手动方式更新到
@@ -30,7 +31,7 @@ import { DynamicLink } from 'fumadocs-core/dynamic-link'
 ```yaml
 services:
   api:
-    image: cherrystudio/cherry-studio-enterprise-api:v0.3.2
+    image: cherrystudio/cherry-studio-enterprise-api:v0.4.10
     container_name: cherry-studio-enterprise-api
     ports:
       - '3670:3670'
@@ -74,11 +75,14 @@ services:
 ### 1. 拉取新版本镜像
 
 ```bash
-# 拉取最新版本
+# 拉取最新版本（Docker Hub）
 docker pull cherrystudio/cherry-studio-enterprise-api:latest
 
 # 或拉取指定版本
-docker pull cherrystudio/cherry-studio-enterprise-api:v0.3.2
+docker pull cherrystudio/cherry-studio-enterprise-api:v0.4.10
+
+# 国内用户推荐使用国内镜像，速度更快：
+docker pull docker-registry.cherry-ai.com/public/cherry-studio-enterprise-api:latest
 ```
 
 ### 2. 更新 docker-compose.yml
@@ -88,7 +92,7 @@ docker pull cherrystudio/cherry-studio-enterprise-api:v0.3.2
 ```yaml
 services:
   api:
-    image: cherrystudio/cherry-studio-enterprise-api:v0.3.2 # 更新版本号
+    image: cherrystudio/cherry-studio-enterprise-api:v0.4.10 # 更新版本号
     # ... 其他配置保持不变 ...
 ```
 
@@ -122,7 +126,7 @@ docker-compose logs -f
 ### 查看更新日志
 
 - **管理后台**：在「关于我们」>「更新日志」查看
-- **在线文档**：访问 [CHANGELOG](https://releases.enterprise.cherry-ai.com/api/changelog)
+- **在线文档**：访问 <DynamicLink href="/[lang]/docs/admin/about/release-notes">更新日志</DynamicLink>
 
 ## 常见问题
 

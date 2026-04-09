@@ -45,7 +45,9 @@ helm install cherry-studio-enterprise ./helm
 
 📦 **Helm chart releases**: [cherry-studio-enterprise-helm/releases](https://github.com/CherryInternal/cherry-studio-enterprise-helm/releases)
 
-🐳 **Docker image**: [cherrystudio/cherry-studio-enterprise-api](https://hub.docker.com/repository/docker/cherrystudio/cherry-studio-enterprise-api) - view available tags
+🐳 **Docker image**:
+- **Docker Hub**: [cherrystudio/cherry-studio-enterprise-api](https://hub.docker.com/repository/docker/cherrystudio/cherry-studio-enterprise-api)
+- **China mirror**: `docker-registry.cherry-ai.com/public/cherry-studio-enterprise-api` (recommended for mainland China users)
 
 ## Installation
 
@@ -167,7 +169,7 @@ helm install cherry-studio-enterprise ./helm -f values-custom.yaml
 | ------------------------------- | --------------------------------------- | ------------------------------------------- |
 | `app.enabled` | Enable application | `true` |
 | `app.replicaCount` | Replica count (recommend 1 for data consistency) | `1` |
-| `app.image.repository` | Image repository | `cherrystudio/cherry-studio-enterprise-api` |
+| `app.image.repository` | Image repository (China users: use `docker-registry.cherry-ai.com/public/cherry-studio-enterprise-api`) | `cherrystudio/cherry-studio-enterprise-api` |
 | `app.image.tag` | Image tag | `latest` |
 | `app.api.service.type` | API Service type | `ClusterIP` |
 | `app.api.service.port` | API service port | `3670` |
