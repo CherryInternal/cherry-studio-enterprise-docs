@@ -24,7 +24,6 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 推論挙動とリソース消費を細かく制御します。
 
-<img src="/assets/images/ja/admin/assistant-management-advanced-config-3_ja.webp" alt="" />
 <img src="/assets/images/ja/admin/assistant-management-advanced-config-4_ja.webp" alt="" />
 <table><thead><tr><th>設定</th><th width="344.203125">説明</th><th>推奨</th></tr></thead><tbody><tr><td><strong>モデル (Model)</strong></td><td>基盤モデルを随時切替（例：GPT-4 → DeepSeek）。</td><td>タスクの難易度で選択</td></tr><tr><td><strong>温度 (Temperature)</strong></td><td>出力のランダム性。<code>0</code> は決定的（コード/論理向き）、<code>1+</code> は創造的。</td><td>論理: 0.1 / クリエイティブ: 0.8</td></tr><tr><td><strong>コンテキスト数 (Context)</strong></td><td>会話に含める履歴ターン数。多いほど記憶は長いがコスト増。</td><td>既定 5-10</td></tr><tr><td><strong>Top P</strong></td><td>核サンプリングの多様性パラメータ。</td><td>既定または温度と調整</td></tr><tr><td><strong>最大 Token 数</strong></td><td>回答最大長を制限し、過剰出力を防ぐ。</td><td>既定または 4096</td></tr><tr><td><strong>ストリーム出力</strong></td><td>タイプライター効果の有効化。体感遅延を減らすため推奨。</td><td>✅ On</td></tr><tr><td><strong>MCP 呼び出し方式</strong></td><td>ツール呼び出し方法。精度の高い <code>Function</code> を推奨。</td><td>Function Calling</td></tr><tr><td><strong>カスタムパラメータ</strong></td><td>モデルリクエストにカスタムパラメータ（キーと値のペア）を追加し、特定モデル向けの設定を渡すことができます。</td><td>必要に応じて設定</td></tr></tbody></table>
 
@@ -36,11 +35,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 アシスタントに「外部知識」を付与します。**[知識ベース管理]** で作成済みのデータセットを選択できます。
 
-* **動作:** 有効化すると、回答前に選択した知識ベースを検索します。
-
-**ツール例:**
-* **Playwright:** Web へアクセスしてページを読み取り。
-* **Filesystem:** サーバー内の特定ディレクトリを読み書き。
+* **動作:** 有効化すると、回答前に選択した知識ベースを検索し、関連するコンテンツをコンテキストとしてモデルに提供します。
 
 <img src="/assets/images/ja/admin/assistant-management-advanced-config-5_ja.webp" alt="" />
 ### 3.4 MCP サーバー (MCP Servers)
@@ -49,6 +44,10 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 <img src="/assets/images/ja/admin/assistant-management-advanced-config-6_ja.webp" alt="" />
 このページには **グローバル設定** で追加済みの MCP サービスが表示されます。スイッチで付与できます。
+
+**ツール例:**
+* **Playwright:** アシスタントがインターネットにアクセスし、Web ページの内容を読み取ることを許可します。
+* **Filesystem:** アシスタントがサーバー上の特定のファイルディレクトリを読み書きすることを許可します。
 
 | 項目 | 説明 |
 | -------------------- | ---------------------------------------------- |
