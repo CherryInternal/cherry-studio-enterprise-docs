@@ -2,8 +2,12 @@
 
 import { ReactRouterProvider } from 'fumadocs-core/framework/react-router'
 import { RootProvider } from 'fumadocs-ui/provider/base'
-import { useEffect, useState } from 'react'
+import { lazy, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
+
+const CustomSearchDialog = lazy(
+  () => import('@/components/search-dialog')
+)
 
 import {
   getLocaleFromPath,
@@ -59,6 +63,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ReactRouterProvider>
       <RootProvider
+        search={{
+          SearchDialog: CustomSearchDialog,
+          options: {
+            api: '/api/search.json',
+            locale: currentLocale
+          }
+        }}
         i18n={{
           ...i18nConfig,
           onLocaleChange: (newLocale) => {

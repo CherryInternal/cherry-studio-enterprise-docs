@@ -5,13 +5,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "react-router build",
+    "build": "node scripts/build-search-index.mjs && react-router build",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
+    "@orama/orama": "^3.1.18",
     "@react-router/node": "^7.9.4",
     "@react-router/serve": "^7.9.4",
     "fumadocs-core": "16.0.6",

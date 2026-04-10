@@ -2,7 +2,12 @@
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
 
-/* Increase TOC h3 indentation: 32px → 40px for clearer hierarchy */
-a[data-active].ps-8 {
-  padding-inline-start: 2.5rem !important;
+/* TOC heading indentation: increase spacing between levels for clearer hierarchy */
+/* H2 (depth 3): 24px → 32px */
+.border-s > a.ps-6 {
+  padding-inline-start: 2rem !important;
+}
+/* H3 (depth 4): 32px → 48px */
+.border-s > a.ps-8 {
+  padding-inline-start: 3rem !important;
 }
