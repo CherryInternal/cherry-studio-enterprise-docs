@@ -152,7 +152,7 @@ docker-compose down -v
 
 ### Environment Variables
 
-### Core Configuration
+**Core Configuration**
 
 | Variable | Description | Default | Required |
 | -------------------- | ----------------- | --------------- | ---- |
@@ -164,7 +164,7 @@ docker-compose down -v
 | `ADMIN_APP_LOGO_URL` | Admin logo URL | - | No |
 | `ADMIN_BASE_PATH` | Admin base path | `/` | No |
 
-### Database Configuration
+**Database Configuration**
 
 | Variable | Description | Default | Notes |
 | ------------- | ------------ | ---------- | ------------------- |
@@ -333,7 +333,7 @@ docker-compose up -d
 
 ### Common Issues
 
-### 1. Container fails to start
+**1. Container fails to start**
 
 ```bash
 # Check container logs
@@ -346,14 +346,14 @@ netstat -tulpn | grep -E '3670|3680'
 systemctl status docker
 ```
 
-### 2. Database connection failure
+**2. Database connection failure**
 
 - Ensure the database service is running
 - Check network connectivity and firewall rules
 - Verify database credentials
 - Ensure the database is created and permissions are correct
 
-### 3. Permission issues
+**3. Permission issues**
 
 ```bash
 # Fix data directory permissions
@@ -364,7 +364,7 @@ docker exec cherry-studio-enterprise \
   chown -R node:node /app/data
 ```
 
-### 4. Out of memory
+**4. Out of memory**
 
 ```bash
 # Increase Docker memory limit
