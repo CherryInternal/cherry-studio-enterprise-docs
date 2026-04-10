@@ -3,11 +3,15 @@
 @import "fumadocs-ui/css/preset.css";
 
 /* TOC heading indentation: increase spacing between levels for clearer hierarchy */
-/* H2 (depth 3): 24px → 32px */
-.border-s > a.ps-6 {
-  padding-inline-start: 2rem !important;
+/* H2: keep at base level */
+.border-s > a.ps-3 {
+  padding-inline-start: 0.75rem !important;
 }
-/* H3 (depth 4): 32px → 48px */
+/* H3: clearly indented under H2 */
+.border-s > a.ps-6 {
+  padding-inline-start: 2.5rem !important;
+}
+/* H4: further indented under H3 */
 .border-s > a.ps-8 {
-  padding-inline-start: 3rem !important;
+  padding-inline-start: 4rem !important;
 }

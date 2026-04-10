@@ -7,7 +7,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 点击智能体管理页面右上角的 **新建智能体** 按钮，进入创建页面。创建页面包含 7 个配置 Tab，您可以从"快速设置"开始，也可以逐一配置各项参数。
 
-## 1. 快速设置
+## 快速设置
 
 最简化的创建流程，仅需填写头像、名称和主模型即可完成创建。
 
@@ -15,7 +15,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 <table><thead><tr><th width="120">参数</th><th>说明</th></tr></thead><tbody><tr><td><strong>头像</strong></td><td>智能体的表情符号标识，点击可更换。</td></tr><tr><td><strong>名称 *</strong></td><td>智能体的唯一标识名称。</td></tr><tr><td><strong>主模型 *</strong></td><td>智能体使用的主要 AI 模型，从已配置的服务商模型列表中选择。</td></tr></tbody></table>
 
-## 2. 基础设置
+## 基础设置
 
 配置智能体的描述文案和系统指令（System Prompt）。
 
@@ -23,19 +23,19 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 <table><thead><tr><th width="140">参数</th><th>说明</th></tr></thead><tbody><tr><td><strong>头像</strong></td><td>同快速设置。</td></tr><tr><td><strong>名称 *</strong></td><td>同快速设置。</td></tr><tr><td><strong>描述</strong></td><td>简要描述智能体的职能和用途，方便用户理解。</td></tr><tr><td><strong>系统指令</strong></td><td>定义智能体的行为规则和角色设定，作为系统提示词注入每次对话。</td></tr><tr><td><strong>指令可见</strong></td><td>开关控制。开启后用户可查看系统指令内容，关闭则对用户隐藏。默认开启。</td></tr></tbody></table>
 
-## 3. 模型设置
+## 模型设置
 
 配置智能体在不同任务阶段使用的 AI 模型。三模型架构允许在性能和成本之间取得最佳平衡。
 
 <img src="/assets/images/zh/admin/agent-management-create-model_zh.webp" alt="模型设置" />
 
-<table><thead><tr><th width="140">参数</th><th width="80">必填</th><th>说明</th></tr></thead><tbody><tr><td><strong>主模型</strong></td><td>是</td><td>用于生成响应的主要模型。建议选择能力最强的模型（如 Claude Opus、GPT-4 等）。</td></tr><tr><td><strong>规划模型</strong></td><td>否</td><td>用于复杂规划和推理任务的模型。留空时使用主模型。建议选择推理能力强的模型。</td></tr><tr><td><strong>快速模型</strong></td><td>否</td><td>用于简单任务的小型快速模型。留空时使用主模型。适合选择响应速度快、成本低的模型。</td></tr></tbody></table>
+<table><thead><tr><th width="140">参数</th><th width="80">必填</th><th>说明</th></tr></thead><tbody><tr><td><strong>主模型</strong></td><td>是</td><td>用于生成响应的主要模型。建议选择能力最强的模型（如 Claude Opus、Codex 等）。</td></tr><tr><td><strong>规划模型</strong></td><td>否</td><td>用于复杂规划和推理任务的模型。留空时使用主模型。建议选择推理能力强的模型。</td></tr><tr><td><strong>快速模型</strong></td><td>否</td><td>用于简单任务的小型快速模型。留空时使用主模型。适合选择响应速度快、成本低的模型。</td></tr></tbody></table>
 
 <Callout type="info">
-**模型选择建议：** 主模型选择 Claude Opus 或 GPT-4 级别；规划模型可与主模型相同或使用 Claude Sonnet；快速模型建议使用 Claude Haiku 或 GPT-4o-mini 等轻量模型以降低成本。
+**模型选择建议：** 主模型选择 Claude Opus 或 Codex 级别；规划模型可与主模型相同或使用 Claude Sonnet；快速模型建议使用 Claude Haiku 等轻量模型以降低成本。
 </Callout>
 
-## 4. 权限设置
+## 权限设置
 
 控制智能体的运行权限，确保符合企业安全策略。
 
@@ -47,7 +47,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 **安全提示：** "绕过权限"模式允许智能体执行所有操作（包括文件写入和命令执行），建议仅向可信的高级开发者开放。
 </Callout>
 
-## 5. 技能
+## 技能
 
 选择智能体可使用的技能。技能来自**资源库**中的"智能体技能"模块，需先在资源库中添加技能，才能在此处绑定。
 
@@ -55,7 +55,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 每个技能通过开关控制启用/禁用。如列表为空，请先前往 **资源库 → 智能体技能** 添加技能。
 
-## 6. MCP 服务器
+## MCP 服务器
 
 选择智能体可调用的 MCP 服务器。MCP 服务器提供外部工具和数据源接入能力。
 
@@ -63,7 +63,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 列表展示所有已配置的 MCP 服务器，每个通过开关控制启用/禁用。
 
-## 7. 高级设置
+## 高级设置
 
 配置智能体的运行时行为参数。
 

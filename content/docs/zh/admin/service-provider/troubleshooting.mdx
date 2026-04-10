@@ -1,11 +1,11 @@
 ---
 title: "常见问题排查"
-description: "服务商相关常见错误排查，涵盖余额不足、模型未找到和鉴权失败等问题。"
+description: "当用户使用 API Key 调用模型遇到阻碍时，通常由以下四类原因导致。请根据返回的错误码或报错信息对照排查。"
 ---
 
-当用户使用 API Key 调用模型遇到阻碍时，通常由以下三类原因导致。请根据返回的错误码或报错信息对照排查。
+## 余额不足
 
-## Q1: 提示 "Insufficient Balance" 或 "Quota Exceeded" (余额不足)
+**Q1: 提示 "Insufficient Balance" 或 "Quota Exceeded" (余额不足)**
 
 **表现：** 接口返回 `402 Payment Required` 或 `429 Too Many Requests`，提示余额不足。
 
@@ -17,7 +17,9 @@ description: "服务商相关常见错误排查，涵盖余额不足、模型未
   * 登录上游模型提供商（Provider）后台（如 OpenAI Platform）检查信用卡余额。
   * **临时救急：** 在 **分组管理** 中，将该用户所属分组的默认模型切换至其他有余额的渠道。
 
-## Q2: 提示 "Model Not Found" (找不到模型)
+## 找不到模型
+
+**Q2: 提示 "Model Not Found" (找不到模型)**
 
 **表现：** 接口返回 `404 Not Found`，报错信息包含 `The model 'xxx' does not exist`。
 
@@ -28,7 +30,9 @@ description: "服务商相关常见错误排查，涵盖余额不足、模型未
   2. **检查分组权限：** 进入 **分组管理** > 选择该用户所在分组 > 检查 **模型路由** 配置，确认是否已勾选该模型。
   3. **别名映射：** 确认是否在系统后台对模型名称做了重映射（例如将 `gpt-4` 内部映射为 `gpt-4-0613`）。
 
-## Q3: 提示 "401 Unauthorized" (鉴权失败)
+## 鉴权失败
+
+**Q3: 提示 "401 Unauthorized" (鉴权失败)**
 
 **表现：** 接口直接拒绝连接。
 
@@ -40,7 +44,9 @@ description: "服务商相关常见错误排查，涵盖余额不足、模型未
   * 检查 **过期时间** 是否早于当前时间。
   * 若确认无误，建议删除旧 Key，重新生成一个新的 `sk-` 密钥。
 
-## Q4: 提示 "No Healthy Upstream" (无可用上游)
+## 无可用上游
+
+**Q4: 提示 "No Healthy Upstream" (无可用上游)**
 
 **表现：** 接口返回 `502 Bad Gateway` 或 `503 Service Unavailable`。
 
