@@ -25,7 +25,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 <img src="/assets/images/ja/admin/provider-management-standard-2_ja.webp" alt="" />
 プリセットテンプレートで主要プロバイダーを素早く接続できます。
 
-## 設定パラメータ
+### 設定パラメータ
 
 <table><thead><tr><th width="114.1875">項目</th><th width="385.765625">説明</th><th>例</th></tr></thead><tbody><tr><td><strong>プロバイダー名</strong></td><td>表示用の名称。識別しやすい名前を設定。</td><td><code>SiliconFlow</code> / <code>DeepSeek 公式</code></td></tr><tr><td><strong>有効</strong></td><td>このプロバイダー配下のモデルをユーザーに表示するか制御。</td><td>🟢 ON</td></tr><tr><td><strong>プロバイダー種別</strong></td><td><strong>[重要]</strong> 対応プロトコルを選択。<br />• 国内モデル（通義千問、DeepSeek）通常は <code>OpenAI</code>。<br />• Claude は <code>Anthropic</code>。</td><td><code>OpenAI</code></td></tr><tr><td><strong>API Key</strong></td><td>プロバイダー管理画面で取得したキー（sk-...）。</td><td><code>sk-rwkj...</code></td></tr><tr><td><strong>API Host</strong></td><td>API エンドポイント。種別選択で自動入力されるが、中継事業者は手動変更が必要。</td><td>`https://api.siliconflow.com/v1`</td></tr></tbody></table>
 
@@ -40,7 +40,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 プロバイダー追加後、カードをクリックしてモデル一覧を展開します。システムが自動取得を試みますが、手動追加も可能です。
 
 <img src="/assets/images/ja/admin/provider-management-standard-3_ja.webp" alt="" />
-## 🏷️ 能力タグ
+### 能力タグ
 
 モデル名の右側のアイコンは特殊能力を示します。アシスタントに適したモデルを選ぶ上で重要です。
 
@@ -55,7 +55,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 企業の運用コストを正確に計算するため、モデルごとの価格を設定してください。
 
 <img src="/assets/images/zh/admin/provider-management-standard-4_zh.webp" alt="" />
-## モデル設定の編集
+### モデル設定の編集
 
 * **モデル ID**：API 呼び出しに使用される文字列（変更不可、公式ドキュメントと一致必須）。
 * **コンテキスト長**：最大メモリウィンドウ（例：`32k`, `128k`）。
