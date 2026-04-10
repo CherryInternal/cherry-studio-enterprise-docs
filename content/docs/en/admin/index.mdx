@@ -1,163 +1,74 @@
 ---
 title: Admin Console
-description: Cherry Studio Admin Console - a centralized management platform built for enterprise users
+description: The Cherry Studio Admin Console is a centralized management platform designed for enterprise users, offering comprehensive AI service management, user permission control, and resource configuration.
 ---
 
-The Cherry Studio Admin Console is a centralized management platform designed for enterprise users, offering comprehensive AI service management, user permission control, and resource configuration.
-
 <img src="/assets/images/en/admin-demo.webp" alt="Admin console demo" />
-## Demo Environment
+## 1. Demo Environment
 
 - **Console URL**: https://admin.demo.cherry-ai.com/
 - **Demo account**: `admin`
 - **Demo password**: `password`
 
-## Core Modules
+## 2. Core Modules
 
 ### 👥 User and Permission Management
 
 Provides fine-grained user and permission controls to ensure enterprise security and compliance.
 
-### Employee Management
-
-- Bulk import and manage employee accounts
-- Set access permissions and usage quotas
-- Monitor usage and activity
-- Support multiple authentication methods (local auth, SSO)
-
-### Group Management
-
-- Create and manage departments or project groups
-- Batch-assign group permissions and resources
-- Flexible org structure management
-
-### Access Control
-
-- Role-based access control (RBAC)
-- Fine-grained feature permissions
-- API access permission management
+- **User Management**: Bulk import and manage employee accounts, set access permissions and usage quotas, monitor usage and activity, support multiple authentication methods (local auth, SSO)
+- **Group Management**: Create and manage departments or project groups, batch-assign group permissions and resources, flexible org structure management
 
 ### 🤖 AI Service and Model Management
 
 Centralized management of enterprise AI models for flexible usage and cost control.
 
-### Provider Management (Model Access)
+- **Provider Management**: Built-in support for 40+ AI providers (OpenAI, Azure OpenAI, Google Gemini, Anthropic Claude, Baidu ERNIE, Alibaba Tongyi, etc.), with custom provider support for OpenAI / Gemini / Claude API formats
+- **Default Models**: Set platform default assistant model, topic naming model, and translation model, configure usage quotas and rate limits per model
 
-**Built-in support for 40+ AI providers**, including:
+### 📋 Assistant Management
 
-- OpenAI (GPT-5.4, GPT-4, etc.)
-- Azure OpenAI
-- Google Gemini
-- Anthropic Claude
-- Major domestic providers (Baidu ERNIE, Alibaba Tongyi, iFlytek Spark, etc.)
+Manage enterprise AI assistants to provide users with pre-configured conversational assistants.
 
-### Custom Provider Configuration
-
-Supports multiple API formats:
-
-- OpenAI Chat Completions API format
-- OpenAI Response API format
-- Google Gemini API format
-- Anthropic Claude API format
-
-### Model Policy Configuration
-
-- **Default assistant model**: default model for common chat features
-- **Topic naming model**: model used to auto-generate summaries/titles
-- **Translation model**: default model for client translation
-- **Model usage limits**: quotas and rate limits per model
-- **Cost management**: configure usage cost and budget control
+- **Assistant List**: Create and manage enterprise AI assistants, set visibility and group permissions
+- **Advanced Configuration**: Prompt settings and visibility control, model selection and parameter tuning, knowledge base and MCP tool binding, assistant publishing and validation
 
 ### 🎭 Agent Management
 
-### Agent Creation and Configuration
+Manage enterprise AI agents with more powerful autonomous task execution capabilities.
 
-- Visual agent creation wizard
-- Custom agent persona and behavior rules
-- Configure tools and APIs available to agents
-- Set knowledge base associations
+- **Agent Creation and Configuration**: Visual creation wizard, custom persona and behavior rules, configure available tools/APIs and knowledge base associations
+- **Agent Marketplace**: Internal enterprise agent sharing and template management
 
-### Agent Marketplace
+### 📦 Resource Library
 
-- Internal enterprise agent sharing
-- Agent template management
-- Usage statistics and effectiveness analysis
+Centralized management of enterprise AI resources, containing five modules:
 
-### 📚 Enterprise Knowledge Base Management
+- **Agent Skills**: Manage skill modules available to agents, support manual upload or marketplace download, control availability by group
+- **Assistant Templates**: Manage reusable assistant configuration templates, import from marketplace or create manually
+- **Knowledge Base**: Multi-source data ingestion (PDF, DOCX, TXT, etc.), automatic parsing and smart chunking, vectorized retrieval with reranking
+- **Mini Programs**: Add and manage mini program apps, configure name, icon, URL, and permissions
+- **MCP Servers**: Configure enterprise MCP Server endpoints and tools, set access permissions, auto-distribute configs by user permissions
 
-### Knowledge Base Creation and Management
+### 📊 Usage Analytics
 
-- **Multi-source data ingestion**:
-  - Document uploads (PDF, DOCX, TXT, MD, CSV, etc.)
-  - Web content crawling
-  - API data ingestion
-  - Database connections
-- **Smart processing**:
-  - Automatic document parsing and structuring
-  - Smart chunking and index optimization
-  - Multilingual support
+Comprehensive data analysis and usage monitoring to help administrators understand platform usage.
 
-### Vectorization and Storage
+- **Usage Overview**: Token consumption and request count statistics, multi-dimensional analysis by user, model, and time period, trend and distribution visualization charts
+- **Leaderboard**: User usage rankings, sort by request count and token consumption, filter by group
 
-- **Vector embeddings**: generate high-quality vectors with advanced embedding models
-- **Vector database**: built-in high-performance vector DB with external DB support
-- **Retrieval optimization**: hybrid search, reranking, and more
+### ⚙️ License Management and System Settings
 
-### Knowledge Base Testing and Optimization
+- **License Management**: View license status and expiry, monitor licensed user count, license activation, update, and renewal
+- **System Settings**: System configuration and parameter management, security policy settings, data backup and restore
 
-- Retrieval evaluation tools
-- Answer quality assessment
-- Knowledge base updates and version management
+### ℹ️ About
 
-### 🔗 MCP Server Management
+- **Application Information**: View system version and build information, client and Docker image download links
+- **Release Notes**: View update details and release notes for each version
+- **Technical Support**: Access official support contacts and service channels
 
-### MCP Server Configuration
-
-- Configure enterprise MCP Server endpoints
-- Manage MCP tools and resources
-- Set access permissions and security policies
-
-### Configuration Distribution
-
-- Auto-distribute configs based on user permissions
-- Support hot updates
-- Configuration version management
-
-### 📱 Mini Program Extension Management
-
-### Mini Program Configuration
-
-- Add and manage mini program apps
-- Configure app name, icon, and URL
-- Set required parameters and permissions
-
-### App Integrations
-
-- Third-party app integration
-- OAuth configuration
-- API gateway management
-
-### ⚙️ System Management and Maintenance
-
-### License Management
-
-- View license status and expiry
-- Monitor licensed user count usage
-- License renewal and upgrades
-
-### System Monitoring
-
-- Real-time system performance monitoring
-- API call statistics and analysis
-- Error log and alert management
-
-### Data Management
-
-- Data backup and restore
-- Data import/export
-- Data cleanup and archiving policies
-
-## Admin Console Highlights
+## 3. Admin Console Highlights
 
 ### 🎨 User Experience
 
@@ -183,7 +94,7 @@ Supports multiple API formats:
 - Open API interfaces
 - Plugin-friendly development
 
-## Use Cases
+## 4. Use Cases
 
 1. **Enterprise AI platform management**: unified management of internal AI resources and services
 2. **Team collaboration platform**: configure dedicated AI tools and knowledge bases for teams
