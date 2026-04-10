@@ -1,6 +1,6 @@
 ---
 title: Software Updates
-description: Cherry Studio Enterprise update guide
+description: "Update Cherry Studio Enterprise via one-click update in the admin console (Docker Compose) or manual update."
 ---
 
 import { DynamicLink } from 'fumadocs-core/dynamic-link'
@@ -11,22 +11,20 @@ import { Callout } from 'fumadocs-ui/components/callout'
   v0.3.3 first, then you can use one-click update.
 </Callout>
 
-This document explains how to update Cherry Studio Enterprise to the latest version. The system supports one-click updates in the admin console (Docker Compose deployments) or manual updates.
-
 ## Update Methods
 
 ### Method 1: One-Click Update in Admin Console (Recommended)
 
 If you deployed with Docker Compose, you can update directly from the admin console.
 
-### Prerequisites
+**Prerequisites**
 
 To enable one-click update, configure the following in `docker-compose.yml`:
 
 1. **Mount Docker Socket**: Allow the container to control Docker
 2. **Mount docker-compose.yml**: Allow the container to read and update the config file
 
-### Configuration Example
+**Configuration Example**
 
 ```yaml
 services:
@@ -48,7 +46,7 @@ services:
     restart: unless-stopped
 ```
 
-### Steps
+**Steps**
 
 1. Sign in to the admin console
 2. Go to the **About** page
@@ -62,7 +60,7 @@ services:
    - Start new containers
 7. The page will refresh after the update completes
 
-### Notes
+**Notes**
 
 - Service will be briefly interrupted (typically 10-30 seconds)
 - Do not close the browser or refresh during the update
@@ -72,7 +70,7 @@ services:
 
 If you did not configure one-click update or prefer manual control, follow these steps:
 
-### 1. Pull the new image
+**Pull the new image**
 
 ```bash
 # Pull latest version (Docker Hub)
@@ -85,7 +83,7 @@ docker pull cherrystudio/cherry-studio-enterprise-api:v0.4.10
 docker pull docker-registry.cherry-ai.com/public/cherry-studio-enterprise-api:latest
 ```
 
-### 2. Update docker-compose.yml
+**Update docker-compose.yml**
 
 Modify the image tag in `docker-compose.yml`:
 
@@ -96,7 +94,7 @@ services:
     # ... other configuration unchanged ...
 ```
 
-### 3. Restart services
+**Restart services**
 
 ```bash
 # Stop and recreate containers
@@ -107,7 +105,7 @@ docker-compose up -d
 docker-compose logs -f
 ```
 
-### 4. Verify the update
+**Verify the update**
 
 - Check the version on the **About** page in the admin console
 - Verify the service is running: `curl http://localhost:3670/health`

@@ -1,3 +1,8 @@
 @import "tailwindcss";
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
+
+/* Increase TOC h3 indentation: 32px → 40px for clearer hierarchy */
+a[data-active].ps-8 {
+  padding-inline-start: 2.5rem !important;
+}

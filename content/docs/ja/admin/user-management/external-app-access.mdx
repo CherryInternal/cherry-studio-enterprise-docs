@@ -1,6 +1,6 @@
 ---
 title: "外部アプリ接続（Express モデル）"
-description: Cherry Studio Enterprise API を使って、外部アプリから Enterprise Express のクローズドモデルとオープンソースモデルを呼び出す方法を説明します。このガイドは、外部アプリ、IDE プラグイン、自動化スクリプト、または自社サービスから Cherry Studio Enterprise Express モデルを直接呼び出したい開発者向けです。
+description: "外部アプリ、IDE プラグイン、自作サービスから API で Cherry Studio Enterprise Express モデルを呼び出します。"
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
@@ -150,7 +150,7 @@ print(resp.choices[0].message.content)
 
 ## よくある質問
 
-### 1. `Provider is required` と表示されるのはなぜですか？
+**1. `Provider is required` と表示されるのはなぜですか？**
 
 通常、`model` にプロバイダー接尾辞が付いていないことが原因です。次の形式になっているか確認してください：
 
@@ -158,7 +158,7 @@ print(resp.choices[0].message.content)
 anthropic/claude-sonnet-4.5@x-express-internal
 ```
 
-### 2. `401 Unauthorized` または `Key Expired` と表示されるのはなぜですか？
+**2. `401 Unauthorized` または `Key Expired` と表示されるのはなぜですか？**
 
 次を確認してください：
 
@@ -166,7 +166,7 @@ anthropic/claude-sonnet-4.5@x-express-internal
 2. API Key の有効期限が切れていないか
 3. API Key が管理者によって無効化されていないか
 
-### 3. モデルが存在しない、またはアクセス権がないと表示されるのはなぜですか？
+**3. モデルが存在しない、またはアクセス権がないと表示されるのはなぜですか？**
 
 次を確認してください：
 
@@ -174,6 +174,6 @@ anthropic/claude-sonnet-4.5@x-express-internal
 2. 現在のユーザーのグループにそのモデルの利用権限があるか
 3. モデル接尾辞が正しい Express カテゴリに対応しているか
 
-### 4. `Balance Insufficient` と表示されるのはなぜですか？
+**4. `Balance Insufficient` と表示されるのはなぜですか？**
 
 通常、企業 Express 残高が不足しているか、そのモデルにクォータ制限があることを意味します。管理者に **プロバイダー管理 > Express** で残高とモデル状態を確認してもらってください。

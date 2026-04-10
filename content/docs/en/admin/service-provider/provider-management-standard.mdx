@@ -1,11 +1,11 @@
 ---
 title: "Provider Management (Premium)"
-description: This section covers onboarding mainstream model providers via standard protocols (OpenAI, Anthropic, Google, etc.).
+description: "Onboard mainstream model providers via standard protocols (OpenAI, Anthropic, Google, etc.)."
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
 
-### Overview
+## Overview
 
 **Path:** Admin console sidebar > **Provider Management**
 
@@ -18,14 +18,14 @@ In this module, admins can configure and manage the AI model sources used by the
 
 ***
 
-### 1. Add a New Provider
+## 1. Add a New Provider
 
 **Action:** Click **+ Add Provider** at the bottom of the list.
 
 <img src="/assets/images/en/admin/provider-management-standard-2_en.webp" alt="" />
 The system supports quick onboarding via preset templates.
 
-### Configuration Parameters
+## Configuration Parameters
 
 <table><thead><tr><th width="114.1875">Field</th><th width="385.765625">Description</th><th>Example</th></tr></thead><tbody><tr><td><strong>Provider name</strong></td><td>Custom display name for identification.</td><td><code>SiliconFlow</code> or <code>DeepSeek Official</code></td></tr><tr><td><strong>Enabled</strong></td><td>Controls whether all models under this provider are visible to users.</td><td>🟢 On</td></tr><tr><td><strong>Provider type</strong></td><td><strong>[Key]</strong> Choose the protocol template.<br />• Domestic models (Qwen, DeepSeek) typically choose <code>OpenAI</code>.<br />• Claude chooses <code>Anthropic</code>.</td><td><code>OpenAI</code></td></tr><tr><td><strong>API Key</strong></td><td>Key from the provider console (sk-...).</td><td><code>sk-rwkj...</code></td></tr><tr><td><strong>API Host</strong></td><td>API endpoint. Defaults auto-fill after provider type; relay providers may require manual changes.</td><td>`https://api.siliconflow.com/v1`</td></tr></tbody></table>
 
@@ -35,12 +35,12 @@ The system supports quick onboarding via preset templates.
 
 ***
 
-### 2. Model List and Capability Tags
+## 2. Model List and Capability Tags
 
 After adding a provider, click its card to expand the model list. The system will try to fetch supported models automatically, or you can add them manually.
 
 <img src="/assets/images/en/admin/provider-management-standard-3_en.webp" alt="" />
-### 🏷️ Capability Tags
+## 🏷️ Capability Tags
 
 Icons next to model names indicate special capabilities. Understanding these is critical when selecting models for assistants.
 
@@ -48,14 +48,14 @@ Icons next to model names indicate special capabilities. Understanding these is 
 
 ***
 
-### 3. Model Parameters and Pricing
+## 3. Model Parameters and Pricing
 
 **Action:** Click the **⚙️ Settings** icon next to a model.
 
 To accurately calculate costs, configure pricing per model.
 
 <img src="/assets/images/zh/admin/provider-management-standard-4_zh.webp" alt="" />
-### Edit Model Settings
+## Edit Model Settings
 
 * **Model ID**: The exact identifier used in API calls (must match provider docs).
 * **Context length**: Maximum context window (e.g., `32k`, `128k`).
@@ -70,7 +70,7 @@ To accurately calculate costs, configure pricing per model.
 
 ***
 
-### 4. Connectivity Validation
+## 4. Connectivity Validation
 
 After configuration, validate API Key and connectivity:
 
@@ -82,7 +82,7 @@ After configuration, validate API Key and connectivity:
 
 ***
 
-### FAQ
+## FAQ
 
 **Q: The provider was added but the model list is empty.**
 

@@ -1,5 +1,6 @@
 ---
 title: "创建新助手"
+description: 通过初始化模态框配置助手的图标、名称、模型和提示词等基础参数，完成助手创建。
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
@@ -7,7 +8,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 点击右上角的 **+ 添加助手** 按钮，系统将弹出初始化模态框。这是赋予助手"生命"的第一步。
 
 <img src="/assets/images/zh/admin/assistant-management-create-new_zh.webp" alt="" />
-### 基础配置参数
+## 基础配置参数
 
 <table><thead><tr><th width="180">参数</th><th>说明</th><th>示例</th></tr></thead><tbody><tr><td><strong>图标 *</strong></td><td>助手的视觉标识，建议根据职能选择，便于快速识别。</td><td>💻 (代码助手), ⚖️ (法务助手)</td></tr><tr><td><strong>名称 *</strong></td><td>助手的唯一标识名。建议采用 <code>[部门/职能] + 角色</code> 的命名规范。</td><td><code>研发部-代码审查员</code></td></tr><tr><td><strong>模型 *</strong></td><td>设置默认模型和模型池。默认模型会自动加入模型池。点击"高级配置"可进一步管理模型池。</td><td><code>anthropic/claude-sonnet-4-20250514</code></td></tr><tr><td><strong>提示词 *</strong></td><td>配置助手的系统提示词和对话提示词。定义其任务目标、输出格式及行为约束。</td><td><code>你是一个资深 Python 工程师，请只输出代码，不要解释...</code></td></tr><tr><td><strong>提示词可见性</strong></td><td>控制用户是否可以查看此助手的系统提示词。默认开启。</td><td>开启 / 关闭</td></tr></tbody></table>
 

@@ -1,6 +1,6 @@
 ---
 title: 软件更新
-description: Cherry Studio Enterprise 软件更新指南
+description: "通过管理后台一键更新（Docker Compose 部署）或手动更新 Cherry Studio Enterprise 到最新版本。"
 ---
 
 import { DynamicLink } from 'fumadocs-core/dynamic-link'
@@ -11,22 +11,20 @@ import { Callout } from 'fumadocs-ui/components/callout'
   v0.3.3，之后即可使用一键更新功能。
 </Callout>
 
-本文档介绍如何更新 Cherry Studio Enterprise 到最新版本。系统支持通过管理后台一键更新（Docker Compose 部署）或手动更新。
-
 ## 更新方式
 
 ### 方式一：管理后台一键更新（推荐）
 
 如果您使用 Docker Compose 方式部署，可以通过管理后台直接进行更新。
 
-### 前置条件
+**前置条件**
 
 为了启用一键更新功能，您需要在 `docker-compose.yml` 中配置以下内容：
 
 1. **挂载 Docker Socket**：允许容器内部控制 Docker
 2. **挂载 docker-compose.yml 文件**：允许容器读取和更新配置文件
 
-### 配置示例
+**配置示例**
 
 ```yaml
 services:
@@ -48,7 +46,7 @@ services:
     restart: unless-stopped
 ```
 
-### 使用步骤
+**使用步骤**
 
 1. 登录管理后台
 2. 进入「关于我们」页面
@@ -62,7 +60,7 @@ services:
    - 启动新容器
 7. 更新完成后，页面会自动刷新
 
-### 注意事项
+**注意事项**
 
 - 更新过程中服务会短暂中断（通常 10-30 秒）
 - 更新过程中请勿关闭浏览器或刷新页面
@@ -72,7 +70,7 @@ services:
 
 如果您没有配置一键更新，或更喜欢手动控制更新过程，可以按以下步骤操作：
 
-### 1. 拉取新版本镜像
+**拉取新版本镜像**
 
 ```bash
 # 拉取最新版本（Docker Hub）
@@ -85,7 +83,7 @@ docker pull cherrystudio/cherry-studio-enterprise-api:v0.4.10
 docker pull docker-registry.cherry-ai.com/public/cherry-studio-enterprise-api:latest
 ```
 
-### 2. 更新 docker-compose.yml
+**更新 docker-compose.yml**
 
 修改 `docker-compose.yml` 中的镜像版本：
 
@@ -96,7 +94,7 @@ services:
     # ... 其他配置保持不变 ...
 ```
 
-### 3. 重启服务
+**重启服务**
 
 ```bash
 # 停止并重新创建容器
@@ -107,7 +105,7 @@ docker-compose up -d
 docker-compose logs -f
 ```
 
-### 4. 验证更新
+**验证更新**
 
 - 访问管理后台，在「关于我们」页面查看版本号
 - 检查服务是否正常运行：`curl http://localhost:3670/health`

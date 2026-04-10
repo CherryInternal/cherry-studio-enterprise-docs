@@ -1,13 +1,11 @@
 ---
 title: Pricing
-description: Cherry Studio pricing plans - flexible options for users and enterprises of different sizes
+description: "Flexible pricing from individual developers to large enterprises, covering Community, Express, and Premium editions."
 ---
-
-Cherry Studio offers flexible pricing for users and enterprises of all sizes, from individual developers to large organizations.
 
 ## Version Selection Guide
 
-### Express vs Premium: Key Differences
+### Express vs Premium
 
 **Same functionality**: Express and Premium are identical in features and both include the full enterprise capability set.
 
@@ -46,114 +44,87 @@ For product pricing details, see the official comparison: https://enterprise.che
 
 ### Community
 
----
-
-**Target users**: Individuals, developers<br />
-**Deployment**: Single-machine use<br />
-**Technical support**: Community support<br />
-**License**: AGPL 3.0 open-source license
+<table>
+<tbody>
+<tr><td><strong>Target users</strong></td><td>Individuals, developers</td></tr>
+<tr><td><strong>Pricing</strong></td><td>Free</td></tr>
+<tr><td><strong>License</strong></td><td>AGPL 3.0 open-source license</td></tr>
+<tr><td><strong>Deployment</strong></td><td>Single-machine use</td></tr>
+<tr><td><strong>Technical support</strong></td><td>Community support</td></tr>
+</tbody>
+</table>
 
 **Core features**:
 
-- Completely free, no time limit
-- Basic chat features for mainstream AI models
+- Basic chat for mainstream AI models, no time limit
 - Local deployment with full data control
 - Built-in 30+ providers (OpenAI, Anthropic, Google Gemini, domestic LLMs, etc.)
-- **Feature-rich but manual configuration**: users must apply for and configure API keys
+- Users must apply for and configure API keys themselves
 
-**Provider usage**:
+**Use cases**: Personal AI assistant, developer learning and trials, internal tools for small teams
 
-- Full provider list available, but users must register accounts themselves
-- Manual configuration of API Key, Base URL, and other settings
-- Best for technical users who are comfortable managing API keys
-
-**Use cases**:
-
-- Personal AI assistant
-- Developer learning and trials
-- Internal tools for small teams
-- Cost-sensitive individual users
+---
 
 ### Express
 
----
-
-**Target users**: Startups, small and mid-sized teams<br />
-**Deployment**: Private deployment<br />
-**Technical support**: Dedicated technical support (annual service fee required)<br />
-**Pricing**: ¥9,999, no user limit
+<table>
+<tbody>
+<tr><td><strong>Target users</strong></td><td>Startups, small and mid-sized teams</td></tr>
+<tr><td><strong>Pricing</strong></td><td>¥9,999, no user limit</td></tr>
+<tr><td><strong>License</strong></td><td>Commercial license (perpetual)</td></tr>
+<tr><td><strong>Deployment</strong></td><td>Private deployment</td></tr>
+<tr><td><strong>Technical support</strong></td><td>Dedicated technical support (annual service fee required)</td></tr>
+<tr><td><strong>Providers</strong></td><td>Built-in major domestic and global LLMs, out of the box (<strong>no customization</strong>)</td></tr>
+</tbody>
+</table>
 
 **Core features** (same as Premium):
 
-- ✅ Core features: complete AI chat and multi-model support
-- ✅ Provider management: built-in mainstream LLM services (no customization)
-- ✅ Model management: manage and configure available AI models
-- ✅ Employee management: enterprise user accounts and org structure
-- ✅ Shared knowledge base: enterprise vector knowledge base and document management
-- ✅ Access control: role-based access control (RBAC)
-- ✅ Data backup: full backup and recovery mechanisms
-- ✅ Assistant management: custom AI assistant configuration and management
-- ✅ Agent management: enterprise agent workflow orchestration
-- ✅ MCP management: MCP tool integration and management
-- ✅ Mini program management: enterprise mini program ecosystem support
+| Module | Description |
+| --- | --- |
+| Core functionality | Multi-model AI chat with multimodal support (text, images, files) |
+| Provider management | Built-in mainstream LLM services, out of the box |
+| Default model settings | Configure assistant, topic naming, and translation models to balance experience and cost |
+| User & group management | Employee accounts and group-based permission control for fine-grained AI resource access |
+| Assistant management | Create AI assistants with preset roles, knowledge bases, and tools, distribute by user group |
+| Assistant library | Centrally manage reusable assistant templates, one-click import from the built-in template market |
+| Agent management | AI agents with multi-model collaboration, skill binding, and MCP tool integration |
+| Agent skills | Manage reusable skill modules, add manually or download from the community marketplace |
+| Knowledge base | Enterprise RAG engine that vectorizes documents for accurate AI-powered Q&A |
+| MCP servers | Connect external tools and data sources via the MCP protocol |
+| Mini programs | Integrate external AI tools and web services into the client sidebar |
+| Usage analytics | Multi-dimensional dashboards for real-time Token consumption and cost monitoring |
+| License management | License activation and status monitoring with Casdoor SSO support |
+| System settings | Network proxy, search engine integration, OCR document preprocessing, and cache management |
+| API gateway | Call enterprise models from external apps and IDE plugins via API Key |
+| Data backup | Full PostgreSQL database and application data backup and restore |
 
-**Provider usage**:
-
-- **Built-in providers**: preconfigured mainstream LLM services, **out of the box**
-- **No custom providers**: cannot add your own API keys or other providers
-- No complex API Key configuration required, ideal for fast onboarding
-
-**Provider limitations**:
-
-- Only system built-in providers and models are available
-- Private/self-hosted model services cannot be added
-- Your own API keys cannot be used
-
-**Use cases**:
-
-- Small and mid-sized businesses that want fast, out-of-the-box deployment
-- Teams without custom provider requirements
-- Enterprises that need full features but no provider customization
-- Teams with no user count constraints
-
-### Premium
+**Use cases**: Small and mid-sized businesses that want fast, out-of-the-box deployment with full features but no custom provider requirements
 
 ---
 
-**Target users**: Medium to large enterprises with high security and management requirements<br />
-**Deployment**: Private deployment<br />
-**Technical support**: Dedicated technical support (annual service fee required)<br />
-**Pricing**: [Contact us for pricing](/docs/contact)
+### Premium
 
-**Core features** (same as Express):
+<table>
+<tbody>
+<tr><td><strong>Target users</strong></td><td>Medium to large enterprises with high security and management requirements</td></tr>
+<tr><td><strong>Pricing</strong></td><td><a href="/docs/contact">Contact us for pricing</a></td></tr>
+<tr><td><strong>License</strong></td><td>Commercial license (perpetual)</td></tr>
+<tr><td><strong>Deployment</strong></td><td>Private deployment</td></tr>
+<tr><td><strong>Technical support</strong></td><td>Dedicated technical support (annual service fee required)</td></tr>
+<tr><td><strong>Providers</strong></td><td>Fully configurable, add custom providers and private models</td></tr>
+</tbody>
+</table>
 
-- ✅ Core features: complete AI chat and multi-model support
-- ✅ Provider management: fully configurable (custom providers supported)
-- ✅ Model management: manage and configure available AI models
-- ✅ Employee management: enterprise user accounts and org structure
-- ✅ Shared knowledge base: enterprise vector knowledge base and document management
-- ✅ Access control: role-based access control (RBAC)
-- ✅ Data backup: full backup and recovery mechanisms
-- ✅ Assistant management: custom AI assistant configuration and management
-- ✅ Agent management: enterprise agent workflow orchestration
-- ✅ MCP management: MCP tool integration and management
-- ✅ Mini program management: enterprise mini program ecosystem support
+**Core features** (same as Express, except provider management):
 
-**Provider usage**:
+Shares all 16 feature modules listed above with Express. The only difference is **provider management**:
 
-- **Fully configurable**: add any custom provider
-- Supports private/self-hosted model services
-- Configure multiple provider accounts and API keys
+- Fully configurable with any custom provider and private models
 - Supports model services in enterprise intranets
-- Flexible provider permission allocation and management
+- Flexible provider permissions and group-based management
 
-**Use cases**:
-
-- Enterprises that need private models or self-hosted LLM services
-- Organizations that need intranet model services
-- Teams with custom provider requirements
-- Teams with special provider or API key management needs
-- Large enterprises with tiered pricing needs by headcount
+**Use cases**: Enterprises that need private models or self-hosted LLM services, organizations that need custom provider configuration or intranet model services
 
 ## Purchase and Services
 
@@ -172,6 +143,8 @@ For product pricing details, see the official comparison: https://enterprise.che
 - Remote deployment assistance
 - Custom requirement consultation
 - Training and usage guidance
+
+**Support email**: support@cherry-ai.com
 
 ### 📞 Contact for Purchase
 

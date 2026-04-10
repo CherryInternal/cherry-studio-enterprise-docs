@@ -1,12 +1,13 @@
 ---
 title: "Advanced Configuration Details"
+description: Fine-tune assistant behavior by configuring prompts, model parameters, knowledge base attachments, and MCP tools.
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
 
 After creation, click **Edit** to enter the detailed configuration page. The left navigation is divided into four core areas.
 
-### 3.1 Prompt Settings
+## 3.1 Prompt Settings
 
 Manage the assistant's persona and permissions here.
 
@@ -18,7 +19,7 @@ Manage the assistant's persona and permissions here.
   * **Off:** Only admins can view it, protecting core prompt assets.
 
   <img src="/assets/images/en/admin/assistant-management-advanced-config-2_en.webp" alt="" />
-### 3.2 Model Settings
+## 3.2 Model Settings
 
 Fine-tune reasoning behavior and resource usage.
 
@@ -29,14 +30,14 @@ Fine-tune reasoning behavior and resource usage.
 **Cost warning:** Increasing **Context** significantly raises token usage per chat. Balance cost and experience.
 </Callout>
 
-### 3.3 Knowledge Base Settings
+## 3.3 Knowledge Base Settings
 
 Attach an "external brain". Here you can select datasets indexed in **[Knowledge Base Management]**.
 
 * **How it works:** When enabled, the assistant will search selected knowledge bases before answering, providing relevant content as context to the model.
 
 <img src="/assets/images/en/admin/assistant-management-advanced-config-5_en.webp" alt="" />
-### 3.4 MCP Servers
+## 3.4 MCP Servers
 
 This module is the assistant's "toolbox". By enabling MCP (Model Context Protocol) servers, you can grant assistants real-world capabilities (web search, chart generation, file IO, etc.), evolving them from "talkers" to "doers".
 

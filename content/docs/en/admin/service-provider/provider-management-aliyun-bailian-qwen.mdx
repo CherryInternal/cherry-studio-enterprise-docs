@@ -1,11 +1,11 @@
 ---
 title: "Provider Management (Aliyun Bailian/Qwen)"
-description: This section is based on the latest model list screenshots for Cherry Studio Enterprise.
+description: Configure and manage the Aliyun Bailian (Qwen) provider, including API Key activation, model enablement, and adding custom models.
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
 
-### Overview
+## Overview
 
 **Path:** Admin console sidebar > **Provider Management**
 
@@ -20,7 +20,7 @@ Cherry Studio Enterprise integrates **Aliyun Bailian** as the core model engine 
 
 ***
 
-### 1. Activate the Default Provider
+## 1. Activate the Default Provider
 
 The list already includes an **"Aliyun Bailian"** card.
 
@@ -34,11 +34,11 @@ The list already includes an **"Aliyun Bailian"** card.
 
 ***
 
-### 2. Model System Details
+## 2. Model System Details
 
 Based on Bailian's latest API policy, Cherry Studio groups models into two categories. Understanding the difference helps allocate resources by department.
 
-### A. Qwen (Commercial/Closed-Source)
+## A. Qwen (Commercial/Closed-Source)
 
 _At the top of the model list, representing Aliyun's strongest models._
 
@@ -48,7 +48,7 @@ _At the top of the model list, representing Aliyun's strongest models._
 **About the Turbo series**: `qwen-turbo` is no longer updated and has been replaced by `qwen3.5-flash`. If you are still using Turbo, consider migrating to Flash.
 </Callout>
 
-### B. Qwen Open-Source Series (Hosted)
+## B. Qwen Open-Source Series (Hosted)
 
 _Aliyun Bailian hosts selected open-source models on enterprise GPU clusters, no local GPUs required._
 
@@ -62,7 +62,7 @@ _Aliyun Bailian hosts selected open-source models on enterprise GPU clusters, no
 
 ***
 
-### 3. Manage the Model List
+## 3. Manage the Model List
 
 <img src="/assets/images/en/admin/provider-management-aliyun-bailian-qwen-2_en.webp" alt="" />
 Bailian provides a long model list. To avoid overwhelming users, admins should trim it.
@@ -79,7 +79,7 @@ Bailian provides a long model list. To avoid overwhelming users, admins should t
 
 ***
 
-### 4. Add Other Providers (Custom)
+## 4. Add Other Providers (Custom)
 
 Although Bailian is the default, Cherry Studio supports other channels.
 
@@ -101,7 +101,7 @@ Although Bailian is the default, Cherry Studio supports other channels.
 
 ***
 
-### 5. FAQ
+## 5. FAQ
 
 **Q: What's the difference between `qwen3-max` and the legacy `qwen-max`?**
 

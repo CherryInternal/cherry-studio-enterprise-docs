@@ -1,5 +1,6 @@
 ---
 title: "Create New Assistant"
+description: Configure basic parameters such as icon, name, model, and prompt via the initialization modal to create a new assistant.
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
@@ -7,7 +8,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 Click **+ Add Assistant** in the top right to open the initialization modal. This is the first step to bring an assistant to life.
 
 <img src="/assets/images/en/admin/assistant-management-create-new_en.webp" alt="" />
-### Basic Parameters
+## Basic Parameters
 
 <table><thead><tr><th width="180">Field</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><strong>Icon *</strong></td><td>Visual identifier for the assistant; choose by function for quick recognition.</td><td>💻 (Code assistant), ⚖️ (Legal assistant)</td></tr><tr><td><strong>Name *</strong></td><td>Unique identifier. Recommended format: <code>[Department/Function] + Role</code>.</td><td><code>R&D - Code Reviewer</code></td></tr><tr><td><strong>Model *</strong></td><td>Set the default model and model pool. The default model is automatically added to the model pool. Click "Advanced Configuration" to manage the model pool.</td><td><code>anthropic/claude-sonnet-4-20250514</code></td></tr><tr><td><strong>Prompt *</strong></td><td>Configure the assistant's system prompt and conversation prompt. Defines goals, output format, and behavioral constraints.</td><td><code>You are a senior Python engineer. Only output code, no explanations...</code></td></tr><tr><td><strong>Prompt Visibility</strong></td><td>Controls whether users can view this assistant's system prompt. Enabled by default.</td><td>On / Off</td></tr></tbody></table>
 

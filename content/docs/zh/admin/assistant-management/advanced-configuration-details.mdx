@@ -1,12 +1,13 @@
 ---
 title: "深度配置详解"
+description: 深入配置助手的提示词、模型参数、知识库挂载和 MCP 工具，精细调控助手的行为与能力。
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
 
 创建完成后，点击 **编辑** 进入详细配置界面。左侧导航栏将其划分为四个核心维度。
 
-### 3.1 提示词设置 (Prompt Settings)
+## 3.1 提示词设置 (Prompt Settings)
 
 此处管理助手的"人设"与权限。
 
@@ -18,7 +19,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
     * **关闭 (Off)：** 仅管理员可见。适用于保护企业核心 Prompt 资产不外泄。
 
     <img src="/assets/images/zh/admin/assistant-management-advanced-config-2_zh.webp" alt="" />
-### 3.2 模型设置 (Model Settings)
+## 3.2 模型设置 (Model Settings)
 
 精细控制 AI 的推理行为与资源消耗。
 
@@ -29,14 +30,14 @@ import { Callout } from 'fumadocs-ui/components/callout'
 **成本预警：** 调大 **上下文数** 会显著增加每次对话的 Token 消耗量，请根据实际业务需求平衡成本与体验。
 </Callout>
 
-### 3.3 知识库设置 (Knowledge Base)
+## 3.3 知识库设置 (Knowledge Base)
 
 为助手挂载"外脑"。在此列表中，您可以勾选预先在 \[知识库管理] 模块中索引好的数据集。
 
 * **运作机制：** 启用后，助手在回答用户问题前，会先在选中的知识库中进行检索，将相关内容作为上下文提供给模型。
 
 <img src="/assets/images/zh/admin/assistant-management-advanced-config-5_zh.webp" alt="" />
-### 3.4 MCP 服务器 (MCP Servers)
+## 3.4 MCP 服务器 (MCP Servers)
 
 此模块是助手的"工具箱"。通过启用 MCP (Model Context Protocol) 服务器，您可以赋予助手执行实际操作的能力（如联网搜索、生成图表、读写文件等），使其从单纯的"对话者"进化为"执行者"。
 
