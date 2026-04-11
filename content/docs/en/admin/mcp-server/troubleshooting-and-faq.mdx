@@ -3,19 +3,23 @@ title: "Troubleshooting and FAQ"
 description: "Troubleshooting steps and solutions for common MCP server configuration and invocation issues."
 ---
 
-## Q1: "JSON Parse Error" when saving?
+**Q1: "JSON Parse Error" when saving?**
 
 * **Cause**: Invalid JSON format.
 * **Fix**: Check for trailing commas or Chinese quotes. Click **Format JSON** to auto-fix simple errors.
 
-## Q2: Assistant tool call keeps loading or errors?
+---
+
+**Q2: Assistant tool call keeps loading or errors?**
 
 * **Cause**: Missing runtime dependencies on the server.
 * **Fix**:
   1. Ensure **Node.js** (for `npx`) or **Python** is installed on the host running Cherry Studio.
   2. Check network connectivity. The first run of `npx` may download packages from npm, and timeouts can cause failures.
 
-## Q3: How to verify MCP is working?
+---
+
+**Q3: How to verify MCP is working?**
 
 * **Verification**:
   1. Go to **Assistant Management** and bind this MCP server to a test assistant.
