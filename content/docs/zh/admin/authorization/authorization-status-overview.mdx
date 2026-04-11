@@ -4,14 +4,17 @@ description: "查看 License 有效性和服务运行状态，快速判断系统
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
+import { DynamicLink } from 'fumadocs-core/dynamic-link'
 
 ## 未授权
 
 <img src="/assets/images/zh/admin/authorization-import_zh.webp" alt="导入授权" />
+* **未导入 License**：系统尚未导入任何授权文件，所有高级功能处于不可用状态。
 
 ## 授权失败
 
 <img src="/assets/images/zh/admin/authorization-validation-failed_zh.webp" alt="验证失败" />
+* **License 校验未通过**：授权文件签名无效、已过期或与当前部署环境不匹配。
 
 ## 授权成功
 

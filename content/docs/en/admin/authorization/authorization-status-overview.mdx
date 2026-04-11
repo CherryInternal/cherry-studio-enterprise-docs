@@ -4,14 +4,17 @@ description: "Check License validity and service status to quickly determine if 
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
+import { DynamicLink } from 'fumadocs-core/dynamic-link'
 
 ## Unauthorized
 
 <img src="/assets/images/en/admin/authorization-import_en.webp" alt="Import license" />
+* **No License imported**: No license file has been imported yet; all advanced features are unavailable.
 
 ## Authorization Failed
 
 <img src="/assets/images/en/admin/authorization-validation-failed_en.webp" alt="Validation failed" />
+* **License validation failed**: The license file signature is invalid, expired, or does not match the current deployment environment.
 
 ## Authorization Successful
 

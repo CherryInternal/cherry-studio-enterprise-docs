@@ -4,14 +4,17 @@ description: "ライセンスの有効性とサービス稼働状況を確認し
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
+import { DynamicLink } from 'fumadocs-core/dynamic-link'
 
 ## 未認可
 
 <img src="/assets/images/ja/admin/authorization-import_ja.webp" alt="ライセンス取り込み" />
+* **License 未インポート**：ライセンスファイルがまだインポートされておらず、すべての高度な機能が利用できません。
 
 ## 認可失敗
 
 <img src="/assets/images/ja/admin/authorization-validation-failed_ja.webp" alt="検証失敗" />
+* **License 検証失敗**：ライセンス署名が無効、期限切れ、または現在のデプロイ環境と一致しません。
 
 ## 認可成功
 
