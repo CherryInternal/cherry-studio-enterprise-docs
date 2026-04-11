@@ -1,0 +1,45 @@
+---
+title: "配额管理"
+description: "为用户和分组设置日/周/月/总量四个维度的 API 使用限额，实现企业级成本控制，避免单个用户过度消耗资源。"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+## 配额层级
+
+Cherry Studio 采用两级配额体系：
+
+1. **分组级配额**：在分组设置中配置，作为该组所有成员的默认限额。
+2. **用户级配额**：针对单个用户的个性化配额，优先级高于分组配额。留空则继承分组默认值。
+
+## 为用户设置配额
+
+1. 前往 **用户管理** 页面。
+2. 在目标用户的操作列中，点击 **限额** 按钮。
+
+<img src="/assets/images/zh/admin/user-management-quota-dialog_zh.webp" alt="用户配额设置" />
+
+3. 在弹窗中设置各维度的限额值：
+
+<table><thead><tr><th width="100">维度</th><th>说明</th></tr></thead><tbody><tr><td><strong>日限额</strong></td><td>过去 24 小时内允许的最大使用量。每日自动重置。</td></tr><tr><td><strong>周限额</strong></td><td>过去 7 天内允许的最大使用量。每周自动重置。</td></tr><tr><td><strong>月限额</strong></td><td>过去 30 天内允许的最大使用量。每月自动重置。</td></tr><tr><td><strong>总限额</strong></td><td>累计总使用量上限。不自动重置，需手动重置。</td></tr></tbody></table>
+
+<Callout type="info">
+**提示：** 留空表示继承分组默认配置。如果分组也未设置，则表示不限制。
+</Callout>
+
+## 查看用量与重置
+
+点击每个限额维度旁的展开按钮，可以查看当期用量详情：
+
+<img src="/assets/images/zh/admin/user-management-quota-detail_zh.webp" alt="配额用量详情" />
+
+* **当期用量**：当前周期内已使用的量。
+* **限制值**：当前设置的上限（"无限制"表示未设置）。
+* **下次重置时间**：该维度配额自动重置的时间。
+* **重置用量**按钮：手动将当期用量清零。
+
+4. 配置完成后点击 **保存**。
+
+<Callout type="warn">
+**注意：** 当用户使用量达到限额时，后续的 API 调用将被拒绝，直到配额重置或管理员手动调整。
+</Callout>

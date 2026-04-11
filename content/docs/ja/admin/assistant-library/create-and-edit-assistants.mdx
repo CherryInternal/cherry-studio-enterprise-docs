@@ -1,21 +1,29 @@
 ---
 title: "アシスタントの作成と編集"
+description: 名称・プロンプト・グループ割り当てなどをゼロから設定し、標準化された AI アシスタントテンプレートを作成します。
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
 
-# 2. アシスタントの作成と編集
+## アシスタントの作成
 
-アシスタントライブラリの中核機能です。AI アシスタントの挙動をゼロから定義できます。
+**リソースライブラリ → アシスタントテンプレート** に移動し、右上の **アクション → 新規テンプレートを作成** をクリックして作成画面を開きます：
 
-<img src="/assets/images/zh/admin/assistant-library-create-edit_zh.webp" alt="" />
-#### 設定パラメータ
+<img src="/assets/images/ja/admin/assistant-library-create-new_ja.webp" alt="" />
+
+## アシスタントの編集
+
+リストから対象のアシスタントを見つけ、**編集** をクリックして編集画面を開きます：
+
+<img src="/assets/images/ja/admin/assistant-library-create-edit_ja.webp" alt="" />
+
+## 設定パラメータ
 
 **+ 新規アシスタントテンプレート** または **編集** をクリックすると設定画面が開きます：
 
-<table><thead><tr><th width="151.15234375">項目</th><th width="205.03515625">説明</th><th>ベストプラクティス</th></tr></thead><tbody><tr><td><strong>アシスタント名</strong></td><td>アシスタントの一意名。</td><td>「動詞 + 名詞」形式（例：「Web ページ作成」）。</td></tr><tr><td><strong>絵文字</strong></td><td>アシスタントのアイコン。</td><td>職種に合う絵文字を選択（例：🧑‍💻）。</td></tr><tr><td><strong>所属グループ</strong></td><td>クライアントでの分類に利用。</td><td>少なくとも 1 つのグループ（例：オフィス、コード、厳選）。</td></tr><tr><td><strong>プロンプト</strong></td><td><strong>最重要設定</strong>。人格・口調・タスクを定義。</td><td>構造化プロンプト（役割 + 目標 + 制約）。</td></tr><tr><td><strong>説明</strong></td><td>ユーザーに表示する短い紹介。</td><td>1 文で用途を説明（例：「要件を HTML に変換」）。</td></tr></tbody></table>
+<table><thead><tr><th width="151.15234375">項目</th><th width="205.03515625">説明</th><th>ベストプラクティス</th></tr></thead><tbody><tr><td><strong>お名前</strong></td><td>アシスタントの一意名。</td><td>「動詞 + 名詞」形式（例：「Web ページ作成」）。</td></tr><tr><td><strong>絵文字</strong></td><td>アシスタントのアバター絵文字。</td><td>職種に合う絵文字を選択（例：🧑‍💻）。</td></tr><tr><td><strong>タグ</strong></td><td>クライアントでの分類に利用。複数選択可能。</td><td>適切なタグを選択（例：オフィス、コード、ツール）。</td></tr><tr><td><strong>プロンプト</strong></td><td><strong>最重要設定</strong>。アシスタントの行動と責任を定義。</td><td>構造化プロンプト（役割 + 目標 + 制約）。</td></tr><tr><td><strong>説明</strong></td><td>アシスタントの機能と目的の簡単な説明。</td><td>1 文で用途を説明（例：「要件を HTML に変換」）。</td></tr></tbody></table>
 
-#### プロンプト作成のコツ
+## プロンプト作成のコツ
 
 **プロンプト** は以下の構造を推奨します：
 

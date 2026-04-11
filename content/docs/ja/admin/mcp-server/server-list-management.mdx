@@ -1,19 +1,18 @@
 ---
 title: "サーバー一覧管理"
+description: "登録済み MCP サーバーの一覧表示・グループ管理・関連アシスタントの確認と操作を行います。"
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
 
-# 1. サーバー一覧管理
+<Callout type="info">
+**入口パス：** 管理コンソール → リソースライブラリ → MCP サーバー
+</Callout>
 
-**パス：** 管理コンソールサイドバー > **MCP サーバー**
+<img src="/assets/images/ja/admin/mcp-server-list-management_ja.webp" alt="" />
+## 主な項目
 
-このページは MCP エコシステムの管理コンソールです。登録済みサービスの状態を確認できます。
-
-<img src="/assets/images/zh/admin/mcp-server-list-management_zh.webp" alt="" />
-#### 主な項目
-
-<table><thead><tr><th width="94.671875">項目</th><th>説明</th></tr></thead><tbody><tr><td><strong>名称</strong></td><td>表示名（例：<code>Playwright</code>）。</td></tr><tr><td><strong>ID</strong></td><td>システム内部 ID（例：<code>JfzwZ...</code>）。</td></tr><tr><td><strong>タイプ</strong></td><td>通信プロトコル。既定は <code>stdio</code>。</td></tr><tr><td><strong>関連アシスタント</strong></td><td><strong>[重要]</strong> 現在利用中のアシスタント数。</td></tr><tr><td><strong>操作</strong></td><td><strong>編集</strong> または <strong>削除</strong>。</td></tr></tbody></table>
+<table><thead><tr><th width="94.671875">項目</th><th>説明</th></tr></thead><tbody><tr><td><strong>名前</strong></td><td>表示名（例：<code>mcp-server-chart</code>）。</td></tr><tr><td><strong>所属グループ</strong></td><td>サーバーが属するグループ。どのユーザーグループがアクセスできるかを決定します。</td></tr><tr><td><strong>ID</strong></td><td>システム内部 ID（例：<code>antv-chart</code>）。</td></tr><tr><td><strong>タイプ</strong></td><td>通信プロトコル（例：<code>stdio</code>）。</td></tr><tr><td><strong>説明</strong></td><td>サーバーの機能説明。</td></tr><tr><td><strong>関連アシスタント</strong></td><td><strong>[重要]</strong> 現在利用中のアシスタント数。</td></tr><tr><td><strong>操作</strong></td><td><strong>詳細表示</strong>、<strong>編集</strong>、または <strong>削除</strong>。</td></tr></tbody></table>
 
 <Callout type="warn">
 **削除リスク:** 削除前に **関連アシスタント** が `0` であることを確認してください。使用中のサーバーを削除するとツール呼び出しが失敗します。

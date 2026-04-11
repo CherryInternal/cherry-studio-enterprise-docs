@@ -14,6 +14,7 @@ import { getSource } from '@/lib/source'
 
 import type { Route } from './+types/page'
 import {ImageSteps} from "@/components/image-steps";
+import {ConditionalBreadcrumb} from "@/components/conditional-breadcrumb";
 
 export async function loader({ params }: Route.LoaderArgs) {
   const source = await getSource()
@@ -30,11 +31,15 @@ export async function loader({ params }: Route.LoaderArgs) {
 }
 
 const renderer = toClientRenderer(docs.doc, ({ toc, default: Mdx, frontmatter }) => {
+  const fullToc = [
+    { title: frontmatter.title, url: '#page-title', depth: 2 },
+    ...toc.map((item: { title: string; url: string; depth: number }) => ({ ...item, depth: item.depth + 1 }))
+  ]
   return (
-    <DocsPage toc={toc}>
+    <DocsPage toc={fullToc} breadcrumb={{ component: <ConditionalBreadcrumb /> }}>
       <title>{frontmatter.title}</title>
       <meta name="description" content={frontmatter.description} />
-      <DocsTitle>{frontmatter.title}</DocsTitle>
+      <DocsTitle id="page-title">{frontmatter.title}</DocsTitle>
       <DocsDescription>{frontmatter.description}</DocsDescription>
       <DocsBody>
         <Mdx components={{ ...defaultMdxComponents, Card, Cards, ExperienceCard, ExperienceCards, ImageSteps }} />

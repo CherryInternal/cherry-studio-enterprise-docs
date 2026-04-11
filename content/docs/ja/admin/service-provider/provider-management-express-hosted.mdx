@@ -1,18 +1,18 @@
 ---
-title: "プロバイダー管理（Express/托管）"
-description: Standard と異なり、Express は「一括集約サービス」と「統一クォータ管理」に重点を置きます。
+title: "プロバイダー管理（Express）"
+description: "Express エディションのプロバイダー設定・管理。ワンストップ集約モデルサービスと統一クォータ管理を提供します。"
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
 
-# 2. プロバイダー管理（Express/托管）
+## 概要
 
-### 概要
+<Callout type="info">
+**入口パス：** 管理コンソール → モデル管理 → Express クローズドソースモデル/オープンソースモデル
+</Callout>
 
-**パス：** 管理コンソールサイドバー > **モデル管理**（または プロバイダー管理 > Express）
-
-<img src="/assets/images/zh/admin/provider-management-express-1_zh.webp" alt="" />
-**Cherry Studio Express** は企業向けの一括モデル集約サービスです。Standard 版のように OpenAI/Anthropic で API Key を個別取得する必要がなく、統一クォータで世界の主要モデル（Claude 3.5、GPT-4o など）や人気 OSS モデルを利用できます。
+<img src="/assets/images/ja/admin/provider-management-express-1_ja.webp" alt="" />
+**Cherry Studio Express** は企業向けの一括モデル集約サービスです。Premium 版のように OpenAI/Anthropic で API Key を個別取得する必要がなく、統一クォータで世界の主要モデル（Claude Opus 4.6、Claude Sonnet 4.6、Gemini-3.1、GPT-5.4 など）や人気 OSS モデルを利用できます。
 
 <Callout type="info">
 **コア価値**：
@@ -24,33 +24,33 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 ***
 
-### 1. 残高ダッシュボードとチャージ
+## 残高ダッシュボードとチャージ
 
 ページ上部で資金状況を確認できます：
 
-<img src="/assets/images/zh/admin/provider-management-express-2_zh.webp" alt="" />
+<img src="/assets/images/ja/admin/provider-management-express-2_ja.webp" alt="" />
 * **総残高**：企業アカウントの総残高。
 * **使用済み**：当期の消費額と比率。
 * **利用可能残高**：モデル呼び出しに使える残額。
 * **リクエスト数**：API 呼び出しの総数。
 
-**💰 どうやってチャージ？** 右上の **🏦 法人支払い** をクリック。銀行振込や QR 決済でチャージ可能です。残高は Express の全モデルに使えます。
+**💰 どうやってチャージ？** 右上の **💳 残高をチャージ** をクリック。銀行振込でチャージ可能です。残高は Express の全モデルに使えます。
 
 ***
 
-### 2. モデル分類（クローズド vs オープンソース）
+## モデル分類（クローズド vs オープンソース）
 
 Express はモデルを 2 つのカテゴリに分け、上部タブで切り替えます：
 
-<img src="/assets/images/zh/admin/provider-management-express-3_zh.webp" alt="" />
-#### 🌍 Express クローズドモデル
+<img src="/assets/images/ja/admin/provider-management-express-3_ja.webp" alt="" />
+### Express クローズドモデル
 
 世界の強力な商用モデルを集約。
 
 * **提供元**：OpenAI（GPT 系）、Anthropic（Claude 系）、Google（Gemini 系）、X-AI（Grok）など。
 * **用途**：複雑な推論、創作、翻訳。
 
-#### 🐧 Express オープンソースモデル
+### Express オープンソースモデル
 
 高コスパな国内/OSS モデルを集約。
 
@@ -59,37 +59,37 @@ Express はモデルを 2 つのカテゴリに分け、上部タブで切り替
 
 ***
 
-### 3. モデルの公開と管理
+## モデルの公開と管理
 
 デフォルトで多数のモデルが用意されています。管理者は公開/非公開を決められます。
 
-<img src="/assets/images/zh/admin/provider-management-express-4_zh.webp" alt="" />
-#### モデルの有効化/無効化
+<img src="/assets/images/ja/admin/provider-management-express-4_ja.webp" alt="" />
+### モデルの有効化/無効化
 
-1. 一覧下部の **𝌡 モデル管理** をクリック。
+1. 一覧下部の **𝌡 モデルを管理** をクリック。
 2. 表示されたリストで **+/-** やトグルを操作：
    * **+（追加）**：利用可能一覧に追加（従業員に表示）。
    * **-（削除）**：非表示。
 3. **保存** をクリック。
 
-#### 新しいモデルの手動追加
+### 新しいモデルの手動追加
 
-<img src="/assets/images/zh/admin/provider-management-express-5_zh.webp" alt="" />
+<img src="/assets/images/ja/admin/provider-management-express-5_ja.webp" alt="" />
 Express が新モデル（例：`gpt-5`）を公開したが一覧に未反映の場合は手動で追加可能：
 
-1. **+ モデル追加** をクリック。
+1. **+ モデルを追加** をクリック。
 2. 公式の **Model ID** を入力（例：`gpt-5-preview`）。
-3. **追加** をクリックして即時利用。
+3. **確認** をクリックして即時利用。
 
-開発者がこれらの Express モデルを外部アプリから直接呼び出す場合は、`model` フィールドに完全な `model-id@provider_id` 形式を使用し、詳細は [外部アプリ接続（Express モデル）](/ja/admin/user-management/external-app-access) を参照してください。
+開発者がこれらの Express モデルを外部アプリから直接呼び出す場合は、`model` フィールドに完全な `model-id@provider_id` 形式を使用し、詳細は [外部アプリ接続（Express モデル）](/ja/docs/admin/user-management/external-app-access) を参照してください。
 
 ***
 
-### 4. 能力タグを理解する
+## 能力タグを理解する
 
 Express 一覧のモデル名にはカラフルなアイコンが付いています。モデル分配の際に重要です。
 
-<table data-header-hidden><thead><tr><th width="88.21484375">意味</th><th>説明</th></tr></thead><tbody><tr><td><strong>推論</strong></td><td><strong>高知能モード</strong>。<code>Claude 3.7 Sonnet</code> や <code>o1</code> のように深い推論を行い、数学問題や複雑なコード設計に向きます。</td></tr><tr><td><strong>視覚</strong></td><td><strong>画像理解</strong>。画像解析が可能。アイコンがないモデルは画像入力でエラー。</td></tr><tr><td><strong>ネット検索</strong></td><td><strong>ネイティブ検索</strong>。<code>Gemini</code> など一部モデルは検索連携可能（注意：Cherry Studio は通常 MCP で実現）。</td></tr><tr><td><strong>ツール</strong></td><td><strong>プラグイン対応</strong>。**最重要アイコン**。レンチ付きモデルのみ知識ベース（RAG）、図表生成、MCP ツールが使用可能。</td></tr><tr><td><strong>無料</strong></td><td><strong>コスト制御</strong>。残高消費なし。Ollama などローカルモデルや無料テストモデルに付くことがあります。</td></tr><tr><td><strong>埋め込み</strong></td><td><strong>知識ベースの基盤</strong>。**対話には使えません**。テキストをベクトル化してインデックスを構築します。</td></tr><tr><td><strong>再ランキング</strong></td><td><strong>精度最適化</strong>。**対話には使えません**。検索結果を再スコアリングして精度を高めます。</td></tr></tbody></table>
+<table data-header-hidden><thead><tr><th width="88.21484375">意味</th><th>説明</th></tr></thead><tbody><tr><td>🧠 <strong>推論</strong></td><td><strong>高知能モード</strong>。<code>Claude Opus 4.6</code> や <code>o3</code> のように深い思考・推論を行い、複雑なロジック、数学問題やコードアーキテクチャ設計に向きます。</td></tr><tr><td>👁️ <strong>視覚</strong></td><td><strong>画像理解</strong>。画像解析が可能。アイコンがないモデルは画像入力でエラー。</td></tr><tr><td>🌐 <strong>ネット検索</strong></td><td><strong>ネイティブ検索</strong>。<code>Gemini</code> など一部モデルは検索連携可能（注意：Cherry Studio は通常 MCP で実現）。</td></tr><tr><td>🔧 <strong>ツール</strong></td><td><strong>プラグイン対応</strong>。**最重要アイコン**。レンチ付きモデルのみ知識ベース（RAG）、図表生成、MCP ツールが使用可能。</td></tr><tr><td>🆓 <strong>無料</strong></td><td><strong>コスト制御</strong>。残高消費なし。Ollama などローカルモデルや無料テストモデルに付くことがあります。</td></tr><tr><td>📊 <strong>埋め込み</strong></td><td><strong>知識ベースの基盤</strong>。**対話には使えません**。テキストをベクトル化してインデックスを構築します。</td></tr><tr><td>🔀 <strong>再ランキング</strong></td><td><strong>精度最適化</strong>。**対話には使えません**。検索結果を再スコアリングして精度を高めます。</td></tr></tbody></table>
 
 <Callout type="warn">
 **設定の推奨**：**既定アシスタントモデル** は 🔧（工具）アイコンのあるモデルを選んでください。ない場合、知識ベースが使えません。
@@ -97,23 +97,51 @@ Express 一覧のモデル名にはカラフルなアイコンが付いていま
 
 ***
 
-### 5. 課金とコスト管理
+## 接続チェック
 
-**操作：** モデル右側の **⚙️ 設定** アイコンをクリック。
+モデルを使用する前に、プロバイダーとの接続性を確認できます。
 
-<img src="/assets/images/zh/admin/provider-management-express-6_zh.webp" alt="" />
-Express は統一課金ですが、管理者は**社内精算価格**を設定して部門別の請求書を作成できます。
+<img src="/assets/images/ja/admin/provider-management-express-6_ja.webp" alt="" />
 
-* **入力/出力価格**：公式価格をコピーするか、社内価格を設定。
-* **通貨**：USD/CNY の切替。**用量統計**でこの価格が使用されます。
+1. 下部の **接続を確認してください** ボタンをクリック。
+2. ポップアップでチェックするモデルを選択。
+3. **確認** をクリック — システムがモデルの可用性を自動テストします。
+4. 成功時：右下に **「チェック成功 API Key は有効です」** というトースト通知が表示されます。
 
 ***
 
-### FAQ
+## モデルの編集と削除
+
+管理者は公開済みモデルの編集・削除が可能です。
+
+<img src="/assets/images/ja/admin/provider-management-express-7_ja.webp" alt="" />
+
+### モデルの編集
+
+1. モデル右側の **⚙️ 設定** ボタンをクリックし、「モデル設定の編集」ダイアログを開きます。
+2. 以下の項目を変更できます：
+   * **モデル名**：表示名をカスタマイズ。
+   * **モデル説明**：モデルの説明文を追加。
+   * **能力設定**：**手動でモデル能力を指定** をオンにすると、能力タグ（推論、視覚、ツール呼び出し、デフォルトモデル、埋め込み、再ランキング、無料など）を選択できます。
+3. **保存** をクリック。
+
+<Callout type="warn">
+能力タグの設定は慎重に行ってください。誤った設定はモデルの正常な動作を妨げる場合があります。
+</Callout>
+
+### モデルの削除
+
+モデル右側の **🗑️ 削除** ボタンをクリックすると、一覧から削除されます。
+
+***
+
+## FAQ
 
 **Q: 残高があるのに "Balance Insufficient" と表示される。**
 
 A: 非常に高価なモデル（プレビュー等）か、企業側で日次上限を設定している可能性があります。
+
+---
 
 **Q: モデルが突然グレーになった/消えた。**
 

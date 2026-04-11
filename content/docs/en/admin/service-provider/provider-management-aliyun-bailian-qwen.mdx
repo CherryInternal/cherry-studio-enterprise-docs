@@ -1,15 +1,15 @@
 ---
 title: "Provider Management (Aliyun Bailian/Qwen)"
-description: This section is based on the latest model list screenshots for Cherry Studio Enterprise.
+description: Configure and manage the Aliyun Bailian (Qwen) provider, including API Key activation, model enablement, and adding custom models.
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
 
-# 3. Provider Management (Aliyun Bailian/Qwen)
+## Overview
 
-### Overview
-
-**Path:** Admin console sidebar > **Provider Management**
+<Callout type="info">
+**Navigation:** Admin Console → Provider Management
+</Callout>
 
 Cherry Studio Enterprise integrates **Aliyun Bailian** as the core model engine by default. It ships with OpenAI-compatible presets, so enterprises can unlock the full Qwen series and Bailian-hosted open-source models by simply entering an API key.
 
@@ -22,12 +22,12 @@ Cherry Studio Enterprise integrates **Aliyun Bailian** as the core model engine 
 
 ***
 
-### 1. Activate the Default Provider
+## Activate the Default Provider
 
 The list already includes an **"Aliyun Bailian"** card.
 
-<img src="/assets/images/zh/admin/provider-management-aliyun-bailian-qwen-1_zh.webp" alt="" />
-1. Click the **⚙️ Settings** button on the card.
+<img src="/assets/images/en/admin/provider-management-aliyun-bailian-qwen-1_en.webp" alt="" />
+1. Click the **Aliyun Bailian** card, then click the toggle in the upper-right corner to enable this provider.
 2. **API Key**: Enter the key from the Aliyun Bailian console (starts with `sk-`).
 3. **API Host**: Keep the default value.
    * _Address_: `https://dashscope.aliyuncs.com/compatible-mode/v1`
@@ -36,47 +36,52 @@ The list already includes an **"Aliyun Bailian"** card.
 
 ***
 
-### 2. Model System Details
+## Model System Details
 
 Based on Bailian's latest API policy, Cherry Studio groups models into two categories. Understanding the difference helps allocate resources by department.
 
-#### A. Qwen (Commercial/Closed)
+### A. Qwen (Commercial/Closed-Source)
 
 _At the top of the model list, representing Aliyun's strongest models._
 
-<table><thead><tr><th width="138.00390625">Series</th><th width="129.8046875">Typical ID (Snapshot)</th><th width="325.71875">Use cases</th><th>Recommendation</th></tr></thead><tbody><tr><td><strong>Flagship (Max)</strong></td><td><code>qwen-max</code><br /><code>qwen-max-2025-01-25</code></td><td><strong>Complex tasks</strong>. Reasoning, long-form writing, instruction following. Comparable to GPT-4o.</td><td>✅ Recommended as default model for executives.</td></tr><tr><td><strong>Balanced (Plus)</strong></td><td><code>qwen-plus</code><br /><code>qwen-plus-latest</code></td><td><strong>Best value</strong>. Faster than Max and lower cost, ideal for daily office use.</td><td>✅ Recommended as a company-wide default.</td></tr><tr><td><strong>Long context (Long)</strong></td><td><code>qwen-long</code></td><td><strong>Document analysis</strong>. Very long context for full PDF summarization or Q&A.</td><td>🔧 Use with the Knowledge Base feature.</td></tr><tr><td><strong>Reasoning (QwQ)</strong></td><td><code>qwq-plus</code></td><td><strong>Deep thinking</strong>. Optimized for math, code, and complex reasoning.</td><td>🧠 Suitable for R&D or data teams.</td></tr></tbody></table>
+<table><thead><tr><th width="150">Series</th><th width="200">Typical ID</th><th width="300">Use cases</th><th>Recommendation</th></tr></thead><tbody><tr><td><strong>Flagship (Max)</strong></td><td><code>qwen3-max</code><br /><code>qwen3-max-2026-01-23</code></td><td><strong>Complex tasks</strong>. 262K context. Reasoning, long-form writing, instruction following. The strongest commercial Qwen model.</td><td>✅ Recommended for executives and core teams.</td></tr><tr><td><strong>Balanced (Plus)</strong></td><td><code>qwen3.6-plus</code><br /><code>qwen3.5-plus</code></td><td><strong>Best value</strong>. 1M context. Faster than Max and lower cost, supports agentic workflows.</td><td>✅ Recommended as a company-wide default.</td></tr><tr><td><strong>Lightweight (Flash)</strong></td><td><code>qwen3.5-flash</code></td><td><strong>Ultra-low cost</strong>. 1M context. Ideal for simple Q&A, classification, and summarization.</td><td>💡 Best for high-frequency, low-complexity tasks.</td></tr><tr><td><strong>Reasoning (QwQ)</strong></td><td><code>qwq-plus</code></td><td><strong>Deep thinking</strong>. Optimized for math, code, and complex reasoning chains.</td><td>🧠 Suitable for R&D or data teams.</td></tr><tr><td><strong>Coder</strong></td><td><code>qwen3-coder-plus</code><br /><code>qwen3-coder-flash</code></td><td><strong>Code-focused</strong>. 1M context. Code generation, review, and refactoring.</td><td>💻 Best for development teams.</td></tr><tr><td><strong>Vision (VL)</strong></td><td><code>qwen3-vl-plus</code><br /><code>qwen3-vl-flash</code></td><td><strong>Image understanding</strong>. 262K context. Image recognition, OCR, chart analysis.</td><td>👁️ Enable when image analysis is needed.</td></tr><tr><td><strong>Long context (Long)</strong></td><td><code>qwen-long</code></td><td><strong>Massive document analysis</strong>. 10M context for full PDF summarization or Q&A.</td><td>🔧 Use for extra-long document scenarios.</td></tr></tbody></table>
 
-#### B. Qwen Open-Source Series (Hosted)
+<Callout type="info">
+**About the Turbo series**: `qwen-turbo` is no longer updated and has been replaced by `qwen3.5-flash`. If you are still using Turbo, consider migrating to Flash.
+</Callout>
+
+### B. Qwen Open-Source Series (Hosted)
 
 _Aliyun Bailian hosts selected open-source models on enterprise GPU clusters, no local GPUs required._
 
-<table><thead><tr><th width="124.9921875">Series</th><th width="207.57421875">Typical ID</th><th>Notes</th></tr></thead><tbody><tr><td><strong>Qwen 2.5</strong></td><td><code>qwen2.5-72b-instruct</code><br /><code>qwen2.5-32b-instruct</code></td><td><strong>Best open-source</strong>. The 72B model surpasses GPT-4 on multiple benchmarks with low cost.</td></tr><tr><td><strong>Coder</strong></td><td><code>qwen-coder-plus</code><br /><code>codeqwen1.5-7b-chat</code></td><td><strong>Code-focused</strong>. Fine-tuned on large code corpora, ideal for IDE plugins or code review assistants.</td></tr><tr><td><strong>Math</strong></td><td><code>qwen-math-plus</code></td><td><strong>STEM-focused</strong>. Enhanced math reasoning and derivations.</td></tr><tr><td><strong>Qwen 2 / 1.5</strong></td><td><code>qwen2-72b-instruct</code><br /><code>qwen1.5-110b-chat</code></td><td><strong>Legacy versions</strong>. Compatibility for specific version-dependent workloads.</td></tr></tbody></table>
+<table><thead><tr><th width="130">Series</th><th width="250">Typical ID</th><th>Notes</th></tr></thead><tbody><tr><td><strong>Qwen 3.5</strong></td><td><code>qwen3.5-397b-a17b</code><br /><code>qwen3.5-27b</code></td><td><strong>Current best open-source</strong>. 397B MoE architecture, Apache 2.0 license, performance approaching commercial models.</td></tr><tr><td><strong>Qwen 3</strong></td><td><code>qwen3-235b-a22b</code><br /><code>qwen3-32b</code><br /><code>qwen3-8b</code></td><td><strong>Main open-source generation</strong>. Parameters from 0.6B to 235B, supports thinking/non-thinking dual-mode switching.</td></tr><tr><td><strong>Qwen 2.5</strong></td><td><code>qwen2.5-72b-instruct</code><br /><code>qwen2.5-32b-instruct</code></td><td><strong>Previous generation</strong>. Still available for existing deployment compatibility.</td></tr><tr><td><strong>Qwen 2 / 1.5</strong></td><td><code>qwen2-72b-instruct</code><br /><code>qwen1.5-110b-chat</code></td><td><strong>Legacy versions</strong>. Backward compatibility support.</td></tr></tbody></table>
 
 <Callout type="warn">
-**About version suffixes (dates)** You may see IDs like `qwen-max-2024-09-19`.
+**About version suffixes (dates)** You may see IDs like `qwen3-max-2026-01-23`.
 
-* **Best practice:** Unless you depend on a specific date's behavior, use IDs without dates (e.g., `qwen-max`, `qwen-plus`). The system will point to the latest stable (`latest`).
+* **Best practice:** Unless you depend on a specific date's behavior, use IDs without dates (e.g., `qwen3-max`, `qwen3.6-plus`). The system will point to the latest stable (`latest`).
 </Callout>
 
 ***
 
-### 3. Manage the Model List
+## Manage the Model List
 
-<img src="/assets/images/zh/admin/provider-management-aliyun-bailian-qwen-2_zh.webp" alt="" />
+<img src="/assets/images/en/admin/provider-management-aliyun-bailian-qwen-2_en.webp" alt="" />
 Bailian provides a long model list. To avoid overwhelming users, admins should trim it.
 
 1. Click **𝌡 Manage Models** under the Bailian card.
 2. **Suggested filtering:**
-   * Keep `qwen-max` and `qwen-plus` (non-dated IDs).
+   * Keep `qwen3-max` and `qwen3.6-plus` (latest commercial models).
    * Keep `qwq-plus` (for reasoning tasks).
-   * Keep `qwen2.5-72b-instruct` (high value).
-   * Keep `qwen-coder-plus` (R&D focused).
-3. **Hide redundancy:** Click **-** to hide dated versions (e.g., `2024-04-28`) or tiny models (`0.5b`, `1.5b`).
+   * Keep `qwen3-coder-plus` (R&D focused).
+   * Keep `qwen3.5-flash` (lightweight high-frequency tasks).
+   * Optionally keep `qwen3-32b` or `qwen3-8b` (open-source alternatives).
+3. **Hide redundancy:** Click **-** to hide legacy models (e.g., `qwen-max`, `qwen-plus`), dated versions, or tiny models (`0.5b`, `1.7b`).
 4. Click **Save**.
 
 ***
 
-### 4. Add Other Providers (Custom)
+## Add Other Providers (Custom)
 
 Although Bailian is the default, Cherry Studio supports other channels.
 
@@ -98,12 +103,20 @@ Although Bailian is the default, Cherry Studio supports other channels.
 
 ***
 
-### 5. FAQ
+## FAQ
 
-**Q: What's the difference between `qwq-32b-preview` and `qwq-plus`?**
+**Q: What's the difference between `qwen3-max` and the legacy `qwen-max`?**
 
-A: `qwq-32b` is an open-weight reasoning model, while `qwq-plus` is Aliyun's commercial closed-source model. The latter usually provides better reasoning and safety at higher cost.
+A: `qwen3-max` is the latest-generation flagship model (262K context), while `qwen-max` points to the previous generation (Qwen 2.5-Max). It is still available but no longer the best choice. Use `qwen3-max` for new projects.
 
-**Q: Should I choose `qwen-max` or `qwen-max-latest`?**
+---
 
-A: In Aliyun Bailian, `qwen-max` typically points to the stable version, while `qwen-max-latest` may include experimental optimizations. For production, `qwen-max` is safest.
+**Q: What's the difference between `qwq-32b` and `qwq-plus`?**
+
+A: `qwq-32b` is an open-weight reasoning model, while `qwq-plus` is Aliyun's commercial closed-source reasoning model. The latter usually provides better reasoning and safety at higher cost.
+
+---
+
+**Q: Can I still use `qwen-turbo`?**
+
+A: `qwen-turbo` is no longer updated. Migrate to `qwen3.5-flash`, which offers lower cost and longer context (1M).

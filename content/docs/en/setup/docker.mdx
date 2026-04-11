@@ -1,9 +1,9 @@
 ---
 title: Docker Deployment
-description: Deploy Cherry Studio Enterprise using Docker and Docker Compose
+description: "Deploy Cherry Studio Enterprise with Docker and Docker Compose, featuring dual-service integration, data persistence, and health checks."
 ---
 
-This document describes how to deploy the Cherry Studio Enterprise API service using Docker and Docker Compose.
+import { Callout } from 'fumadocs-ui/components/callout'
 
 ## Features
 
@@ -12,6 +12,17 @@ This document describes how to deploy the Cherry Studio Enterprise API service u
 - **Environment configuration**: Flexible environment variable configuration
 - **Health checks**: Built-in health check mechanism
 - **Auto restart**: Supports container auto-restart policy
+
+## Image Registries
+
+| Registry | Image Address |
+|---|---|
+| **China mirror** (recommended for users in mainland China) | `docker-registry.cherry-ai.com/public/cherry-studio-enterprise-api:v0.4.10` |
+| **Docker Hub** (international users) | `cherrystudio/cherry-studio-enterprise-api:v0.4.10` |
+
+<Callout type="info">
+Users in mainland China are recommended to use the China mirror for faster and more stable image pulls.
+</Callout>
 
 ## Quick Start
 
@@ -46,7 +57,7 @@ services:
     restart: unless-stopped
 ```
 
-#### Full Production Configuration (with Database)
+### Full Production Configuration (with Database)
 
 ```yaml
 services:
@@ -141,7 +152,7 @@ docker-compose down -v
 
 ### Environment Variables
 
-#### Core Configuration
+**Core Configuration**
 
 | Variable | Description | Default | Required |
 | -------------------- | ----------------- | --------------- | ---- |
@@ -153,7 +164,7 @@ docker-compose down -v
 | `ADMIN_APP_LOGO_URL` | Admin logo URL | - | No |
 | `ADMIN_BASE_PATH` | Admin base path | `/` | No |
 
-#### Database Configuration
+**Database Configuration**
 
 | Variable | Description | Default | Notes |
 | ------------- | ------------ | ---------- | ------------------- |
@@ -165,7 +176,7 @@ docker-compose down -v
 | `DB_NAME` | Database name | - | Required for PostgreSQL |
 | `DB_SSL` | Enable SSL | `false` | PostgreSQL SSL connection |
 
-> For Casdoor SSO configuration, see [SSO configuration](../advanced/sso).
+> For Casdoor SSO configuration, see [SSO configuration](/docs/setup/advanced/sso).
 
 ### Data Persistence
 
@@ -185,7 +196,7 @@ volumes:
 
 ## Deployment Best Practices
 
-### 1. Security Configuration
+### Security Configuration
 
 **JWT secret management**:
 
@@ -194,7 +205,7 @@ volumes:
 openssl rand -base64 32
 ```
 
-### 2. Network Configuration
+### Network Configuration
 
 **Use a custom network**:
 
@@ -237,7 +248,7 @@ server {
 }
 ```
 
-### 3. Performance Optimization
+### Performance Optimization
 
 **Resource limits**:
 
@@ -265,7 +276,7 @@ healthcheck:
   start_period: 40s
 ```
 
-### 4. Log Management
+### Log Management
 
 **Configure log driver**:
 
@@ -322,7 +333,7 @@ docker-compose up -d
 
 ### Common Issues
 
-#### 1. Container fails to start
+**1. Container fails to start**
 
 ```bash
 # Check container logs
@@ -335,14 +346,14 @@ netstat -tulpn | grep -E '3670|3680'
 systemctl status docker
 ```
 
-#### 2. Database connection failure
+**2. Database connection failure**
 
 - Ensure the database service is running
 - Check network connectivity and firewall rules
 - Verify database credentials
 - Ensure the database is created and permissions are correct
 
-#### 3. Permission issues
+**3. Permission issues**
 
 ```bash
 # Fix data directory permissions
@@ -353,7 +364,7 @@ docker exec cherry-studio-enterprise \
   chown -R node:node /app/data
 ```
 
-#### 4. Out of memory
+**4. Out of memory**
 
 ```bash
 # Increase Docker memory limit
@@ -392,6 +403,6 @@ deploy:
 
 ## Related Documents
 
-- [Helm deployment guide](./helm) - Deploy to Kubernetes
-- [Database configuration guide](../advanced/database) - PostgreSQL configuration details
-- [SSO configuration](../advanced/sso) - SSO setup
+- [Helm deployment guide](/docs/setup/helm) - Deploy to Kubernetes
+- [Database configuration guide](/docs/setup/advanced/database) - PostgreSQL configuration details
+- [SSO configuration](/docs/setup/advanced/sso) - SSO setup

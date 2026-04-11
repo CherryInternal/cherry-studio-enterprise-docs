@@ -1,9 +1,7 @@
 ---
 title: Helm Deployment
-description: Deploy Cherry Studio Enterprise to a Kubernetes cluster with Helm
+description: "Deploy the full Cherry Studio Enterprise solution to Kubernetes with Helm, including the API service and admin console."
 ---
-
-This Helm chart deploys the full Cherry Studio Enterprise solution to Kubernetes, including the API service and admin console.
 
 ## Features
 
@@ -45,7 +43,9 @@ helm install cherry-studio-enterprise ./helm
 
 📦 **Helm chart releases**: [cherry-studio-enterprise-helm/releases](https://github.com/CherryInternal/cherry-studio-enterprise-helm/releases)
 
-🐳 **Docker image**: [cherrystudio/cherry-studio-enterprise-api](https://hub.docker.com/repository/docker/cherrystudio/cherry-studio-enterprise-api) - view available tags
+🐳 **Docker image**:
+- **Docker Hub**: [cherrystudio/cherry-studio-enterprise-api](https://hub.docker.com/repository/docker/cherrystudio/cherry-studio-enterprise-api)
+- **China mirror**: `docker-registry.cherry-ai.com/public/cherry-studio-enterprise-api:v0.4.10` (recommended for mainland China users)
 
 ## Installation
 
@@ -161,13 +161,13 @@ helm install cherry-studio-enterprise ./helm -f values-custom.yaml
 
 ### Detailed Parameters
 
-#### Application Service Configuration
+**Application Service Configuration**
 
 | Parameter | Description | Default |
 | ------------------------------- | --------------------------------------- | ------------------------------------------- |
 | `app.enabled` | Enable application | `true` |
 | `app.replicaCount` | Replica count (recommend 1 for data consistency) | `1` |
-| `app.image.repository` | Image repository | `cherrystudio/cherry-studio-enterprise-api` |
+| `app.image.repository` | Image repository (China users: use `docker-registry.cherry-ai.com/public/cherry-studio-enterprise-api`) | `cherrystudio/cherry-studio-enterprise-api` |
 | `app.image.tag` | Image tag | `latest` |
 | `app.api.service.type` | API Service type | `ClusterIP` |
 | `app.api.service.port` | API service port | `3670` |
@@ -187,7 +187,7 @@ helm install cherry-studio-enterprise ./helm -f values-custom.yaml
 | `app.resources.requests.memory` | Memory request | `128Mi` |
 | `app.env.*` | Environment variables | See below |
 
-#### Port Details
+### Port Details
 
 This application runs two services in a single container:
 
@@ -200,7 +200,7 @@ This application runs two services in a single container:
 
 The chart includes all required environment variables. Key variables include:
 
-#### API Service Variables
+**API Service Variables**
 
 | Environment Variable | Description | Default |
 | -------------------- | ------------------ | -------------------------------------------------------- |
@@ -212,7 +212,7 @@ The chart includes all required environment variables. Key variables include:
 | `ADMIN_BASE_PATH` | Admin base path | `/` |
 | `JWT_SECRET` | JWT secret | `your-secure-jwt-secret-at-least-32-characters` |
 
-#### Database Variables
+**Database Variables**
 
 | Environment Variable | Description | Default |
 | ------------- | -------------- | -------------------------- |

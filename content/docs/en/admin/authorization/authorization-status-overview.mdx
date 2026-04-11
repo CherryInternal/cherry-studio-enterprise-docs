@@ -1,16 +1,24 @@
 ---
 title: "License Status Overview"
+description: "Check License validity and service status to quickly determine if the system is operating normally."
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
+import { DynamicLink } from 'fumadocs-core/dynamic-link'
 
-# 1. License Status Overview
+## Unauthorized
 
-On the **License Management** page, the top panel is the system health barometer.
+<img src="/assets/images/en/admin/authorization-import_en.webp" alt="Import license" />
+* **No License imported**: No license file has been imported yet; all advanced features are unavailable.
 
-<img src="/assets/images/zh/admin/authorization-import_zh.webp" alt="Import license" />
-<img src="/assets/images/zh/admin/authorization-validation-failed_zh.webp" alt="Validation failed" />
-<img src="/assets/images/zh/admin/authorization-valid_zh.webp" alt="Authorized and running" />
+## Authorization Failed
+
+<img src="/assets/images/en/admin/authorization-validation-failed_en.webp" alt="Validation failed" />
+* **License validation failed**: The license file signature is invalid, expired, or does not match the current deployment environment.
+
+## Authorization Successful
+
+<img src="/assets/images/en/admin/authorization-valid_en.webp" alt="Authorized and running" />
 * **System licensed (License valid)**: the license file signature is correct and within validity.
 * **Runtime status**: the ● Running indicator on the right shows the system has successfully connected to the validation server (or passed offline validation) with no tampering risk.
 

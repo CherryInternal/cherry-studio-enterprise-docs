@@ -1,0 +1,59 @@
+---
+title: "智能体技能"
+description: 资源库中专门为智能体提供的可复用能力模块。支持手动添加或从市场下载，添加后可在智能体创建/编辑时绑定使用，按分组控制可用范围。
+icon: Puzzle
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+<Callout type="info">
+**入口路径：** 侧边栏 → 资源库 → 智能体技能（第一个 Tab）
+</Callout>
+
+<img src="/assets/images/zh/admin/agent-skills-list_zh.webp" alt="智能体技能列表" />
+
+## 技能列表
+
+技能列表展示所有已添加的智能体技能，包含以下信息：
+
+<table><thead><tr><th width="100">字段</th><th>说明</th></tr></thead><tbody><tr><td><strong>名称</strong></td><td>技能的标识名称。</td></tr><tr><td><strong>分组</strong></td><td>技能所属的分组，决定哪些用户组可以使用该技能。</td></tr><tr><td><strong>描述</strong></td><td>技能的功能说明。</td></tr><tr><td><strong>操作</strong></td><td>编辑、查看详情、删除等操作。</td></tr></tbody></table>
+
+支持通过搜索框按名称快速查找技能。
+
+## 添加技能
+
+点击列表右上角的 **添加** 按钮，系统提供两种添加方式：
+
+<img src="/assets/images/zh/admin/agent-skills-add-menu_zh.webp" alt="添加技能菜单" />
+
+### 手动添加
+
+适用于企业自建技能或第三方自定义技能。
+
+<img src="/assets/images/zh/admin/agent-skills-manual-add_zh.webp" alt="手动添加技能" />
+
+操作步骤：
+1. 输入技能**名称**（必填）。
+2. 输入技能**描述**（可选），简要说明技能用途。
+3. 上传技能**文件**（支持 `.md` 或 `.zip` 格式），可拖拽文件到上传区域或点击选择。
+4. 点击 **创建** 完成添加。
+
+### 从市场下载
+
+打开技能市场浏览器，从社区技能市场中浏览并下载预置技能。
+
+<img src="/assets/images/zh/admin/agent-skills-marketplace_zh.webp" alt="从市场下载技能" />
+
+操作步骤：
+1. 在搜索框中输入关键词查找所需技能。
+2. 可通过排序方式（如按星标数）筛选热门技能。
+3. 浏览技能卡片，查看名称、来源、描述和星标数。
+4. 点击技能卡片右下角的**下载**按钮，即可将技能添加到资源库。
+
+<Callout type="warn">
+技能市场的资源由社区收集整理，托管在 GitHub 上，部分地区可能无法正常下载。
+</Callout>
+
+<Callout type="info">
+**使用流程：** 在资源库中添加技能 → 在智能体创建/编辑页面的"技能"Tab 中启用该技能 → 智能体即可在运行时调用该技能的能力。
+</Callout>

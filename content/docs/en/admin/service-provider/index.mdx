@@ -1,12 +1,10 @@
 ---
 title: "Provider Management"
-description: This section helps users choose the most suitable Cherry Studio edition before first use.
+description: Edition overview and provider management guide covering the differences and setup of Premium (BYOK), Express (SaaS), and Qwen editions.
 icon: Server
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
-
-# Provider Management
 
 ## 📚 Edition Overview
 
@@ -14,25 +12,25 @@ Cherry Studio is committed to delivering the best AI workspace for different use
 
 Currently, Cherry Studio offers three core editions:
 
-1. **Standard - BYOK**
-2. **Express - Global Direct (SaaS)**
+1. **Premium (BYOK)**
+2. **Express (SaaS)**
 3. **Qwen - Aliyun Edition**
 
 ***
 
-### 1. 🛠️ Standard (BYOK)
+### 🛠️ Premium (BYOK)
 
 > **Keywords:** Flexibility, your own keys, local models, privacy first
 
-Standard is the foundation of Cherry Studio, built for **developers, power users, and enterprises with existing API resources**. It uses **BYOK (Bring Your Own Key)**.
+Premium is the foundation of Cherry Studio, built for **developers, power users, and enterprises with existing API resources**. It uses **BYOK (Bring Your Own Key)**.
 
-#### Core Features
+**Core Features**
 
 * **Universal connectivity**: Configure OpenAI, Azure, DeepSeek, Anthropic, Google Gemini, and any OpenAI-compatible provider.
 * **Local model support**: Full support for Ollama, vLLM, and LM Studio. Data stays local, ideal for sensitive workloads.
 * **Deep customization**: Fine-tune context length, temperature, and system prompts per model.
 
-#### Ideal For
+**Ideal For**
 
 * Developers with their own API keys.
 * Users running local LLMs.
@@ -40,20 +38,20 @@ Standard is the foundation of Cherry Studio, built for **developers, power users
 
 ***
 
-### 2. 🚀 Express (Global Direct)
+### 🚀 Express
 
 > **Keywords:** Out of the box, global models, official pricing, no special network
 
 Express is a zero-configuration solution for **individuals and teams focused on efficiency**. No need to register ChatGPT/Claude accounts, apply for overseas credit cards, or configure special networks — use top global models directly.
 
-#### Core Features
+**Core Features**
 
 * **Out of the box**: No API keys or proxy setup required.
 * **Top global models**: Built-in **GPT-5**, **Claude 4.5 Sonnet**, **Google Gemini 3 Pro**, and more.
 * **Official pricing**: Billing matches upstream providers (OpenAI/Anthropic). **No markup**. Pay as you go; balance never expires.
 * **Unified billing**: One account balance for all models instead of multiple subscriptions.
 
-#### Ideal For
+**Ideal For**
 
 * Users who cannot apply for overseas API keys.
 * Writers who want to start immediately without network setup.
@@ -61,19 +59,19 @@ Express is a zero-configuration solution for **individuals and teams focused on 
 
 ***
 
-### 3. ☁️ Qwen (Aliyun Edition)
+### ☁️ Qwen (Aliyun Edition)
 
 > **Keywords:** Aliyun Bailian, compliance in China, enterprise stability, deep integration
 
 The Qwen edition is an enterprise-grade version deeply integrated with **Aliyun Bailian**. It ships with Bailian's protocol presets to provide stable, compliant, high-performance domestic model services.
 
-#### Core Features
+**Core Features**
 
 * **Bailian ecosystem integration**: Built-in access to the full Qwen series (Qwen-Max/Plus/Turbo) and Bailian-hosted CodeQwen models.
 * **Enterprise-grade guarantees**: Backed by Aliyun infrastructure with high concurrency and enterprise SLA. Data transfer meets domestic compliance requirements.
 * **Minimal setup**: Enter one Aliyun API key to sync and manage all available models.
 
-#### Ideal For
+**Ideal For**
 
 * Enterprises/government organizations with strict data residency requirements.
 * Existing Aliyun Bailian enterprise customers.
@@ -85,21 +83,21 @@ The Qwen edition is an enterprise-grade version deeply integrated with **Aliyun 
 
 Use this feature comparison to decide:
 
-| Feature | Standard | Express | Qwen |
+| Feature | Premium | Express | Qwen |
 | -------- | ------------------- | --------------------------- | ----------------- |
 | **Core concept** | Bring your own resources | Simple global access | Domestic compliance, Aliyun ecosystem |
-| **Model support** | Unlimited (depends on your keys) | GPT-4, Claude 3.5, Gemini, etc. | Full Qwen series + Bailian-hosted models |
+| **Model support** | Unlimited (depends on your keys) | GPT-5, Claude Opus 4.6, Gemini, etc. | Full Qwen series + Bailian-hosted models |
 | **Setup difficulty** | ⭐⭐⭐ (manual key/host) | ⭐ (zero config) | ⭐⭐ (key only) |
 | **Network** | User-managed connectivity | **No special network** (built-in acceleration) | Domestic direct (very fast) |
 | **Billing** | Pay upstream providers | **Unified Cherry wallet (official price)** | Aliyun Bailian billing |
 | **Local models** | ✅ Supported (Ollama, etc.) | ❌ Not supported | ✅ Supported (Ollama, etc.) |
 | **Recommended for** | Developers, local deployment, multi-source aggregation | Personal use, no ops, top models | Domestic enterprise production and compliance |
 
-#### How should I choose?
+**How should I choose?**
 
-* **Need Claude 4.5 for coding but no overseas card?** 👉 Choose **Express**.
-* **Must use domestic servers and rely on Qwen?** 👉 Choose **Qwen**.
-* **Run Ollama locally or have official Gemini keys?** 👉 Choose **Standard**.
+* **Want zero-config access to top global models (GPT, Claude, Gemini) without managing multiple accounts or network setup?** 👉 Choose **Express**.
+* **Need data to stay domestic, primarily use the Qwen model family, and require compliance and enterprise-grade stability?** 👉 Choose **Qwen**.
+* **Already have API keys or local models and need flexible multi-provider access with deep customization?** 👉 Choose **Premium**.
 
 <Callout type="info">
 **💡 Tip** All editions share the same core architecture; differences are presets and authentication modules. If you are an enterprise admin, contact us for the specific deployment package.

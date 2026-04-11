@@ -1,28 +1,23 @@
 ---
 title: "API Key 管理"
-description: Cherry Studio Enterprise には API ゲートウェイ機能があります。クライアント UI 以外にも、API Key を使ってモデル機能を呼び出せます。管理者はここで認証情報を配布します。
+description: "ユーザーに API Key 認証情報を配布・管理し、内蔵 API ゲートウェイ経由で統合モデル機能を呼び出せるようにします。"
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
 
-# 4. API Key 管理
+## キーの作成と管理
 
-#### キーの作成と管理
+1. ユーザー一覧で対象ユーザーの **操作** 列にある **キー** ボタンをクリック。
+2. **キー設定** パネルで確認・設定を行います：
 
-1. ユーザー一覧で対象ユーザーの **⋮** をクリック。
-2. **キー**（Key アイコン）を選択。
-
-<img src="/assets/images/zh/admin/user-management-api-key-settings-modal_zh.webp" alt="キー設定モーダル" />
-3. **キー設定** パネルで設定：
-
-<img src="/assets/images/zh/admin/user-management-api-key-expiration-settings_zh.webp" alt="API Key と有効期限設定" />
+<img src="/assets/images/ja/admin/user-management-api-key-settings-modal_ja.webp" alt="キー設定モーダル" />
 **設定項目の説明**
 
 <table><thead><tr><th width="111.69921875">項目</th><th width="369.5078125">説明</th><th>例/操作</th></tr></thead><tbody><tr><td><strong>キー</strong></td><td>システムが生成する <code>sk-</code> で始まる高強度ランダム文字列。</td><td>右側の <strong>コピー</strong> アイコンで複製。</td></tr><tr><td><strong>説明</strong></td><td>キー用途のメモ。監査に役立ちます。</td><td>例：<code>Dev Environment CI/CD</code></td></tr><tr><td><strong>有効期限</strong></td><td>キーの有効期間。期限切れ後は拒否されます。</td><td>日時を選択。</td></tr><tr><td><strong>有効状態</strong></td><td>キーの有効化/凍結。</td><td>トグルを ON/OFF。</td></tr></tbody></table>
 
 4. **保存** をクリックして適用。
 
-#### 検証とトラブルシューティング
+## 検証とトラブルシューティング
 
 設定完了後、ユーザーはこのキーで Cherry Studio API を利用できます。
 
@@ -32,7 +27,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
   2. **有効状態** がオフになっていないか。
   3. **グループ** に有効なモデルチャネルが設定されているか。
 
-サードパーティクライアント、IDE プラグイン、自社サービスから Enterprise Express モデルを直接呼び出す場合は、[外部アプリ接続（Express モデル）](/ja/admin/user-management/external-app-access) を参照してください。
+サードパーティクライアント、IDE プラグイン、自社サービスから Enterprise Express モデルを直接呼び出す場合は、[外部アプリ接続（Express モデル）](/ja/docs/admin/user-management/external-app-access) を参照してください。
 
 <Callout type="info">
 **Note:** API Key はユーザーのデジタル ID であり、課金権限を持ちます。公開リポジトリ等での漏えいは厳禁です。

@@ -1,35 +1,35 @@
 ---
-title: "Provider Management (Standard/BYOK)"
-description: This section covers onboarding mainstream model providers via standard protocols (OpenAI, Anthropic, Google, etc.).
+title: "Provider Management (Premium)"
+description: "Onboard mainstream model providers via standard protocols (OpenAI, Anthropic, Google, etc.)."
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
 
-# 1. Provider Management (Standard/BYOK)
+## Overview
 
-### Overview
+<Callout type="info">
+**Navigation:** Admin Console → Provider Management
+</Callout>
 
-**Path:** Admin console sidebar > **Provider Management**
-
-<img src="/assets/images/zh/admin/provider-management-standard-1_zh.webp" alt="" />
+<img src="/assets/images/en/admin/provider-management-standard-1_en.webp" alt="" />
 In this module, admins can configure and manage the AI model sources used by the enterprise. Cherry Studio includes presets for mainstream providers and supports one-click access to OpenAI, Anthropic (Claude), Google (Gemini), as well as OpenAI-compatible domestic relay providers (e.g., SiliconFlow, DeepSeek, OpenRouter).
 
 <Callout type="info">
-**Standard edition scope:** Commercial model services accessed via standard API Key and API Host.
+**Premium edition scope:** Commercial model services accessed via standard API Key and API Host.
 </Callout>
 
 ***
 
-### 1. Add a New Provider
+## Add a New Provider
 
 **Action:** Click **+ Add Provider** at the bottom of the list.
 
-<img src="/assets/images/zh/admin/provider-management-standard-2_zh.webp" alt="" />
+<img src="/assets/images/en/admin/provider-management-standard-2_en.webp" alt="" />
 The system supports quick onboarding via preset templates.
 
-#### Configuration Parameters
+### Configuration Parameters
 
-<table><thead><tr><th width="114.1875">Field</th><th width="385.765625">Description</th><th>Example</th></tr></thead><tbody><tr><td><strong>Provider name</strong></td><td>Custom display name for identification.</td><td><code>SiliconFlow</code> or <code>DeepSeek Official</code></td></tr><tr><td><strong>Enabled</strong></td><td>Controls whether all models under this provider are visible to users.</td><td>🟢 On</td></tr><tr><td><strong>Provider type</strong></td><td><strong>[Key]</strong> Choose the protocol template.<br />• Domestic models (Qwen, DeepSeek) typically choose <code>OpenAI</code>.<br />• Claude chooses <code>Anthropic</code>.</td><td><code>OpenAI</code></td></tr><tr><td><strong>API Key</strong></td><td>Key from the provider console (sk-...).</td><td><code>sk-rwkj...</code></td></tr><tr><td><strong>API Host</strong></td><td>API endpoint. Defaults auto-fill after provider type; relay providers may require manual changes.</td><td><code>https://api.siliconflow.cn</code></td></tr></tbody></table>
+<table><thead><tr><th width="114.1875">Field</th><th width="385.765625">Description</th><th>Example</th></tr></thead><tbody><tr><td><strong>Provider name</strong></td><td>Custom display name for identification.</td><td><code>SiliconFlow</code> or <code>DeepSeek Official</code></td></tr><tr><td><strong>Enabled</strong></td><td>Controls whether all models under this provider are visible to users.</td><td>🟢 On</td></tr><tr><td><strong>Provider type</strong></td><td><strong>[Key]</strong> Choose the protocol template.<br />• Domestic models (Qwen, DeepSeek) typically choose <code>OpenAI</code>.<br />• Claude chooses <code>Anthropic</code>.</td><td><code>OpenAI</code></td></tr><tr><td><strong>API Key</strong></td><td>Key from the provider console (sk-...).</td><td><code>sk-rwkj...</code></td></tr><tr><td><strong>API Host</strong></td><td>API endpoint. Defaults auto-fill after provider type; relay providers may require manual changes.</td><td>`https://api.siliconflow.com/v1`</td></tr></tbody></table>
 
 <Callout type="info">
 **Tip:** Most domestic providers (Aliyun Bailian, Tencent Hunyuan, SiliconFlow) are compatible with the `OpenAI` protocol. Select **OpenAI** and use the provider's `Base URL` as the **API Host**.
@@ -37,27 +37,27 @@ The system supports quick onboarding via preset templates.
 
 ***
 
-### 2. Model List and Capability Tags
+## Model List and Capability Tags
 
 After adding a provider, click its card to expand the model list. The system will try to fetch supported models automatically, or you can add them manually.
 
-<img src="/assets/images/zh/admin/provider-management-standard-3_zh.webp" alt="" />
-#### 🏷️ Capability Tags
+<img src="/assets/images/en/admin/provider-management-standard-3_en.webp" alt="" />
+### Capability Tags
 
 Icons next to model names indicate special capabilities. Understanding these is critical when selecting models for assistants.
 
-<table><thead><tr><th width="66.87890625">Icon</th><th width="239.375">Name</th><th>Meaning and use cases</th></tr></thead><tbody><tr><td>🧠</td><td><strong>Reasoning</strong></td><td><strong>Chain-of-thought capability</strong>. Models like <code>DeepSeek-R1</code> or <code>OpenAI o1</code> perform deep reasoning before responding. Users see "Thinking..." and it is suited for complex math, logic, or code problems.</td></tr><tr><td>🔧</td><td><strong>Function Calling</strong></td><td><strong>Plugin/MCP support</strong>. Only models with this icon can use knowledge base retrieval, web search, or MCP tools.</td></tr><tr><td>👁️</td><td><strong>Vision</strong></td><td><strong>Multimodal vision</strong>. These models can analyze images; users can upload images for analysis, description, or text extraction.</td></tr></tbody></table>
+<table><thead><tr><th width="66.87890625">Icon</th><th width="239.375">Name</th><th>Meaning and use cases</th></tr></thead><tbody><tr><td>🧠</td><td><strong>Reasoning</strong></td><td><strong>Deep reasoning capability</strong>. Models like <code>Claude Opus 4.6</code>, <code>o3</code>, or <code>DeepSeek-R1</code> perform deep thinking before responding. Users see "Thinking..." and it is suited for complex logic, math problems, or code architecture design.</td></tr><tr><td>🔧</td><td><strong>Function Calling</strong></td><td><strong>Plugin/MCP support</strong>. Only models with this icon can use knowledge base retrieval, web search, or MCP tools.</td></tr><tr><td>👁️</td><td><strong>Vision</strong></td><td><strong>Multimodal vision</strong>. These models can analyze images; users can upload images for analysis, description, or text extraction.</td></tr></tbody></table>
 
 ***
 
-### 3. Model Parameters and Pricing
+## Model Parameters and Pricing
 
 **Action:** Click the **⚙️ Settings** icon next to a model.
 
 To accurately calculate costs, configure pricing per model.
 
 <img src="/assets/images/zh/admin/provider-management-standard-4_zh.webp" alt="" />
-#### Edit Model Settings
+### Edit Model Settings
 
 * **Model ID**: The exact identifier used in API calls (must match provider docs).
 * **Context length**: Maximum context window (e.g., `32k`, `128k`).
@@ -72,11 +72,11 @@ To accurately calculate costs, configure pricing per model.
 
 ***
 
-### 4. Connectivity Validation
+## Connectivity Validation
 
 After configuration, validate API Key and connectivity:
 
-<img src="/assets/images/zh/admin/provider-management-standard-5_zh.webp" alt="" />
+<img src="/assets/images/en/admin/provider-management-standard-5_en.webp" alt="" />
 1. Click **Check Connection** on the provider row.
 2. In the dialog, select a model (e.g., `deepseek-chat`).
 3. Click **Confirm**.
@@ -84,11 +84,13 @@ After configuration, validate API Key and connectivity:
 
 ***
 
-### FAQ
+## FAQ
 
 **Q: The provider was added but the model list is empty.**
 
 A: Some OpenAI-compatible providers do not support listing models (`/v1/models`). Click **+ Add Model** at the bottom and enter the Model ID manually (e.g., `qwen-max`).
+
+---
 
 **Q: Why can't my assistant use the knowledge base?**
 

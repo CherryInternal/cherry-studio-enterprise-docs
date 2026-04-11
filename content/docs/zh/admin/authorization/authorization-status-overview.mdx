@@ -1,15 +1,23 @@
 ---
 title: "授权状态概览"
+description: "查看 License 有效性和服务运行状态，快速判断系统是否正常运行。"
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
+import { DynamicLink } from 'fumadocs-core/dynamic-link'
 
-# 1. 授权状态概览
-
-进入 **授权管理** 页面，顶部面板是系统健康状况的“晴雨表”。
+## 未授权
 
 <img src="/assets/images/zh/admin/authorization-import_zh.webp" alt="导入授权" />
+* **未导入 License**：系统尚未导入任何授权文件，所有高级功能处于不可用状态。
+
+## 授权失败
+
 <img src="/assets/images/zh/admin/authorization-validation-failed_zh.webp" alt="验证失败" />
+* **License 校验未通过**：授权文件签名无效、已过期或与当前部署环境不匹配。
+
+## 授权成功
+
 <img src="/assets/images/zh/admin/authorization-valid_zh.webp" alt="系统已授权及运行正常" />
 * **系统已授权 (License 有效)**：表示当前的 License 文件签名正确且在有效期内。
 * **运行状态**：右侧的 ● 正常运行 指示器表明系统已成功连接到验证服务器（或离线校验通过），未发现篡改风险。

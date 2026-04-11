@@ -1,13 +1,9 @@
 ---
 title: "外部应用接入（Express 模型）"
-description: 使用 Cherry Studio 企业版 API，在外部应用中调用企业速通版闭源和开源模型。
+description: "在外部应用、IDE 插件或自建服务中，通过 API 调用 Cherry Studio 企业版 Express 模型。"
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
-
-# 5. 外部应用接入（Express 模型）
-
-本文适用于需要在外部应用、IDE 插件、自动化脚本或自建服务中，直接调用 Cherry Studio 企业版 **Express** 模型的场景。
 
 ## 适用前提
 
@@ -20,8 +16,8 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 相关文档：
 
-- [API 密钥管理](/zh/admin/user-management/api-key-management)
-- [服务商管理（Express 版/托管）](/zh/admin/service-provider/provider-management-express-hosted)
+- [API 密钥管理](/zh/docs/admin/user-management/api-key-management)
+- [服务商管理（Express 版/托管）](/zh/docs/admin/service-provider/provider-management-express-hosted)
 
 ## 配置项对应关系
 
@@ -149,12 +145,12 @@ print(resp.choices[0].message.content)
 | Model | `anthropic/claude-sonnet-4.5@x-express-internal` |
 
 <Callout type="info">
-**兼容性说明：** 当前更推荐用于支持“手动填写自定义模型名”的外部应用。若某个应用强依赖标准的自动拉取模型列表能力，可能还需要您手动补充模型名。
+**兼容性说明：** 当前更推荐用于支持"手动填写自定义模型名"的外部应用。若某个应用强依赖标准的自动拉取模型列表能力，可能还需要您手动补充模型名。
 </Callout>
 
 ## 常见问题
 
-### 1. 为什么提示 `Provider is required`？
+**1. 为什么提示 `Provider is required`？**
 
 通常是因为 `model` 没有带服务商后缀。请检查是否写成了下面这种完整格式：
 
@@ -162,7 +158,7 @@ print(resp.choices[0].message.content)
 anthropic/claude-sonnet-4.5@x-express-internal
 ```
 
-### 2. 为什么提示 `401 Unauthorized` 或 `Key Expired`？
+**2. 为什么提示 `401 Unauthorized` 或 `Key Expired`？**
 
 请检查：
 
@@ -170,7 +166,7 @@ anthropic/claude-sonnet-4.5@x-express-internal
 2. API Key 是否已过期
 3. API Key 是否已被管理员禁用
 
-### 3. 为什么提示模型不存在或没有权限？
+**3. 为什么提示模型不存在或没有权限？**
 
 请检查：
 
@@ -178,6 +174,6 @@ anthropic/claude-sonnet-4.5@x-express-internal
 2. 当前用户所属分组是否已被授权使用该模型
 3. 模型后缀是否与后台所属分类一致
 
-### 4. 为什么提示 `Balance Insufficient`？
+**4. 为什么提示 `Balance Insufficient`？**
 
 通常表示企业 Express 余额不足，或该模型受到了额度限制。请联系管理员前往 **服务商管理 > Express** 查看余额与模型状态。

@@ -1,24 +1,22 @@
 ---
 title: "Cache Management"
-description: Over time, Cherry Studio generates temporary local files. This page monitors storage usage and cleans up unused files to free disk space.
+description: "Monitor local storage usage and clean up unused temporary files to free disk space."
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
 
-# 5. Cache Management
-
-#### Status Metrics
+## Status Metrics
 
 <table><thead><tr><th width="141.5234375">Metric</th><th>Meaning</th></tr></thead><tbody><tr><td><strong>Total files / size</strong></td><td>All files under the data directory.</td></tr><tr><td><strong>Valid files</strong></td><td>Files referenced by the knowledge base or active chats. <strong>The system protects these files from deletion.</strong></td></tr><tr><td><strong>Invalid files</strong></td><td>Orphan files whose DB records were deleted but files remain on disk.</td></tr></tbody></table>
 
-#### Cleanup
+## Cleanup
 
 1. Click **Refresh stats** to scan disk usage.
 2. Review **Invalid files** count and size.
-3. Click **Clean invalid files (0)** to run cleanup.
+3. Click **Clean invalid files** to run cleanup.
 
-<img src="/assets/images/zh/admin/system-settings-cache_zh.webp" alt="" />
-#### ⚠️ Risk Warning
+<img src="/assets/images/en/admin/system-settings-cache_en.webp" alt="" />
+## ⚠️ Risk Warning
 
 <Callout type="error">
 **Data safety warning**:
