@@ -5,14 +5,18 @@ description: Get started with Cherry Studio Enterprise in 20 minutes, from deplo
 
 import { Callout } from 'fumadocs-ui/components/callout'
 
-## Step 1: Deploy
+## Step 1: Deploy (Premium Only)
+
+<Callout type="warn">
+This step applies to **Premium** only. Express is officially hosted and requires no self-deployment.
+</Callout>
 
 Choose a deployment method that suits you:
 
 <Cards>
-  <Card title="Cloud App Deployment" href="/[lang]/docs/setup/cloud-app" description="One-click deployment, zero technical barrier, no ops cost" />
-  <Card title="Docker Deployment" href="/[lang]/docs/setup/docker" description="Deploy quickly with Docker Compose" />
-  <Card title="K8s Deployment" href="/[lang]/docs/setup/helm" description="Deploy on Kubernetes with Helm" />
+  <Card title="Cloud App Deployment" href="/docs/setup/cloud-app" description="One-click deployment, zero technical barrier, no ops cost" />
+  <Card title="Docker Deployment" href="/docs/setup/docker" description="Deploy quickly with Docker Compose" />
+  <Card title="K8s Deployment" href="/docs/setup/helm" description="Deploy on Kubernetes with Helm" />
 </Cards>
 
 ## Step 2: Obtain a License
@@ -30,7 +34,15 @@ We provide a **14-day free trial**. After deployment, you can experience all fea
   [View full pricing →](/docs/pricing)
 </Callout>
 
-## Step 3: Add a Provider
+<Callout type="info">
+  [Learn how to activate your license →](/docs/admin/authorization/activate-license)
+</Callout>
+
+## Step 3: Add a Provider (Premium Only)
+
+<Callout type="warn">
+This step applies to **Premium** only. Express comes with built-in providers and requires no manual setup.
+</Callout>
 
 Log in to the admin console and go to "Provider Management" to add AI providers (such as OpenAI or Anthropic) and configure API keys.
 
@@ -46,7 +58,7 @@ Log in to the admin console and go to "Provider Management" to add AI providers 
 
 ## Step 4: Set the Default Model
 
-Go to "Model Management" to configure available models for the provider and set a default model.
+Go to "Default Models" to assign the default assistant model, topic naming model, and translation model for the system.
 
 <img src="/assets/images/en/admin/default-model-settings-overview_en.webp" alt="Set default model" />
 

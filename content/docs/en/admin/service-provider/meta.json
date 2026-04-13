@@ -1,8 +1,8 @@
 {
   "title": "Provider Management",
   "pages": [
-    "provider-management-standard",
     "provider-management-express-hosted",
+    "provider-management-standard",
     "provider-management-aliyun-bailian-qwen",
     "troubleshooting"
   ]
