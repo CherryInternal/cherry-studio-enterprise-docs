@@ -5,6 +5,8 @@
     "add-new-user",
     "edit-and-maintain",
     "api-key-management",
-    "external-app-access"
+    "external-app-access",
+    "batch-import",
+    "quota-management"
   ]
 }

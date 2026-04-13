@@ -1,19 +1,17 @@
 ---
 title: "基本設定"
-description: クライアントとサーバー間の同期戦略を管理します。適切な同期間隔で安全性と性能のバランスを取れます。
+description: "クライアントとサーバー間のデータ同期間隔を設定し、安全性とパフォーマンスのバランスを取ります。"
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
 
-# 1. 基本設定
-
-#### 設定手順
+## 設定手順
 
 1. **システム設定** > **基本設定** を開く。
 2. 必要に応じて同期パラメータを調整。
 
-<img src="/assets/images/zh/admin/system-settings-basic_zh.webp" alt="" />
-#### パラメータ詳細
+<img src="/assets/images/ja/admin/system-settings-basic_ja.webp" alt="" />
+## パラメータ詳細
 
 <table><thead><tr><th width="115.4765625">項目</th><th width="219.5859375">説明</th><th>推奨値/操作</th></tr></thead><tbody><tr><td><strong>クライアントデータ同期間隔</strong></td><td>会話履歴や設定などのローカルデータをサーバーへ同期する頻度（分）。</td><td><strong>既定: 1</strong><br />• <strong>低頻度 (5-10)</strong>: 低スペック端末で負荷軽減。<br />• <strong>高頻度 (1)</strong>: 断電時のデータ損失を最小化。</td></tr></tbody></table>
 

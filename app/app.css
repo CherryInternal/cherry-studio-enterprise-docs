@@ -1,3 +1,17 @@
 @import "tailwindcss";
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
+
+/* TOC heading indentation: increase spacing between levels for clearer hierarchy */
+/* H2: keep at base level */
+.border-s > a.ps-3 {
+  padding-inline-start: 0.75rem !important;
+}
+/* H3: clearly indented under H2 */
+.border-s > a.ps-6 {
+  padding-inline-start: 2.5rem !important;
+}
+/* H4: further indented under H3 */
+.border-s > a.ps-8 {
+  padding-inline-start: 4rem !important;
+}

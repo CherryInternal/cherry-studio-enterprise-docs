@@ -1,16 +1,15 @@
 ---
 title: ソフトウェア更新
-description: Cherry Studio Enterprise の更新ガイド
+description: "管理コンソールのワンクリック更新（Docker Compose）または手動更新で Cherry Studio Enterprise を最新バージョンに更新します。"
 ---
 
 import { DynamicLink } from 'fumadocs-core/dynamic-link'
+import { Callout } from 'fumadocs-ui/components/callout'
 
 <Callout type="info" title="バージョン要件">
   ワンクリック更新には **v0.3.3** 以降が必要です。現在のバージョンが v0.3.3 未満の場合は、まず手動で
   v0.3.3 に更新してからワンクリック更新を利用してください。
 </Callout>
-
-本ドキュメントでは Cherry Studio Enterprise を最新バージョンへ更新する方法を説明します。管理コンソールのワンクリック更新（Docker Compose 導入）または手動更新に対応します。
 
 ## 更新方法
 
@@ -18,19 +17,19 @@ import { DynamicLink } from 'fumadocs-core/dynamic-link'
 
 Docker Compose で導入している場合、管理コンソールから直接更新できます。
 
-#### 前提条件
+**前提条件**
 
 ワンクリック更新を有効にするため、`docker-compose.yml` に以下を設定します：
 
 1. **Docker Socket をマウント**：コンテナ内から Docker を操作
 2. **docker-compose.yml をマウント**：設定ファイルの読み取り/更新を許可
 
-#### 設定例
+**設定例**
 
 ```yaml
 services:
   api:
-    image: cherrystudio/cherry-studio-enterprise-api:v0.3.2
+    image: cherrystudio/cherry-studio-enterprise-api:v0.4.10
     container_name: cherry-studio-enterprise-api
     ports:
       - '3670:3670'
@@ -47,7 +46,7 @@ services:
     restart: unless-stopped
 ```
 
-#### 手順
+**手順**
 
 1. 管理コンソールにログイン
 2. **About** ページへ移動
@@ -61,7 +60,7 @@ services:
    - 新コンテナを起動
 7. 更新完了後、ページが自動でリフレッシュ
 
-#### 注意事項
+**注意事項**
 
 - 更新中はサービスが短時間停止します（通常 10〜30 秒）
 - 更新中にブラウザを閉じたり更新しないでください
@@ -71,28 +70,31 @@ services:
 
 ワンクリック更新を使わない場合は以下の手順です：
 
-#### 1. 新しいイメージを取得
+**新しいイメージを取得**
 
 ```bash
-# 最新版を取得
+# 最新版を取得（Docker Hub）
 docker pull cherrystudio/cherry-studio-enterprise-api:latest
 
 # 特定バージョンを取得
-docker pull cherrystudio/cherry-studio-enterprise-api:v0.3.2
+docker pull cherrystudio/cherry-studio-enterprise-api:v0.4.10
+
+# 中国大陸のユーザー：国内ミラーで高速取得：
+docker pull docker-registry.cherry-ai.com/public/cherry-studio-enterprise-api:latest
 ```
 
-#### 2. docker-compose.yml を更新
+**docker-compose.yml を更新**
 
 `docker-compose.yml` のイメージタグを変更します：
 
 ```yaml
 services:
   api:
-    image: cherrystudio/cherry-studio-enterprise-api:v0.3.2 # バージョン更新
+    image: cherrystudio/cherry-studio-enterprise-api:v0.4.10 # バージョン更新
     # ... 他の設定はそのまま ...
 ```
 
-#### 3. サービス再起動
+**サービス再起動**
 
 ```bash
 # 停止して再作成
@@ -103,7 +105,7 @@ docker-compose up -d
 docker-compose logs -f
 ```
 
-#### 4. 更新確認
+**更新確認**
 
 - 管理コンソールの **About** でバージョン確認
 - サービス正常性を確認：`curl http://localhost:3670/health`
@@ -122,7 +124,7 @@ docker-compose logs -f
 ### 更新ログの確認
 
 - **管理コンソール**：**About** > **更新ログ**
-- **オンライン文書**：[CHANGELOG](https://releases.enterprise.cherry-ai.com/api/changelog)
+- **オンライン文書**：<DynamicLink href="/[lang]/docs/admin/about/release-notes">リリースノート</DynamicLink>
 
 ## よくある質問
 
@@ -177,5 +179,5 @@ netstat -tulpn | grep -E '3670|3680'
 ## 関連ドキュメント
 
 - <DynamicLink href="/[lang]/docs/setup/docker">Docker 導入ガイド</DynamicLink> - Docker 導入の詳細
-- <DynamicLink href="/[lang]/docs/setup/database">データベース設定ガイド</DynamicLink> - PostgreSQL 設定
+- <DynamicLink href="/[lang]/docs/setup/advanced/database">データベース設定ガイド</DynamicLink> - PostgreSQL 設定
 - <DynamicLink href="/[lang]/docs/setup/helm">Helm 導入ガイド</DynamicLink> - Kubernetes 導入

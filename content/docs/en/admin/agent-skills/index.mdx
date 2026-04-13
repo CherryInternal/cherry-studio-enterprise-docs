@@ -1,0 +1,59 @@
+---
+title: "Agent Skills"
+description: Reusable capability modules in the Resource Library designed for agents. Add manually or download from the marketplace, then bind to agents during creation/editing. Access is controlled by group.
+icon: Puzzle
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+<Callout type="info">
+**Navigation:** Sidebar → Resource Library → Agent Skills (first tab)
+</Callout>
+
+<img src="/assets/images/en/admin/agent-skills-list_en.webp" alt="Agent Skills List" />
+
+## Skills List
+
+The skills list displays all added agent skills with the following information:
+
+<table><thead><tr><th width="100">Field</th><th>Description</th></tr></thead><tbody><tr><td><strong>Name</strong></td><td>The skill's identifier name.</td></tr><tr><td><strong>Group</strong></td><td>The group the skill belongs to, determining which user groups can access it.</td></tr><tr><td><strong>Description</strong></td><td>A description of the skill's functionality.</td></tr><tr><td><strong>Actions</strong></td><td>Edit, view details, delete, and other operations.</td></tr></tbody></table>
+
+Use the search box to quickly find skills by name.
+
+## Adding Skills
+
+Click the **Add** button in the top-right corner. Two methods are available:
+
+<img src="/assets/images/en/admin/agent-skills-add-menu_en.webp" alt="Add Skills Menu" />
+
+### Manual Upload
+
+For custom enterprise-built or third-party skills.
+
+<img src="/assets/images/en/admin/agent-skills-manual-add_en.webp" alt="Manual Add Skill" />
+
+Steps:
+1. Enter the skill **Name** (required).
+2. Enter a **Description** (optional) to briefly explain the skill's purpose.
+3. Upload a skill **File** (`.md` or `.zip` format supported). Drag and drop or click to select.
+4. Click **Create** to finish adding the skill.
+
+### Download from Marketplace
+
+Opens the skill marketplace browser where you can browse and download pre-built skills from the community.
+
+<img src="/assets/images/en/admin/agent-skills-marketplace_en.webp" alt="Download from Marketplace" />
+
+Steps:
+1. Use the search box to find skills by keyword.
+2. Sort by criteria (e.g., by stars) to find popular skills.
+3. Browse skill cards to view name, source, description, and star count.
+4. Click the **download** button on the bottom-right of a skill card to add it to your resource library.
+
+<Callout type="warn">
+Marketplace skills are community-curated and hosted on GitHub. Downloads may fail depending on your network conditions.
+</Callout>
+
+<Callout type="info">
+**Workflow:** Add skills in Resource Library → Enable skills in the agent's "Skills" tab → The agent can now use the skill's capabilities at runtime.
+</Callout>

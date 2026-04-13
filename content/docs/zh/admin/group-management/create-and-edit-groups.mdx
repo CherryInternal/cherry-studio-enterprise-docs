@@ -1,18 +1,17 @@
 ---
 title: "创建与编辑分组"
-description: 本章节将指导您如何建立新的业务分组并维护基础信息。
+description: "创建新的业务分组并配置名称、描述等基础信息，建立企业组织架构映射。"
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
+import { DynamicLink } from 'fumadocs-core/dynamic-link'
 
-# 1. 创建与编辑分组
-
-### 前置条件
+## 前置条件
 
 * 您必须拥有 Cherry Studio 企业后台的 **管理员** 权限。
 * 已在 **模型管理** 中配置好企业可用的模型资源（API Key 及 Base URL 验证通过）。
 
-### 创建新分组
+## 创建新分组
 
 1. 登录 Cherry Studio 企业管理后台。
 2. 导航至 **分组管理**。
@@ -20,28 +19,30 @@ import { Callout } from 'fumadocs-ui/components/callout'
 4. 在弹出的配置窗口中，填写以下基础信息：
 
 <img src="/assets/images/zh/admin/group-management-create-edit-1_zh.webp" alt="" />
-<table><thead><tr><th width="111.23046875">参数名称</th><th width="73.9609375">必填</th><th width="402.95703125">说明</th><th>示例值</th></tr></thead><tbody><tr><td><strong>分组名称</strong></td><td>是</td><td>分组的唯一标识，建议采用“部门-职能”的命名格式。</td><td><code>研发部-后端组</code></td></tr><tr><td><strong>分组描述</strong></td><td>否</td><td>用于备注该分组的职能范围或特定的资源限制策略。</td><td><code>可以使用所有 Coding 类模型</code></td></tr></tbody></table>
+<table><thead><tr><th width="111.23046875">参数名称</th><th width="73.9609375">必填</th><th width="402.95703125">说明</th><th>示例值</th></tr></thead><tbody><tr><td><strong>分组名称</strong></td><td>是</td><td>分组的唯一标识，建议采用"部门-职能"的命名格式。</td><td><code>研发部-后端组</code></td></tr><tr><td><strong>分组描述</strong></td><td>否</td><td>用于备注该分组的职能范围或特定的资源限制策略。</td><td><code>可以使用所有 Coding 类模型</code></td></tr></tbody></table>
 
 5. 完成资源配置（详见下一章节）后，点击 **保存**。
 
 <Callout type="info">
-**验证成功：** 创建完成后，新分组将立即显示在列表中。此时“成员数”应显示为 `0`。
+**验证成功：** 创建完成后，新分组将立即显示在列表中。此时"成员数"应显示为 `0`。
 </Callout>
 
-### 编辑与管理
+## 编辑与管理
 
 当业务需求变更（例如：需要为某部门临时增加模型权限）时，您可以随时编辑分组。
 
 1. 在分组列表中找到目标分组。
-2. 点击右侧的 **编辑** 图标（通常为铅笔样式）。
+2. 点击右侧的 **设置** 按钮。
 3. 修改相应配置后点击 **保存**。
+
+具体配置方法请参见 <DynamicLink href="/[lang]/docs/admin/group-management/resource-permissions-configuration">资源权限配置</DynamicLink>。
 
 <img src="/assets/images/zh/admin/group-management-create-edit-2_zh.webp" alt="" />
 <Callout type="info">
 **生效机制：** 分组配置的修改（如增加模型权限）通常会 **实时生效**。用户只需刷新客户端或重新登录，即可看到变更后的资源列表。
 </Callout>
 
-### 删除分组
+## 删除分组
 
 <img src="/assets/images/zh/admin/group-management-create-edit-3_zh.webp" alt="" />
 <Callout type="error">
@@ -49,6 +50,6 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 在点击 **删除** 按钮前，请务必检查该分组下的 **成员数** 是否为 0。
 
-* **若分组内仍有用户：** 强制删除非空分组可能导致这些用户回退到系统的“默认分组”，从而失去原有的特定资源访问权，甚至导致工作流中断。
+* **若分组内仍有用户：** 强制删除非空分组可能导致这些用户回退到系统的"默认分组"，从而失去原有的特定资源访问权，甚至导致工作流中断。
 * **建议操作：** 请先前往 **用户管理** 模块，将该组用户迁移至其他分组后，再执行删除操作。
 </Callout>

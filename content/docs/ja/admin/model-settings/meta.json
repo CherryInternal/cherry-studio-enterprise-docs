@@ -2,8 +2,8 @@
   "title": "既定モデル設定",
   "pages": [
     "default-assistant-model",
-    "recommended-configurations",
     "topic-naming-model",
-    "translation-model"
+    "translation-model",
+    "recommended-configurations"
   ]
 }

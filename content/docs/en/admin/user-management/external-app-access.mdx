@@ -1,13 +1,9 @@
 ---
 title: "External App Access (Express Models)"
-description: Use Cherry Studio Enterprise APIs to call Enterprise Express closed-source and open-source models from external applications.
+description: "Call Cherry Studio Enterprise Express models via API from external apps, IDE plugins, or custom services."
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
-
-# 5. External App Access (Express Models)
-
-This guide is for developers who need to call Cherry Studio Enterprise **Express** models directly from external applications, IDE plugins, automation scripts, or self-built services.
 
 ## Prerequisites
 
@@ -20,8 +16,8 @@ Before you start, make sure the following requirements are met:
 
 Related docs:
 
-- [API Key Management](/en/admin/user-management/api-key-management)
-- [Provider Management (Express/Hosted)](/en/admin/service-provider/provider-management-express-hosted)
+- [API Key Management](/docs/admin/user-management/api-key-management)
+- [Provider Management (Express/Hosted)](/docs/admin/service-provider/provider-management-express-hosted)
 
 ## Required Configuration
 
@@ -154,7 +150,7 @@ If you are using a chat client, IDE plugin, or another third-party application, 
 
 ## FAQ
 
-### 1. Why do I get `Provider is required`?
+**1. Why do I get `Provider is required`?**
 
 This usually means the `model` value does not include the provider suffix. Make sure it looks like this:
 
@@ -162,7 +158,7 @@ This usually means the `model` value does not include the provider suffix. Make 
 anthropic/claude-sonnet-4.5@x-express-internal
 ```
 
-### 2. Why do I get `401 Unauthorized` or `Key Expired`?
+**2. Why do I get `401 Unauthorized` or `Key Expired`?**
 
 Please check:
 
@@ -170,7 +166,7 @@ Please check:
 2. Whether the API key has expired
 3. Whether the API key has been disabled by an admin
 
-### 3. Why does the API say the model does not exist or I do not have access?
+**3. Why does the API say the model does not exist or I do not have access?**
 
 Please check:
 
@@ -178,6 +174,6 @@ Please check:
 2. Whether the current user's group has permission to use the model
 3. Whether the model suffix matches the correct Express category
 
-### 4. Why do I get `Balance Insufficient`?
+**4. Why do I get `Balance Insufficient`?**
 
-This usually means the enterprise Express balance is insufficient, or the model is limited by quota settings. Ask an admin to check the balance and model status in **Provider Management > Express**.
+This usually means the enterprise Express balance is insufficient, or the model is limited by quota settings. Ask an admin to check the balance and model status in **Model Management > Express**.

@@ -1,16 +1,15 @@
 ---
 title: Software Updates
-description: Cherry Studio Enterprise update guide
+description: "Update Cherry Studio Enterprise via one-click update in the admin console (Docker Compose) or manual update."
 ---
 
 import { DynamicLink } from 'fumadocs-core/dynamic-link'
+import { Callout } from 'fumadocs-ui/components/callout'
 
 <Callout type="info" title="Version Requirement">
   One-click update requires **v0.3.3** or later. If your current version is lower than v0.3.3, update manually to
   v0.3.3 first, then you can use one-click update.
 </Callout>
-
-This document explains how to update Cherry Studio Enterprise to the latest version. The system supports one-click updates in the admin console (Docker Compose deployments) or manual updates.
 
 ## Update Methods
 
@@ -18,19 +17,19 @@ This document explains how to update Cherry Studio Enterprise to the latest vers
 
 If you deployed with Docker Compose, you can update directly from the admin console.
 
-#### Prerequisites
+**Prerequisites**
 
 To enable one-click update, configure the following in `docker-compose.yml`:
 
 1. **Mount Docker Socket**: Allow the container to control Docker
 2. **Mount docker-compose.yml**: Allow the container to read and update the config file
 
-#### Configuration Example
+**Configuration Example**
 
 ```yaml
 services:
   api:
-    image: cherrystudio/cherry-studio-enterprise-api:v0.3.2
+    image: cherrystudio/cherry-studio-enterprise-api:v0.4.10
     container_name: cherry-studio-enterprise-api
     ports:
       - '3670:3670'
@@ -47,7 +46,7 @@ services:
     restart: unless-stopped
 ```
 
-#### Steps
+**Steps**
 
 1. Sign in to the admin console
 2. Go to the **About** page
@@ -61,7 +60,7 @@ services:
    - Start new containers
 7. The page will refresh after the update completes
 
-#### Notes
+**Notes**
 
 - Service will be briefly interrupted (typically 10-30 seconds)
 - Do not close the browser or refresh during the update
@@ -71,28 +70,31 @@ services:
 
 If you did not configure one-click update or prefer manual control, follow these steps:
 
-#### 1. Pull the new image
+**Pull the new image**
 
 ```bash
-# Pull latest version
+# Pull latest version (Docker Hub)
 docker pull cherrystudio/cherry-studio-enterprise-api:latest
 
 # Or pull a specific version
-docker pull cherrystudio/cherry-studio-enterprise-api:v0.3.2
+docker pull cherrystudio/cherry-studio-enterprise-api:v0.4.10
+
+# China users: use the China mirror for faster pulls:
+docker pull docker-registry.cherry-ai.com/public/cherry-studio-enterprise-api:latest
 ```
 
-#### 2. Update docker-compose.yml
+**Update docker-compose.yml**
 
 Modify the image tag in `docker-compose.yml`:
 
 ```yaml
 services:
   api:
-    image: cherrystudio/cherry-studio-enterprise-api:v0.3.2 # Update version
+    image: cherrystudio/cherry-studio-enterprise-api:v0.4.10 # Update version
     # ... other configuration unchanged ...
 ```
 
-#### 3. Restart services
+**Restart services**
 
 ```bash
 # Stop and recreate containers
@@ -103,7 +105,7 @@ docker-compose up -d
 docker-compose logs -f
 ```
 
-#### 4. Verify the update
+**Verify the update**
 
 - Check the version on the **About** page in the admin console
 - Verify the service is running: `curl http://localhost:3670/health`
@@ -122,7 +124,7 @@ docker-compose logs -f
 ### View release notes
 
 - **Admin console**: **About** > **Release Notes**
-- **Online docs**: [CHANGELOG](https://releases.enterprise.cherry-ai.com/api/changelog)
+- **Online docs**: [Release Notes](/docs/admin/about/release-notes)
 
 ## FAQ
 
@@ -176,6 +178,6 @@ netstat -tulpn | grep -E '3670|3680'
 
 ## Related Documents
 
-- <DynamicLink href="/[lang]/docs/setup/docker">Docker deployment guide</DynamicLink> - Docker deployment details
-- <DynamicLink href="/[lang]/docs/setup/database">Database configuration guide</DynamicLink> - PostgreSQL configuration
-- <DynamicLink href="/[lang]/docs/setup/helm">Helm deployment guide</DynamicLink> - Kubernetes deployment
+- [Docker deployment guide](/docs/setup/docker) - Docker deployment details
+- [Database configuration guide](/docs/setup/advanced/database) - PostgreSQL configuration
+- [Helm deployment guide](/docs/setup/helm) - Kubernetes deployment

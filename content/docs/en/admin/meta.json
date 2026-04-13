@@ -8,6 +8,8 @@
     "model-settings",
     "assistant-library",
     "assistant-management",
+    "agent-management",
+    "agent-skills",
     "minapp",
     "knowledge-base",
     "mcp-server",

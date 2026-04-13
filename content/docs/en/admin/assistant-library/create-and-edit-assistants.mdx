@@ -1,21 +1,29 @@
 ---
 title: "Create and Edit Assistants"
+description: Define assistant name, prompt, and group assignment from scratch to build standardized AI assistant templates.
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
 
-# 2. Create and Edit Assistants
+## Create Assistant
 
-This is the core module of the Assistant Library. You can define an assistant's behavior from scratch.
+Go to **Resource Library → Assistant Templates**, click **Actions → Create New Template** in the top-right corner to open the creation dialog:
 
-<img src="/assets/images/zh/admin/assistant-library-create-edit_zh.webp" alt="" />
-#### Configuration Parameters
+<img src="/assets/images/en/admin/assistant-library-create-new_en.webp" alt="" />
+
+## Edit Assistant
+
+Find the target assistant in the list and click **Edit** to open the editing dialog:
+
+<img src="/assets/images/en/admin/assistant-library-create-edit_en.webp" alt="" />
+
+## Configuration Parameters
 
 After clicking **+ New Assistant Template** or **Edit**, a configuration dialog appears. Use the table below:
 
-<table><thead><tr><th width="151.15234375">Module</th><th width="205.03515625">Description</th><th>Best Practice</th></tr></thead><tbody><tr><td><strong>Assistant name</strong></td><td>Unique identifier for the assistant.</td><td>Use "verb + noun" format, e.g., "Webpage Builder".</td></tr><tr><td><strong>Emoji</strong></td><td>Assistant avatar/logo.</td><td>Select an emoji that matches the role, e.g., 🧑‍💻 for developers.</td></tr><tr><td><strong>Group</strong></td><td>Used for client-side categorization.</td><td>Select at least one group (e.g., Office, Code, Featured).</td></tr><tr><td><strong>Prompt</strong></td><td><strong>Core configuration</strong>. Defines persona, tone, and tasks.</td><td>Use structured prompts (role + goal + constraints).</td></tr><tr><td><strong>Description</strong></td><td>Short summary shown to users.</td><td>Summarize in one sentence, e.g., "Turn requirements into HTML code".</td></tr></tbody></table>
+<table><thead><tr><th width="151.15234375">Field</th><th width="205.03515625">Description</th><th>Best Practice</th></tr></thead><tbody><tr><td><strong>Name</strong></td><td>Unique identifier for the assistant.</td><td>Use "verb + noun" format, e.g., "Webpage Builder".</td></tr><tr><td><strong>Emoji</strong></td><td>Assistant avatar emoji.</td><td>Select an emoji that matches the role, e.g., 🧑‍💻 for developers.</td></tr><tr><td><strong>Tags</strong></td><td>Used for client-side categorization. Supports multiple selections.</td><td>Select appropriate tags (e.g., Office, Code, Tools).</td></tr><tr><td><strong>Prompt</strong></td><td><strong>Core configuration</strong>. Defines the assistant's behavior and responsibilities.</td><td>Use structured prompts (role + goal + constraints).</td></tr><tr><td><strong>Description</strong></td><td>Brief description of the assistant's function and purpose.</td><td>Summarize in one sentence, e.g., "Turn requirements into HTML code".</td></tr></tbody></table>
 
-#### Prompt Writing Tips (Prompt Engineering)
+## Prompt Writing Tips (Prompt Engineering)
 
 When writing **Prompt**, follow this structure for best results:
 

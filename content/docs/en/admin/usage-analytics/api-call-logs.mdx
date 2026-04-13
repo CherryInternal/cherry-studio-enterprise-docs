@@ -1,25 +1,24 @@
 ---
 title: "API Call Logs"
+description: "View complete records for each API call, including user, model, Token consumption, and request details."
 ---
 
-# 6. API Call Logs
-
-This is the lowest-level audit data, recording the full fingerprint of each API call.
-
-<img src="/assets/images/zh/admin/usage-analytics-call-logs-1_zh.webp" alt="" />
-#### Log Details
+<img src="/assets/images/en/admin/usage-analytics-call-logs-1_en.webp" alt="" />
+## Log Details
 
 Click **View** (eye icon) on the right to open the detail card:
 
-<img src="/assets/images/zh/admin/usage-analytics-call-logs-2_zh.webp" alt="" />
-1. **User overview:** Caller and timestamp (to the second).
-2. **Model info:** Model ID (e.g., `google/gemini-pro`) and provider channel.
-3. **Token audit:**
-   * **Input Tokens:** Consumption.
-   * **Output Tokens:** Consumption.
-   * **Total Tokens:** Total billed tokens for the call.
+<img src="/assets/images/en/admin/usage-analytics-call-logs-2_en.webp" alt="" />
+1. **User:** The user who initiated the call.
+2. **Time:** Call timestamp (to the second).
+3. **Model:** Model ID used (e.g., `stepfun-ai/step-3.5-flash(Free)`).
+4. **Provider:** The corresponding provider channel (e.g., `CherryIn`).
+5. **Token Usage Statistics:**
+   * **Input Token:** Input consumption for this request.
+   * **Output Token:** Output consumption for this request.
+   * **Total Token:** Combined total of input and output.
 
-#### Use Cases
+## Use Cases
 
 * **Troubleshooting:** If users report truncated responses or errors, find the log by timestamp to see if token limits were hit.
 * **Compliance audit:** Confirm calls in specific time ranges meet enterprise policies.

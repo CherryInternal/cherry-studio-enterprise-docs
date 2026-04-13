@@ -1,19 +1,18 @@
 ---
 title: "服务器列表管理"
+description: "查看和管理已注册的 MCP 服务器，包括分组、关联助手及增删改操作。"
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
 
-# 1. 服务器列表管理
-
-**路径：** 管理后台侧边栏 > **MCP 服务器**
-
-此页面是 MCP 生态的控制台，管理员可以在此查看所有已注册的工具服务状态。
+<Callout type="info">
+**入口路径：** 管理后台 → 资源库 → MCP 服务器
+</Callout>
 
 <img src="/assets/images/zh/admin/mcp-server-list-management_zh.webp" alt="" />
-#### 界面核心字段
+## 界面核心字段
 
-<table><thead><tr><th width="94.671875">字段</th><th>说明</th></tr></thead><tbody><tr><td><strong>名称</strong></td><td>服务器的显示名称（如 <code>Playwright</code>）。</td></tr><tr><td><strong>ID</strong></td><td>系统内部调用的唯一标识符（如 <code>JfzwZ...</code>）。</td></tr><tr><td><strong>类型</strong></td><td>通信协议类型，默认为 <code>stdio</code>（标准输入输出）。</td></tr><tr><td><strong>关联助手</strong></td><td><strong>[关键指标]</strong> 显示当前有多少个助手正在使用该服务器。</td></tr><tr><td><strong>操作</strong></td><td>支持 <strong>编辑</strong> 配置或 <strong>删除</strong> 服务器。</td></tr></tbody></table>
+<table><thead><tr><th width="94.671875">字段</th><th>说明</th></tr></thead><tbody><tr><td><strong>名称</strong></td><td>服务器的显示名称（如 <code>mcp-server-chart</code>）。</td></tr><tr><td><strong>所属组</strong></td><td>服务器所属的分组，决定哪些用户组可以使用该服务器。</td></tr><tr><td><strong>ID</strong></td><td>系统内部调用的唯一标识符（如 <code>antv-chart</code>）。</td></tr><tr><td><strong>类型</strong></td><td>通信协议类型，如 <code>stdio</code>（标准输入输出）。</td></tr><tr><td><strong>描述</strong></td><td>服务器的功能说明。</td></tr><tr><td><strong>关联助手</strong></td><td><strong>[关键指标]</strong> 显示当前有多少个助手正在使用该服务器。</td></tr><tr><td><strong>操作</strong></td><td>支持 <strong>查看</strong> 详情、<strong>编辑</strong> 配置或 <strong>删除</strong> 服务器。</td></tr></tbody></table>
 
 <Callout type="warn">
 **删除风险提示**：在点击删除前，请务必检查 **关联助手** 的数量是否为 `0`。如果删除了正在被助手使用的服务器，这些助手在调用工具时将直接报错。

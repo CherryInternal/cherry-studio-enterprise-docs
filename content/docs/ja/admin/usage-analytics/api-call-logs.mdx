@@ -1,25 +1,24 @@
 ---
 title: "API 呼び出しログ"
+description: "ユーザー、モデル、Token 消費、リクエスト内容など、各 API 呼び出しの完全な記録を確認します。"
 ---
 
-# 6. API 呼び出しログ
-
-最下層の監査データで、各 API 呼び出しの完全な記録を保持します。
-
-<img src="/assets/images/zh/admin/usage-analytics-call-logs-1_zh.webp" alt="" />
-#### ログ詳細
+<img src="/assets/images/ja/admin/usage-analytics-call-logs-1_ja.webp" alt="" />
+## ログ詳細
 
 右側の **表示（目のアイコン）** をクリックすると詳細カードが表示されます：
 
-<img src="/assets/images/zh/admin/usage-analytics-call-logs-2_zh.webp" alt="" />
-1. **ユーザー概要:** 呼び出し元と日時（秒単位）。
-2. **モデル情報:** モデル ID（例：`google/gemini-pro`）とプロバイダー。
-3. **トークン監査:**
-   * **入力 Token:** 消費量。
-   * **出力 Token:** 消費量。
-   * **総 Token:** 今回の請求対象トークン総量。
+<img src="/assets/images/ja/admin/usage-analytics-call-logs-2_ja.webp" alt="" />
+1. **ユーザー：** 呼び出しを行ったユーザー名。
+2. **時間：** 呼び出し日時（秒単位）。
+3. **モデル：** 使用されたモデル ID（例：`google/gemini-3-pro-preview`）。
+4. **プロバイダー：** 対応するプロバイダーチャネル（例：`Express クローズドモデル`）。
+5. **Token 使用統計：**
+   * **入力 Token:** 今回のリクエストの入力消費量。
+   * **出力 Token:** 今回のリクエストの出力消費量。
+   * **総計 Token:** 入力と出力の合計値。
 
-#### 利用シーン
+## 利用シーン
 
 * **障害調査:** 返信切れやエラーの報告時、タイムスタンプで該当ログを探し、トークン超過を確認。
 * **コンプライアンス監査:** 特定期間の呼び出しが規定に沿っているか確認。

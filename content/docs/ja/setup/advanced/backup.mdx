@@ -1,9 +1,9 @@
 ---
 title: バックアップと復旧
-description: Cherry Studio Enterprise のバックアップ/復旧ガイド
+description: "Docker と Kubernetes 両方の導入方式に対応した、PostgreSQL データベースとアプリデータのバックアップ/復旧手順です。"
 ---
 
-本ドキュメントでは、PostgreSQL とアプリデータを含む Cherry Studio Enterprise のバックアップ/復旧方法を説明します。
+import { DynamicLink } from 'fumadocs-core/dynamic-link'
 
 ## Docker 導入のバックアップ
 
@@ -118,6 +118,6 @@ kubectl delete pod backup-pod
 
 ## 関連ドキュメント
 
-- [Docker 導入ガイド](../setup/docker) - Docker 導入の詳細
-- [Helm 導入ガイド](../setup/helm) - Kubernetes 導入
-- [データベース設定ガイド](./database) - PostgreSQL の詳細設定
+- <DynamicLink href="/[lang]/docs/setup/docker">Docker 導入ガイド</DynamicLink> - Docker 導入の詳細
+- <DynamicLink href="/[lang]/docs/setup/helm">Helm 導入ガイド</DynamicLink> - Kubernetes 導入
+- <DynamicLink href="/[lang]/docs/setup/advanced/database">データベース設定ガイド</DynamicLink> - PostgreSQL の詳細設定

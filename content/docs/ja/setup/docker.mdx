@@ -1,9 +1,28 @@
 ---
 title: Docker 導入
-description: Docker と Docker Compose を使って Cherry Studio Enterprise を導入
+description: "Docker と Docker Compose で Cherry Studio Enterprise を導入。デュアルサービス統合、データ永続化、ヘルスチェックに対応します。"
 ---
 
-このドキュメントでは、Docker と Docker Compose を使って Cherry Studio Enterprise API を導入する方法を説明します。
+import { DynamicLink } from 'fumadocs-core/dynamic-link'
+import { Callout } from 'fumadocs-ui/components/callout'
+
+## イメージレジストリ
+
+**中国国内ミラー**（中国大陸のユーザー向け）：
+
+```bash
+docker-registry.cherry-ai.com/public/cherry-studio-enterprise-api:v0.4.10
+```
+
+**Docker Hub**（海外ユーザー）：
+
+```bash
+cherrystudio/cherry-studio-enterprise-api:v0.4.10
+```
+
+<Callout type="info">
+中国大陸のユーザーは、より高速で安定したイメージ取得のため、中国国内ミラーの使用を推奨します。
+</Callout>
 
 ## 特長
 
@@ -46,7 +65,7 @@ services:
     restart: unless-stopped
 ```
 
-#### 本番環境の完全構成（DB 付き）
+### 本番環境の完全構成（DB 付き）
 
 ```yaml
 services:
@@ -141,7 +160,7 @@ docker-compose down -v
 
 ### 環境変数
 
-#### コア設定
+**コア設定**
 
 | 変数 | 説明 | デフォルト | 必須 |
 | -------------------- | ----------------- | --------------- | ---- |
@@ -153,7 +172,7 @@ docker-compose down -v
 | `ADMIN_APP_LOGO_URL` | 管理コンソールのロゴ URL | - | いいえ |
 | `ADMIN_BASE_PATH` | 管理コンソールのベースパス | `/` | いいえ |
 
-#### データベース設定
+**データベース設定**
 
 | 変数 | 説明 | デフォルト | 備考 |
 | ------------- | ------------ | ---------- | ------------------- |
@@ -165,7 +184,7 @@ docker-compose down -v
 | `DB_NAME` | データベース名 | - | PostgreSQL 必須 |
 | `DB_SSL` | SSL 有効化 | `false` | PostgreSQL SSL 接続 |
 
-> Casdoor SSO の設定は [SSO 設定](../advanced/sso) を参照してください。
+> Casdoor SSO の設定は <DynamicLink href="/[lang]/docs/setup/advanced/sso">SSO 設定</DynamicLink> を参照してください。
 
 ### データ永続化
 
@@ -185,7 +204,7 @@ volumes:
 
 ## 導入のベストプラクティス
 
-### 1. セキュリティ設定
+### セキュリティ設定
 
 **JWT 秘密鍵の管理**：
 
@@ -194,7 +213,7 @@ volumes:
 openssl rand -base64 32
 ```
 
-### 2. ネットワーク設定
+### ネットワーク設定
 
 **カスタムネットワークを使用**：
 
@@ -237,7 +256,7 @@ server {
 }
 ```
 
-### 3. パフォーマンス最適化
+### パフォーマンス最適化
 
 **リソース制限**：
 
@@ -265,7 +284,7 @@ healthcheck:
   start_period: 40s
 ```
 
-### 4. ログ管理
+### ログ管理
 
 **ログドライバ設定**：
 
@@ -322,7 +341,7 @@ docker-compose up -d
 
 ### よくある問題
 
-#### 1. コンテナが起動しない
+**1. コンテナが起動しない**
 
 ```bash
 # コンテナログを確認
@@ -335,14 +354,14 @@ netstat -tulpn | grep -E '3670|3680'
 systemctl status docker
 ```
 
-#### 2. データベース接続に失敗
+**2. データベース接続に失敗**
 
 - データベースサービスが起動しているか確認
 - ネットワーク接続とファイアウォールを確認
 - データベース認証情報を確認
 - データベースが作成済みで権限が正しいか確認
 
-#### 3. 権限の問題
+**3. 権限の問題**
 
 ```bash
 # データディレクトリ権限を修正
@@ -353,7 +372,7 @@ docker exec cherry-studio-enterprise \
   chown -R node:node /app/data
 ```
 
-#### 4. メモリ不足
+**4. メモリ不足**
 
 ```bash
 # Docker のメモリ上限を増加
@@ -392,6 +411,6 @@ deploy:
 
 ## 関連ドキュメント
 
-- [Helm 導入ガイド](./helm) - Kubernetes 環境の導入
-- [データベース設定ガイド](../advanced/database) - PostgreSQL の詳細設定
-- [SSO 設定](../advanced/sso) - SSO 導入
+- <DynamicLink href="/[lang]/docs/setup/helm">Helm 導入ガイド</DynamicLink> - Kubernetes 環境の導入
+- <DynamicLink href="/[lang]/docs/setup/advanced/database">データベース設定ガイド</DynamicLink> - PostgreSQL の詳細設定
+- <DynamicLink href="/[lang]/docs/setup/advanced/sso">SSO 設定</DynamicLink> - SSO 導入
