@@ -4,20 +4,21 @@ description: "在外部应用、IDE 插件或自建服务中，通过 API 调用
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
+import { DynamicLink } from 'fumadocs-core/dynamic-link'
 
 ## 适用前提
 
 开始前，请先确认以下条件已经满足：
 
 1. 管理员已经为当前用户创建并启用了 **API Key**。
-2. 管理员已经在 **Express 闭源模型** 或 **Express 开源模型** 中启用了目标模型。
+2. 管理员已经在 **Express 模型** 中启用了目标模型。
 3. 当前用户所属分组已经被授权可访问该模型。
 4. 您已经拿到企业版 API 地址，例如 `https://api.enterprise.cherry-ai.com`。
 
 相关文档：
 
-- [API 密钥管理](/zh/docs/admin/user-management/api-key-management)
-- [服务商管理（Express 版/托管）](/zh/docs/admin/service-provider/provider-management-express-hosted)
+- <DynamicLink href="/[lang]/docs/admin/user-management/api-key-management">API 密钥管理</DynamicLink>
+- <DynamicLink href="/[lang]/docs/admin/service-provider/provider-management-express-hosted">服务商管理（Express 版/托管）</DynamicLink>
 
 ## 配置项对应关系
 
@@ -40,41 +41,20 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 Express 模型在外部应用中调用时，`model` 字段必须写成 `模型 ID@provider_id`。
 
-### 闭源模型
-
 格式：
 
 ```text
-模型名字@x-express-internal
+模型名字@x-express
 ```
 
 示例：
 
 ```text
-anthropic/claude-sonnet-4.5@x-express-internal
+anthropic/claude-sonnet-4.5@x-express
 ```
-
-### 开源模型
-
-格式：
-
-```text
-模型名字@x-express-opensource
-```
-
-示例：
-
-```text
-your-model@x-express-opensource
-```
-
-### 如何判断该用哪个后缀？
-
-- 如果模型来自后台的 **Express 闭源模型** 标签页，使用 `@x-express-internal`
-- 如果模型来自后台的 **Express 开源模型** 标签页，使用 `@x-express-opensource`
 
 <Callout type="warn">
-**注意：** 这里要填写的是 **模型 ID**，不是页面上的展示名称。并且必须带上 `@x-express-internal` 或 `@x-express-opensource` 后缀，否则接口会返回 `Provider is required`。
+**注意：** 这里要填写的是 **模型 ID**，不是页面上的展示名称。并且必须带上 `@x-express` 后缀，否则接口会返回 `Provider is required`。
 </Callout>
 
 ## 通用请求示例
@@ -86,7 +66,7 @@ curl https://api.enterprise.cherry-ai.com/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer sk-your-api-key" \
   -d '{
-    "model": "anthropic/claude-sonnet-4.5@x-express-internal",
+    "model": "anthropic/claude-sonnet-4.5@x-express",
     "messages": [
       {
         "role": "user",
@@ -108,7 +88,7 @@ const client = new OpenAI({
 })
 
 const completion = await client.chat.completions.create({
-  model: 'anthropic/claude-sonnet-4.5@x-express-internal',
+  model: 'anthropic/claude-sonnet-4.5@x-express',
   messages: [{ role: 'user', content: '你好，请介绍一下自己' }]
 })
 
@@ -126,7 +106,7 @@ client = OpenAI(
 )
 
 resp = client.chat.completions.create(
-    model="anthropic/claude-sonnet-4.5@x-express-internal",
+    model="anthropic/claude-sonnet-4.5@x-express",
     messages=[{"role": "user", "content": "你好，请介绍一下自己"}],
 )
 
@@ -142,7 +122,7 @@ print(resp.choices[0].message.content)
 | Provider Type | `OpenAI Compatible` / `OpenAI` |
 | Base URL | `https://api.enterprise.cherry-ai.com` |
 | API Key | 用户自己的 `sk-...` |
-| Model | `anthropic/claude-sonnet-4.5@x-express-internal` |
+| Model | `anthropic/claude-sonnet-4.5@x-express` |
 
 <Callout type="info">
 **兼容性说明：** 当前更推荐用于支持"手动填写自定义模型名"的外部应用。若某个应用强依赖标准的自动拉取模型列表能力，可能还需要您手动补充模型名。
@@ -155,7 +135,7 @@ print(resp.choices[0].message.content)
 通常是因为 `model` 没有带服务商后缀。请检查是否写成了下面这种完整格式：
 
 ```text
-anthropic/claude-sonnet-4.5@x-express-internal
+anthropic/claude-sonnet-4.5@x-express
 ```
 
 **2. 为什么提示 `401 Unauthorized` 或 `Key Expired`？**

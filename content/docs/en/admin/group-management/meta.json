@@ -2,6 +2,8 @@
   "title": "Group Management",
   "pages": [
     "create-and-edit-groups",
+    "batch-import",
+    "invite-links",
     "resource-permissions-configuration",
     "faq"
   ]

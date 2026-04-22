@@ -3,6 +3,7 @@ title: "Quota Management"
 description: "Set daily, weekly, monthly, and total API usage limits for users and groups to control AI service costs and prevent resource overuse."
 ---
 
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 import { Callout } from 'fumadocs-ui/components/callout'
 
 ## Quota Hierarchy
@@ -17,7 +18,20 @@ Cherry Studio uses a two-level quota system:
 1. Go to the **User Management** page.
 2. Click the **Quota** button in the target user's action column.
 
-<img src="/assets/images/en/admin/user-management-quota-dialog_en.webp" alt="User Quota Settings" />
+<Tabs items={['Express', 'Premium']}>
+<Tab value="Express">
+
+<img src="/assets/images/en/admin/user-management-quota-dialog-express_en.webp" alt="Express User Quota Settings" />
+
+Express supports switching between **Cost Quota** and **Token Quota** via the tabs at the top of the dialog to set limits by cost or token consumption.
+
+</Tab>
+<Tab value="Premium">
+
+<img src="/assets/images/en/admin/user-management-quota-dialog_en.webp" alt="Premium User Quota Settings" />
+
+</Tab>
+</Tabs>
 
 3. Set limit values for each dimension:
 
@@ -31,12 +45,28 @@ Cherry Studio uses a two-level quota system:
 
 Click the expand button next to each quota dimension to view usage details:
 
-<img src="/assets/images/en/admin/user-management-quota-detail_en.webp" alt="Quota Usage Details" />
+<Tabs items={['Express', 'Premium']}>
+<Tab value="Express">
+
+<img src="/assets/images/en/admin/user-management-quota-detail-express_en.webp" alt="Express Quota Usage Details" />
+
+* **Current Usage**: Displayed as `used / limit` showing the current period's consumption against the cap.
+* **Last 24 Hours**: Amount consumed in the last 24 hours.
+* **Next Reset**: When the quota will auto-reset.
+* **Reset Usage** button: Manually reset the current period's usage to zero.
+
+</Tab>
+<Tab value="Premium">
+
+<img src="/assets/images/en/admin/user-management-quota-detail_en.webp" alt="Premium Quota Usage Details" />
 
 * **Current usage**: Amount consumed in the current period.
 * **Limit**: The configured cap ("Unlimited" if not set).
 * **Next reset**: When the quota will auto-reset.
 * **Reset usage** button: Manually reset the current period's usage to zero.
+
+</Tab>
+</Tabs>
 
 4. Click **Save** when done.
 

@@ -3,6 +3,7 @@ title: "配额管理"
 description: "为用户和分组设置日/周/月/总量四个维度的 API 使用限额，实现企业级成本控制，避免单个用户过度消耗资源。"
 ---
 
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 import { Callout } from 'fumadocs-ui/components/callout'
 
 ## 配额层级
@@ -17,7 +18,20 @@ Cherry Studio 采用两级配额体系：
 1. 前往 **用户管理** 页面。
 2. 在目标用户的操作列中，点击 **限额** 按钮。
 
-<img src="/assets/images/zh/admin/user-management-quota-dialog_zh.webp" alt="用户配额设置" />
+<Tabs items={['Express 版', 'Premium 版']}>
+<Tab value="Express 版">
+
+<img src="/assets/images/zh/admin/user-management-quota-dialog-express_zh.webp" alt="Express 版用户配额设置" />
+
+Express 版支持通过顶部的 **金额限额** / **Token 限额** 标签页切换，分别设置金额维度和 Token 维度的配额。
+
+</Tab>
+<Tab value="Premium 版">
+
+<img src="/assets/images/zh/admin/user-management-quota-dialog_zh.webp" alt="Premium 版用户配额设置" />
+
+</Tab>
+</Tabs>
 
 3. 在弹窗中设置各维度的限额值：
 
@@ -31,12 +45,28 @@ Cherry Studio 采用两级配额体系：
 
 点击每个限额维度旁的展开按钮，可以查看当期用量详情：
 
-<img src="/assets/images/zh/admin/user-management-quota-detail_zh.webp" alt="配额用量详情" />
+<Tabs items={['Express 版', 'Premium 版']}>
+<Tab value="Express 版">
+
+<img src="/assets/images/zh/admin/user-management-quota-detail-express_zh.webp" alt="Express 版配额用量详情" />
+
+* **当期用量**：以 `已用量 / 限额` 格式显示当前周期的使用情况。
+* **过去 24 小时**：最近 24 小时内的消耗金额。
+* **下次重置**：该维度配额自动重置的时间。
+* **重置用量**按钮：手动将当期用量清零。
+
+</Tab>
+<Tab value="Premium 版">
+
+<img src="/assets/images/zh/admin/user-management-quota-detail_zh.webp" alt="Premium 版配额用量详情" />
 
 * **当期用量**：当前周期内已使用的量。
 * **限制值**：当前设置的上限（"无限制"表示未设置）。
 * **下次重置时间**：该维度配额自动重置的时间。
 * **重置用量**按钮：手动将当期用量清零。
+
+</Tab>
+</Tabs>
 
 4. 配置完成后点击 **保存**。
 

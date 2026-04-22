@@ -1,11 +1,111 @@
 ---
 title: Quickstart
-description: Get started with Cherry Studio Enterprise in 20 minutes, from deployment to your first message
+description: Get started with Cherry Studio Enterprise — choose Express (sign up and go) or Premium (self-hosted)
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 
-## Step 1: Deploy
+Choose your edition and follow the steps to get started with Cherry Studio Enterprise.
+
+<Tabs items={['Express (Sign Up & Go)', 'Premium (Self-Hosted)']}>
+<Tab value="Express (Sign Up & Go)">
+
+**Estimated time: 5 minutes** — no deployment, sign up and go
+
+<h3>Step 1: Register</h3>
+
+Visit the Cherry Studio Enterprise website and register your admin account using your phone number or email. Enter the verification code and set your password, then click "Sign up".
+
+<img src="/assets/images/en/express/register.webp" alt="Register" />
+
+<h3>Step 2: Create an Organization</h3>
+
+After registration, the system will guide you to create your organization. Fill in your **organization name**, select your **industry** and **company size**, then click "Create Organization".
+
+<img src="/assets/images/en/express/create-org.webp" alt="Create organization" />
+
+<h3>Step 3: Select a Plan</h3>
+
+Choose a subscription plan that fits your needs. Click "Activate Now" to proceed.
+
+<img src="/assets/images/en/express/select-plan.webp" alt="Select a plan" />
+
+<Callout type="info">
+  [View full pricing →](/docs/pricing)
+</Callout>
+
+<h3>Step 4: Enterprise Verification</h3>
+
+Before activation, you need to complete enterprise verification. Follow the on-screen steps:
+
+1. **Upload business license** — JPG or PNG format, the system will auto-recognize via OCR
+2. **Upload legal representative ID**
+3. **Submit for review** — service will be activated once approved
+
+<img src="/assets/images/en/express/enterprise-verify.webp" alt="Enterprise verification" />
+
+<h3>Step 5: Payment & Activation</h3>
+
+Once enterprise verification is approved, complete the payment to activate your service.
+
+Supported payment methods:
+- **Alipay** — instant scan-to-pay
+- **Bank transfer** — for organizations requiring invoices
+
+<Callout type="warn">Screenshot needed: payment page</Callout>
+
+After payment, the system will automatically deploy and activate the service for your organization. This usually completes within a few minutes.
+
+<Callout type="warn">Screenshot needed: provisioning success / console home</Callout>
+
+<h3>Step 6: Invite Members</h3>
+
+Go to "User Management" in the admin console and click "Invite Members" to generate an invite link. You can:
+
+- Assign members to a specific **group** (e.g., Operations, Engineering)
+- Set the invite link's **expiration time** and **max usage count**
+- Share the link with your team — they click it to register and automatically join the assigned group
+
+<Callout type="info">
+If you haven't created any groups yet, go to [Create & Edit Groups](/docs/admin/group-management/create-and-edit-groups) to set them up first.
+</Callout>
+
+<img src="/assets/images/en/express/invite-members.webp" alt="Invite members" />
+
+<Callout type="info">
+  [View full member invitation docs →](/docs/admin/user-management/invite-members)
+</Callout>
+
+<h3>Step 7: Download the Client</h3>
+
+Download and install the Cherry Studio Enterprise client.
+
+<div style={{margin:'12px 0'}}>
+  <a href="https://enterprise.cherry-ai.com/" target="_blank" style={{display:'inline-flex',alignItems:'center',gap:'6px',height:'36px',padding:'0 14px',backgroundColor:'#1a6eff',color:'white',borderRadius:'6px',fontSize:'14px',fontWeight:500,textDecoration:'none'}}>
+    <svg style={{flexShrink:0}} xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+    <span style={{lineHeight:1}}>Download Client</span>
+  </a>
+</div>
+
+<h3>Step 8: Sign In and Start Using</h3>
+
+Sign in to the client with your registered account or the account created via an invite link.
+
+Express comes with AI model services pre-configured (OpenAI, Claude, Gemini, etc.) — **no need to manually add providers or API keys**. Start chatting right after signing in.
+
+<img src="/assets/images/en/express/client-chat.webp" alt="Client chat interface" />
+
+<Callout type="info">
+  [View the full client guide →](/docs/client)
+</Callout>
+
+</Tab>
+<Tab value="Premium (Self-Hosted)">
+
+**Estimated time: 20 minutes** — from deployment to your first message
+
+<h3>Step 1: Deploy</h3>
 
 Choose a deployment method that suits you:
 
@@ -15,7 +115,7 @@ Choose a deployment method that suits you:
   <Card title="K8s Deployment" href="/docs/setup/helm" description="Deploy on Kubernetes with Helm" />
 </Cards>
 
-## Step 2: Obtain a License
+<h3>Step 2: Obtain a License</h3>
 
 We provide a **14-day free trial**. After deployment, you can experience all features. You can also purchase a full license directly.
 
@@ -34,11 +134,7 @@ We provide a **14-day free trial**. After deployment, you can experience all fea
   [Learn how to activate your license →](/docs/admin/authorization/activate-license)
 </Callout>
 
-## Step 3: Add a Provider (Premium Only)
-
-<Callout type="warn">
-This step applies to **Premium** only. Express comes with built-in providers and requires no manual setup.
-</Callout>
+<h3>Step 3: Add a Provider</h3>
 
 Log in to the admin console and go to "Provider Management" to add AI providers (such as OpenAI or Anthropic) and configure API keys.
 
@@ -52,7 +148,7 @@ Log in to the admin console and go to "Provider Management" to add AI providers 
   [View the full provider configuration guide →](/docs/admin/service-provider)
 </Callout>
 
-## Step 4: Set the Default Model
+<h3>Step 4: Set the Default Model</h3>
 
 Go to "Default Models" to assign the default assistant model, topic naming model, and translation model for the system.
 
@@ -62,7 +158,7 @@ Go to "Default Models" to assign the default assistant model, topic naming model
   [View the full model configuration guide →](/docs/admin/model-settings)
 </Callout>
 
-## Step 5: Add Users
+<h3>Step 5: Add Users</h3>
 
 Go to "User Management" and create accounts for team members.
 
@@ -72,7 +168,7 @@ Go to "User Management" and create accounts for team members.
   [View the full user management guide →](/docs/admin/user-management)
 </Callout>
 
-## Step 6: Download the Client
+<h3>Step 6: Download the Client</h3>
 
 Download and install the Cherry Studio Enterprise client.
 
@@ -83,7 +179,7 @@ Download and install the Cherry Studio Enterprise client.
   </a>
 </div>
 
-## Step 7: Sign In and Start Using
+<h3>Step 7: Sign In and Start Using</h3>
 
 Sign in to the client with the account created by the admin to start using all features.
 
@@ -92,3 +188,15 @@ Sign in to the client with the account created by the admin to start using all f
 <Callout type="info">
   [View the full client guide →](/docs/client)
 </Callout>
+
+</Tab>
+</Tabs>
+
+## Edition Comparison
+
+| | Express | Premium |
+| --- | --- | --- |
+| Deployment | No deployment needed | Self-hosted deployment required |
+| Provider setup | Built-in, no configuration needed | Manually add providers and API Keys |
+| User management | Invite link registration | Admin manually creates accounts |
+| Billing | Subscription-based | License-based |

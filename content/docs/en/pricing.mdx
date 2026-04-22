@@ -1,42 +1,91 @@
 ---
 title: Pricing
-description: "Flexible pricing from individual developers to large enterprises, covering Community, Express, and Premium editions."
+description: "Cherry Studio Enterprise offers Express (cloud subscription) and Premium (self-hosted) plans to meet the needs of organizations of any size."
 ---
 
-## Version Selection Guide
+import { Callout } from 'fumadocs-ui/components/callout'
+
+## Edition Selection Guide
 
 ### Express vs Premium
 
-**Same functionality**: Express and Premium are identical in features and both include the full enterprise capability set.
+Both editions share the **same core enterprise features**. The key differences are in deployment and billing:
 
-**Only two core differences**:
+| | **Express** (Cloud-Hosted) | **Premium** (Self-Hosted) |
+| --- | --- | --- |
+| **Deployment** | No deployment needed — sign up and start | Deploy yourself with Docker / Helm |
+| **Data Storage** | Hosted on Cherry Studio cloud | Entirely on your own servers |
+| **Provider Configuration** | Built-in major LLMs, out of the box | Fully configurable with custom providers and private models |
+| **Billing** | Subscription + Token-based consumption | License (perpetual) |
+| **Users** | Tiered by subscription plan | Tiered by license |
+| **Support** | Online support | Dedicated technical support (annual service fee) |
 
-1. **Provider configuration**
+### How to Choose?
 
-   - Express: built-in providers only, out of the box, no configuration required
-   - Premium: fully configurable, add custom providers and private models
+- **Choose Express**: Zero deployment, instant access, mainstream LLMs, pay-as-you-go
+- **Choose Premium**: Full data privacy, private model integration, or compliance requirements
 
-2. **Pricing model**
-   - Express: ¥9,999, no user limit
-   - Premium: [Contact us for pricing](/docs/contact)
+## Express Pricing
 
-### How to choose?
+### Subscription Plans
 
-- **Choose Express**: want fast deployment, use mainstream LLM services, no need for custom providers
-- **Choose Premium**: need private models, self-hosted services, or special provider requirements
+Express uses a **subscription model** — choose a plan based on your team size:
 
-## Core Differences at a Glance
+<img src="/assets/images/en/express/select-plan.webp" alt="Express plan selection page" />
 
-| Feature Dimension | Community | Express | Premium |
-| -------------- | ------------------------------------------- | ------------------------------------------------------------------ | ---------------------------------------------------- |
-| **Pricing** | Free | ¥9,999 | [Contact us](/docs/contact) |
-| **License** | AGPL 3.0 open-source license | Commercial license | Commercial license |
-| **Users** | Single-machine use | Unlimited | From 1-50 users<br />Tiered pricing |
-| **Deployment** | Standalone deployment | Private deployment | Private deployment |
-| **Technical Support** | Community support | Dedicated technical support (annual service fee required) | Dedicated technical support (annual service fee required) |
-| **System Support** | Windows 10+, macOS, Linux | Windows 7+, macOS, Linux | Windows 7+, macOS, Linux |
-| **Provider Management** | Built-in 30+ providers<br />Manual API Key setup required | Built-in major domestic and global LLMs<br />Use built-in providers<br />**No custom providers** | Fully configurable<br />Custom providers supported<br />Private models supported |
-| **Enterprise Features** | ❌ Not supported | ✅ Full enterprise features | ✅ Full enterprise features |
+Supported payment methods:
+- **Alipay** — instant scan-to-pay
+- **Bank transfer** — for organizations requiring invoices
+
+### Token Consumption
+
+AI conversations in Express are billed per Token consumed. Different models have different Token unit prices:
+
+<img src="/assets/images/en/admin/provider-management-express-1_en.webp" alt="Token pricing" />
+
+- Top up Token balance at any time
+- View org-level and per-member usage in the admin console
+
+<Callout type="info">
+  [View Orders & Payments details →](/docs/admin/order-management)
+</Callout>
+
+## Premium Pricing
+
+Premium uses a **perpetual license** with tiered pricing by headcount:
+
+| Team Size | Description |
+| --- | --- |
+| 1–50 users | Starter plan |
+| 51–200 users | Mid-sized team |
+| 200+ users | Large organization, custom quote |
+
+<Callout type="info">
+Premium pricing is customized. [Contact us](/docs/contact) for a detailed proposal.
+</Callout>
+
+### Annual Support Fee (Optional)
+
+After purchasing a Premium license, you can optionally add an annual support fee, which includes:
+
+- Version upgrades and new features
+- 7x24 technical support
+- Remote deployment assistance
+- Custom requirement consultation
+- Training and usage guidance
+
+## Core Edition Comparison
+
+| Feature | Community | Express | Premium |
+| --- | --- | --- | --- |
+| **Pricing** | Free | Subscription-based | [Contact us](/docs/contact) |
+| **License** | AGPL 3.0 | Subscription agreement | Commercial license (perpetual) |
+| **Users** | Single-machine | Tiered by plan | Tiered by license |
+| **Deployment** | Standalone | Cloud-hosted, no deployment | Self-hosted (Docker / K8s) |
+| **Support** | Community | Online support | Dedicated support |
+| **System** | Windows 10+, macOS, Linux | Windows 7+, macOS, Linux | Windows 7+, macOS, Linux |
+| **Provider Management** | 30+ built-in, manual API Key setup | Built-in major LLMs, out of the box, **no customization** | Fully configurable, private models supported |
+| **Enterprise Features** | ❌ Not supported | ✅ Full features | ✅ Full features |
 
 For product pricing details, see the official comparison: https://enterprise.cherry-ai.com/
 
@@ -50,7 +99,7 @@ For product pricing details, see the official comparison: https://enterprise.che
 <tr><td><strong>Pricing</strong></td><td>Free</td></tr>
 <tr><td><strong>License</strong></td><td>AGPL 3.0 open-source license</td></tr>
 <tr><td><strong>Deployment</strong></td><td>Single-machine use</td></tr>
-<tr><td><strong>Technical support</strong></td><td>Community support</td></tr>
+<tr><td><strong>Support</strong></td><td>Community support</td></tr>
 </tbody>
 </table>
 
@@ -70,10 +119,9 @@ For product pricing details, see the official comparison: https://enterprise.che
 <table>
 <tbody>
 <tr><td><strong>Target users</strong></td><td>Startups, small and mid-sized teams</td></tr>
-<tr><td><strong>Pricing</strong></td><td>¥9,999, no user limit</td></tr>
-<tr><td><strong>License</strong></td><td>Commercial license (perpetual)</td></tr>
-<tr><td><strong>Deployment</strong></td><td>Private deployment</td></tr>
-<tr><td><strong>Technical support</strong></td><td>Dedicated technical support (annual service fee required)</td></tr>
+<tr><td><strong>Pricing</strong></td><td>Subscription + Token-based consumption</td></tr>
+<tr><td><strong>Deployment</strong></td><td>Cloud-hosted, no deployment, sign up and start</td></tr>
+<tr><td><strong>Support</strong></td><td>Online support</td></tr>
 <tr><td><strong>Providers</strong></td><td>Built-in major domestic and global LLMs, out of the box (<strong>no customization</strong>)</td></tr>
 </tbody>
 </table>
@@ -94,12 +142,10 @@ For product pricing details, see the official comparison: https://enterprise.che
 | MCP servers | Connect external tools and data sources via the MCP protocol |
 | Mini programs | Integrate external AI tools and web services into the client sidebar |
 | Usage analytics | Multi-dimensional dashboards for real-time Token consumption and cost monitoring |
-| License management | License activation and status monitoring with Casdoor SSO support |
 | System settings | Network proxy, search engine integration, OCR document preprocessing, and cache management |
 | API gateway | Call enterprise models from external apps and IDE plugins via API Key |
-| Data backup | Full PostgreSQL database and application data backup and restore |
 
-**Use cases**: Small and mid-sized businesses that want fast, out-of-the-box deployment with full features but no custom provider requirements
+**Use cases**: Small and mid-sized businesses that want zero deployment, out-of-the-box access, and flexible pay-as-you-go scaling
 
 ---
 
@@ -110,51 +156,41 @@ For product pricing details, see the official comparison: https://enterprise.che
 <tr><td><strong>Target users</strong></td><td>Medium to large enterprises with high security and management requirements</td></tr>
 <tr><td><strong>Pricing</strong></td><td><a href="/docs/contact">Contact us for pricing</a></td></tr>
 <tr><td><strong>License</strong></td><td>Commercial license (perpetual)</td></tr>
-<tr><td><strong>Deployment</strong></td><td>Private deployment</td></tr>
-<tr><td><strong>Technical support</strong></td><td>Dedicated technical support (annual service fee required)</td></tr>
+<tr><td><strong>Deployment</strong></td><td>Self-hosted (Docker / Helm)</td></tr>
+<tr><td><strong>Support</strong></td><td>Dedicated technical support (annual service fee required)</td></tr>
 <tr><td><strong>Providers</strong></td><td>Fully configurable, add custom providers and private models</td></tr>
 </tbody>
 </table>
 
-**Core features** (same as Express, except provider management):
+**Core features** (same as Express, plus the following):
 
-Shares all 16 feature modules listed above with Express. The only difference is **provider management**:
+- Fully configurable with any custom provider and private models (Express is limited to built-in providers)
+- Supports connecting to enterprise intranet or self-hosted LLM services
+- Data stored entirely on your own servers, meeting compliance requirements
 
-- Fully configurable with any custom provider and private models
-- Supports model services in enterprise intranets
-- Flexible provider permissions and group-based management
+**Use cases**: Enterprises that need full data privacy, private model integration, or self-hosted LLM services
 
-**Use cases**: Enterprises that need private models or self-hosted LLM services, organizations that need custom provider configuration or intranet model services
+## How to Purchase
 
-## Purchase and Services
+### Express
 
-### 💰 Pricing Notes
+Sign up online to get started. Alipay and bank transfer supported.
 
-- **Perpetual license**: one-time purchase, perpetual use of the current version
-- **Annual support fee**: optional, includes upgrades, technical support, priority service, etc.
-- **Tiered pricing by headcount**: choose a plan based on organization size
+<Callout type="info">
+  [Express Quickstart →](/docs/quickstart)
+</Callout>
 
-### 🛠️ Technical Support
+### Premium
 
-**Annual support fee includes**:
-
-- Version upgrades and new feature updates
-- 7x24 technical support
-- Remote deployment assistance
-- Custom requirement consultation
-- Training and usage guidance
-
-**Support email**: support@cherry-ai.com
-
-### 📞 Contact for Purchase
-
-If you would like to purchase or learn more, please contact us:
+Contact us for a custom quote:
 
 - **Business email**: bd@cherry-ai.com
 - **Phone**: +86 13681876646
 - **WeChat for Business**:
 
-<img src="/assets/images/wechat-enterprise-qr.jpg" alt="WeChat for Business QR Code" style={{maxWidth: '200px'}} />
+<img src="/assets/images/wechat-enterprise-qr.webp" alt="WeChat for Business QR Code" style={{maxWidth: '200px'}} />
+
+**Support email**: support@cherry-ai.com
 
 ### 🎯 Free Trial
 

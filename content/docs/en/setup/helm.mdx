@@ -1,133 +1,116 @@
 ---
 title: Helm Deployment
-description: "Deploy the full Cherry Studio Enterprise solution to Kubernetes with Helm, including the API service and admin console."
+description: "Deploy Cherry Studio Enterprise to Kubernetes with Helm, including the API service and admin console."
 ---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+<Callout type="info">
+**Recommended**: Use the Cherry Studio Agent deployment skill to automate all the steps below. See [Installation and Deployment → Agent One-Click Deploy](/docs/setup).
+</Callout>
 
 ## Features
 
 - **Dual service deployment**: Deploy API and Admin simultaneously
-- **API service**: Backend API based on PostgreSQL for enterprise data storage
-- **Admin console**: Web-based management UI
-- **Database support**: PostgreSQL with high availability and scalability
 - **Independent configuration**: Each service can be enabled/disabled and configured independently
 - **Auto scaling**: Supports HPA (Horizontal Pod Autoscaler)
 - **Health checks**: Includes liveness and readiness probes
 - **Ingress support**: Independent Ingress rules for each service
 
-## Get the Helm Chart
-
-### Option 1: Download the Release (Recommended)
-
-Download the latest Helm chart from GitHub Releases:
-
-```bash
-# Download latest release
-wget https://github.com/CherryInternal/cherry-studio-enterprise-helm/archive/refs/heads/main.zip
-unzip main.zip
-cd cherry-studio-enterprise-helm-main
-
-# Install
-helm install cherry-studio-enterprise ./helm
-```
-
-### Option 2: Use Git Clone
-
-```bash
-# Clone latest version
-git clone https://github.com/CherryInternal/cherry-studio-enterprise-helm.git
-cd cherry-studio-enterprise-helm
-
-# Install
-helm install cherry-studio-enterprise ./helm
-```
-
-📦 **Helm chart releases**: [cherry-studio-enterprise-helm/releases](https://github.com/CherryInternal/cherry-studio-enterprise-helm/releases)
-
-🐳 **Docker image**:
-- **Docker Hub**: [cherrystudio/cherry-studio-enterprise-api](https://hub.docker.com/repository/docker/cherrystudio/cherry-studio-enterprise-api)
-- **China mirror**: `docker-registry.cherry-ai.com/public/cherry-studio-enterprise-api:v0.4.10` (recommended for mainland China users)
-
-## Installation
-
-### Prerequisites
+## Prerequisites
 
 - Kubernetes 1.16+
 - Helm 3.0+
 - PVC support in the cluster
+- A PostgreSQL database ready (see [Database Configuration](/docs/setup/advanced/database))
 
-### Basic Install
+## Docker Image
 
-Choose the correct install command based on how you obtained the chart:
+- **Docker Hub**: `cherrystudio/cherry-studio-enterprise-api`
+- **China mirror** (recommended for mainland China users): `docker-registry.cherry-ai.com/public/cherry-studio-enterprise-api`
 
-**If you downloaded the release:**
+## Deployment Steps
+
+### Step 1: Get the Helm Chart
+
+Choose either method:
+
+**Option A: Download ZIP**
 
 ```bash
-# Enter the extracted directory
+wget https://github.com/CherryInternal/cherry-studio-enterprise-helm/archive/refs/heads/main.zip
+unzip main.zip
 cd cherry-studio-enterprise-helm-main
-
-# Install chart (note the ./helm directory)
-helm install cherry-studio-enterprise ./helm
-
-# Or specify a namespace
-helm install cherry-studio-enterprise ./helm --namespace cherry-studio --create-namespace
 ```
 
-**If you used git clone:**
+**Option B: Git Clone**
 
 ```bash
-# Enter the cloned directory
+git clone https://github.com/CherryInternal/cherry-studio-enterprise-helm.git
 cd cherry-studio-enterprise-helm
-
-# Install chart
-helm install cherry-studio-enterprise ./helm
-
-# Or specify a namespace
-helm install cherry-studio-enterprise ./helm --namespace cherry-studio --create-namespace
 ```
 
-### Custom Install
+### Step 2: Create Configuration File
 
-Create a `values-custom.yaml` file to override defaults:
+<Callout type="warn">
+The chart's default image version, database connection, and JWT secret are test values and **must not be used for deployment**. You must create a `values-custom.yaml` to override these settings.
+</Callout>
+
+Create a `values-custom.yaml` and modify the following according to your environment:
 
 ```yaml
 app:
-  # API service configuration
+  # Image version (must be set explicitly, otherwise defaults to outdated v0.1.3)
+  image:
+    tag: v0.4.10
+    # China users can switch to the China mirror:
+    # repository: docker-registry.cherry-ai.com/public/cherry-studio-enterprise-api
+
+  # Replicas and autoscaling
+  replicaCount: 1  # Recommend 1 for data consistency
+  autoscaling:
+    enabled: false  # Set to true if autoscaling is needed
+
+  # API service Ingress
   api:
     ingress:
       enabled: true
       annotations:
         nginx.ingress.kubernetes.io/proxy-body-size: '20m'
       hosts:
-        - host: api.your-domain.com
+        - host: api.your-domain.com          # ← Replace with your API domain
           paths:
             - path: /
               pathType: ImplementationSpecific
 
-  # Admin console configuration
+  # Admin console Ingress
   admin:
     ingress:
       enabled: true
       annotations:
         nginx.ingress.kubernetes.io/proxy-body-size: '20m'
       hosts:
-        - host: admin.your-domain.com
+        - host: admin.your-domain.com        # ← Replace with your Admin domain
           paths:
             - path: /
               pathType: ImplementationSpecific
 
-  # Storage configuration (optional)
+  # Storage configuration
   persistence:
     size: 20Gi
 
-  # Environment configuration (required for production)
+  # Environment variables
   env:
-    API_URL: http://cherry-studio-enterprise-api.test # Change to your backend API address
-    JWT_SECRET: 'your-secure-jwt-secret-at-least-32-characters-long'
-    DB_HOST: database.host
-    DB_PORT: 5432
-    DB_USERNAME: username
-    DB_PASSWORD: password
-    DB_NAME: database
+    # Address for the admin console to reach the API:
+    #   - With Ingress: use the API's external domain (e.g. https://api.your-domain.com)
+    #   - Cluster-internal only: use K8s Service address (e.g. http://cherry-studio-enterprise-api:3670)
+    API_URL: https://api.your-domain.com     # ← Replace with your API address
+    JWT_SECRET: 'your-secure-jwt-secret'     # ← Replace with a strong random string (at least 32 chars)
+    DB_HOST: your-postgres-host              # ← Replace with your database host
+    DB_PORT: '5432'
+    DB_USERNAME: your-username               # ← Replace with your database username
+    DB_PASSWORD: your-password               # ← Replace with your database password
+    DB_NAME: your-database                   # ← Replace with your database name
     DB_TYPE: postgres
 
   # Resource configuration (optional)
@@ -140,114 +123,21 @@ app:
       memory: 256Mi
 ```
 
-Then install with custom configuration:
+<Callout type="info">
+We recommend using Kubernetes Secrets for JWT keys and database passwords. See [Production Secrets Management](#production-secrets-management) below.
+</Callout>
+
+### Step 3: Install
 
 ```bash
 helm install cherry-studio-enterprise ./helm -f values-custom.yaml
+
+# Or specify a namespace
+helm install cherry-studio-enterprise ./helm -f values-custom.yaml \
+  --namespace cherry-studio --create-namespace
 ```
 
-## Configuration Details
-
-### Common Configuration Scenarios
-
-| Scenario | Key configuration | Example |
-| -------------- | ------------------------------- | ---------------------------------------------- |
-| **Dev/Test** | Use defaults, access via port-forward | `helm install cherry-studio-enterprise ./helm` |
-| **Cloud deployment** | Use LoadBalancer | `service.type: LoadBalancer` |
-| **Local cluster** | Use NodePort | `service.type: NodePort` |
-| **Production** | Ingress + custom JWT secret | See full example above |
-| **Large data** | Increase storage size | `persistence.size: 50Gi` |
-| **High availability** | Configure resources and probes | Defaults provided; adjust as needed |
-
-### Detailed Parameters
-
-**Application Service Configuration**
-
-| Parameter | Description | Default |
-| ------------------------------- | --------------------------------------- | ------------------------------------------- |
-| `app.enabled` | Enable application | `true` |
-| `app.replicaCount` | Replica count (recommend 1 for data consistency) | `1` |
-| `app.image.repository` | Image repository (China users: use `docker-registry.cherry-ai.com/public/cherry-studio-enterprise-api`) | `cherrystudio/cherry-studio-enterprise-api` |
-| `app.image.tag` | Image tag | `latest` |
-| `app.api.service.type` | API Service type | `ClusterIP` |
-| `app.api.service.port` | API service port | `3670` |
-| `app.api.service.targetPort` | API container port | `3670` |
-| `app.admin.service.type` | Admin Service type | `ClusterIP` |
-| `app.admin.service.port` | Admin service port | `3680` |
-| `app.admin.service.targetPort` | Admin container port | `3680` |
-| `app.persistence.enabled` | Enable persistence | `true` |
-| `app.persistence.size` | Storage size | `10Gi` |
-| `app.persistence.accessMode` | Access mode | `ReadWriteOnce` |
-| `app.persistence.mountPath` | Mount path | `/app/data` |
-| `app.api.ingress.enabled` | Enable API Ingress | `true` |
-| `app.admin.ingress.enabled` | Enable Admin Ingress | `true` |
-| `app.resources.limits.cpu` | CPU limit | `500m` |
-| `app.resources.limits.memory` | Memory limit | `512Mi` |
-| `app.resources.requests.cpu` | CPU request | `100m` |
-| `app.resources.requests.memory` | Memory request | `128Mi` |
-| `app.env.*` | Environment variables | See below |
-
-### Port Details
-
-This application runs two services in a single container:
-
-| Port | Service | Description |
-| ---- | ---------- | ------------------------------------ |
-| 3670 | API service | Provides RESTful APIs for data access |
-| 3680 | Admin console | Admin UI for system management and configuration |
-
-### Environment Variables
-
-The chart includes all required environment variables. Key variables include:
-
-**API Service Variables**
-
-| Environment Variable | Description | Default |
-| -------------------- | ------------------ | -------------------------------------------------------- |
-| `API_URL` | Admin console API base URL | `http://cherry-studio-enterprise-api.test` |
-| `API_PORT` | API service port | `3670` |
-| `ADMIN_PORT` | Admin console port | `3680` |
-| `ADMIN_APP_NAME` | Admin console name | `Cherry Studio` |
-| `ADMIN_APP_LOGO_URL` | Admin logo URL | `https://img.picui.cn/free/2025/07/07/686ab9a2b7825.webp` |
-| `ADMIN_BASE_PATH` | Admin base path | `/` |
-| `JWT_SECRET` | JWT secret | `your-secure-jwt-secret-at-least-32-characters` |
-
-**Database Variables**
-
-| Environment Variable | Description | Default |
-| ------------- | -------------- | -------------------------- |
-| `DB_HOST` | Database host | `1panel.cherry-ai.com` |
-| `DB_PORT` | Database port | `5432` |
-| `DB_USERNAME` | Database username | `cherry-studio-enterprise` |
-| `DB_PASSWORD` | Database password | `your-secure-password` |
-| `DB_NAME` | Database name | `cherry-studio-enterprise` |
-| `DB_TYPE` | Database type | `postgres` |
-| `DB_SSL` | Enable SSL | `false` |
-
-**⚠️ Important**:
-
-- You must change the default JWT_SECRET in production
-- You must configure your own PostgreSQL connection in production
-- Manage sensitive data like database passwords with Kubernetes Secrets
-
-You can override these settings via `app.env`, for example:
-
-```yaml
-app:
-  env:
-    JWT_SECRET: 'your-custom-jwt-secret'
-    ADMIN_APP_NAME: 'your app name'
-    DB_HOST: 'your-postgres-host'
-    DB_USERNAME: 'your-username'
-    DB_PASSWORD: 'your-password'
-    DB_NAME: 'your-database'
-```
-
-**Note**: In production, we recommend using Kubernetes Secrets to manage sensitive information.
-
-## Deployment Verification
-
-After installation, verify the deployment with the following commands:
+### Step 4: Verify Deployment
 
 ```bash
 # Check pod status
@@ -263,94 +153,164 @@ kubectl get pvc
 helm test cherry-studio-enterprise
 ```
 
-### Deployment Checklist
+Confirm the following:
 
-- **Pod status**: All pods are Running
-- **Service status**: Services are created with endpoints
-- **PVC status**: PVCs are bound to available PVs
-- **Ingress status**: If enabled, Ingress rules are created
-- **Health checks**: API responds to health checks
-- **Data persistence**: Data persists after pod restarts
-- **JWT configuration**: Default JWT_SECRET replaced in production
+- All pods are in Running state
+- Services are created with endpoints
+- PVCs are bound to available PVs
+- If Ingress is enabled, Ingress rules are created
 
 ## Access the Application
 
-### Use Port-Forward (Recommended for Testing)
-
-**API service:**
+### Using Port-Forward (Testing)
 
 ```bash
+# API service
 kubectl port-forward svc/cherry-studio-enterprise-api 3670:3670
-```
 
-Then visit `http://localhost:3670`
-
-**Admin console:**
-
-```bash
+# Admin console
 kubectl port-forward svc/cherry-studio-enterprise-admin 3680:3680
 ```
 
-Then visit `http://localhost:3680`
+Visit `http://localhost:3670` (API) and `http://localhost:3680` (Admin).
 
-### Use LoadBalancer
+### Using Ingress (Production)
 
-If you configured a LoadBalancer service:
+Access via the domains configured in your `values-custom.yaml`:
 
-**API service:**
-
-```bash
-kubectl get svc cherry-studio-enterprise-api
-```
-
-Access `http://EXTERNAL-IP:3670`
-
-**Admin console:**
-
-```bash
-kubectl get svc cherry-studio-enterprise-admin
-```
-
-Access `http://EXTERNAL-IP:3680`
-
-### Use Ingress
-
-If Ingress is enabled, access via the configured domain names:
-
-- API service: via the domain set in `app.api.ingress.hosts`
-- Admin console: via the domain set in `app.admin.ingress.hosts`
+- API service: domain set in `app.api.ingress.hosts`
+- Admin console: domain set in `app.admin.ingress.hosts`
 
 ## Upgrade
 
-```bash
-# Upgrade to a new version
-helm upgrade cherry-studio-enterprise ./helm
+Update `app.image.tag` in your `values-custom.yaml` to the target version, then run:
 
-# Upgrade with updated values
+```bash
 helm upgrade cherry-studio-enterprise ./helm -f values-custom.yaml
 ```
 
 ## Uninstall
 
 ```bash
-# Uninstall chart
+# Uninstall the chart
 helm uninstall cherry-studio-enterprise
 
 # Delete PVC manually (if needed)
 kubectl delete pvc cherry-studio-enterprise-data
 ```
 
+## Configuration Reference
+
+### Application Parameters
+
+| Parameter                       | Description                    | Default                                     |
+| ------------------------------- | ------------------------------ | ------------------------------------------- |
+| `app.enabled`                   | Enable application             | `true`                                      |
+| `app.replicaCount`              | Replica count                  | `2`                                         |
+| `app.image.repository`          | Image repository               | `cherrystudio/cherry-studio-enterprise-api` |
+| `app.image.tag`                 | Image tag (falls back to Chart appVersion v0.1.3 if not set) | Not set        |
+| `app.autoscaling.enabled`       | Enable HPA autoscaling         | `true`                                      |
+| `app.autoscaling.minReplicas`   | HPA minimum replicas           | `1`                                         |
+| `app.autoscaling.maxReplicas`   | HPA maximum replicas           | `10`                                        |
+| `app.api.service.type`          | API Service type               | `ClusterIP`                                 |
+| `app.api.service.port`          | API service port               | `3670`                                      |
+| `app.admin.service.type`        | Admin Service type             | `ClusterIP`                                 |
+| `app.admin.service.port`        | Admin service port             | `3680`                                      |
+| `app.persistence.enabled`       | Enable persistence             | `true`                                      |
+| `app.persistence.size`          | Storage size                   | `10Gi`                                      |
+| `app.persistence.accessMode`    | Access mode                    | `ReadWriteOnce`                             |
+| `app.persistence.mountPath`     | Mount path                     | `/app/data`                                 |
+| `app.api.ingress.enabled`       | Enable API Ingress             | `true`                                      |
+| `app.admin.ingress.enabled`     | Enable Admin Ingress           | `true`                                      |
+| `app.resources.limits.cpu`      | CPU limit                      | `500m`                                      |
+| `app.resources.limits.memory`   | Memory limit                   | `512Mi`                                     |
+| `app.resources.requests.cpu`    | CPU request                    | `100m`                                      |
+| `app.resources.requests.memory` | Memory request                 | `128Mi`                                     |
+| `app.env.*`                     | Environment variables          | See below                                   |
+
+### Port Details
+
+This application runs two services in a single container:
+
+| Port | Service       | Description          |
+| ---- | ------------- | -------------------- |
+| 3670 | API service   | RESTful API          |
+| 3680 | Admin console | Admin UI             |
+
+### Environment Variables
+
+Configured via `app.env`. Key variables:
+
+**Application Configuration**
+
+| Variable             | Description                        |
+| -------------------- | ---------------------------------- |
+| `API_URL`            | Address for admin to reach the API |
+| `API_PORT`           | API service port (default `3670`)  |
+| `ADMIN_PORT`         | Admin port (default `3680`)        |
+| `ADMIN_APP_NAME`     | Admin console name                 |
+| `ADMIN_APP_LOGO_URL` | Admin logo URL                     |
+| `ADMIN_BASE_PATH`    | Admin base path (default `/`)      |
+| `JWT_SECRET`         | JWT secret (must be replaced)      |
+
+**Database Configuration**
+
+| Variable      | Description                           |
+| ------------- | ------------------------------------- |
+| `DB_HOST`     | Database host (must be replaced)      |
+| `DB_PORT`     | Database port (default `5432`)        |
+| `DB_USERNAME` | Database username (must be replaced)  |
+| `DB_PASSWORD` | Database password (must be replaced)  |
+| `DB_NAME`     | Database name (must be replaced)      |
+| `DB_TYPE`     | Database type (default `postgres`)    |
+| `DB_SSL`      | Enable SSL (default `false`)          |
+
+### Production Secrets Management
+
+Use Kubernetes Secrets for JWT keys and database passwords:
+
+```yaml
+# Create a Secret
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cherry-studio-jwt-secret
+type: Opaque
+data:
+  jwt-secret: <base64-encoded-strong-random-string>
+---
+# Reference in values-custom.yaml
+app:
+  env:
+    JWT_SECRET:
+      valueFrom:
+        secretKeyRef:
+          name: cherry-studio-jwt-secret
+          key: jwt-secret
+```
+
+### Recommended Cluster Specs
+
+| User scale     | Node spec           | Node count | Pod replicas | Storage   |
+| -------------- | ------------------- | ---------- | ------------ | --------- |
+| **0-50**       | 2 vCPU, 4GB RAM     | 1-2        | 1            | 10-20GB   |
+| **50-200**     | 4 vCPU, 8GB RAM     | 2-3        | 1-2          | 20-50GB   |
+| **200-1000**   | 8 vCPU, 16GB RAM    | 3-5        | 2-3          | 50-100GB  |
+| **2000+**      | 16 vCPU, 32GB RAM   | 5+         | 3-5          | 100GB+    |
+
+Cherry Studio Enterprise is lightweight (~100-150MB memory, < 100m CPU after startup). Even small clusters can support many users.
+
+**Database recommendations**:
+- **< 200 users**: single PostgreSQL instance (2 vCPU, 4GB RAM)
+- **> 200 users**: PostgreSQL primary-replica for availability
+
 ## Troubleshooting
 
-### Common Issues
-
 1. **Pods stuck in Pending**
-
    - Check node resources
    - Ensure PVC can be created and bound
 
 2. **Service not accessible**
-
    - Check Service and Endpoints
    - Verify firewall rules
 
@@ -358,7 +318,7 @@ kubectl delete pvc cherry-studio-enterprise-data
    - Ensure PVC is configured correctly
    - Check storage class persistence support
 
-### Logs
+**View logs**:
 
 ```bash
 # View pod logs
@@ -368,70 +328,10 @@ kubectl logs -l app.kubernetes.io/name=cherry-studio-enterprise
 kubectl describe pod -l app.kubernetes.io/name=cherry-studio-enterprise
 ```
 
-## Cluster Configuration Reference
-
-Based on organization size, the following cluster configurations are recommended:
-
-### Recommended Specs
-
-| User scale | Node spec | Node count | Pod replicas | Storage |
-|---------|---------|---------|-----------|----------|
-| **0-50 users** | 2 vCPU, 4GB RAM | 1-2 | 1 | 10-20GB |
-| **50-200 users** | 4 vCPU, 8GB RAM | 2-3 | 1-2 | 20-50GB |
-| **200-1000 users** | 8 vCPU, 16GB RAM | 3-5 | 2-3 | 50-100GB |
-| **2000+ users** | 16 vCPU, 32GB RAM | 5+ | 3-5 | 100GB+ |
-
-### Resource Usage Notes
-
-Cherry Studio Enterprise is lightweight:
-- **Memory**: ~100-150MB after startup
-- **CPU**: < 100m under normal load
-- **Database load**: very low, mostly configuration data
-- **Storage**: mainly logs and temporary files
-
-Even small clusters can support many users. Adjust resources based on actual monitoring data.
-
-### Database Configuration
-
-Database requirements are modest. Recommended setup:
-- **Small deployments (< 200 users)**: single PostgreSQL instance (2 vCPU, 4GB RAM)
-- **Large deployments (> 200 users)**: PostgreSQL primary-replica for availability rather than performance
-
 ## Notes
 
-1. **Instance recommendation**: Although PostgreSQL is used, to ensure data consistency and app state management, run a single pod. For high availability, configure PostgreSQL primary-replica.
+1. **Single instance**: For data consistency, set `replicaCount: 1`. For high availability, configure PostgreSQL primary-replica instead of multiple pods.
 
 2. **Data persistence**: Ensure the cluster supports persistent storage; otherwise data is lost when pods restart.
 
-3. **JWT secret security**:
-
-   - Replace the default JWT_SECRET in production
-   - Use Kubernetes Secrets for sensitive data
-   - JWT secrets should be strong random strings (at least 32 characters)
-
-4. **Network security**:
-   - Use Ingress + TLS in production
-   - Restrict network access
-   - Update image versions regularly
-
-### Example JWT Secret Configuration for Production
-
-```yaml
-# Use a Secret to manage the JWT secret
-apiVersion: v1
-kind: Secret
-metadata:
-  name: cherry-studio-jwt-secret
-type: Opaque
-data:
-  jwt-secret: <base64-encoded-strong-random-string>
----
-# Reference in values.yaml
-app:
-  env:
-    JWT_SECRET:
-      valueFrom:
-        secretKeyRef:
-          name: cherry-studio-jwt-secret
-          key: jwt-secret
-```
+3. **Network security**: Use Ingress + TLS in production, restrict network access, and update image versions regularly.

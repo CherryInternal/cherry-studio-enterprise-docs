@@ -3,10 +3,55 @@ title: "核心指标看板"
 description: "展示总请求数、Token 消耗量和费用估算等关键 KPI 的核心指标卡片。"
 ---
 
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 import { Callout } from 'fumadocs-ui/components/callout'
 
-<img src="/assets/images/zh/admin/usage-analytics-core-metrics_zh.webp" alt="" />
-## 指标详解
+## 看板概览
+
+核心指标看板以卡片形式展示关键 KPI。Express 版提供 **Token** 和 **金额** 两种视图，Premium 版提供统一的 Token 用量视图。
+
+<Tabs items={['Express 版 — Token', 'Express 版 — 金额', 'Premium 版']}>
+<Tab value="Express 版 — Token">
+
+<img src="/assets/images/zh/admin/usage-analytics-core-metrics-express-token_zh.webp" alt="Express 版 Token 看板" />
+
+### 指标详解
+
+| 指标 | 说明 |
+| --- | --- |
+| **统计请求数** | 在选定时间范围内成功发起到模型服务商的 API 调用次数。 |
+| **总 Token** | 消耗的 Token 总和（输入 + 输出）。 |
+| **输入 Token** | 发送给 AI 的提示词（Prompt）与上下文长度。 |
+| **输出 Token** | AI 生成的回复内容长度。 |
+| **活跃用户** | 在选定时间内实际产生过调用的用户去重数。 |
+| **活跃模型** | 被调用过的 AI 模型种类数量。 |
+| **缓存读取 Token** | 命中缓存而无需重新计算的 Token 数量，可降低实际消耗。 |
+| **缓存写入 Token** | 写入缓存供后续复用的 Token 数量。 |
+
+</Tab>
+<Tab value="Express 版 — 金额">
+
+<img src="/assets/images/zh/admin/usage-analytics-core-metrics-express-cost_zh.webp" alt="Express 版金额看板" />
+
+### 指标详解
+
+| 指标 | 说明 |
+| --- | --- |
+| **许可证总额度** | 当前许可证的总金额额度。 |
+| **许可证已使用** | 已消耗的许可证金额。 |
+| **许可证剩余** | 许可证尚未使用的剩余金额。 |
+| **许可证请求数** | 许可证允许的总请求次数上限。 |
+| **统计请求数** | 在选定时间范围内实际发起的 API 调用次数。 |
+| **统计费用** | 在选定时间范围内产生的实际费用。 |
+| **活跃用户** | 在选定时间内实际产生过调用的用户去重数。 |
+| **活跃模型** | 被调用过的 AI 模型种类数量。 |
+
+</Tab>
+<Tab value="Premium 版">
+
+<img src="/assets/images/zh/admin/usage-analytics-core-metrics_zh.webp" alt="Premium 版核心指标看板" />
+
+### 指标详解
 
 | 指标 | 说明 |
 | --- | --- |
@@ -22,5 +67,8 @@ import { Callout } from 'fumadocs-ui/components/callout'
 <Callout type="warn">
 **运维建议：** 如果 **中断请求** 的比例异常升高，建议立即检查 **系统设置 > Model Provider** 中的连接状态，或确认外部网络环境是否稳定。
 </Callout>
+
+</Tab>
+</Tabs>
 
 ***

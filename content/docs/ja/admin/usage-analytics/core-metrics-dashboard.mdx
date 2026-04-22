@@ -3,10 +3,55 @@ title: "コア指標ダッシュボード"
 description: "総リクエスト数、Token 消費量、費用見積もりなどの KPI を表示するコアメトリクスカードです。"
 ---
 
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 import { Callout } from 'fumadocs-ui/components/callout'
 
-<img src="/assets/images/ja/admin/usage-analytics-core-metrics_ja.webp" alt="" />
-## 指標の説明
+## ダッシュボード概要
+
+コア指標ダッシュボードは、主要な KPI をカード形式で表示します。Express 版では **Token** と **金額** の 2 つのビューを提供し、Premium 版では統一的なトークン使用量ビューを提供します。
+
+<Tabs items={['Express 版 — Token', 'Express 版 — 金額', 'Premium 版']}>
+<Tab value="Express 版 — Token">
+
+<img src="/assets/images/ja/admin/usage-analytics-core-metrics-express-token_ja.webp" alt="Express 版 Token ダッシュボード" />
+
+### 指標の説明
+
+| 指標 | 説明 |
+| --- | --- |
+| **総リクエスト数** | 選択期間内にプロバイダーへ発行された API 呼び出し成功回数。 |
+| **トータルトークン** | 入力+出力トークンの合計。 |
+| **入力トークン** | AI に送信されたプロンプトと文脈長。 |
+| **出力トークン** | AI の返信長。 |
+| **アクティブユーザー** | 選択期間内に呼び出しを行ったユニークユーザー数。 |
+| **アクティブモデル** | 呼び出されたモデル数。 |
+| **キャッシュ読み取り Token** | 再計算なしでキャッシュから提供されたトークン数。実際の消費を削減します。 |
+| **キャッシュ書き込み Token** | 後続の再利用のためにキャッシュに書き込まれたトークン数。 |
+
+</Tab>
+<Tab value="Express 版 — 金額">
+
+<img src="/assets/images/ja/admin/usage-analytics-core-metrics-express-cost_ja.webp" alt="Express 版金額ダッシュボード" />
+
+### 指標の説明
+
+| 指標 | 説明 |
+| --- | --- |
+| **ライセンス総額** | 現在のライセンスの総金額枠。 |
+| **ライセンス使用済み** | 消費済みのライセンス金額。 |
+| **ライセンス残高** | 未使用のライセンス残額。 |
+| **ライセンスリクエスト数** | ライセンスで許可されているリクエスト数の上限。 |
+| **総リクエスト数** | 選択期間内に実際に発行された API 呼び出し数。 |
+| **統計費用** | 選択期間内に発生した実際の費用。 |
+| **アクティブユーザー** | 選択期間内に呼び出しを行ったユニークユーザー数。 |
+| **アクティブモデル** | 呼び出されたモデル数。 |
+
+</Tab>
+<Tab value="Premium 版">
+
+<img src="/assets/images/ja/admin/usage-analytics-core-metrics_ja.webp" alt="Premium 版コア指標ダッシュボード" />
+
+### 指標の説明
 
 | 指標 | 説明 |
 | --- | --- |
@@ -22,5 +67,8 @@ import { Callout } from 'fumadocs-ui/components/callout'
 <Callout type="warn">
 **運用ヒント:** **中断リクエスト** が増えたら **システム設定 > Model Provider** の接続状態や外部ネットワークを確認してください。
 </Callout>
+
+</Tab>
+</Tabs>
 
 ***

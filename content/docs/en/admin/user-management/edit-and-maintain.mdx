@@ -4,10 +4,10 @@ description: "Update user info, ban or delete accounts in response to organizati
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 
 ## Edit User Information <a href="#heading8ca0746f50e147119c6c47d6dded5dd2-bian-ji-yong-hu-xin-xi-0" id="heading8ca0746f50e147119c6c47d6dded5dd2-bian-ji-yong-hu-xin-xi-0"></a>
 
-<img src="/assets/images/en/admin/user-management-edit-user-modal_en.webp" alt="Edit user modal" />
 To change group assignment or account status:
 
 1. Find the user in the list.
@@ -18,9 +18,28 @@ To change group assignment or account status:
    * **Promote to admin**: Turn on **Group Admin** to grant administrator privileges.
 4. Click **Update User** to save.
 
+<Tabs items={['Express', 'Premium']}>
+<Tab value="Express">
+
+The Express Edit User panel includes: Group, Username, Active Status, and Group Admin.
+
+<img src="/assets/images/en/admin/user-management-edit-user-modal-express_en.webp" alt="Express Edit User modal" />
+
+<Callout type="info">
+Express users register via invite links and manage their own passwords. Admins cannot view or reset user passwords.
+</Callout>
+
+</Tab>
+<Tab value="Premium">
+
+<img src="/assets/images/en/admin/user-management-edit-user-modal_en.webp" alt="Premium Edit User modal" />
+
 <Callout type="info">
 **Reset password**: Click the **⋮** icon in the user's Actions column and select **Change Password** to set a new password.
 </Callout>
+
+</Tab>
+</Tabs>
 
 ## Delete Users <a href="#heading8ca0746f50e147119c6c47d6dded5dd2-shan-chu-yong-hu-0" id="heading8ca0746f50e147119c6c47d6dded5dd2-shan-chu-yong-hu-0"></a>
 

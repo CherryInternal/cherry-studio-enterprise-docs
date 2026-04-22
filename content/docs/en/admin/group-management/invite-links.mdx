@@ -1,0 +1,58 @@
+---
+title: "Invite Links"
+description: "Create and manage invite links within group settings, controlling link expiration and usage limits for targeted member invitation by group."
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+<Callout type="warn" title="Express Only">
+Invite link management is only available in Express.
+</Callout>
+
+## Overview
+
+Express supports managing invite links independently within each group. Admins can create dedicated invite links for different groups — invitees who register via the link will automatically join the corresponding group.
+
+For the invitee registration flow, see [Member Invitation](/docs/admin/user-management/invite-members).
+
+## Accessing Invite Link Management
+
+1. Go to the **Group Management** page.
+2. Click the **Settings** button on the target group to open the group edit page.
+3. Select **Invite Links** in the left sidebar.
+
+<img src="/assets/images/en/admin/group-management-invite-links_en.webp" alt="Invite link management interface" />
+
+The invite link list displays the following:
+
+| Field | Description |
+| --- | --- |
+| **Code** | Auto-generated unique invite identifier |
+| **Status** | **Active** (green) or **Revoked** (red) |
+| **Uses** | Used count / max uses (`∞` means unlimited) |
+| **Expiration** | Link expiration time; the link cannot be used after this date |
+| **Created** | When the link was created |
+| **Actions** | Copy link, revoke link |
+
+## Creating an Invite Link
+
+1. Click the **+ Create Invite** button in the top-right corner.
+2. Configure the following parameters in the dialog:
+
+<img src="/assets/images/en/admin/group-management-invite-links-create_en.webp" alt="Create invite link" />
+
+| Parameter | Description |
+| --- | --- |
+| **Expiration** | How long the invite link remains valid. Choose a preset duration or **Never expire** |
+| **Max uses** | Maximum number of times the link can be used. Leave empty or enter `0` for unlimited |
+
+3. Click **Create** to finish.
+
+## Managing Existing Links
+
+- **Copy link**: Click the copy icon in the Actions column to share the invite link with target members.
+- **Revoke link**: Click the delete icon in the Actions column. Once revoked, the link status changes to "Revoked"; already-registered users are not affected.
+
+<Callout type="info">
+**Tip:** Create separate invite links for different purposes (e.g., "new employee onboarding" and "external collaboration") to manage expiration and usage limits independently.
+</Callout>

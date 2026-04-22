@@ -5,6 +5,10 @@ description: "Deploy Cherry Studio Enterprise with Docker and Docker Compose, fe
 
 import { Callout } from 'fumadocs-ui/components/callout'
 
+<Callout type="info">
+**Recommended**: Use the Cherry Studio Agent deployment skill to automate all the steps below. See [Installation and Deployment → Agent One-Click Deploy](/docs/setup).
+</Callout>
+
 ## Features
 
 - **Dual service integration**: API service (port 3670) and admin console (port 3680) run in a single container
@@ -18,13 +22,13 @@ import { Callout } from 'fumadocs-ui/components/callout'
 **China mirror** (recommended for users in mainland China):
 
 ```bash
-docker-registry.cherry-ai.com/public/cherry-studio-enterprise-api:v0.4.10
+docker-registry.cherry-ai.com/public/cherry-studio-enterprise-api
 ```
 
 **Docker Hub** (international users):
 
 ```bash
-cherrystudio/cherry-studio-enterprise-api:v0.4.10
+cherrystudio/cherry-studio-enterprise-api
 ```
 
 <Callout type="info">
@@ -44,7 +48,7 @@ Users in mainland China are recommended to use the China mirror for faster and m
 ```yaml
 services:
   api:
-    image: cherrystudio/cherry-studio-enterprise-api:latest
+    image: cherrystudio/cherry-studio-enterprise-api:v0.4.10
     container_name: cherry-studio-enterprise
     ports:
       - '3670:3670'
@@ -89,7 +93,7 @@ services:
 
   # Cherry Studio API
   api:
-    image: cherrystudio/cherry-studio-enterprise-api:latest
+    image: cherrystudio/cherry-studio-enterprise-api:v0.4.10
     container_name: cherry-studio-enterprise
     depends_on:
       postgres:

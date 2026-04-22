@@ -1,22 +1,122 @@
 ---
 title: 快速开始
-description: 20 分钟上手 Cherry Studio 企业版，从部署到发送第一条消息
+description: 快速上手 Cherry Studio 企业版，选择 Express（注册即用）或 Premium（私有化部署）
 ---
 
 import { DynamicLink } from 'fumadocs-core/dynamic-link'
 import { Callout } from 'fumadocs-ui/components/callout'
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 
-## 第一步：部署
+选择您的版本，按照步骤快速开始使用 Cherry Studio 企业版。
+
+<Tabs items={['Express 版（注册即用）', 'Premium 版（私有化部署）']}>
+<Tab value="Express 版（注册即用）">
+
+**预计用时：5 分钟** — 无需部署，注册即用
+
+<h3>第一步：注册账号</h3>
+
+访问 Cherry Studio 企业版官网，使用手机号或邮箱注册管理员账号。填写验证码和密码后点击「注册」即可。
+
+<img src="/assets/images/zh/express/register.webp" alt="注册账号" />
+
+<h3>第二步：创建组织</h3>
+
+注册完成后，系统会引导您创建组织。填写**组织名称**，选择所在**行业**和**团队规模**，点击「创建组织」。
+
+<img src="/assets/images/zh/express/create-org.webp" alt="创建组织" />
+
+<h3>第三步：选择套餐</h3>
+
+创建组织后，选择适合的订阅套餐。点击「立即开通」进入下一步。
+
+<img src="/assets/images/zh/express/select-plan.webp" alt="选择套餐" />
+
+<Callout type="info">
+  <DynamicLink href="/[lang]/docs/pricing">查看完整定价方案 →</DynamicLink>
+</Callout>
+
+<h3>第四步：企业认证</h3>
+
+开通服务前需完成企业认证。按页面提示依次完成以下三步：
+
+1. **上传营业执照** — 支持 JPG、PNG 格式，系统将自动 OCR 识别
+2. **上传法人身份证**
+3. **提交审核** — 审核通过后即可开通服务
+
+<img src="/assets/images/zh/express/enterprise-verify.webp" alt="企业认证" />
+
+<h3>第五步：支付开通</h3>
+
+企业认证通过后，完成支付即可开通服务。
+
+支持以下支付方式：
+- **支付宝** — 扫码即时到账
+- **对公转账** — 适合需要开票的企业
+
+<Callout type="warn">截图待补充：支付页面</Callout>
+
+支付完成后，系统将自动为您的组织部署并开通服务，通常在几分钟内完成。
+
+<Callout type="warn">截图待补充：开通成功/控制台首页</Callout>
+
+<h3>第六步：邀请成员</h3>
+
+进入管理后台「用户管理」，点击「邀请成员」生成邀请链接。您可以：
+
+- 选择成员加入的**分组**（如运营团队、研发团队等）
+- 设置邀请链接的**过期时间**和**最大使用次数**
+- 将链接发送给团队成员，对方点击链接即可注册并自动加入对应分组
+
+<Callout type="info">
+若尚未创建分组，请先前往 <DynamicLink href="/[lang]/docs/admin/group-management/create-and-edit-groups">创建与编辑分组</DynamicLink> 完成分组设置。
+</Callout>
+
+<img src="/assets/images/zh/express/invite-members.webp" alt="邀请成员" />
+
+<Callout type="info">
+  <DynamicLink href="/[lang]/docs/admin/user-management/invite-members">查看完整成员邀请文档 →</DynamicLink>
+</Callout>
+
+<h3>第七步：下载客户端</h3>
+
+下载并安装 Cherry Studio 企业版客户端。
+
+<div style={{margin:'12px 0'}}>
+  <a href="https://enterprise.cherry-ai.com/" target="_blank" style={{display:'inline-flex',alignItems:'center',gap:'6px',height:'36px',padding:'0 14px',backgroundColor:'#1a6eff',color:'white',borderRadius:'6px',fontSize:'14px',fontWeight:500,textDecoration:'none'}}>
+    <svg style={{flexShrink:0}} xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+    <span style={{lineHeight:1}}>下载客户端</span>
+  </a>
+</div>
+
+<h3>第八步：登录使用</h3>
+
+使用注册账号或通过邀请链接创建的账号登录客户端。
+
+Express 版已为您预配置好 AI 模型服务（OpenAI、Claude、Gemini 等），**无需手动添加服务商或 API Key**，登录后即可直接开始对话。
+
+<img src="/assets/images/zh/express/client-chat.webp" alt="客户端聊天界面" />
+
+<Callout type="info">
+  <DynamicLink href="/[lang]/docs/client">查看完整客户端文档 →</DynamicLink>
+</Callout>
+
+</Tab>
+<Tab value="Premium 版（私有化部署）">
+
+**预计用时：20 分钟** — 从部署到发送第一条消息
+
+<h3>第一步：部署</h3>
 
 选择适合您的部署方式：
 
 <Cards>
-  <Card title="云应用部署" href="/zh/docs/setup/cloud-app" description="一键部署，零技术门槛，无运维成本" />
-  <Card title="Docker 部署" href="/zh/docs/setup/docker" description="使用 Docker Compose 快速部署" />
-  <Card title="K8s 部署" href="/zh/docs/setup/helm" description="使用 Helm 在 Kubernetes 上部署" />
+  <Card title="云应用部署" href="/[lang]/docs/setup/cloud-app" description="一键部署，零技术门槛，无运维成本" />
+  <Card title="Docker 部署" href="/[lang]/docs/setup/docker" description="使用 Docker Compose 快速部署" />
+  <Card title="K8s 部署" href="/[lang]/docs/setup/helm" description="使用 Helm 在 Kubernetes 上部署" />
 </Cards>
 
-## 第二步：获取授权
+<h3>第二步：获取授权</h3>
 
 我们提供 **14 天免费试用期**，部署完成后可直接体验全部功能。您也可以直接购买正式授权。
 
@@ -35,11 +135,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
   <DynamicLink href="/[lang]/docs/admin/authorization/activate-license">查看如何激活授权 →</DynamicLink>
 </Callout>
 
-## 第三步：添加服务商（仅旗舰版 Premium）
-
-<Callout type="warn">
-此步骤仅适用于 **旗舰版（Premium）**。Express 版已内置服务商，无需手动添加。
-</Callout>
+<h3>第三步：添加服务商</h3>
 
 登录管理后台，进入「服务商管理」添加 AI 服务商（如 OpenAI、Anthropic 等），配置 API Key。
 
@@ -53,7 +149,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
   <DynamicLink href="/[lang]/docs/admin/service-provider">查看完整服务商配置文档 →</DynamicLink>
 </Callout>
 
-## 第四步：设置默认模型
+<h3>第四步：设置默认模型</h3>
 
 进入「默认模型」，为系统指定默认助手模型、话题命名模型和翻译模型。
 
@@ -63,7 +159,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
   <DynamicLink href="/[lang]/docs/admin/model-settings">查看完整模型配置文档 →</DynamicLink>
 </Callout>
 
-## 第五步：添加用户
+<h3>第五步：添加用户</h3>
 
 进入「用户管理」，为团队成员创建账号。
 
@@ -73,7 +169,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
   <DynamicLink href="/[lang]/docs/admin/user-management">查看完整用户管理文档 →</DynamicLink>
 </Callout>
 
-## 第六步：下载客户端
+<h3>第六步：下载客户端</h3>
 
 下载并安装 Cherry Studio 企业版客户端。
 
@@ -84,7 +180,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
   </a>
 </div>
 
-## 第七步：登录使用
+<h3>第七步：登录使用</h3>
 
 使用管理员创建的账号登录客户端，即可开始使用 Cherry Studio 企业版的全部功能。
 
@@ -93,3 +189,15 @@ import { Callout } from 'fumadocs-ui/components/callout'
 <Callout type="info">
   <DynamicLink href="/[lang]/docs/client">查看完整客户端文档 →</DynamicLink>
 </Callout>
+
+</Tab>
+</Tabs>
+
+## 版本对比
+
+| | Express 版 | Premium 版 |
+| --- | --- | --- |
+| 部署 | 无需部署 | 需自行部署 |
+| 服务商配置 | 已内置，无需配置 | 需手动添加服务商和 API Key |
+| 用户管理 | 支持邀请链接注册 | 管理员手动创建账号 |
+| 计费 | 订阅制 | 授权许可证 |

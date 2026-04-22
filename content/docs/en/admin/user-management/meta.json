@@ -2,11 +2,12 @@
   "title": "User Management",
   "pages": [
     "overview",
+    "invite-members",
     "add-new-user",
-    "edit-and-maintain",
-    "api-key-management",
-    "external-app-access",
     "batch-import",
-    "quota-management"
+    "edit-and-maintain",
+    "quota-management",
+    "api-key-management",
+    "external-app-access"
   ]
 }

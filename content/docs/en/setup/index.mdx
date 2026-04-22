@@ -3,6 +3,30 @@ title: Installation and Deployment
 description: "Flexible deployment options including Docker, Helm, and Tencent Cloud to fit organizations of any size."
 ---
 
+import { Callout } from 'fumadocs-ui/components/callout'
+
+<Callout type="info" title="Premium Only">
+Installation and deployment applies to Premium (self-hosted). If you are using Express (cloud-hosted), no deployment is needed — go to [Express Quickstart](/docs/quickstart).
+</Callout>
+
+## 🤖 Deploy with Cherry Studio Agent (Recommended)
+
+If you are using the Cherry Studio client, you can use the **AI Agent deployment skill** to automate the entire deployment process — just provide your server information, and the Agent will determine the best deployment path (Docker / Helm) and guide you through each step.
+
+**How to use**:
+
+1. Download the deployment skill pack: <a href="/assets/downloads/cherry-enterprise-deploy-skill.zip" download>cherry-enterprise-deploy-skill.zip</a>
+2. In the Cherry Studio client, go to **Agents → Skills** and import the skill pack
+3. Provide your server information (IP, SSH credentials) to the Agent, and it will guide you through the deployment
+
+<Callout type="info">
+The Agent deployment skill wraps the full Docker and Helm deployment processes described below. It is ideal for users unfamiliar with the command line.
+</Callout>
+
+For manual deployment, continue reading below to choose a deployment method.
+
+---
+
 ## 🚀 Before You Start
 
 ### System Requirements

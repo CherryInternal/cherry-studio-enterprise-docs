@@ -3,10 +3,55 @@ title: "Core Metrics Dashboard"
 description: "Core metric cards showing key KPIs such as total requests, Token consumption, and cost estimates."
 ---
 
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 import { Callout } from 'fumadocs-ui/components/callout'
 
-<img src="/assets/images/en/admin/usage-analytics-core-metrics_en.webp" alt="" />
-## Metric Details
+## Dashboard Overview
+
+The core metrics dashboard displays key KPIs as metric cards. Express offers both **Token** and **Cost** views, while Premium provides a unified token usage view.
+
+<Tabs items={['Express — Token', 'Express — Cost', 'Premium']}>
+<Tab value="Express — Token">
+
+<img src="/assets/images/en/admin/usage-analytics-core-metrics-express-token_en.webp" alt="Express Token Dashboard" />
+
+### Metric Details
+
+| Metric | Description |
+| --- | --- |
+| **Statistics Requests** | Successful API calls to providers in the selected time range. |
+| **Total Token** | Total tokens consumed (input + output). |
+| **Input Token** | Prompt and context length sent to AI. |
+| **Output Token** | Length of AI responses. |
+| **Active Users** | Unique users who made calls in the selected time range. |
+| **Active Models** | Number of AI models invoked. |
+| **Cache Read Tokens** | Tokens served from cache without recalculation, reducing actual consumption. |
+| **Cache Write Tokens** | Tokens written to cache for subsequent reuse. |
+
+</Tab>
+<Tab value="Express — Cost">
+
+<img src="/assets/images/en/admin/usage-analytics-core-metrics-express-cost_en.webp" alt="Express Cost Dashboard" />
+
+### Metric Details
+
+| Metric | Description |
+| --- | --- |
+| **License Total** | Total monetary quota of the current license. |
+| **License Used** | Amount of license quota consumed. |
+| **License Remaining** | Unused remaining license quota. |
+| **License Requests** | Maximum number of requests allowed by the license. |
+| **Statistics Requests** | Actual API calls made in the selected time range. |
+| **Statistics Cost** | Actual cost incurred in the selected time range. |
+| **Active Users** | Unique users who made calls in the selected time range. |
+| **Active Models** | Number of AI models invoked. |
+
+</Tab>
+<Tab value="Premium">
+
+<img src="/assets/images/en/admin/usage-analytics-core-metrics_en.webp" alt="Premium Core Metrics Dashboard" />
+
+### Metric Details
 
 | Metric | Description |
 | --- | --- |
@@ -22,5 +67,8 @@ import { Callout } from 'fumadocs-ui/components/callout'
 <Callout type="warn">
 **Ops tip:** If **Interrupted** spikes, check **System Settings > Model Provider** connectivity or external network stability.
 </Callout>
+
+</Tab>
+</Tabs>
 
 ***
