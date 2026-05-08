@@ -66,8 +66,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         search={{
           SearchDialog: CustomSearchDialog,
           options: {
-            api: '/api/search.json',
-            locale: currentLocale
+            api: '/api/search.json'
           }
         }}
         i18n={{

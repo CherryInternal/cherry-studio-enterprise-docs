@@ -1,11 +1,21 @@
 import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router'
 
-import { i18n, locales, setPreferredLocale } from '@/lib/i18n'
+import { i18n, isLocale, setPreferredLocale } from '@/lib/i18n'
+import { getTranslations } from '@/lib/translations'
+
+import type { Route } from './+types/home'
+
+export function meta({ params }: Route.MetaArgs) {
+  const lang = isLocale(params.lang) ? params.lang : i18n.defaultLanguage
+  const t = getTranslations(lang)
+
+  return [{ title: t.meta.title }, { name: 'description', content: t.meta.description }]
+}
 
 export default function Home() {
   const params = useParams()
-  const explicitLang = params.lang && locales.includes(params.lang) ? params.lang : null
+  const explicitLang = isLocale(params.lang) ? params.lang : null
   const lang = explicitLang ?? i18n.defaultLanguage
   const docsPath = lang === i18n.defaultLanguage ? '/docs' : `/${lang}/docs`
   const navigate = useNavigate()

@@ -4,22 +4,23 @@ import { toClientRenderer } from 'fumadocs-mdx/runtime/vite'
 import { DocsLayout } from 'fumadocs-ui/layouts/docs'
 import defaultMdxComponents from 'fumadocs-ui/mdx'
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/page'
+import type { TOCItemType } from 'fumadocs-core/toc'
 
 import { docs } from '@/.source'
 import { Card, Cards } from '@/components/card'
+import { ConditionalBreadcrumb } from '@/components/conditional-breadcrumb'
 import { ExperienceCard, ExperienceCards } from '@/components/experience-card'
+import { ImageSteps } from '@/components/image-steps'
 import { sidebarComponents } from '@/components/sidebar-components'
-import { i18n, locales } from '@/lib/i18n'
+import { i18n, isLocale } from '@/lib/i18n'
 import { baseOptions } from '@/lib/layout.shared'
 import { getSource } from '@/lib/source'
 
 import type { Route } from './+types/page'
-import {ImageSteps} from "@/components/image-steps";
-import {ConditionalBreadcrumb} from "@/components/conditional-breadcrumb";
 
 export async function loader({ params }: Route.LoaderArgs) {
   const source = await getSource()
-  const lang = params.lang && locales.includes(params.lang) ? params.lang : i18n.defaultLanguage
+  const lang = isLocale(params.lang) ? params.lang : i18n.defaultLanguage
   const slugs = params['*'].split('/').filter((v) => v.length > 0)
   const page = source.getPage(slugs, lang)
   if (!page) throw new Response('Not found', { status: 404 })
@@ -42,9 +43,9 @@ function DownloadAwareLink({ href, ...props }: React.AnchorHTMLAttributes<HTMLAn
 }
 
 const renderer = toClientRenderer(docs.doc, ({ toc, default: Mdx, frontmatter }) => {
-  const fullToc = [
+  const fullToc: TOCItemType[] = [
     { title: frontmatter.title, url: '#page-title', depth: 2 },
-    ...toc.map((item: { title: string; url: string; depth: number }) => ({ ...item, depth: item.depth + 1 }))
+    ...toc.map((item) => ({ ...item, depth: item.depth + 1 }))
   ]
   return (
     <DocsPage toc={fullToc} breadcrumb={{ component: <ConditionalBreadcrumb /> }}>
