@@ -66,11 +66,13 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 ## 配额管理
 
-在分组设置页面左侧，展开 **配额管理** → 点击 **Token 限额** Tab，可为该分组设置调用配额上限。
+### Token 限额
+
+在分组设置页面左侧，展开 **配额管理** → 点击 **Token 限额** Tab，可为该分组设置 Token 维度的调用配额上限。
 
 <img src="/assets/images/zh/admin/group-management-token-quota_zh.webp" alt="Token 限额配置" />
 
-配额分为两个层级：
+Token 限额分为三个层级：
 
 **1. 组总限额（Group Total Quota）**
 
@@ -87,8 +89,42 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 为未单独配置限额的组成员设置默认上限。如需为某个用户设置不同的限额，可在用户管理中单独配置。
 
+**3. 个人限额上限（Member Quota Cap）**
+
+组管理员为成员设置个人限额时不能超过此值。用于防止组管理员分配过高的配额。
+
 <Callout type="info">
-Token 限额与调用次数限额同时生效，任一达到上限即会阻止后续使用。留空表示不限制。
+Token 限额与金额限额同时生效，任一达到上限即会阻止后续使用。留空表示不限制。
+</Callout>
+
+### 金额限额（Express 版专属）
+
+<Callout type="info">
+此功能仅在 **Express 版** 中可用。在分组设置页面左侧，展开 **配额管理** → 点击 **金额限额** Tab。
+</Callout>
+
+金额限额以货币金额（而非 Token 数量）为维度，对分组及成员的 API 使用进行成本控制。
+
+<img src="/assets/images/zh/admin/group-management-cost-quota-1_zh.webp" alt="金额限额配置（上）" />
+
+与 Token 限额类似，金额限额分为三个层级：
+
+**1. 组总限额**
+
+整个分组的金额用量上限，超出后该分组所有成员将无法继续使用。支持日限额、周限额、月限额和总限额四个维度。
+
+**2. 默认个人限额**
+
+未单独配置限额的成员将继承此默认值。
+
+**3. 个人限额上限**
+
+组管理员为成员设置个人限额时的最大值上限。
+
+<img src="/assets/images/zh/admin/group-management-cost-quota-2_zh.webp" alt="金额限额配置（下）" />
+
+<Callout type="warn">
+Token 限额与金额限额同时生效。任一维度达到上限，用户后续的 API 调用即会被阻止。
 </Callout>
 
 ## 验证权限配置

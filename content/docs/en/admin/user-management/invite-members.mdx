@@ -1,0 +1,66 @@
+---
+title: "Member Invitation"
+description: "Quickly add team members via invite links — invitees click the link to register and join the organization."
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+<Callout type="warn" title="Express Only">
+Member invitation is only available in Express. For Premium, manage users via [manual creation](/docs/admin/user-management/add-new-user) or [batch import](/docs/admin/user-management/batch-import).
+</Callout>
+
+## Overview
+
+Member invitation lets admins generate a unique invite link. Team members click the link, register on their own, and automatically join the organization — no need for admins to create accounts one by one.
+
+Use cases:
+- Rapidly scaling a team
+- Self-service onboarding for new employees
+- Adding cross-department collaborators
+
+## Generate an Invite Link
+
+### Steps
+
+1. Go to Admin Console → User Management
+2. Click the "Invite Members" button
+3. Configure invite options (see parameters below)
+4. Copy the generated invite link
+
+<img src="/assets/images/en/express/invite-members.webp" alt="Invite link generation UI" />
+
+### Invite Configuration
+
+| Parameter | Description |
+| --- | --- |
+| **Target Group** | The group invitees will join, which determines their accessible models and assistants |
+| **Expiration** | How long the link remains valid (e.g., 7 days, 30 days, or never) |
+| **Max Uses** | Maximum number of times the link can be used (e.g., unlimited, 10, 50) |
+
+## Manage Invite Links
+
+Invite links are managed within group settings. You can create dedicated invite links for each group and control their expiration and usage limits.
+
+See [Invite Links](/docs/admin/group-management/invite-links) for details.
+
+## Invitee Registration Flow
+
+When an invitee receives the link:
+
+1. Click the invite link to open the "Join Organization" page
+2. The page automatically shows the invite code and the group they will join
+3. Confirm the details and click "Join Now" to complete
+4. Download the client and sign in to start using
+
+<Callout type="info">
+Invitees must register an account and sign in before they can join the organization via the invite link. For client login instructions, see [Client](/docs/client).
+</Callout>
+
+<img src="/assets/images/en/express/invite-join.webp" alt="Invitee registration page" />
+
+## Best Practices
+
+- Keep invite links secure — avoid sharing with unintended recipients
+- Set reasonable expiration and usage limits
+- After registration, admins can still edit the invitee's group and permissions in User Management
+- To revoke access for a registered user, set their status to "Inactive" in User Management

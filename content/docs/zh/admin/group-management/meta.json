@@ -2,6 +2,8 @@
   "title": "分组管理",
   "pages": [
     "create-and-edit-groups",
+    "batch-import",
+    "invite-links",
     "resource-permissions-configuration",
     "faq"
   ]

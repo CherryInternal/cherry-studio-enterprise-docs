@@ -3,13 +3,28 @@ title: "フィルタとコントロール"
 description: "グループ、ユーザー、モデル、期間でデータをフィルタリングし、全チャートがリアルタイム連動します。"
 ---
 
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 import { Callout } from 'fumadocs-ui/components/callout'
 
 ## ダイナミックプレビュー
 
 ページ上部で詳細な条件を指定し、分析範囲を定義できます。下部のグラフ/一覧はリアルタイムで連動します。
 
-<img src="/assets/images/ja/admin/usage-analytics-filters-controls_ja.webp" alt="" />
+<Tabs items={['Express 版', 'Premium 版']}>
+<Tab value="Express 版">
+
+<img src="/assets/images/ja/admin/usage-analytics-filters-controls-express_ja.webp" alt="Express 版フィルタとコントロール" />
+
+Express 版では **Token / 金額** 切替ボタンが追加されており、トークン使用量と金額消費の表示を素早く切り替えられます。
+
+</Tab>
+<Tab value="Premium 版">
+
+<img src="/assets/images/ja/admin/usage-analytics-filters-controls_ja.webp" alt="Premium 版フィルタとコントロール" />
+
+</Tab>
+</Tabs>
+
 ## 機能説明
 
 | UI 要素 | 説明 | ビジネスシーン |

@@ -4,10 +4,10 @@ description: "更新用户信息、封禁或删除用户账号，应对组织架
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 
 ## 编辑用户信息 <a href="#heading8ca0746f50e147119c6c47d6dded5dd2-bian-ji-yong-hu-xin-xi-0" id="heading8ca0746f50e147119c6c47d6dded5dd2-bian-ji-yong-hu-xin-xi-0"></a>
 
-<img src="/assets/images/zh/admin/user-management-edit-user-modal_zh.webp" alt="编辑用户弹窗" />
 若需修改用户的分组归属或账号状态：
 
 1. 在用户列表中找到目标用户。
@@ -18,9 +18,28 @@ import { Callout } from 'fumadocs-ui/components/callout'
    * **提升管理员**：开启 **组管理员** 开关，将该用户设为管理员。
 4. 点击 **更新用户** 保存。
 
+<Tabs items={['Express 版', 'Premium 版']}>
+<Tab value="Express 版">
+
+Express 版的编辑用户面板包含：所属分组、用户名、激活状态、组管理员。
+
+<img src="/assets/images/zh/admin/user-management-edit-user-modal-express_zh.webp" alt="Express 版编辑用户弹窗" />
+
+<Callout type="info">
+Express 版用户通过邀请链接自行注册，密码由用户自行管理，管理员无法查看或重置密码。
+</Callout>
+
+</Tab>
+<Tab value="Premium 版">
+
+<img src="/assets/images/zh/admin/user-management-edit-user-modal_zh.webp" alt="Premium 版编辑用户弹窗" />
+
 <Callout type="info">
 **重置密码**：点击用户操作列的 **⋮** 图标，选择 **修改密码**，在弹窗中为用户设置新密码。
 </Callout>
+
+</Tab>
+</Tabs>
 
 ## 删除用户 <a href="#heading8ca0746f50e147119c6c47d6dded5dd2-shan-chu-yong-hu-0" id="heading8ca0746f50e147119c6c47d6dded5dd2-shan-chu-yong-hu-0"></a>
 

@@ -10,7 +10,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 Before you start, make sure the following requirements are met:
 
 1. An admin has created and enabled an **API Key** for the current user.
-2. The target model has been enabled under **Express Closed Models** or **Express Open-Source Models**.
+2. The target model has been enabled under **Express Models**.
 3. The current user's group has permission to access the target model.
 4. You have the enterprise API address, for example `https://api.enterprise.cherry-ai.com`.
 
@@ -40,41 +40,20 @@ In most third-party applications that support the OpenAI protocol, you only need
 
 When calling Express models from external applications, the `model` field must use the format `model-id@provider_id`.
 
-### Closed-Source Models
-
 Format:
 
 ```text
-model-name@x-express-internal
+model-name@x-express
 ```
 
 Example:
 
 ```text
-anthropic/claude-sonnet-4.5@x-express-internal
+anthropic/claude-sonnet-4.5@x-express
 ```
-
-### Open-Source Models
-
-Format:
-
-```text
-model-name@x-express-opensource
-```
-
-Example:
-
-```text
-your-model@x-express-opensource
-```
-
-### How do I know which suffix to use?
-
-- If the model comes from the **Express Closed Models** tab in the admin console, use `@x-express-internal`
-- If the model comes from the **Express Open-Source Models** tab, use `@x-express-opensource`
 
 <Callout type="warn">
-**Important:** Use the actual **Model ID**, not the display name shown in the UI. You must also append `@x-express-internal` or `@x-express-opensource`, otherwise the API will return `Provider is required`.
+**Important:** Use the actual **Model ID**, not the display name shown in the UI. You must also append `@x-express`, otherwise the API will return `Provider is required`.
 </Callout>
 
 ## Common Request Examples
@@ -86,7 +65,7 @@ curl https://api.enterprise.cherry-ai.com/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer sk-your-api-key" \
   -d '{
-    "model": "anthropic/claude-sonnet-4.5@x-express-internal",
+    "model": "anthropic/claude-sonnet-4.5@x-express",
     "messages": [
       {
         "role": "user",
@@ -108,7 +87,7 @@ const client = new OpenAI({
 })
 
 const completion = await client.chat.completions.create({
-  model: 'anthropic/claude-sonnet-4.5@x-express-internal',
+  model: 'anthropic/claude-sonnet-4.5@x-express',
   messages: [{ role: 'user', content: 'Hello, please introduce yourself.' }]
 })
 
@@ -126,7 +105,7 @@ client = OpenAI(
 )
 
 resp = client.chat.completions.create(
-    model="anthropic/claude-sonnet-4.5@x-express-internal",
+    model="anthropic/claude-sonnet-4.5@x-express",
     messages=[{"role": "user", "content": "Hello, please introduce yourself."}],
 )
 
@@ -142,7 +121,7 @@ If you are using a chat client, IDE plugin, or another third-party application, 
 | Provider Type | `OpenAI Compatible` / `OpenAI` |
 | Base URL | `https://api.enterprise.cherry-ai.com` |
 | API Key | The user's own `sk-...` key |
-| Model | `anthropic/claude-sonnet-4.5@x-express-internal` |
+| Model | `anthropic/claude-sonnet-4.5@x-express` |
 
 <Callout type="info">
 **Compatibility note:** This integration works best with applications that support manually entering a custom model name. If an app strictly depends on standard automatic model listing, you may still need to enter the model name manually.
@@ -155,7 +134,7 @@ If you are using a chat client, IDE plugin, or another third-party application, 
 This usually means the `model` value does not include the provider suffix. Make sure it looks like this:
 
 ```text
-anthropic/claude-sonnet-4.5@x-express-internal
+anthropic/claude-sonnet-4.5@x-express
 ```
 
 **2. Why do I get `401 Unauthorized` or `Key Expired`?**

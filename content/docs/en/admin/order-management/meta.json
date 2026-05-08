@@ -1,0 +1,5 @@
+{
+  "title": "Order Management",
+  "icon": "ShoppingCart",
+  "pages": ["order-list", "order-details"]
+}

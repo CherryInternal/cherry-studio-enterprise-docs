@@ -3,13 +3,28 @@ title: "Filters and Controls"
 description: "Filter analytics by group, user, model, and time range — all charts update in real time."
 ---
 
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 import { Callout } from 'fumadocs-ui/components/callout'
 
 ## Dynamic Preview
 
 At the top of the page, admins can define the analysis scope with fine-grained filters. All charts and lists below update in real time.
 
-<img src="/assets/images/en/admin/usage-analytics-filters-controls_en.webp" alt="" />
+<Tabs items={['Express', 'Premium']}>
+<Tab value="Express">
+
+<img src="/assets/images/en/admin/usage-analytics-filters-controls-express_en.webp" alt="Express Filters and Controls" />
+
+Express provides an additional **Token / Cost** toggle to quickly switch between token usage and cost consumption views.
+
+</Tab>
+<Tab value="Premium">
+
+<img src="/assets/images/en/admin/usage-analytics-filters-controls_en.webp" alt="Premium Filters and Controls" />
+
+</Tab>
+</Tabs>
+
 ## Feature Descriptions
 
 | UI Element | Description | Business Scenario |

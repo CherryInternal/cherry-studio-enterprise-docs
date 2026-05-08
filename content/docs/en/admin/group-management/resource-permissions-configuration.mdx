@@ -66,11 +66,13 @@ Each tab supports both "All" and "Specified" modes. Follow the same steps descri
 
 ## Quota Management
 
-In the group settings page, expand **Quota Management** on the left → Click the **Token Quota** tab to set usage limits for this group.
+### Token Quota
+
+In the group settings page, expand **Quota Management** on the left → Click the **Token Quota** tab to set token-based usage limits for this group.
 
 <img src="/assets/images/en/admin/group-management-token-quota_en.webp" alt="Token quota configuration" />
 
-Quotas are configured at two levels:
+Token Quota is configured at three levels:
 
 **1. Group Total Quota**
 
@@ -87,8 +89,42 @@ Sets the usage cap for the entire group. Once exceeded, all members in the group
 
 Sets the default cap for members without individual quota settings. To configure different limits for a specific user, use the user management page.
 
+**3. Member Quota Cap**
+
+The maximum quota a group admin can assign to an individual member. Prevents group admins from allocating excessively high quotas.
+
 <Callout type="info">
-Token limits and call count limits are enforced simultaneously. Reaching either limit will block further usage. Leave empty for unlimited.
+Token limits and cost limits are enforced simultaneously. Reaching either limit will block further usage. Leave empty for unlimited.
+</Callout>
+
+### Cost Quota (Express Only)
+
+<Callout type="info">
+This feature is only available in the **Express** edition. In the group settings page, expand **Quota Management** on the left → Click the **Cost Quota** tab.
+</Callout>
+
+Cost Quota uses monetary amounts (rather than token counts) to control API spending for the group and its members.
+
+<img src="/assets/images/en/admin/group-management-cost-quota-1_en.webp" alt="Cost Quota Configuration (top)" />
+
+Like Token Quota, Cost Quota is configured at three levels:
+
+**1. Group Total Quota**
+
+The total cost limit for the entire group. Once exceeded, all members in the group will be blocked from further usage. Supports daily, weekly, monthly, and total limits.
+
+**2. Default Member Quota**
+
+Members without individual quota settings will inherit this default.
+
+**3. Member Quota Cap**
+
+The maximum quota a group admin can set for an individual member.
+
+<img src="/assets/images/en/admin/group-management-cost-quota-2_en.webp" alt="Cost Quota Configuration (bottom)" />
+
+<Callout type="warn">
+Token limits and cost limits are enforced simultaneously. When either limit is reached, the user's subsequent API calls will be blocked.
 </Callout>
 
 ## Validate Permission Configuration

@@ -1,0 +1,9 @@
+{
+  "title": "Account Center",
+  "icon": "User",
+  "pages": [
+    "account-settings",
+    "my-orders",
+    "linked-organizations"
+  ]
+}

@@ -5,6 +5,7 @@
     "network-settings",
     "search-engine-configuration",
     "document-preprocessing-configuration",
-    "cache-management"
+    "cache-management",
+    "language-settings"
   ]
 }

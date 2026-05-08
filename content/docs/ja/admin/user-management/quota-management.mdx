@@ -3,6 +3,7 @@ title: "クォータ管理"
 description: "ユーザーとグループに日次/週次/月次/累計の 4 次元で API 使用制限を設定し、AI サービスコストの管理とリソース過剰消費の防止を実現します。"
 ---
 
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 import { Callout } from 'fumadocs-ui/components/callout'
 
 ## クォータ階層
@@ -17,7 +18,20 @@ Cherry Studio は 2 段階のクォータ体系を採用しています：
 1. **ユーザー管理**ページに移動。
 2. 対象ユーザーの操作列で**クォータ**ボタンをクリック。
 
-<img src="/assets/images/ja/admin/user-management-quota-dialog_ja.webp" alt="ユーザークォータ設定" />
+<Tabs items={['Express 版', 'Premium 版']}>
+<Tab value="Express 版">
+
+<img src="/assets/images/ja/admin/user-management-quota-dialog-express_ja.webp" alt="Express 版ユーザークォータ設定" />
+
+Express 版ではダイアログ上部の **金額クォータ** / **トークンクォータ** タブで、金額ベースとトークンベースのクォータを切り替えて設定できます。
+
+</Tab>
+<Tab value="Premium 版">
+
+<img src="/assets/images/ja/admin/user-management-quota-dialog_ja.webp" alt="Premium 版ユーザークォータ設定" />
+
+</Tab>
+</Tabs>
 
 3. 各次元の制限値を設定：
 
@@ -31,12 +45,28 @@ Cherry Studio は 2 段階のクォータ体系を採用しています：
 
 各クォータ次元の横にある展開ボタンをクリックすると、使用量の詳細を確認できます：
 
-<img src="/assets/images/ja/admin/user-management-quota-detail_ja.webp" alt="クォータ使用量詳細" />
+<Tabs items={['Express 版', 'Premium 版']}>
+<Tab value="Express 版">
+
+<img src="/assets/images/ja/admin/user-management-quota-detail-express_ja.webp" alt="Express 版クォータ使用量詳細" />
+
+* **現在の使用状況**：`使用量 / 制限値` の形式で当期の消費状況を表示。
+* **過去 24 時間**：直近 24 時間の消費額。
+* **次回リセット**：クォータが自動リセットされる時刻。
+* **使用状況をリセット**ボタン：当期の使用量を手動でゼロにリセット。
+
+</Tab>
+<Tab value="Premium 版">
+
+<img src="/assets/images/ja/admin/user-management-quota-detail_ja.webp" alt="Premium 版クォータ使用量詳細" />
 
 * **当期使用量**：現在の期間で消費された量。
 * **制限値**：設定された上限（「無制限」は未設定を意味）。
 * **次回リセット**：クォータが自動リセットされる時刻。
 * **使用量リセット**ボタン：当期の使用量を手動でゼロにリセット。
+
+</Tab>
+</Tabs>
 
 4. 完了したら**保存**をクリック。
 
