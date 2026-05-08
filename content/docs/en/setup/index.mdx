@@ -6,22 +6,26 @@ description: "Flexible deployment options including Docker, Helm, and Tencent Cl
 import { Callout } from 'fumadocs-ui/components/callout'
 
 <Callout type="info" title="Premium Only">
-Installation and deployment applies to Premium (self-hosted). If you are using Express (cloud-hosted), no deployment is needed — go to [Express Quickstart](/docs/quickstart).
+Installation and deployment applies to Premium (self-hosted). If you are using Express (cloud-hosted), no deployment is needed — go to [Express Quickstart](/docs/quickstart#express).
 </Callout>
 
-## 🤖 Deploy with Cherry Studio Agent (Recommended)
+## 🤖 Deploy with Cherry Studio Agent
 
-If you are using the Cherry Studio client, you can use the **AI Agent deployment skill** to automate the entire deployment process — just provide your server information, and the Agent will determine the best deployment path (Docker / Helm) and guide you through each step.
+Premium edition requires deployment before you can log into the enterprise client. Use the Agent in Cherry Studio Community Edition to automate the deployment.
 
-**How to use**:
+**Steps**:
 
-1. Download the deployment skill pack: <a href="/assets/downloads/cherry-enterprise-deploy-skill.zip" download>cherry-enterprise-deploy-skill.zip</a>
-2. In the Cherry Studio client, go to **Agents → Skills** and import the skill pack
-3. Provide your server information (IP, SSH credentials) to the Agent, and it will guide you through the deployment
+1. Download and install [Cherry Studio Community Edition](https://www.cherry-ai.com/download)
+2. Open the client, go to **Agents**, and select or create an agent
+3. Send the following prompt to the agent:
 
-<Callout type="info">
-The Agent deployment skill wraps the full Docker and Helm deployment processes described below. It is ideal for users unfamiliar with the command line.
-</Callout>
+   ```
+   Following the guide at https://docs.enterprise.cherry-ai.com/en/docs/setup, install cherry-enterprise-deploy-skill, and help me deploy.
+   ```
+
+4. Provide server information (IP, SSH credentials) when the agent prompts you to complete the deployment.
+
+> Skill package download: [cherry-enterprise-deploy-skill.zip](/assets/downloads/cherry-enterprise-deploy-skill.zip)
 
 For manual deployment, continue reading below to choose a deployment method.
 

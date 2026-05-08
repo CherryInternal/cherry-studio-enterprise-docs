@@ -7,22 +7,26 @@ import { DynamicLink } from 'fumadocs-core/dynamic-link'
 import { Callout } from 'fumadocs-ui/components/callout'
 
 <Callout type="info" title="Premium 版のみ">
-インストールとデプロイは Premium 版（プライベート導入型）のみ対象です。Express 版（クラウドホスト型）をご利用の場合、デプロイは不要です。<DynamicLink href="/[lang]/docs/quickstart">Express 版クイックスタート</DynamicLink> をご覧ください。
+インストールとデプロイは Premium 版（プライベート導入型）のみ対象です。Express 版（クラウドホスト型）をご利用の場合、デプロイは不要です。<DynamicLink href="/[lang]/docs/quickstart#express">Express 版クイックスタート</DynamicLink> をご覧ください。
 </Callout>
 
-## 🤖 Cherry Studio Agent でワンクリック導入（推奨）
+## 🤖 Cherry Studio Agent でデプロイ
 
-Cherry Studio クライアントをお使いの場合、**AI Agent デプロイスキル**を使って導入プロセス全体を自動化できます。サーバー情報を提供するだけで、Agent が最適な導入パス（Docker / Helm）を判断し、ステップごとにガイドします。
+Premium 版はデプロイ完了後でなければエンタープライズクライアントにログインできません。Cherry Studio コミュニティ版の Agent を使ってデプロイを自動化できます。
 
-**使い方**：
+**手順**：
 
-1. デプロイスキルパックをダウンロード：<a href="/assets/downloads/cherry-enterprise-deploy-skill.zip" download>cherry-enterprise-deploy-skill.zip</a>
-2. Cherry Studio クライアントで **スマートエージェント → スキル** に移動し、スキルパックをインポート
-3. サーバー情報（IP、SSH 認証情報）を Agent に提供すると、導入を自動でガイドします
+1. [Cherry Studio コミュニティ版](https://www.cherry-ai.com/download)をダウンロードしてインストール
+2. クライアントを開き、「エージェント」に入って既存または新規エージェントを選択
+3. 以下のプロンプトをエージェントに送信：
 
-<Callout type="info">
-Agent デプロイスキルは、下記の Docker と Helm の導入プロセスをすべてラップしています。コマンドラインに不慣れなユーザーに最適です。
-</Callout>
+   ```
+   https://docs.enterprise.cherry-ai.com/ja/docs/setup の指示に従い、cherry-enterprise-deploy-skill をインストールしてデプロイしてください。
+   ```
+
+4. エージェントの指示に従ってサーバー情報（IP、SSH 認証情報）を提供し、デプロイを完了します。
+
+> スキルパッケージのダウンロード：[cherry-enterprise-deploy-skill.zip](/assets/downloads/cherry-enterprise-deploy-skill.zip)
 
 手動導入の場合は、下記の内容を読んで導入方式を選択してください。
 
