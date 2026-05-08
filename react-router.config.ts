@@ -9,27 +9,32 @@ const getUrl = createGetUrl('/docs', i18n)
 export default {
   ssr: false,
   async prerender({ getStaticPaths }) {
-    const paths: string[] = []
-
-    for (const path of getStaticPaths()) {
-      paths.push(path)
+    const paths = new Set<string>()
+    const addPath = (path: string) => {
+      paths.add(path)
       // 同时生成带尾部斜线的路径
       if (!path.endsWith('/')) {
-        paths.push(`${path}/`)
+        paths.add(`${path}/`)
+      }
+    }
+
+    for (const path of getStaticPaths()) {
+      addPath(path)
+    }
+
+    for (const lang of locales) {
+      if (lang !== i18n.defaultLanguage) {
+        addPath(`/${lang}`)
       }
     }
 
     for (const lang of locales) {
       for await (const entry of glob('**/*.mdx', { cwd: `content/docs/${lang}` })) {
         const url = getUrl(getSlugs(entry), lang)
-        paths.push(url)
-        // 同时生成带尾部斜线的路径
-        if (!url.endsWith('/')) {
-          paths.push(`${url}/`)
-        }
+        addPath(url)
       }
     }
 
-    return paths
+    return Array.from(paths)
   }
 } satisfies Config
