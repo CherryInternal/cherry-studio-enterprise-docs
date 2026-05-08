@@ -4,6 +4,8 @@ export const translations = {
       title: 'Cherry Studio Enterprise - Enterprise AI Management Platform',
       description: 'AI productivity and management platform built for modern teams and enterprises'
     },
+    /* Marketing landing page content — preserved for potential future use.
+       The /<lang> route now redirects directly to /<lang>/docs.
     home: {
       title: 'Cherry Studio Enterprise',
       subtitle: 'Enterprise AI Management Platform',
@@ -27,9 +29,9 @@ export const translations = {
         description: 'Unified admin console, role-based permission assignment, flexible resource access control.'
       },
       privateDeployment: {
-        title: 'Fully Private Deployment',
+        title: 'Flexible Deployment',
         description:
-          'Support enterprise internal server deployment, private cloud environment deployment, 100% data privacy control.'
+          'Express edition is cloud-ready out of the box; Premium edition supports on-prem and private cloud with 100% data privacy.'
       },
       backendService: {
         title: 'Reliable Backend Service',
@@ -42,6 +44,7 @@ export const translations = {
           'Meet the strictest data security and compliance requirements, support audit logs, ensure data usage traceability.'
       }
     },
+    */
     nav: {
       docs: 'Documentation'
     },
@@ -64,6 +67,8 @@ export const translations = {
       title: 'Cherry Studio 企业版 - 企业级 AI 管理平台',
       description: '专为现代团队和企业打造的 AI 生产力与管理平台'
     },
+    /* Marketing landing page content — preserved for potential future use.
+       The /<lang> route now redirects directly to /<lang>/docs.
     home: {
       title: 'Cherry Studio 企业版',
       subtitle: '企业级 AI 管理平台',
@@ -85,8 +90,8 @@ export const translations = {
         description: '统一的管理后台,基于角色的权限分配,灵活的资源访问控制'
       },
       privateDeployment: {
-        title: '完全私有化部署',
-        description: '支持企业内部服务器部署,私有云环境部署,数据 100% 私有可控'
+        title: '灵活的部署方式',
+        description: 'Express 版云端开箱即用；Premium 版支持企业内网/私有云部署，数据 100% 私有可控'
       },
       backendService: {
         title: '可靠的后端服务',
@@ -97,6 +102,7 @@ export const translations = {
         description: '满足最严格的数据安全与合规要求,支持审计日志,确保数据使用可追溯'
       }
     },
+    */
     nav: {
       docs: '文档'
     },
@@ -119,6 +125,8 @@ export const translations = {
       title: 'Cherry Studio Enterprise - エンタープライズ AI 管理プラットフォーム',
       description: '現代のチームと企業のために構築された AI 生産性・管理プラットフォーム'
     },
+    /* Marketing landing page content — preserved for potential future use.
+       The /<lang> route now redirects directly to /<lang>/docs.
     home: {
       title: 'Cherry Studio Enterprise',
       subtitle: 'エンタープライズ AI 管理プラットフォーム',
@@ -142,9 +150,9 @@ export const translations = {
         description: '統合管理コンソール、ロールベースの権限割り当て、柔軟なリソースアクセス制御。'
       },
       privateDeployment: {
-        title: '完全プライベートデプロイメント',
+        title: '柔軟な導入方式',
         description:
-          '企業内部サーバーデプロイメント、プライベートクラウド環境デプロイメントをサポート、データ 100% プライベート管理。'
+          'Express 版はクラウドですぐ利用可能、Premium 版はオンプレ/プライベートクラウドに導入しデータを 100% 自社管理。'
       },
       backendService: {
         title: '信頼性の高いバックエンドサービス',
@@ -157,6 +165,7 @@ export const translations = {
           '最も厳格なデータセキュリティとコンプライアンス要件を満たし、監査ログをサポート、データ使用の追跡可能性を確保。'
       }
     },
+    */
     nav: {
       docs: 'ドキュメント'
     },

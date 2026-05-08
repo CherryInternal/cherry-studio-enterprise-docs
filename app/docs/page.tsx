@@ -1,3 +1,4 @@
+import type * as React from 'react'
 import type * as PageTree from 'fumadocs-core/page-tree'
 import { toClientRenderer } from 'fumadocs-mdx/runtime/vite'
 import { DocsLayout } from 'fumadocs-ui/layouts/docs'
@@ -30,6 +31,16 @@ export async function loader({ params }: Route.LoaderArgs) {
   }
 }
 
+const DOWNLOAD_EXT = /\.(zip|pdf|tar|tar\.gz|tgz|gz|7z|rar|exe|dmg|pkg|msi|deb|rpm)(\?|#|$)/i
+
+function DownloadAwareLink({ href, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
+  if (typeof href === 'string' && DOWNLOAD_EXT.test(href)) {
+    return <a href={href} download {...props} />
+  }
+  const Anchor = defaultMdxComponents.a as React.ComponentType<React.AnchorHTMLAttributes<HTMLAnchorElement>>
+  return <Anchor href={href} {...props} />
+}
+
 const renderer = toClientRenderer(docs.doc, ({ toc, default: Mdx, frontmatter }) => {
   const fullToc = [
     { title: frontmatter.title, url: '#page-title', depth: 2 },
@@ -42,7 +53,7 @@ const renderer = toClientRenderer(docs.doc, ({ toc, default: Mdx, frontmatter })
       <DocsTitle id="page-title">{frontmatter.title}</DocsTitle>
       <DocsDescription>{frontmatter.description}</DocsDescription>
       <DocsBody>
-        <Mdx components={{ ...defaultMdxComponents, Card, Cards, ExperienceCard, ExperienceCards, ImageSteps }} />
+        <Mdx components={{ ...defaultMdxComponents, a: DownloadAwareLink, Card, Cards, ExperienceCard, ExperienceCards, ImageSteps }} />
       </DocsBody>
     </DocsPage>
   )

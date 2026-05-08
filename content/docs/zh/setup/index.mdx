@@ -7,22 +7,26 @@ import { DynamicLink } from 'fumadocs-core/dynamic-link'
 import { Callout } from 'fumadocs-ui/components/callout'
 
 <Callout type="info" title="仅 Premium 版">
-安装与部署仅适用于 Premium 版（私有化部署）。如果您使用 Express 版（云端托管），无需部署，请前往 <DynamicLink href="/[lang]/docs/quickstart">Express 版快速开始</DynamicLink>。
+安装与部署仅适用于 Premium 版（私有化部署）。如果您使用 Express 版（云端托管），无需部署，请前往 <DynamicLink href="/[lang]/docs/quickstart#express">Express 版快速开始</DynamicLink>。
 </Callout>
 
-## 🤖 使用 Cherry Studio Agent 一键部署（推荐）
+## 🤖 使用 Cherry Studio Agent 部署
 
-如果你正在使用 Cherry Studio 客户端，可以通过 **AI Agent 部署技能**自动完成整个部署过程——只需提供服务器信息，Agent 将自动判断最佳部署路径（Docker / Helm），并一步步引导你完成部署。
+Premium 版需要先完成部署才能登录企业版客户端。可借助 Cherry Studio 社区版中的 Agent 自动完成部署。
 
-**使用方法**：
+**步骤**：
 
-1. 下载部署技能包：<a href="/assets/downloads/cherry-enterprise-deploy-skill.zip" download>cherry-enterprise-deploy-skill.zip</a>
-2. 在 Cherry Studio 客户端中，进入**智能体 → 技能**，导入该技能包
-3. 向 Agent 提供你的服务器信息（IP、SSH 账号），Agent 将自动引导完成部署
+1. 下载并安装 [Cherry Studio 社区版](https://www.cherry-ai.com/download)
+2. 打开客户端，进入「智能体」，选择或新建一个智能体
+3. 将以下提示词发送给智能体：
 
-<Callout type="info">
-Agent 部署技能封装了下方 Docker 和 Helm 两种部署方式的完整流程，适合不熟悉命令行的用户。
-</Callout>
+   ```
+   按照 https://docs.enterprise.cherry-ai.com/zh/docs/setup 指引，安装 cherry-enterprise-deploy-skill，帮我部署。
+   ```
+
+4. 按 Agent 提示提供服务器信息（IP、SSH 账号），即可完成部署
+
+> 技能包下载：[cherry-enterprise-deploy-skill.zip](/assets/downloads/cherry-enterprise-deploy-skill.zip)
 
 如需手动部署，请继续阅读下方内容选择部署方式。
 
