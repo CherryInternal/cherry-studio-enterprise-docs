@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useParams } from 'react-router'
 
-import { i18n, locales } from '@/lib/i18n'
+import { i18n, isLocale } from '@/lib/i18n'
 
 interface LocalizedImageProps {
   src: string
@@ -25,7 +25,7 @@ interface LocalizedImageProps {
  */
 export function LocalizedImage({ src, alt, className, width, height }: LocalizedImageProps) {
   const params = useParams()
-  const currentLocale = params.lang && locales.includes(params.lang as string) ? params.lang : i18n.defaultLanguage
+  const currentLocale = isLocale(params.lang) ? params.lang : i18n.defaultLanguage
   const fallbackLocale = 'zh'
 
   const [imgSrc, setImgSrc] = useState(`/assets/images/${currentLocale}/${src}`)
