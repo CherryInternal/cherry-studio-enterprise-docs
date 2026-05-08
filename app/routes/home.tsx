@@ -1,14 +1,14 @@
 import { HomeLayout } from 'fumadocs-ui/layouts/home'
 import { Link, useParams } from 'react-router'
 
-import { i18n, locales } from '@/lib/i18n'
+import { i18n, isLocale } from '@/lib/i18n'
 import { baseOptions } from '@/lib/layout.shared'
 import { getTranslations } from '@/lib/translations'
 
 import type { Route } from './+types/home'
 
 export function meta({ params }: Route.MetaArgs) {
-  const lang = params.lang && locales.includes(params.lang) ? params.lang : i18n.defaultLanguage
+  const lang = isLocale(params.lang) ? params.lang : i18n.defaultLanguage
   const t = getTranslations(lang)
 
   return [{ title: t.meta.title }, { name: 'description', content: t.meta.description }]
@@ -16,7 +16,7 @@ export function meta({ params }: Route.MetaArgs) {
 
 export default function Home() {
   const params = useParams()
-  const lang = params.lang && locales.includes(params.lang) ? params.lang : i18n.defaultLanguage
+  const lang = isLocale(params.lang) ? params.lang : i18n.defaultLanguage
   const t = getTranslations(lang)
 
   const docsPath = lang === i18n.defaultLanguage ? '/docs' : `/${lang}/docs`

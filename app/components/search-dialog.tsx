@@ -5,6 +5,7 @@ import { useDocsSearch } from 'fumadocs-core/search/client'
 import type { SortedResult } from 'fumadocs-core/search'
 import type { SharedProps } from 'fumadocs-ui/components/dialog/search'
 import { useMemo } from 'react'
+import { useLocation } from 'react-router'
 import {
   SearchDialog,
   SearchDialogClose,
@@ -16,6 +17,8 @@ import {
   SearchDialogList,
   SearchDialogOverlay
 } from 'fumadocs-ui/components/dialog/search'
+
+import { getLocaleFromPath } from '@/lib/i18n'
 
 const CJK_REGEX = /[\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]/
 
@@ -48,7 +51,11 @@ function initOrama(locale?: string) {
     return create({
       schema: { _: 'string' as const },
       components: {
-        tokenizer: { tokenize: cjkTokenize }
+        tokenizer: {
+          language: ORAMA_LANGUAGES[locale] ?? 'english',
+          normalizationCache: new Map<string, string>(),
+          tokenize: cjkTokenize
+        }
       }
     })
   }
@@ -72,10 +79,12 @@ export default function CustomSearchDialog({
   links = [],
   ...props
 }: Props) {
+  const location = useLocation()
+  const currentLocale = locale ?? getLocaleFromPath(location.pathname)
   const { search, setSearch, query } = useDocsSearch({
     type: 'static',
     from: api,
-    locale,
+    locale: currentLocale,
     delayMs,
     initOrama
   })

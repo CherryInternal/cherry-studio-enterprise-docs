@@ -6,7 +6,7 @@ import { useParams } from 'react-router'
 import { ImageZoom } from 'fumadocs-ui/components/image-zoom'
 import { cn } from 'fumadocs-ui/utils/cn'
 
-import { i18n, locales } from '@/lib/i18n'
+import { i18n, isLocale } from '@/lib/i18n'
 import { getTranslations } from '@/lib/translations'
 
 export interface Step {
@@ -76,8 +76,8 @@ export function ImageSteps({ title, basePath, steps, className }: ImageStepsProp
   const total = steps.length
 
   const params = useParams()
-  const currentLocale = params.lang && locales.includes(params.lang as string) ? params.lang : i18n.defaultLanguage
-  const t = getTranslations(currentLocale as string)
+  const currentLocale = isLocale(params.lang) ? params.lang : i18n.defaultLanguage
+  const t = getTranslations(currentLocale)
   const fallbackLocale = 'zh'
 
   const goTo = (index: number) => {
@@ -128,7 +128,7 @@ export function ImageSteps({ title, basePath, steps, className }: ImageStepsProp
             src={step.image}
             alt={step.title}
             basePath={basePath}
-            currentLocale={currentLocale as string}
+            currentLocale={currentLocale}
             fallbackLocale={fallbackLocale}
             visible={index === current}
           />

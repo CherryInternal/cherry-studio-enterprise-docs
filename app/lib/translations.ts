@@ -1,3 +1,48 @@
+import type { Locale } from './i18n'
+
+export type TranslationKeys = {
+  meta: {
+    title: string
+    description: string
+  }
+  home: {
+    title: string
+    subtitle: string
+    description: string
+    getStarted: string
+    deployGuide: string
+  }
+  features: {
+    modelManagement: FeatureTranslation
+    knowledgeBase: FeatureTranslation
+    accessControl: FeatureTranslation
+    privateDeployment: FeatureTranslation
+    backendService: FeatureTranslation
+    security: FeatureTranslation
+  }
+  nav: {
+    docs: string
+  }
+  imageSteps: {
+    step: string
+    prev: string
+    next: string
+    goToStep: string
+  }
+  error: {
+    oops: string
+    unexpected: string
+    notFound: string
+    notFoundMessage: string
+    error: string
+  }
+}
+
+type FeatureTranslation = {
+  title: string
+  description: string
+}
+
 export const translations = {
   en: {
     meta: {
@@ -174,10 +219,7 @@ export const translations = {
       error: 'エラー'
     }
   }
-} as const
-
-export type Locale = keyof typeof translations
-export type TranslationKeys = (typeof translations)['en']
+} as const satisfies Record<Locale, TranslationKeys>
 
 export function getTranslations(locale: string): TranslationKeys {
   return translations[locale as Locale] || translations['en']
