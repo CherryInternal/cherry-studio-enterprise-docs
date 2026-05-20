@@ -56,12 +56,10 @@ jobs:
           # Upload archive (scp uses -P for port)
           scp $SSH_KEY -P $PORT docs-build.tar.gz ${SSH_USER}@${SSH_HOST}:/tmp/docs-build.tar.gz
 
-          # Remote: backup, deploy, cleanup
+          # Remote: clean deploy directory and extract new build
           ssh $SSH_KEY -p $PORT ${SSH_USER}@${SSH_HOST} << DEPLOY
             set -e
-            rm -rf "${REMOTE_PATH}/.backup"
-            mkdir -p "${REMOTE_PATH}/.backup"
-            find "${REMOTE_PATH}" -maxdepth 1 -not -name '.backup' -not -path "${REMOTE_PATH}" -exec mv {} "${REMOTE_PATH}/.backup/" \;
+            find "${REMOTE_PATH}" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
             tar -xzf /tmp/docs-build.tar.gz -C "${REMOTE_PATH}"
             rm -f /tmp/docs-build.tar.gz
           DEPLOY
