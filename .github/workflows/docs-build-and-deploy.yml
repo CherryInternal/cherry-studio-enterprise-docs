@@ -9,6 +9,20 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # SaaS 使用文档（原站，docs.enterprise.cherry-ai.com）
+          - variant: saas
+            deploy_path_secret: DOCS_DEPLOY_PATH
+            default_deploy_path: /var/www/docs
+          # Express 私有化部署文档（deploy.enterprise.cherry-ai.com）
+          # 等运维确认子域与目标路径后，把对应 secret 填进 GitHub Settings 即可生效
+          - variant: selfhost
+            deploy_path_secret: DOCS_DEPLOY_PATH_SELFHOST
+            default_deploy_path: /var/www/docs-selfhost
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -29,7 +43,10 @@ jobs:
       - name: Process MDX files
         run: pnpm fumadocs-mdx
 
-      - name: Build application
+      - name: Build application (${{ matrix.variant }})
+        env:
+          DOCS_VARIANT: ${{ matrix.variant }}
+          VITE_DOCS_VARIANT: ${{ matrix.variant }}
         run: pnpm build
 
       - name: Package build output
@@ -42,16 +59,17 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -p ${{ secrets.DOCS_SSH_PORT || 22 }} -H ${{ secrets.DOCS_SSH_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Deploy via SCP and SSH
+      - name: Deploy via SCP and SSH (${{ matrix.variant }})
         env:
           SSH_HOST: ${{ secrets.DOCS_SSH_HOST }}
           SSH_USER: ${{ secrets.DOCS_SSH_USER }}
           SSH_PORT: ${{ secrets.DOCS_SSH_PORT }}
-          DEPLOY_PATH: ${{ secrets.DOCS_DEPLOY_PATH }}
+          DEPLOY_PATH: ${{ secrets[matrix.deploy_path_secret] }}
+          DEFAULT_DEPLOY_PATH: ${{ matrix.default_deploy_path }}
         run: |
           SSH_KEY="-i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new"
           PORT="${SSH_PORT:-22}"
-          REMOTE_PATH="${DEPLOY_PATH:-/var/www/docs}"
+          REMOTE_PATH="${DEPLOY_PATH:-$DEFAULT_DEPLOY_PATH}"
 
           # Upload archive (scp uses -P for port)
           scp $SSH_KEY -P $PORT docs-build.tar.gz ${SSH_USER}@${SSH_HOST}:/tmp/docs-build.tar.gz
