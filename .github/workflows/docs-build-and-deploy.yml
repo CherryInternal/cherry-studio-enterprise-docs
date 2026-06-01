@@ -13,15 +13,16 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # SaaS 使用文档（原站，docs.enterprise.cherry-ai.com）
+          # SaaS 使用文档（原站，docs.enterprise.cherry-ai.com） — SSH + SCP 到现有服务器
           - variant: saas
+            transport: ssh
             deploy_path_secret: DOCS_DEPLOY_PATH
             default_deploy_path: /var/www/docs
-          # Express 私有化部署文档（deploy.cherry-ai.com）
-          # 等运维确认子域与目标路径后，把对应 secret 填进 GitHub Settings 即可生效
+          # Express 私有化部署文档（deploy.cherry-ai.com） — FTP 到新服务器
           - variant: selfhost
-            deploy_path_secret: DOCS_DEPLOY_PATH_SELFHOST
-            default_deploy_path: /var/www/docs-selfhost
+            transport: ftp
+            deploy_path_secret: DOCS_FTP_PATH
+            default_deploy_path: /
 
     steps:
       - name: Checkout code
@@ -49,10 +50,14 @@ jobs:
           VITE_DOCS_VARIANT: ${{ matrix.variant }}
         run: pnpm build
 
-      - name: Package build output
+      # ────────────────── SSH + SCP path (saas) ──────────────────
+
+      - name: Package build output (ssh)
+        if: matrix.transport == 'ssh'
         run: tar -czf docs-build.tar.gz -C build/client .
 
-      - name: Setup SSH key
+      - name: Setup SSH key (ssh)
+        if: matrix.transport == 'ssh'
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.DOCS_SSH_KEY }}" > ~/.ssh/deploy_key
@@ -60,6 +65,7 @@ jobs:
           ssh-keyscan -p ${{ secrets.DOCS_SSH_PORT || 22 }} -H ${{ secrets.DOCS_SSH_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy via SCP and SSH (${{ matrix.variant }})
+        if: matrix.transport == 'ssh'
         env:
           SSH_HOST: ${{ secrets.DOCS_SSH_HOST }}
           SSH_USER: ${{ secrets.DOCS_SSH_USER }}
@@ -83,3 +89,27 @@ jobs:
             tar -xzf /tmp/docs-build.tar.gz -C "${REMOTE_PATH}"
             rm -f /tmp/docs-build.tar.gz
           DEPLOY
+
+      # ────────────────── FTP path (selfhost) ──────────────────
+
+      - name: Install lftp (ftp)
+        if: matrix.transport == 'ftp'
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Deploy via FTP (${{ matrix.variant }})
+        if: matrix.transport == 'ftp'
+        env:
+          FTP_HOST: ${{ secrets.DOCS_FTP_HOST }}
+          FTP_USER: ${{ secrets.DOCS_FTP_USER }}
+          FTP_PASS: ${{ secrets.DOCS_FTP_PASSWORD }}
+          FTP_PORT: ${{ secrets.DOCS_FTP_PORT }}
+          REMOTE_PATH: ${{ secrets[matrix.deploy_path_secret] || matrix.default_deploy_path }}
+        run: |
+          PORT="${FTP_PORT:-21}"
+          lftp -e "
+            set ssl:verify-certificate no;
+            set ftp:passive-mode yes;
+            open -u '$FTP_USER','$FTP_PASS' -p $PORT $FTP_HOST;
+            mirror -R --delete --verbose --exclude-glob .backup --exclude-glob .backup/ build/client/ ${REMOTE_PATH};
+            bye
+          "
