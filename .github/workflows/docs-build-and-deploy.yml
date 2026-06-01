@@ -19,10 +19,9 @@ jobs:
             deploy_path_secret: DOCS_DEPLOY_PATH
             default_deploy_path: /var/www/docs
           # Express 私有化部署文档（deploy.cherry-ai.com） — FTP 到新服务器
+          # 沿用旧 build-and-deploy.yml 的 FTP_HOST / FTP_USERNAME / FTP_PASSWORD 三个 secret
           - variant: selfhost
             transport: ftp
-            deploy_path_secret: DOCS_FTP_PATH
-            default_deploy_path: /
 
     steps:
       - name: Checkout code
@@ -91,25 +90,14 @@ jobs:
           DEPLOY
 
       # ────────────────── FTP path (selfhost) ──────────────────
+      # 复用旧 build-and-deploy.yml 的部署方式（SamKirkland/FTP-Deploy-Action + 同名 secret）
 
-      - name: Install lftp (ftp)
+      - name: Deploy to FTP server (${{ matrix.variant }})
         if: matrix.transport == 'ftp'
-        run: sudo apt-get update && sudo apt-get install -y lftp
-
-      - name: Deploy via FTP (${{ matrix.variant }})
-        if: matrix.transport == 'ftp'
-        env:
-          FTP_HOST: ${{ secrets.DOCS_FTP_HOST }}
-          FTP_USER: ${{ secrets.DOCS_FTP_USER }}
-          FTP_PASS: ${{ secrets.DOCS_FTP_PASSWORD }}
-          FTP_PORT: ${{ secrets.DOCS_FTP_PORT }}
-          REMOTE_PATH: ${{ secrets[matrix.deploy_path_secret] || matrix.default_deploy_path }}
-        run: |
-          PORT="${FTP_PORT:-21}"
-          lftp -e "
-            set ssl:verify-certificate no;
-            set ftp:passive-mode yes;
-            open -u '$FTP_USER','$FTP_PASS' -p $PORT $FTP_HOST;
-            mirror -R --delete --verbose --exclude-glob .backup --exclude-glob .backup/ build/client/ ${REMOTE_PATH};
-            bye
-          "
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./build/client/
+          server-dir: /
