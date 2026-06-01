@@ -17,7 +17,7 @@ jobs:
           - variant: saas
             deploy_path_secret: DOCS_DEPLOY_PATH
             default_deploy_path: /var/www/docs
-          # Express 私有化部署文档（deploy.enterprise.cherry-ai.com）
+          # Express 私有化部署文档（deploy.cherry-ai.com）
           # 等运维确认子域与目标路径后，把对应 secret 填进 GitHub Settings 即可生效
           - variant: selfhost
             deploy_path_secret: DOCS_DEPLOY_PATH_SELFHOST
