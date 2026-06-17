@@ -40,6 +40,60 @@ Click "Private Deployment" or "Cloud Service" in the bottom-right corner of the 
 
 </PremiumOnly>
 
+## Runtime Dependencies
+
+If you plan to use **agents**, the following runtimes must be installed on the computer running the client; they are not needed if you only use chat, knowledge base, and similar features.
+
+**Match the list to your OS:**
+
+- **Windows users**: install **Python**, **Node.js**, and **Git for Windows**
+- **macOS / Linux users**: install **Python** and **Node.js**
+
+### Python
+
+Download page: https://www.python.org/downloads/
+
+The page auto-detects your OS — click the large download button at the top to get the matching installer. The screenshot below is the macOS view; on Windows the button reads "Download the latest version for Windows".
+
+<img src="/assets/images/shared/install/python-download.webp" alt="Python download page" />
+
+After the download finishes, double-click the installer and follow the wizard — clicking **Continue** / **Next** through each step is enough to complete the install:
+
+<img src="/assets/images/shared/install/python-installer.webp" alt="Python install wizard" style={{width:'60%'}} />
+
+### Node.js
+
+1. Open https://nodejs.org/ and click the **Get Node.js** button:
+
+   <img src="/assets/images/shared/install/nodejs-home.webp" alt="Node.js homepage" />
+
+2. On the download page, pick your OS from the dropdown at the top (Windows / macOS / Linux), then click the **Installer** button below to download the installer:
+
+   <img src="/assets/images/shared/install/nodejs-download.webp" alt="Node.js download page" />
+
+### Git for Windows (Windows only)
+
+macOS / Linux ship with bash — skip this section.
+
+Download page: https://git-scm.com/downloads/win
+
+Click the **Click here to download** link at the top of the page to grab the latest installer. Keep the default options during install; **Git Bash** is included automatically.
+
+<img src="/assets/images/shared/install/git-windows-download.webp" alt="Git for Windows download page" />
+
+Once installed, the **Git Bash** path will be detected automatically when creating an agent. If the path is empty (as shown on the left), Git for Windows has not been installed yet:
+
+<div style={{display:'flex',gap:'1rem',alignItems:'flex-start'}}>
+  <figure style={{flex:1,textAlign:'center',margin:0}}>
+    <img src="/assets/images/shared/install/agent-gitbash-empty-en.png" alt="Git Bash not installed — path is empty" style={{width:'100%'}} />
+    <figcaption style={{fontSize:'0.85rem',color:'#666'}}>❌ Not installed</figcaption>
+  </figure>
+  <figure style={{flex:1,textAlign:'center',margin:0}}>
+    <img src="/assets/images/shared/install/agent-gitbash-found-en.png" alt="Git Bash installed — path auto-discovered" style={{width:'100%'}} />
+    <figcaption style={{fontSize:'0.85rem',color:'#666'}}>✅ Installed (auto-discovered)</figcaption>
+  </figure>
+</div>
+
 ## Core Features
 
 ### 💬 Smart Conversations
