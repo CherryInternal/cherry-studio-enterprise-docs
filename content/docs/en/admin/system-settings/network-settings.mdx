@@ -1,6 +1,6 @@
 ---
 title: "Network Settings"
-description: "Configure proxy servers to ensure the system can access overseas model providers (OpenAI, Claude, Gemini) and external APIs."
+description: "Configure proxy servers to ensure the system can access the configured model providers and external APIs in restricted network environments."
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
@@ -8,7 +8,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 ## Configuration Steps
 
 1. Go to **System Settings** > **Network Settings**.
-2. Ensure your local proxy software (Clash, v2rayN, Surge, etc.) is running.
+2. Ensure your enterprise proxy server/gateway is running properly (e.g., when the intranet must reach external APIs through a unified egress).
 3. Enter the proxy address below.
 
 <img src="/assets/images/en/admin/system-settings-network_en.webp" alt="" />
@@ -16,13 +16,9 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 <table><thead><tr><th width="122.96875">Parameter</th><th width="300.38671875">Description</th><th>Example</th></tr></thead><tbody><tr><td><strong>System proxy</strong></td><td>Global HTTP/HTTPS proxy. Core chat and model list updates go through this channel.</td><td><code>{'http://127.0.0.1:7890'}</code></td></tr><tr><td><strong>Mini program proxy</strong></td><td>(Optional) Proxy for built-in mini programs or plugin services. Typically same as system proxy.</td><td><code>{'http://127.0.0.1:7890'}</code></td></tr></tbody></table>
 
-## Common Proxy Port References
+## Proxy Port Reference
 
-Default ports vary by software; check the local listening port in your proxy client:
-
-* **Clash / CFW**: `7890`
-* **v2rayN**: `10809`
-* **Surge**: `6152`
+Listening ports vary by proxy software/gateway. Use the "local listening port" shown in your actual proxy service settings, and fill in the corresponding `http://<address>:<port>`.
 
 <Callout type="warn">
 **Note**:

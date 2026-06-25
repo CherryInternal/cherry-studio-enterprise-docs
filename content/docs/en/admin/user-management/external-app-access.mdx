@@ -49,7 +49,7 @@ model-name@x-express
 Example:
 
 ```text
-anthropic/claude-sonnet-4.5@x-express
+qwen/qwen3-max@x-express
 ```
 
 <Callout type="warn">
@@ -65,7 +65,7 @@ curl https://api.enterprise.cherry-ai.com/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer sk-your-api-key" \
   -d '{
-    "model": "anthropic/claude-sonnet-4.5@x-express",
+    "model": "qwen/qwen3-max@x-express",
     "messages": [
       {
         "role": "user",
@@ -87,7 +87,7 @@ const client = new OpenAI({
 })
 
 const completion = await client.chat.completions.create({
-  model: 'anthropic/claude-sonnet-4.5@x-express',
+  model: 'qwen/qwen3-max@x-express',
   messages: [{ role: 'user', content: 'Hello, please introduce yourself.' }]
 })
 
@@ -105,7 +105,7 @@ client = OpenAI(
 )
 
 resp = client.chat.completions.create(
-    model="anthropic/claude-sonnet-4.5@x-express",
+    model="qwen/qwen3-max@x-express",
     messages=[{"role": "user", "content": "Hello, please introduce yourself."}],
 )
 
@@ -121,7 +121,7 @@ If you are using a chat client, IDE plugin, or another third-party application, 
 | Provider Type | `OpenAI Compatible` / `OpenAI` |
 | Base URL | `https://api.enterprise.cherry-ai.com` |
 | API Key | The user's own `sk-...` key |
-| Model | `anthropic/claude-sonnet-4.5@x-express` |
+| Model | `qwen/qwen3-max@x-express` |
 
 <Callout type="info">
 **Compatibility note:** This integration works best with applications that support manually entering a custom model name. If an app strictly depends on standard automatic model listing, you may still need to enter the model name manually.
@@ -134,7 +134,7 @@ If you are using a chat client, IDE plugin, or another third-party application, 
 This usually means the `model` value does not include the provider suffix. Make sure it looks like this:
 
 ```text
-anthropic/claude-sonnet-4.5@x-express
+qwen/qwen3-max@x-express
 ```
 
 **2. Why do I get `401 Unauthorized` or `Key Expired`?**

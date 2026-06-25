@@ -1,6 +1,6 @@
 ---
 title: "ネットワーク設定"
-description: "プロキシサーバーを設定し、海外モデルプロバイダー（OpenAI、Claude、Gemini）や外部 API へのアクセスを確保します。"
+description: "プロキシサーバーを設定し、制限されたネットワーク環境下でも設定済みのモデルプロバイダーや外部 API へアクセスできるようにします。"
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
@@ -8,7 +8,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 ## 設定手順
 
 1. **システム設定** > **ネットワーク設定** へ移動。
-2. ローカルのプロキシソフト（Clash, v2rayN, Surge など）を起動。
+2. 企業のプロキシサーバー/ゲートウェイが正常に稼働していることを確認（社内から統一出口経由で外部 API にアクセスする場合など）。
 3. 下記の入力欄にプロキシアドレスを入力。
 
 <img src="/assets/images/ja/admin/system-settings-network_ja.webp" alt="" />
@@ -16,13 +16,9 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 <table><thead><tr><th width="122.96875">項目</th><th width="300.38671875">説明</th><th>例</th></tr></thead><tbody><tr><td><strong>システムプロキシ</strong></td><td>HTTP/HTTPS の全体プロキシ。チャットやモデル一覧更新はこの経路を使用。</td><td><code>{'http://127.0.0.1:7890'}</code></td></tr><tr><td><strong>ミニプログラムプロキシ</strong></td><td>（任意）内蔵ミニプログラムやプラグイン用。通常はシステムプロキシと同じ。</td><td><code>{'http://127.0.0.1:7890'}</code></td></tr></tbody></table>
 
-## よくあるプロキシポート
+## プロキシポート参考
 
-プロキシソフトにより既定ポートは異なります。ローカルの監視ポートを確認してください：
-
-* **Clash / CFW**: `7890`
-* **v2rayN**: `10809`
-* **Surge**: `6152`
+プロキシソフト/ゲートウェイにより監視ポートは異なります。実際にお使いのプロキシサービスの設定画面にある「ローカル監視ポート」を確認し、対応する `http://<アドレス>:<ポート>` を入力してください。
 
 <Callout type="warn">
 **注意**：
