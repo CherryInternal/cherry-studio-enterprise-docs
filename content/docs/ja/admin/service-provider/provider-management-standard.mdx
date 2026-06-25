@@ -1,6 +1,6 @@
 ---
 title: "プロバイダー管理（標準プロトコル）"
-description: "標準プロトコル（OpenAI、Anthropic、Google など）で主要モデルプロバイダーを接続する設定手順です。"
+description: "標準プロトコル（OpenAI 互換、Anthropic など）で主要モデルプロバイダーを接続する設定手順です。"
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
@@ -14,7 +14,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 </Callout>
 
 <img src="/assets/images/ja/admin/provider-management-standard-1_ja.webp" alt="" />
-このモジュールでは、企業が利用する AI モデルのソースを統合的に管理できます。Cherry Studio は主要プロバイダー用のプリセットを備えており、OpenAI、Anthropic（Claude）、Google（Gemini）に加え、OpenAI 互換の国内中継プロバイダー（SiliconFlow、DeepSeek、OpenRouter など）にも対応します。
+このモジュールでは、企業が利用する AI モデルのソースを統合的に管理できます。Cherry Studio は主要プロバイダー用のプリセットを備えており、DeepSeek、通義千問、GLM、Kimi に加え、OpenAI 互換の中継プロバイダー（SiliconFlow、OpenRouter など）にも対応します。
 
 <Callout type="info">
 **Premium 版の範囲**：標準の API Key と API Host で接続する商用モデルサービスを指します。
@@ -48,7 +48,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 モデル名の右側のアイコンは特殊能力を示します。アシスタントに適したモデルを選ぶ上で重要です。
 
-<table><thead><tr><th width="66.87890625">アイコン</th><th width="239.375">名称</th><th>意味と用途</th></tr></thead><tbody><tr><td>🧠</td><td><strong>推論 (Reasoning)</strong></td><td><strong>深い推論能力</strong>。<code>Claude Opus 4.6</code>、<code>o3</code>、<code>DeepSeek-R1</code> などは回答前に深い思考を行います。「考え中...」が表示され、複雑なロジック、数学問題やコードアーキテクチャ設計に適します。</td></tr><tr><td>🔧</td><td><strong>ツール呼び出し (Function Calling)</strong></td><td><strong>プラグイン/MCP 対応</strong>。このアイコンがあるモデルのみ、知識ベース検索や Web 検索、MCP ツールが利用可能です。</td></tr><tr><td>👁️</td><td><strong>視覚 (Vision)</strong></td><td><strong>画像理解</strong>。画像の解析/説明/文字抽出が可能です。</td></tr></tbody></table>
+<table><thead><tr><th width="66.87890625">アイコン</th><th width="239.375">名称</th><th>意味と用途</th></tr></thead><tbody><tr><td>🧠</td><td><strong>推論 (Reasoning)</strong></td><td><strong>深い推論能力</strong>。<code>DeepSeek-R1</code> などは回答前に深い思考を行います。「考え中...」が表示され、複雑なロジック、数学問題やコードアーキテクチャ設計に適します。</td></tr><tr><td>🔧</td><td><strong>ツール呼び出し (Function Calling)</strong></td><td><strong>プラグイン/MCP 対応</strong>。このアイコンがあるモデルのみ、知識ベース検索や Web 検索、MCP ツールが利用可能です。</td></tr><tr><td>👁️</td><td><strong>視覚 (Vision)</strong></td><td><strong>画像理解</strong>。画像の解析/説明/文字抽出が可能です。</td></tr></tbody></table>
 
 ***
 
