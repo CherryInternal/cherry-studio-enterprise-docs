@@ -31,10 +31,10 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 <img src="/assets/images/zh/admin/agent-management-create-model_zh.webp" alt="模型设置" />
 
-<table><thead><tr><th width="140">参数</th><th width="80">必填</th><th>说明</th></tr></thead><tbody><tr><td><strong>主模型</strong></td><td>是</td><td>用于生成响应的主要模型。建议选择能力最强的模型（如 Claude Opus、Codex 等）。</td></tr><tr><td><strong>规划模型</strong></td><td>否</td><td>用于复杂规划和推理任务的模型。留空时使用主模型。建议选择推理能力强的模型。</td></tr><tr><td><strong>快速模型</strong></td><td>否</td><td>用于简单任务的小型快速模型。留空时使用主模型。适合选择响应速度快、成本低的模型。</td></tr></tbody></table>
+<table><thead><tr><th width="140">参数</th><th width="80">必填</th><th>说明</th></tr></thead><tbody><tr><td><strong>主模型</strong></td><td>是</td><td>用于生成响应的主要模型。建议选择能力最强的模型（如 DeepSeek-R1 等）。</td></tr><tr><td><strong>规划模型</strong></td><td>否</td><td>用于复杂规划和推理任务的模型。留空时使用主模型。建议选择推理能力强的模型。</td></tr><tr><td><strong>快速模型</strong></td><td>否</td><td>用于简单任务的小型快速模型。留空时使用主模型。适合选择响应速度快、成本低的模型。</td></tr></tbody></table>
 
 <Callout type="info">
-**模型选择建议：** 主模型选择 Claude Opus 或 Codex 级别；规划模型可与主模型相同或使用 Claude Sonnet；快速模型建议使用 Claude Haiku 等轻量模型以降低成本。
+**模型选择建议：** 主模型选择 DeepSeek-R1 级别；规划模型可与主模型相同或使用 DeepSeek-V3.2；快速模型建议使用 Qwen 2.5 7B 等轻量模型以降低成本。
 </Callout>
 
 ## 权限设置

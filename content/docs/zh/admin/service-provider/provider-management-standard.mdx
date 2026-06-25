@@ -14,7 +14,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 </Callout>
 
 <img src="/assets/images/zh/admin/provider-management-standard-1_zh.webp" alt="" />
-在此模块中，管理员可以统一配置和管理企业所使用的 AI 模型来源。Cherry Studio 预置了主流大模型厂商的连接协议，支持一键接入 OpenAI、Anthropic (Claude)、Google (Gemini) 以及各类兼容 OpenAI 协议的国内中转服务商（如 SiliconFlow、DeepSeek、OpenRouter 等）。
+在此模块中，管理员可以统一配置和管理企业所使用的 AI 模型来源。Cherry Studio 预置了主流大模型厂商的连接协议，支持一键接入各类兼容 OpenAI 协议的模型服务商（如 DeepSeek、阿里百炼、SiliconFlow、OpenRouter 等）。
 
 <Callout type="info">
 **旗舰版定义的范围**：指通过标准的 API Key 和 API Host 方式接入的商业化模型服务。
@@ -48,7 +48,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 在模型名称右侧，Cherry Studio 使用图标直观地展示了该模型具备的特殊能力。理解这些图标对于为助手选择合适的模型至关重要。
 
-<table><thead><tr><th width="66.87890625">图标</th><th width="239.375">名称</th><th>含义与应用场景</th></tr></thead><tbody><tr><td>🧠</td><td><strong>推理 (Reasoning)</strong></td><td><strong>深度推理能力</strong>。代表该模型（如 <code>Claude Opus 4.6</code>、<code>o3</code>、<code>DeepSeek-R1</code>）在回答前会进行深度思考。用户端会看到"正在思考..."的过程展开，适合解决复杂的逻辑推理、数学问题或代码架构设计。</td></tr><tr><td>🔧</td><td><strong>工具调用 (Function Calling)</strong></td><td><strong>插件/MCP支持</strong>。代表该模型支持 Function Calling 协议。<strong>只有带此图标的模型</strong>，才能正常使用知识库检索、联网搜索或执行 MCP 工具指令。</td></tr><tr><td>👁️</td><td><strong>视觉 (Vision)</strong></td><td><strong>多模态识图</strong>。代表该模型可以"看见"图片。用户可以在对话框中上传图片，让模型进行分析、描述或提取文字。</td></tr></tbody></table>
+<table><thead><tr><th width="66.87890625">图标</th><th width="239.375">名称</th><th>含义与应用场景</th></tr></thead><tbody><tr><td>🧠</td><td><strong>推理 (Reasoning)</strong></td><td><strong>深度推理能力</strong>。代表该模型（如 <code>DeepSeek-R1</code>）在回答前会进行深度思考。用户端会看到"正在思考..."的过程展开，适合解决复杂的逻辑推理、数学问题或代码架构设计。</td></tr><tr><td>🔧</td><td><strong>工具调用 (Function Calling)</strong></td><td><strong>插件/MCP支持</strong>。代表该模型支持 Function Calling 协议。<strong>只有带此图标的模型</strong>，才能正常使用知识库检索、联网搜索或执行 MCP 工具指令。</td></tr><tr><td>👁️</td><td><strong>视觉 (Vision)</strong></td><td><strong>多模态识图</strong>。代表该模型可以"看见"图片。用户可以在对话框中上传图片，让模型进行分析、描述或提取文字。</td></tr></tbody></table>
 
 ***
 

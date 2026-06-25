@@ -8,11 +8,11 @@ import { Callout } from 'fumadocs-ui/components/callout'
 **Definition**: After a user starts a new chat and sends the first message, the system uses this model in the background to summarize long messages into a short title (e.g., summarize "Please draft a Friday meeting memo..." to "Friday meeting memo").
 
 <Callout type="warn">
-**⚠️ Cost and performance warning** Avoid configuring **reasoning models** here (e.g., `DeepSeek-R1`, `OpenAI o1`).
+**⚠️ Cost and performance warning** Avoid configuring **reasoning models** here (e.g., `DeepSeek-R1`, `QwQ`).
 
 * **Why**: Reasoning models perform long chain-of-thought before output. Using them for simple titles is overkill, making title generation **very slow** and unnecessarily expensive.
 </Callout>
 
 * **Best practices**:
-  * **Recommended models**: `Qwen 2.5 7B`, `GPT-5.1-mini`, `Gemini Flash`.
+  * **Recommended models**: `Qwen 2.5 7B`, `DeepSeek-V3.2`, `GLM-4-Flash`.
   * **Key needs**: **Fast, instruction-following, and cheap**. It only needs to understand "summarize as a title."
