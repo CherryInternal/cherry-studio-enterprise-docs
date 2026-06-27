@@ -31,10 +31,10 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 <img src="/assets/images/ja/admin/agent-management-create-model_ja.webp" alt="モデル設定" />
 
-<table><thead><tr><th width="180">パラメータ</th><th width="60">必須</th><th>説明</th></tr></thead><tbody><tr><td><strong>メインモデル</strong></td><td>はい</td><td>応答生成に使用する主要モデル。最も高性能なモデル（Claude Opus、Codex 等）を推奨。</td></tr><tr><td><strong>プランニングモデル</strong></td><td>いいえ</td><td>複雑な計画・推論タスク用モデル。空欄の場合はメインモデルを使用。</td></tr><tr><td><strong>高速モデル</strong></td><td>いいえ</td><td>シンプルなタスク用の小型・高速モデル。空欄の場合はメインモデルを使用。低コストで応答が速いモデルに最適。</td></tr></tbody></table>
+<table><thead><tr><th width="180">パラメータ</th><th width="60">必須</th><th>説明</th></tr></thead><tbody><tr><td><strong>メインモデル</strong></td><td>はい</td><td>応答生成に使用する主要モデル。最も高性能なモデル（DeepSeek-V4、Qwen3-Coder-Plus 等）を推奨。</td></tr><tr><td><strong>プランニングモデル</strong></td><td>いいえ</td><td>複雑な計画・推論タスク用モデル。空欄の場合はメインモデルを使用。</td></tr><tr><td><strong>高速モデル</strong></td><td>いいえ</td><td>シンプルなタスク用の小型・高速モデル。空欄の場合はメインモデルを使用。低コストで応答が速いモデルに最適。</td></tr></tbody></table>
 
 <Callout type="info">
-**モデル選択のヒント：** メインモデルには Claude Opus または Codex クラスを選択。プランニングモデルはメインモデルと同等か Claude Sonnet。高速モデルには Claude Haiku などの軽量モデルがコスト削減に有効です。
+**モデル選択のヒント：** メインモデルには DeepSeek-V4 または Qwen3-Coder-Plus クラスを選択。プランニングモデルはメインモデルと同等か GLM-5.2 などの推論性能の高いモデル。高速モデルには Qwen3.5-Flash、DeepSeek-V4-Flash などの軽量モデルがコスト削減に有効です。
 </Callout>
 
 ## 権限設定

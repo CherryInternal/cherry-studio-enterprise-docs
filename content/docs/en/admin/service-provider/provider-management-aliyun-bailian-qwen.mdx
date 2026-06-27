@@ -44,7 +44,7 @@ Based on Bailian's latest API policy, Cherry Studio groups models into two categ
 
 _At the top of the model list, representing Aliyun's strongest models._
 
-<table><thead><tr><th width="150">Series</th><th width="200">Typical ID</th><th width="300">Use cases</th><th>Recommendation</th></tr></thead><tbody><tr><td><strong>Flagship (Max)</strong></td><td><code>qwen3-max</code><br /><code>qwen3-max-2026-01-23</code></td><td><strong>Complex tasks</strong>. 262K context. Reasoning, long-form writing, instruction following. The strongest commercial Qwen model.</td><td>✅ Recommended for executives and core teams.</td></tr><tr><td><strong>Balanced (Plus)</strong></td><td><code>qwen3.6-plus</code><br /><code>qwen3.5-plus</code></td><td><strong>Best value</strong>. 1M context. Faster than Max and lower cost, supports agentic workflows.</td><td>✅ Recommended as a company-wide default.</td></tr><tr><td><strong>Lightweight (Flash)</strong></td><td><code>qwen3.5-flash</code></td><td><strong>Ultra-low cost</strong>. 1M context. Ideal for simple Q&A, classification, and summarization.</td><td>💡 Best for high-frequency, low-complexity tasks.</td></tr><tr><td><strong>Reasoning (QwQ)</strong></td><td><code>qwq-plus</code></td><td><strong>Deep thinking</strong>. Optimized for math, code, and complex reasoning chains.</td><td>🧠 Suitable for R&D or data teams.</td></tr><tr><td><strong>Coder</strong></td><td><code>qwen3-coder-plus</code><br /><code>qwen3-coder-flash</code></td><td><strong>Code-focused</strong>. 1M context. Code generation, review, and refactoring.</td><td>💻 Best for development teams.</td></tr><tr><td><strong>Vision (VL)</strong></td><td><code>qwen3-vl-plus</code><br /><code>qwen3-vl-flash</code></td><td><strong>Image understanding</strong>. 262K context. Image recognition, OCR, chart analysis.</td><td>👁️ Enable when image analysis is needed.</td></tr><tr><td><strong>Long context (Long)</strong></td><td><code>qwen-long</code></td><td><strong>Massive document analysis</strong>. 10M context for full PDF summarization or Q&A.</td><td>🔧 Use for extra-long document scenarios.</td></tr></tbody></table>
+<table><thead><tr><th width="150">Series</th><th width="200">Typical ID</th><th width="300">Use cases</th><th>Recommendation</th></tr></thead><tbody><tr><td><strong>Flagship (Max)</strong></td><td><code>qwen3-max</code><br /><code>qwen3-max-2026-01-23</code></td><td><strong>Complex tasks</strong>. 262K context. Reasoning, long-form writing, instruction following. The current flagship commercial Qwen model.</td><td>✅ Recommended for executives and core teams.</td></tr><tr><td><strong>Balanced (Plus)</strong></td><td><code>qwen3.6-plus</code><br /><code>qwen3.5-plus</code></td><td><strong>Best value</strong>. 1M context. Faster than Max and lower cost, supports agentic workflows.</td><td>✅ Recommended as a company-wide default.</td></tr><tr><td><strong>Lightweight (Flash)</strong></td><td><code>qwen3.5-flash</code></td><td><strong>Ultra-low cost</strong>. 1M context. Ideal for simple Q&A, classification, and summarization.</td><td>💡 Best for high-frequency, low-complexity tasks.</td></tr><tr><td><strong>Reasoning (QwQ)</strong></td><td><code>qwq-plus</code></td><td><strong>Deep thinking</strong>. Optimized for math, code, and complex reasoning chains.</td><td>🧠 Suitable for R&D or data teams.</td></tr><tr><td><strong>Coder</strong></td><td><code>qwen3-coder-plus</code><br /><code>qwen3-coder-flash</code></td><td><strong>Code-focused</strong>. 1M context. Code generation, review, and refactoring.</td><td>💻 Best for development teams.</td></tr><tr><td><strong>Vision (VL)</strong></td><td><code>qwen3-vl-plus</code><br /><code>qwen3-vl-flash</code></td><td><strong>Image understanding</strong>. 262K context. Image recognition, OCR, chart analysis.</td><td>👁️ Enable when image analysis is needed.</td></tr><tr><td><strong>Long context (Long)</strong></td><td><code>qwen-long</code></td><td><strong>Massive document analysis</strong>. 10M context for full PDF summarization or Q&A.</td><td>🔧 Use for extra-long document scenarios.</td></tr></tbody></table>
 
 <Callout type="info">
 **About the Turbo series**: `qwen-turbo` is no longer updated and has been replaced by `qwen3.5-flash`. If you are still using Turbo, consider migrating to Flash.
@@ -71,7 +71,7 @@ Bailian provides a long model list. To avoid overwhelming users, admins should t
 
 1. Click **𝌡 Manage Models** under the Bailian card.
 2. **Suggested filtering:**
-   * Keep `qwen3-max` and `qwen3.6-plus` (latest commercial models).
+   * Keep `qwen3-max` and `qwen3.6-plus` (current flagship commercial models).
    * Keep `qwq-plus` (for reasoning tasks).
    * Keep `qwen3-coder-plus` (R&D focused).
    * Keep `qwen3.5-flash` (lightweight high-frequency tasks).
@@ -87,15 +87,16 @@ Although Bailian is the default, Cherry Studio supports other channels.
 
 **Example scenarios:**
 
-* You want to use native **OpenAI** `gpt-4o`.
+* You want to integrate **DeepSeek**'s official `deepseek-v4`.
+* You want to integrate **Zhipu GLM**'s `glm-5.2`.
 * You run **Ollama** on a local server.
 
 **Steps:**
 
 1. Click **+ Add Provider** at the bottom of the list.
 2. **Provider type**:
-   * **OpenAI** (generic compatibility)
-   * **Anthropic** (Claude series)
+   * **OpenAI** (generic compatible protocol, works with most domestic models)
+   * **Anthropic** (Anthropic protocol)
    * **Ollama** (local models)
 3. Fill in **API Key** and **API Host**.
    * _Example local Ollama host_: `http://192.168.1.5:11434/v1`
@@ -107,7 +108,7 @@ Although Bailian is the default, Cherry Studio supports other channels.
 
 **Q: What's the difference between `qwen3-max` and the legacy `qwen-max`?**
 
-A: `qwen3-max` is the latest-generation flagship model (262K context), while `qwen-max` points to the previous generation (Qwen 2.5-Max). It is still available but no longer the best choice. Use `qwen3-max` for new projects.
+A: `qwen3-max` is the current flagship model (262K context), while `qwen-max` points to the previous generation (Qwen 2.5-Max). It is still available but no longer the best choice. Use `qwen3-max` for new projects.
 
 ---
 

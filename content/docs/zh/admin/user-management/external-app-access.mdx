@@ -50,7 +50,7 @@ Express 模型在外部应用中调用时，`model` 字段必须写成 `模型 I
 示例：
 
 ```text
-anthropic/claude-sonnet-4.5@x-express
+qwen/qwen3-max@x-express
 ```
 
 <Callout type="warn">
@@ -66,7 +66,7 @@ curl https://api.enterprise.cherry-ai.com/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer sk-your-api-key" \
   -d '{
-    "model": "anthropic/claude-sonnet-4.5@x-express",
+    "model": "qwen/qwen3-max@x-express",
     "messages": [
       {
         "role": "user",
@@ -88,7 +88,7 @@ const client = new OpenAI({
 })
 
 const completion = await client.chat.completions.create({
-  model: 'anthropic/claude-sonnet-4.5@x-express',
+  model: 'qwen/qwen3-max@x-express',
   messages: [{ role: 'user', content: '你好，请介绍一下自己' }]
 })
 
@@ -106,7 +106,7 @@ client = OpenAI(
 )
 
 resp = client.chat.completions.create(
-    model="anthropic/claude-sonnet-4.5@x-express",
+    model="qwen/qwen3-max@x-express",
     messages=[{"role": "user", "content": "你好，请介绍一下自己"}],
 )
 
@@ -122,7 +122,7 @@ print(resp.choices[0].message.content)
 | Provider Type | `OpenAI Compatible` / `OpenAI` |
 | Base URL | `https://api.enterprise.cherry-ai.com` |
 | API Key | 用户自己的 `sk-...` |
-| Model | `anthropic/claude-sonnet-4.5@x-express` |
+| Model | `qwen/qwen3-max@x-express` |
 
 <Callout type="info">
 **兼容性说明：** 当前更推荐用于支持"手动填写自定义模型名"的外部应用。若某个应用强依赖标准的自动拉取模型列表能力，可能还需要您手动补充模型名。
@@ -135,7 +135,7 @@ print(resp.choices[0].message.content)
 通常是因为 `model` 没有带服务商后缀。请检查是否写成了下面这种完整格式：
 
 ```text
-anthropic/claude-sonnet-4.5@x-express
+qwen/qwen3-max@x-express
 ```
 
 **2. 为什么提示 `401 Unauthorized` 或 `Key Expired`？**

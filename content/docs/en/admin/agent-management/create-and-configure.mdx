@@ -31,10 +31,10 @@ Configure the AI models used at different task stages. The three-model architect
 
 <img src="/assets/images/en/admin/agent-management-create-model_en.webp" alt="Model Settings" />
 
-<table><thead><tr><th width="160">Parameter</th><th width="80">Required</th><th>Description</th></tr></thead><tbody><tr><td><strong>Primary Model</strong></td><td>Yes</td><td>The main model for generating responses. Recommended: the most capable model (e.g., Claude Opus, Codex).</td></tr><tr><td><strong>Planning Model</strong></td><td>No</td><td>Model for complex planning and reasoning tasks. Falls back to the primary model if empty.</td></tr><tr><td><strong>Fast Model</strong></td><td>No</td><td>A small, fast model for simple tasks. Falls back to the primary model if empty. Ideal for low-latency, cost-efficient models.</td></tr></tbody></table>
+<table><thead><tr><th width="160">Parameter</th><th width="80">Required</th><th>Description</th></tr></thead><tbody><tr><td><strong>Primary Model</strong></td><td>Yes</td><td>The main model for generating responses. Recommended: the most capable model (e.g., DeepSeek-V4, Qwen3-Coder-Plus).</td></tr><tr><td><strong>Planning Model</strong></td><td>No</td><td>Model for complex planning and reasoning tasks. Falls back to the primary model if empty.</td></tr><tr><td><strong>Fast Model</strong></td><td>No</td><td>A small, fast model for simple tasks. Falls back to the primary model if empty. Ideal for low-latency, cost-efficient models.</td></tr></tbody></table>
 
 <Callout type="info">
-**Model selection tips:** Choose Claude Opus or Codex tier for the primary model; planning model can match the primary or use Claude Sonnet; fast model works well with Claude Haiku to reduce costs.
+**Model selection tips:** Choose DeepSeek-V4 or Qwen3-Coder-Plus tier for the primary model; planning model can match the primary or use a strong reasoning model like GLM-5.2; fast model works well with lightweight models such as Qwen3.5-Flash or DeepSeek-V4-Flash to reduce costs.
 </Callout>
 
 ## Permission Settings
