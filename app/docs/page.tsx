@@ -4,6 +4,7 @@ import type * as React from 'react'
 import type * as PageTree from 'fumadocs-core/page-tree'
 import { toClientRenderer } from 'fumadocs-mdx/runtime/vite'
 import { DocsLayout } from 'fumadocs-ui/layouts/docs'
+import { PageFooter } from 'fumadocs-ui/layouts/docs/page'
 import defaultMdxComponents from 'fumadocs-ui/mdx'
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/page'
 import type { TOCItemType } from 'fumadocs-core/toc'
@@ -59,6 +60,9 @@ function DownloadAwareLink({ href, ...props }: React.AnchorHTMLAttributes<HTMLAn
   return <Anchor href={href} {...props} />
 }
 
+// `footer` is rendered as `<PageFooter className="print:hidden" />` rather than
+// `footer={{ className }}` because DocsPage only forwards enabled/component/items
+// and drops the rest of FooterProps.
 const renderer = toClientRenderer(docs.doc, ({ toc, default: Mdx, frontmatter }) => {
   const fullToc: TOCItemType[] = [
     { title: frontmatter.title, url: '#page-title', depth: 2 },
@@ -70,7 +74,7 @@ const renderer = toClientRenderer(docs.doc, ({ toc, default: Mdx, frontmatter })
       breadcrumb={{ component: <ConditionalBreadcrumb /> }}
       tableOfContent={{ footer: <ExportPdfButton className="mt-4 w-full justify-center" /> }}
       tableOfContentPopover={{ footer: <ExportPdfButton className="m-4 w-[calc(100%-2rem)] justify-center" /> }}
-      footer={{ className: 'print:hidden' }}
+      footer={{ component: <PageFooter className="print:hidden" /> }}
     >
       <title>{frontmatter.title}</title>
       <meta name="description" content={frontmatter.description} />
