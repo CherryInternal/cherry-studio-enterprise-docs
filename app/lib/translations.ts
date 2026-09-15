@@ -32,6 +32,9 @@ export type TranslationKeys = {
     next: string
     goToStep: string
   }
+  pdf: {
+    export: string
+  }
   error: {
     oops: string
     unexpected: string
@@ -102,6 +105,9 @@ export const translations = {
       next: 'Next',
       goToStep: 'Go to step'
     },
+    pdf: {
+      export: 'Export PDF'
+    },
     error: {
       oops: 'Oops!',
       unexpected: 'An unexpected error occurred.',
@@ -159,6 +165,9 @@ export const translations = {
       prev: '上一步',
       next: '下一步',
       goToStep: '跳转到步骤'
+    },
+    pdf: {
+      export: '导出 PDF'
     },
     error: {
       oops: '出错了!',
@@ -222,6 +231,9 @@ export const translations = {
       prev: '前へ',
       next: '次へ',
       goToStep: 'ステップに移動'
+    },
+    pdf: {
+      export: 'PDF を書き出す'
     },
     error: {
       oops: 'エラー!',
