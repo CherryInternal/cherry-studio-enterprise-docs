@@ -11,6 +11,7 @@ import type { TOCItemType } from 'fumadocs-core/toc'
 import { docs } from '@/.source'
 import { Card, Cards } from '@/components/card'
 import { ConditionalBreadcrumb } from '@/components/conditional-breadcrumb'
+import { ExportPdfButton, usePrintLightTheme } from '@/components/export-pdf-button'
 import { ExperienceCard, ExperienceCards } from '@/components/experience-card'
 import { ImageSteps } from '@/components/image-steps'
 import { PremiumOnly } from '@/components/premium-only'
@@ -64,7 +65,13 @@ const renderer = toClientRenderer(docs.doc, ({ toc, default: Mdx, frontmatter })
     ...toc.map((item) => ({ ...item, depth: item.depth + 1 }))
   ]
   return (
-    <DocsPage toc={fullToc} breadcrumb={{ component: <ConditionalBreadcrumb /> }}>
+    <DocsPage
+      toc={fullToc}
+      breadcrumb={{ component: <ConditionalBreadcrumb /> }}
+      tableOfContent={{ footer: <ExportPdfButton className="mt-4 w-full justify-center" /> }}
+      tableOfContentPopover={{ footer: <ExportPdfButton className="m-4 w-[calc(100%-2rem)] justify-center" /> }}
+      footer={{ className: 'print:hidden' }}
+    >
       <title>{frontmatter.title}</title>
       <meta name="description" content={frontmatter.description} />
       <DocsTitle id="page-title">{frontmatter.title}</DocsTitle>
@@ -94,6 +101,8 @@ function DocsRootRedirect({ to }: { to: string }) {
 }
 
 export default function Page({ loaderData }: Route.ComponentProps) {
+  usePrintLightTheme()
+
   if ('redirect' in loaderData) {
     return <DocsRootRedirect to={loaderData.redirect} />
   }
