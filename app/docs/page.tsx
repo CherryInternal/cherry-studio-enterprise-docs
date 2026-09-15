@@ -4,6 +4,7 @@ import type * as React from 'react'
 import type * as PageTree from 'fumadocs-core/page-tree'
 import { toClientRenderer } from 'fumadocs-mdx/runtime/vite'
 import { DocsLayout } from 'fumadocs-ui/layouts/docs'
+import { PageFooter } from 'fumadocs-ui/layouts/docs/page'
 import defaultMdxComponents from 'fumadocs-ui/mdx'
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/page'
 import type { TOCItemType } from 'fumadocs-core/toc'
@@ -11,6 +12,7 @@ import type { TOCItemType } from 'fumadocs-core/toc'
 import { docs } from '@/.source'
 import { Card, Cards } from '@/components/card'
 import { ConditionalBreadcrumb } from '@/components/conditional-breadcrumb'
+import { ExportPdfButton, usePrintLightTheme } from '@/components/export-pdf-button'
 import { ExperienceCard, ExperienceCards } from '@/components/experience-card'
 import { ImageSteps } from '@/components/image-steps'
 import { PremiumOnly } from '@/components/premium-only'
@@ -58,13 +60,22 @@ function DownloadAwareLink({ href, ...props }: React.AnchorHTMLAttributes<HTMLAn
   return <Anchor href={href} {...props} />
 }
 
+// `footer` is rendered as `<PageFooter className="print:hidden" />` rather than
+// `footer={{ className }}` because DocsPage only forwards enabled/component/items
+// and drops the rest of FooterProps.
 const renderer = toClientRenderer(docs.doc, ({ toc, default: Mdx, frontmatter }) => {
   const fullToc: TOCItemType[] = [
     { title: frontmatter.title, url: '#page-title', depth: 2 },
     ...toc.map((item) => ({ ...item, depth: item.depth + 1 }))
   ]
   return (
-    <DocsPage toc={fullToc} breadcrumb={{ component: <ConditionalBreadcrumb /> }}>
+    <DocsPage
+      toc={fullToc}
+      breadcrumb={{ component: <ConditionalBreadcrumb /> }}
+      tableOfContent={{ footer: <ExportPdfButton className="mt-4 w-full justify-center" /> }}
+      tableOfContentPopover={{ footer: <ExportPdfButton className="m-4 w-[calc(100%-2rem)] justify-center" /> }}
+      footer={{ component: <PageFooter className="print:hidden" /> }}
+    >
       <title>{frontmatter.title}</title>
       <meta name="description" content={frontmatter.description} />
       <DocsTitle id="page-title">{frontmatter.title}</DocsTitle>
@@ -94,6 +105,8 @@ function DocsRootRedirect({ to }: { to: string }) {
 }
 
 export default function Page({ loaderData }: Route.ComponentProps) {
+  usePrintLightTheme()
+
   if ('redirect' in loaderData) {
     return <DocsRootRedirect to={loaderData.redirect} />
   }
