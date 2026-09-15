@@ -67,6 +67,12 @@ async function exportPdf(browser, pathname) {
         [...document.images].filter((img) => !img.complete).map((img) => img.decode().catch(() => {}))
       )
     })
+    // A Vite HMR error overlay renders on top of the page and would otherwise be
+    // baked into the PDF without any warning.
+    if (await page.locator('vite-error-overlay').count()) {
+      throw new Error(`${pathname}: dev server is showing an error overlay; fix the build error first`)
+    }
+
     const file = outputPath(pathname)
     await page.pdf({ path: file, format: 'A4', printBackground: true, margin: { top: '12mm', bottom: '12mm', left: '12mm', right: '12mm' } })
     const { size } = await fs.stat(file)
