@@ -58,7 +58,14 @@ function StepImage({ src, alt, basePath, currentLocale, fallbackLocale, visible 
   }
 
   return (
-    <div className={cn('transition-opacity duration-200', visible ? 'block' : 'hidden')}>
+    // Printing flattens the carousel: every step shows, each under its own title.
+    <div
+      className={cn(
+        'transition-opacity duration-200 print:block print:mt-3 print:first:mt-0',
+        visible ? 'block' : 'hidden'
+      )}
+    >
+      <p className="hidden print:block mb-1 text-sm font-medium text-fd-foreground">{alt}</p>
       <ImageZoom>
         <img
           src={imgSrc}
@@ -99,7 +106,7 @@ export function ImageSteps({ title, basePath, steps, className }: ImageStepsProp
       )}
 
       {/* Progress bar */}
-      <div className="px-4 pt-3">
+      <div className="px-4 pt-3 print:hidden">
         <div className="flex items-center gap-2 mb-2">
           <span className="text-sm text-fd-muted-foreground">
             {t.imageSteps.step} {current + 1} / {total}
@@ -114,7 +121,7 @@ export function ImageSteps({ title, basePath, steps, className }: ImageStepsProp
       </div>
 
       {/* Step title */}
-      <div className="px-4 pb-2">
+      <div className="px-4 pb-2 print:hidden">
         <p className="text-sm font-medium text-fd-foreground">
           {steps[current].title}
         </p>
@@ -136,7 +143,7 @@ export function ImageSteps({ title, basePath, steps, className }: ImageStepsProp
       </div>
 
       {/* Navigation */}
-      <div className="px-4 pb-4 flex items-center justify-between">
+      <div className="px-4 pb-4 flex items-center justify-between print:hidden">
         {/* Step dots */}
         <div className="flex gap-1.5">
           {steps.map((_, index) => (
