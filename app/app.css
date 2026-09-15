@@ -15,3 +15,67 @@
 .border-s > a.ps-8 {
   padding-inline-start: 4rem !important;
 }
+
+/* ── Print / "Export PDF" ─────────────────────────────────────────────────── */
+/* Element ids come from the Fumadocs docs layout (#nd-subnav / #nd-sidebar /
+   #nd-toc / #nd-tocnav / #nd-page). Everything that is navigation on screen is
+   noise on paper, so only the <article> survives. */
+@media print {
+  #nd-subnav,
+  #nd-sidebar,
+  #nd-toc,
+  #nd-tocnav {
+    display: none !important;
+  }
+
+  #nd-docs-layout {
+    --fd-sidebar-width: 0px !important;
+    --fd-toc-width: 0px !important;
+    --fd-nav-height: 0px !important;
+    --fd-tocnav-height: 0px !important;
+  }
+
+  #nd-page {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #nd-page article {
+    max-width: none !important;
+    padding: 0 !important;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+  }
+
+  /* Code blocks scroll horizontally on screen; on paper the overflow is simply
+     lost, so wrap instead of clipping. */
+  #nd-page pre,
+  #nd-page code {
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+  }
+
+  #nd-page pre {
+    overflow: visible !important;
+    max-height: none !important;
+  }
+
+  /* Keep headings attached to their section and don't split figures/tables. */
+  #nd-page :is(h1, h2, h3, h4) {
+    break-after: avoid-page;
+  }
+
+  #nd-page :is(img, pre, table, blockquote) {
+    break-inside: avoid;
+  }
+
+  #nd-page img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+}
