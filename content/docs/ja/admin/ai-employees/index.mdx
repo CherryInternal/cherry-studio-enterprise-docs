@@ -35,17 +35,25 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 社員を作成するときに、社員の種類を選択します。**作成後は社員の種類を変更できません。**
 
-<table><thead><tr><th width="140">項目</th><th>標準従業員</th><th>拡張従業員</th></tr></thead><tbody><tr><td><strong>メッセージチャネル</strong></td><td>飛書、DingTalk、WeCom</td><td>飛書、DingTalk、WeCom、Telegram、Discord、Slack、Matrix、Mattermost、Email、Signal、Home Assistant</td></tr><tr><td><strong>チャネル利用者の承認</strong></td><td>各利用者がバインドコードで自分のアカウントをバインド</td><td>管理者またはグループ管理者がペアリングリクエストを承認</td></tr><tr><td><strong>ツールの実行</strong></td><td>確認なしで直接実行</td><td>一部の操作は、費用の請求先アカウント、管理者、またはグループ管理者がチャットで確認</td></tr><tr><td><strong>MCP サーバー</strong></td><td>HTTP タイプのみ対応</td><td>対応</td></tr><tr><td><strong>スキル、シークレット、自動タスク</strong></td><td>対応</td><td>対応</td></tr></tbody></table>
+**標準従業員**は Cherry が独自開発した Agent を使います。Hermes の大部分の機能に対応し、Sandbox による分離と必要に応じた起動を重視しています。**拡張従業員**は Hermes を使います。Hermes のすべての機能に対応し、既存の Hermes エコシステムを活用できます。
 
-社員を新規作成するときは、**標準従業員**がデフォルトで選択されています。
+<table><thead><tr><th width="140">項目</th><th>標準従業員</th><th>拡張従業員</th></tr></thead><tbody><tr><td><strong>Agent と機能</strong></td><td>Cherry 独自開発の Agent。Hermes の大部分の機能に対応します。</td><td>Hermes を使用し、Hermes のすべての機能に対応します。</td></tr><tr><td><strong>実行方式とリソース</strong></td><td>社員ごとの Sandbox が必要に応じて自動起動し、アイドル状態が続くと自動停止・回収されます。社員ごとの実行環境を常時稼働させる必要がなく、リソースを節約できます。</td><td>社員を利用可能にしておく間、Hermes の実行環境を稼働させ続ける必要があります。標準従業員より多くのリソースを常時使用します。</td></tr><tr><td><strong>分離と安全性</strong></td><td>社員ごとに独自の Sandbox があります。ファイル操作とコマンド実行を分離し、ほかの社員やホストへの影響を抑えます。</td><td>Hermes の実行方式とセキュリティ機能を使用します。</td></tr><tr><td><strong>エコシステム</strong></td><td>スキルや MCP などで作業を実行します。リソースの節約と実行環境の分離を重視するチームに適しています。</td><td>既存の Hermes エコシステムを直接活用できます。Hermes の機能や操作方法を必要とするチームに適しています。</td></tr></tbody></table>
+
+どちらもチャット、スキル、MCP、シークレット、メッセージチャネル、自動タスクに対応します。チャネルのバインドと日常の利用は、基本的に同じ流れです。拡張従業員は Hermes の標準的な設定・操作手順に従います。対応するチャネルと具体的な手順は[メッセージチャネル](/ja/docs/admin/ai-employees/channels)を参照してください。
+
+<Callout type="info">
+標準従業員で必要に応じて起動・停止するのは、社員ごとの Sandbox です。プラットフォーム全体のサービスが停止するわけではありません。共有サービスがメッセージの受信とタスクのスケジュール管理を続けます。
+</Callout>
+
+社員を新規作成するときは、**標準従業員**がデフォルトで選択されています。リソースの節約と Sandbox による分離を重視する場合は、標準従業員を選びます。Hermes のすべての機能や既存のエコシステムが必要な場合は、拡張従業員を選びます。
 
 ## 席数
 
 社員 1 人につき、ライセンスの席を 1 つ使用します。標準従業員と拡張従業員は、それぞれ別の席を使用します。席数はデプロイ全体で集計します。社員一覧の上部に、2 種類の席の使用数とライセンス数が表示されます。
 
-<table><thead><tr><th width="140">ライセンスエディション</th><th>標準従業員</th><th>拡張従業員</th></tr></thead><tbody><tr><td><strong>Express</strong></td><td>5</td><td>2</td></tr><tr><td><strong>Premium</strong></td><td>50</td><td>10</td></tr></tbody></table>
+<table><thead><tr><th width="140">ライセンスエディション</th><th>標準従業員</th><th>拡張従業員</th></tr></thead><tbody><tr><td><strong>Express</strong></td><td>5</td><td>2</td></tr><tr><td><strong>Premium</strong></td><td>25</td><td>10</td></tr></tbody></table>
 
-上の表はデフォルト値です。ライセンスで社員数を個別に指定している場合は、ライセンスの値が優先されます。
+上の表はデフォルト値です。ライセンスで社員数を個別に指定している場合は、ライセンスの値が優先されます。スクリーンショットの席数はデモ環境のライセンス数であり、デフォルト値ではありません。
 
 * 停止中の社員も席を使用します。席が解放されるのは、削除処理が完了したときだけです。削除処理が未完了の社員も席を使用します。
 * ある種類の社員に有効な席がない場合、その種類は無効になります。既存の社員の閲覧、停止、削除は引き続き可能です。

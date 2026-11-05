@@ -35,17 +35,25 @@ You can add several **assistants** under one employee. Assistants share part of 
 
 You must select an employee type when you create an employee. **You cannot change the employee type after creation.**
 
-<table><thead><tr><th width="140">Item</th><th>Standard employee</th><th>Enhanced employee</th></tr></thead><tbody><tr><td><strong>Messaging channels</strong></td><td>Feishu, DingTalk, WeCom</td><td>Feishu, DingTalk, WeCom, Telegram, Discord, Slack, Matrix, Mattermost, Email, Signal, Home Assistant</td></tr><tr><td><strong>Channel user authorization</strong></td><td>Each user binds their own account with a bind code</td><td>An admin or group admin approves pairing requests</td></tr><tr><td><strong>Tool execution</strong></td><td>Tools run without confirmation</td><td>Some actions need confirmation in the chat from the billing account, an admin, or a group admin</td></tr><tr><td><strong>MCP servers</strong></td><td>HTTP type only</td><td>Supported</td></tr><tr><td><strong>Skills, secrets, automation</strong></td><td>Supported</td><td>Supported</td></tr></tbody></table>
+**Standard employees** use an Agent developed by Cherry. They support most Hermes features, with a focus on Sandbox isolation and operation on demand. **Enhanced employees** use Hermes. They support all Hermes features and can use the existing Hermes ecosystem.
 
-**Standard employee** is selected by default when you create a new employee.
+<table><thead><tr><th width="140">Item</th><th>Standard employee</th><th>Enhanced employee</th></tr></thead><tbody><tr><td><strong>Agent and features</strong></td><td>An Agent developed by Cherry. Supports most Hermes features.</td><td>Uses Hermes. Supports all Hermes features.</td></tr><tr><td><strong>Operation and resources</strong></td><td>Each employee's Sandbox starts automatically when needed. It stops and is removed after an idle period. A dedicated runtime does not need to stay active for each employee, which saves resources.</td><td>The Hermes runtime must stay active while the employee is available for work. It uses more resources continuously than a standard employee.</td></tr><tr><td><strong>Isolation and security</strong></td><td>Each employee has its own Sandbox. File and command operations are isolated to reduce their effect on other employees and the host.</td><td>Uses the Hermes runtime and security controls.</td></tr><tr><td><strong>Ecosystem</strong></td><td>Uses skills, MCP, and other capabilities. Suits teams that want lower resource use and stronger execution isolation.</td><td>Can use the existing Hermes ecosystem directly. Suits teams that depend on Hermes features and workflows.</td></tr></tbody></table>
+
+Both types support chat, skills, MCP, secrets, messaging channels, and automation. The overall channel binding and daily use workflows are similar. Enhanced employees follow the standard Hermes configuration and operation procedures. See [Messaging Channels](/docs/admin/ai-employees/channels) for supported channels and steps.
+
+<Callout type="info">
+For standard employees, each employee's Sandbox starts and stops on demand. This does not stop all platform services. Shared services continue to receive messages and schedule tasks.
+</Callout>
+
+**Standard employee** is selected by default when you create a new employee. Choose it for lower resource use and Sandbox isolation. Choose an enhanced employee when you need all Hermes features or the existing Hermes ecosystem.
 
 ## Seats
 
 Each employee uses one licensed seat. Standard employees and enhanced employees use separate seats. Seats are counted for the whole deployment. The top of the employee list shows the used seats and licensed seats for both types.
 
-<table><thead><tr><th width="140">License edition</th><th>Standard employees</th><th>Enhanced employees</th></tr></thead><tbody><tr><td><strong>Express</strong></td><td>5</td><td>2</td></tr><tr><td><strong>Premium</strong></td><td>50</td><td>10</td></tr></tbody></table>
+<table><thead><tr><th width="140">License edition</th><th>Standard employees</th><th>Enhanced employees</th></tr></thead><tbody><tr><td><strong>Express</strong></td><td>5</td><td>2</td></tr><tr><td><strong>Premium</strong></td><td>25</td><td>10</td></tr></tbody></table>
 
-The table shows the default values. If the license sets the employee numbers separately, the license values apply.
+The table shows the default values. If the license sets the employee numbers separately, the license values apply. Screenshots show the licensed counts of the demo environment, not the default values.
 
 * A paused employee still uses a seat. A seat is released only after deletion cleanup finishes. An employee awaiting cleanup still uses a seat.
 * If an employee type has no valid seats, this employee type is disabled. You can still view, pause, and delete the existing employees.

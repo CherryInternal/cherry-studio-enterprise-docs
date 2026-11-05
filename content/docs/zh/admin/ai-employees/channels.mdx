@@ -11,7 +11,9 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 连接消息渠道后，员工以机器人的身份出现在消息应用中。团队成员可以私聊机器人，也可以在群聊中使用机器人。员工和每位助理分别连接自己的机器人。
 
-<table><thead><tr><th width="140">员工类型</th><th>支持的渠道</th><th>使用者授权方式</th></tr></thead><tbody><tr><td><strong>标准员工</strong></td><td>飞书、钉钉、企业微信</td><td>每位使用者用绑定码绑定自己的账号</td></tr><tr><td><strong>增强员工</strong></td><td>飞书、钉钉、企业微信、Telegram、Discord、Slack、Matrix、Mattermost、Email、Signal、Home Assistant</td><td>管理员或组管理员批准配对请求</td></tr></tbody></table>
+两类员工的渠道绑定和日常使用流程基本相同：连接机器人、完成使用者授权，然后在消息应用中对话。增强员工遵循 Hermes 的标准配置与操作方式，可以利用现有的 Hermes 渠道生态。下文分别说明界面中的具体步骤。
+
+<table><thead><tr><th width="140">员工类型</th><th>支持的渠道</th></tr></thead><tbody><tr><td><strong>标准员工</strong></td><td>飞书、钉钉、企业微信</td></tr><tr><td><strong>增强员工</strong></td><td>使用 Hermes 的渠道能力，包括飞书、钉钉、企业微信、Telegram、Discord、Slack、Matrix、Mattermost、Email、Signal、Home Assistant</td></tr></tbody></table>
 
 只有**管理员**和本组的**组管理员**可以连接和断开渠道。员工需要处于 **可使用** 状态。
 

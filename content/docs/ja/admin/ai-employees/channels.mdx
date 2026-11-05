@@ -11,7 +11,9 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 メッセージチャネルに接続すると、社員はボットとしてメッセージアプリに表示されます。チームメンバーは、ボットと個別にチャットすることも、グループチャットでボットを使うこともできます。社員と各アシスタントは、それぞれ別のボットに接続します。
 
-<table><thead><tr><th width="140">社員の種類</th><th>対応チャネル</th><th>利用者の承認方法</th></tr></thead><tbody><tr><td><strong>標準従業員</strong></td><td>飛書、DingTalk、WeCom</td><td>各利用者がバインドコードで自分のアカウントをバインド</td></tr><tr><td><strong>拡張従業員</strong></td><td>飛書、DingTalk、WeCom、Telegram、Discord、Slack、Matrix、Mattermost、Email、Signal、Home Assistant</td><td>管理者またはグループ管理者がペアリングリクエストを承認</td></tr></tbody></table>
+どちらの種類も、ボットの接続、利用者の承認、メッセージアプリでの会話という基本的な流れは同じです。拡張従業員は Hermes の標準的な設定・操作手順に従い、既存の Hermes チャネルのエコシステムを活用できます。以下では、画面上の具体的な手順を説明します。
+
+<table><thead><tr><th width="140">社員の種類</th><th>対応チャネル</th></tr></thead><tbody><tr><td><strong>標準従業員</strong></td><td>飛書、DingTalk、WeCom</td></tr><tr><td><strong>拡張従業員</strong></td><td>Hermes のチャネル機能を使用します。飛書、DingTalk、WeCom、Telegram、Discord、Slack、Matrix、Mattermost、Email、Signal、Home Assistant などに対応します。</td></tr></tbody></table>
 
 チャネルの接続と切断ができるのは、**管理者**と所属グループの**グループ管理者**だけです。社員の状態が **利用可能** である必要があります。
 

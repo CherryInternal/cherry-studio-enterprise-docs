@@ -11,7 +11,9 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 After you connect a messaging channel, the employee appears in the messaging app as a bot. Team members can send private messages to the bot. They can also use the bot in group chats. The employee and each assistant connect to their own bots.
 
-<table><thead><tr><th width="140">Employee type</th><th>Supported channels</th><th>User authorization</th></tr></thead><tbody><tr><td><strong>Standard employee</strong></td><td>Feishu, DingTalk, WeCom</td><td>Each user binds their own account with a bind code</td></tr><tr><td><strong>Enhanced employee</strong></td><td>Feishu, DingTalk, WeCom, Telegram, Discord, Slack, Matrix, Mattermost, Email, Signal, Home Assistant</td><td>An admin or group admin approves pairing requests</td></tr></tbody></table>
+Both employee types follow a similar workflow: connect a bot, authorize users, then chat in the messaging app. Enhanced employees follow standard Hermes configuration and operation procedures. They can use the existing Hermes channel ecosystem. The sections below explain the specific UI steps.
+
+<table><thead><tr><th width="140">Employee type</th><th>Supported channels</th></tr></thead><tbody><tr><td><strong>Standard employee</strong></td><td>Feishu, DingTalk, WeCom</td></tr><tr><td><strong>Enhanced employee</strong></td><td>Uses Hermes channel capabilities, including Feishu, DingTalk, WeCom, Telegram, Discord, Slack, Matrix, Mattermost, Email, Signal, Home Assistant</td></tr></tbody></table>
 
 Only **Admins** and the **Group Admins** of the group can connect and disconnect channels. The employee must be in the **Ready** status.
 
