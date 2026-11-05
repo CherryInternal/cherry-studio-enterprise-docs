@@ -1,0 +1,85 @@
+---
+title: "Create an Employee"
+description: Describe the role and duties, let the configuration assistant draft the configuration, then review it and create the employee. You can also fill in the configuration manually.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+<Callout type="info">
+**Navigation:** Sidebar → AI Employees → Click the **New AI employee** button in the top-right corner
+</Callout>
+
+You can create an employee in two ways:
+
+* **AI draft (default):** Describe the role and duties in a short text. The configuration assistant drafts a configuration. You review and edit it, then create the employee.
+* **Manual setup:** Fill in all fields yourself.
+
+## Before You Start
+
+* Only **Admins** and **Group Admins** can create employees.
+* The group of the employee needs at least one available model and one active billing account. You must first configure the model in a service provider and authorize it for the group.
+* The selected employee type needs a free seat. For the seat rules, see [AI Employees → Seats](/docs/admin/ai-employees#seats).
+* To use an AI draft, the configuration assistant must be enabled and have a model.
+
+## Draft with AI
+
+A draft has three steps: **Describe duties → Review configuration → Prepare employee**.
+
+### 1. Describe Duties
+
+<img src="/assets/images/en/admin/ai-employees-create-describe_en.webp" alt="Describe the role and duties" />
+
+1. In the input box, describe the role, duties, and work requirements. You can also click an example below the box (**Feedback analysis**, **Knowledge assistant**, **Content operations**) to fill the example into the input box.
+2. Click **Draft with AI**.
+
+Drafting does not create an employee. The configuration assistant reads the models, skills, MCP servers, and members that are available to the group. It then generates a configuration for you to confirm.
+
+<Callout type="info">
+**Example description:** I need a customer feedback analyst who groups feedback by topic, finds common issues, and cites sources. Ask me when the evidence is unclear.
+</Callout>
+
+### 2. Review Configuration
+
+<img src="/assets/images/en/admin/ai-employees-create-review_en.webp" alt="Review the configuration" />
+
+Check each field that the configuration assistant drafted. You can edit the fields directly. For a description of the fields, see [Configuration Fields](#configuration-fields) below.
+
+<img src="/assets/images/en/admin/ai-employees-create-review-bottom_en.webp" alt="Update the draft and create the employee" />
+
+* To ask the configuration assistant to change the draft, write your request in **Anything to add or change?**. For example, "Only analyze feedback. Do not make commitments for the team." Then click **Update draft**. The new draft replaces the current draft.
+* When the draft is correct, click **Create employee**.
+* To create the employee later, click **Back to employees**.
+
+### 3. Prepare Employee
+
+After you create the employee, the system sends the configuration to the runtime of the employee. You can wait on the page. You can also go back to the employee list and check again later.
+
+When the employee is ready, the page shows the employee details and the status is **Ready**. The **Duties** tab shows the work instructions that the system generated from the configuration.
+
+<img src="/assets/images/en/admin/ai-employees-create-ready_en.webp" alt="The employee is ready" />
+
+<Callout type="info">
+A standard employee is usually ready in a few seconds. An enhanced employee needs a separate runtime after creation, so it takes longer to become ready.
+</Callout>
+
+## Manual Setup
+
+1. At the bottom of the new employee page, click **Fill in settings** next to **Prefer to set it up yourself?**.
+2. Fill in the [Configuration Fields](#configuration-fields).
+3. Click **Create employee**.
+
+<img src="/assets/images/en/admin/ai-employees-create-manual_en.webp" alt="Manual setup: group, employee type, and duties" />
+
+<img src="/assets/images/en/admin/ai-employees-create-manual-bottom_en.webp" alt="Manual setup: billing account, model, skills, and MCP" />
+
+To go back to AI draft, click **Draft with AI** at the top of the form.
+
+## Configuration Fields
+
+<table><thead><tr><th width="160">Field</th><th>Description</th></tr></thead><tbody><tr><td><strong>Group</strong></td><td>The group of the employee. The group decides which members can see and use this employee. It also decides which models, skills, and MCP servers you can select.</td></tr><tr><td><strong>Agent engine</strong></td><td>Select <strong>Standard employee</strong> or <strong>Enhanced employee</strong>. The top-right corner of each option shows the used seats and licensed seats of that type. You cannot change this after creation. For the differences, see <a href="/docs/admin/ai-employees#employee-types">Employee Types</a>.</td></tr><tr><td><strong>Name</strong></td><td>The name of the employee. It appears in the employee list, on the chat page, and in messaging channels.</td></tr><tr><td><strong>Role</strong></td><td>A one-sentence description of the role of the employee, for example "Customer feedback analyst".</td></tr><tr><td><strong>Duties</strong></td><td>The work that the employee is responsible for. Enter one duty per line. The maximum is 10 duties.</td></tr><tr><td><strong>Work rules</strong></td><td>The requirements that the employee must follow at work. Enter one rule per line. The maximum is 10 rules.</td></tr><tr><td><strong>Billing account</strong></td><td>Model usage is charged to this account. The account must be an active member of the group. The billing account does not assign an owner for the employee.</td></tr><tr><td><strong>Model</strong></td><td>The model that the employee uses. The default model of the group is selected by default.</td></tr><tr><td><strong>Personality and communication</strong></td><td>The tone and communication habits of the employee, for example "Give the conclusion first, then the evidence. Be concise." You can leave this field empty.</td></tr><tr><td><strong>Skills</strong></td><td>Select the agent skills that the group can use from the library. Skills give the employee work guidance.</td></tr><tr><td><strong>External tools (MCP)</strong></td><td>Select the MCP servers that the group can use from the library. A standard employee can use only MCP servers of the HTTP type.</td></tr></tbody></table>
+
+Messaging channels, secrets, and automation are not in the creation form. Set them in the employee details after you create the employee.
+
+## Troubleshooting
+
+<table><thead><tr><th width="220">Message</th><th>Solution</th></tr></thead><tbody><tr><td><strong>The assistant is unavailable</strong></td><td>The configuration assistant is not enabled or has no model. Check the settings of the configuration assistant and try again, or use manual setup.</td></tr><tr><td><strong>This group needs an available model and an active billing account</strong></td><td>Authorize at least one model for the group. Make sure the group has an active member.</td></tr><tr><td><strong>All seats are in use</strong></td><td>Delete an employee of the same type, or increase the licensed seats. Pausing an employee does not release its seat.</td></tr><tr><td><strong>Creation failed</strong></td><td>Check the selected model, billing account, and account permissions, then try again. The values you entered stay in the form.</td></tr><tr><td>The status shows "Needs attention"</td><td>The configuration could not be sent. In the employee details, click <strong>Retry preparation</strong>.</td></tr></tbody></table>

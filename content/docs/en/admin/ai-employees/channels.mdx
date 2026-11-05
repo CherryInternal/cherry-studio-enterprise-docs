@@ -1,0 +1,126 @@
+---
+title: "Messaging Channels"
+description: Connect an employee to messaging apps such as Feishu, DingTalk, and WeCom, so that team members can send messages to the employee in the apps they already use.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+<Callout type="info">
+**Navigation:** Sidebar → AI Employees → Click an employee → **Channels** tab
+</Callout>
+
+After you connect a messaging channel, the employee appears in the messaging app as a bot. Team members can send private messages to the bot. They can also use the bot in group chats. The employee and each assistant connect to their own bots.
+
+<table><thead><tr><th width="140">Employee type</th><th>Supported channels</th><th>User authorization</th></tr></thead><tbody><tr><td><strong>Standard employee</strong></td><td>Feishu, DingTalk, WeCom</td><td>Each user binds their own account with a bind code</td></tr><tr><td><strong>Enhanced employee</strong></td><td>Feishu, DingTalk, WeCom, Telegram, Discord, Slack, Matrix, Mattermost, Email, Signal, Home Assistant</td><td>An admin or group admin approves pairing requests</td></tr></tbody></table>
+
+Only **Admins** and the **Group Admins** of the group can connect and disconnect channels. The employee must be in the **Ready** status.
+
+## Connect Feishu, DingTalk, or WeCom
+
+<img src="/assets/images/en/admin/ai-employees-channels_en.webp" alt="Channels tab" />
+
+### Method 1: Scan a QR Code (Recommended)
+
+1. On the **Channels** tab, click **Add Feishu bot** (or the matching button for DingTalk or WeCom).
+2. In the dialog, click **Add Feishu bot**. The page shows an authorization QR code.
+3. Scan the code with the matching mobile app. Confirm the bot and its permissions on your phone.
+4. After you confirm on your phone, the page saves the credentials of the bot automatically.
+
+<img src="/assets/images/en/admin/ai-employees-channel-scan_en.webp" alt="Scan a QR code to add a bot" />
+
+If the QR code expires, click the button again to generate a new code. Scanning creates or authorizes a bot. When you replace a bot, the existing app is not deleted automatically.
+
+### Method 2: Enter Credentials Manually
+
+Use this method if you already created an app on the open platform.
+
+1. In the dialog, click **Already have an app? Enter credentials**.
+2. Enter the credentials of the app:
+
+   <table><thead><tr><th width="140">Channel</th><th>Required</th></tr></thead><tbody><tr><td><strong>Feishu</strong></td><td>App ID, App Secret</td></tr><tr><td><strong>DingTalk</strong></td><td>Client ID, Client Secret</td></tr><tr><td><strong>WeCom</strong></td><td>Bot ID and Secret of the intelligent bot</td></tr></tbody></table>
+
+3. Click **Save configuration**.
+
+<img src="/assets/images/en/admin/ai-employees-channel-manual_en.webp" alt="Enter credentials manually" />
+
+After you save, the channel card shows **Configuration saved** and the connection status: **Connecting**, **Connected**, **Connection failed**, or **Connection stopped**. If the status is **Connection failed**, check the credentials and the app permissions on the open platform.
+
+<img src="/assets/images/en/admin/ai-employees-channel-saved_en.webp" alt="Channel saved" />
+
+<Callout type="warn">
+One app can connect to only one employee or assistant. To replace the bot, click **Manage connection**, remove the current configuration, and then add the new bot.
+</Callout>
+
+## Standard Employee: Bind a User Account
+
+A standard employee must know which Cherry Studio user sent a message. This lets the employee check whether the user has permission to use the employee. For this reason, **each user must bind their messaging app account once before first use.**
+
+1. The user signs in to the admin console and opens the **Channels** tab of the employee.
+2. The user clicks **Bind my Feishu account** (or the matching button for DingTalk or WeCom). The page shows a bind code.
+3. In the messaging app, the user sends a private message with this bind code to the bot.
+4. When the bot replies that the binding is complete, the user can send messages to the bot directly.
+
+<img src="/assets/images/en/admin/ai-employees-channel-bind_en.webp" alt="Bind my Feishu account" />
+
+* A bind code is valid for 10 minutes and works only once.
+* A bind code works only in a private chat. A bind code sent in a group chat has no effect.
+* A binding applies to standard employee bots on the same messaging platform and in the same enterprise (tenant). Bind each messaging platform separately.
+* When an unbound user sends a private message to the bot, the bot replies with a link that leads the user to generate a bind code. The bot does not reply to messages from unbound users in group chats.
+* After binding, the account must be active and have permission to read AI employees in the employee's group. An admin can use employees across groups.
+
+The user can click **Unbind** in the same place. After unbinding, channel runs that use this binding stop. The bot refuses messages from this account until the user binds again.
+
+<Callout type="warn">
+Private bot chats with standard employees also appear in the employee's shared web session list. Members who can view the employee can read these chats. See [Chat with an Employee](/docs/admin/ai-employees/chat).
+</Callout>
+
+### Message Limits
+
+* In a group chat, mention the standard employee's bot with `@` and include the request as plain text.
+* A standard employee processes plain text messages only. Attachments, voice messages, cards, and empty messages are not processed. The bot asks the user to send plain text.
+* In one session, a new message does not start while the previous message is still in process. The bot asks the user to send the message again later.
+
+### Replies That Need Attention
+
+When the employee generated a reply but the reply could not be sent to the messaging app, or the result is not confirmed, the **Channels** tab shows **Replies that need attention** below the channels.
+
+* Click **Resend reply** to send the generated reply to the original session. Resending does not make the employee run the task again.
+* If the status is **Delivery could not be confirmed**, the platform may already have received the reply. Resending can create a duplicate message.
+
+## Enhanced Employee: Approve Pairing Requests
+
+In addition to Feishu, DingTalk, and WeCom, an enhanced employee can connect more channels with **Add channel**.
+
+<img src="/assets/images/en/admin/ai-employees-enhanced-channels_en.webp" alt="Channels tab of an enhanced employee" />
+
+### Add Other Channels
+
+1. Click **Add channel** and select a channel.
+2. Enter the credentials of the channel as the dialog asks. Click **Open platform settings** to see the setup instructions of the platform.
+3. Click **Save**.
+
+<img src="/assets/images/en/admin/ai-employees-add-channel_en.webp" alt="Add channel" />
+
+### Approve Users
+
+Enhanced employees use the channel's access settings rather than Cherry Studio bind codes. If the first private message asks for pairing, an admin or group admin must approve the request:
+
+1. The user sends a private message to the bot in the messaging app.
+2. An admin or group admin clicks **Pair users** on the **Channels** tab.
+3. Find the request in **Waiting for approval** and click **Allow access**.
+4. The user sends the message again.
+
+<img src="/assets/images/en/admin/ai-employees-pairing_en.webp" alt="Pair users" />
+
+<Callout type="warn">
+Approve only users that you know. After approval, the user can use the tools and data of the employee through the channel. The authorization applies only to the current employee or assistant.
+</Callout>
+
+To remove an authorization, click **Revoke access** in **Approved users**.
+
+## Disconnect a Channel
+
+1. On the channel card, click **Manage connection** (for the other channels of an enhanced employee, click **Disconnect**).
+2. Click **Remove configuration** and confirm.
+
+After you disconnect, the employee no longer uses these bot credentials. The app on the open platform is not deleted.

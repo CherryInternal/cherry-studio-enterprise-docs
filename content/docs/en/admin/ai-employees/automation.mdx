@@ -1,0 +1,67 @@
+---
+title: "Automation"
+description: Let an employee run recurring work on a schedule, for example a feedback summary every weekday morning that is sent to a group chat.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+<Callout type="info">
+**Navigation:** Sidebar → AI Employees → Click an employee → **Automation** tab
+</Callout>
+
+Automation lets an employee run a piece of work on a schedule. The result of each run can stay with the employee, or the employee can send it to a connected group chat. Only **Admins** and the **Group Admins** of the group can manage tasks. The employee must be in the **Ready** status.
+
+## Add a Task
+
+1. On the **Automation** tab, click **Add task**.
+2. Fill in the task fields.
+3. Click **Save**.
+
+<img src="/assets/images/en/admin/ai-employees-task-form_en.webp" alt="Add a task" />
+
+<table><thead><tr><th width="140">Field</th><th>Description</th></tr></thead><tbody><tr><td><strong>Task name</strong></td><td>Maximum 64 characters.</td></tr><tr><td><strong>Instructions</strong></td><td>The instructions that are sent to the employee at each run. Maximum 4000 characters. State what to do and which output format to use.</td></tr><tr><td><strong>Schedule</strong></td><td>Select <strong>Every day</strong>, <strong>Weekdays</strong>, <strong>Every week</strong>, or <strong>Custom schedule</strong>, then select the time. A custom schedule uses a cron expression. For example, <code>0 9 * * 1-5</code> means 09:00 on weekdays.</td></tr><tr><td><strong>Destination</strong></td><td>Where the result goes. See <a href="#destination">Destination</a> below.</td></tr><tr><td><strong>Session mode</strong></td><td>For standard employees only. See <a href="#session-mode">Session Mode</a> below.</td></tr></tbody></table>
+
+### Time Zone
+
+* **Standard employee:** The task uses the time zone of the browser at the time you save the task. The hint on the form shows the current time zone, for example `Asia/Shanghai`.
+* **Enhanced employee:** The task uses the time zone setting of the runtime of the employee.
+
+### Destination
+
+<table><thead><tr><th width="200">Value</th><th>Where the result goes</th></tr></thead><tbody><tr><td><code>local</code></td><td>The result stays with the employee. Click <strong>View output</strong> to see it.</td></tr><tr><td><code>platform:group ID</code></td><td>The result is sent to a group chat in a connected channel. For a standard employee, the platform is <code>feishu</code>, <code>dingtalk</code>, or <code>wecom</code>, for example <code>feishu:oc_xxx</code>. For an enhanced employee, enter <code>channel:target</code>.</td></tr></tbody></table>
+
+Before the employee can send a result to a group chat, you must connect the matching [messaging channel](/docs/admin/ai-employees/channels) to the employee. The bot must also be in the group.
+
+### Session Mode
+
+<table><thead><tr><th width="180">Option</th><th>Description</th></tr></thead><tbody><tr><td><strong>New session each run</strong></td><td>Each run uses a separate conversation history. Work files and other employee resources are still shared.</td></tr><tr><td><strong>Share one session</strong></td><td>All runs write to one session. The employee remembers the content of the previous run. Use this for tasks that must compare with the previous result.</td></tr></tbody></table>
+
+A shared session appears in the session list on the chat page with the task name. If this session is deleted, the next run creates it again.
+
+## Manage Tasks
+
+<img src="/assets/images/en/admin/ai-employees-tasks_en.webp" alt="Task list" />
+
+Each task shows its schedule, destination, next run time, and the result of the latest run. Standard employee tasks also show their time zone.
+
+* **View output:** See the result of the latest run.
+* **Edit:** Change the fields of the task.
+* **Run now:** Run the task once immediately. This run uses the model and tools, and sends the result as the task configuration says.
+* **Pause / Enable:** After you pause a task, it no longer runs on schedule. Enable it to resume.
+* **Delete:** Delete the task and stop all later runs.
+
+<img src="/assets/images/en/admin/ai-employees-task-output_en.webp" alt="View output" />
+
+<Callout type="info">
+The model usage of a task is charged to the billing account of the employee, in the same way as chat.
+</Callout>
+
+## Run Rules for Standard Employees
+
+* In the cases below, a run that is due is skipped and recorded as `skipped`. When the employee works normally again, the task continues from the next scheduled time. The system does not run the skipped runs later.
+  * The employee is paused.
+  * The billing account is disabled, deleted, or has left the group of the employee.
+  * The employee has no valid seat.
+* If the previous run of the same task has not ended, the new run does not start.
+* The scheduler checks for due tasks every 5 seconds. The system updates the next run time before a task starts. If the system crashes during this step, this run is skipped and is not run again automatically.
+* One run can last 30 minutes at most.

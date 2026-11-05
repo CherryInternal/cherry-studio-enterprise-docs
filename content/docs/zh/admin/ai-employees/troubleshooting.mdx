@@ -1,0 +1,35 @@
+---
+title: "常见问题"
+description: AI 员工的常见问题和处理方法，包括创建、聊天、渠道、自动任务和运行环境。
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+本页按场景列出常见问题。运行环境的部署问题需要部署人员处理，见 [AI 员工部署](https://deploy.cherry-ai.com/zh/docs/setup/advanced/ai-employees)。
+
+## 创建与席位
+
+<table><thead><tr><th width="260">现象</th><th>处理方法</th></tr></thead><tbody><tr><td>没有 <strong>新建 AI 员工</strong> 按钮</td><td>只有管理员和组管理员可以创建员工。</td></tr><tr><td>员工类型显示 <strong>暂不可用</strong></td><td>这类员工的运行环境没有就绪。把页面显示的原因发给部署人员。</td></tr><tr><td><strong>当前许可证不包含此类型的席位</strong></td><td>这类员工没有有效席位。检查授权席位、许可证有效期和验证状态。需要调整席位时，联系我们。</td></tr><tr><td><strong>席位已用完</strong></td><td>删除不再使用的同类员工，或扩充授权。暂停员工不会释放席位。</td></tr><tr><td>员工被自动暂停</td><td>检查有效席位和费用归属账户。席位减少时，同类型中较早创建的员工优先保留席位，已暂停的员工仍参与计数。费用归属账户被停用、删除或移出分组，也会暂停员工。修复原因后，手动恢复工作。</td></tr></tbody></table>
+
+## 聊天
+
+<table><thead><tr><th width="260">现象</th><th>处理方法</th></tr></thead><tbody><tr><td>员工不回复</td><td>确认员工状态为 <strong>可使用</strong>，并检查员工使用的模型是否可用。</td></tr><tr><td>员工没有使用新配置</td><td>标准员工从下一次运行开始使用新配置。增强员工需要开始一个新对话。</td></tr><tr><td>一直显示 <strong>等待负责人或管理员确认</strong></td><td>增强员工在等待确认。请费用归属账户、管理员或组管理员打开这个会话处理。</td></tr><tr><td>员工找不到技能或 MCP 工具</td><td>在 <strong>扩展</strong> 标签页确认技能已启用、MCP 服务已添加。标准员工只能使用 HTTP 类型的 MCP 服务。</td></tr></tbody></table>
+
+## 消息渠道
+
+<table><thead><tr><th width="260">现象</th><th>处理方法</th></tr></thead><tbody><tr><td>渠道显示 <strong>连接失败</strong></td><td>检查 App ID 和 Secret，并确认开放平台中的应用已发布，并开通了机器人和消息权限。</td></tr><tr><td>机器人回复“此账号尚未绑定”</td><td>标准员工：使用者需要在员工的 <strong>渠道</strong> 标签页生成绑定码，在私聊中发给机器人。</td></tr><tr><td>机器人回复“绑定码无效、已过期或已使用”</td><td>绑定码 10 分钟内有效，只能用一次。重新生成绑定码。</td></tr><tr><td>机器人回复“无权使用这名 AI 员工”</td><td>使用者已绑定，但不属于员工所在的分组。把使用者加入分组。</td></tr><tr><td>群聊中机器人不回复</td><td>标准员工：发送者需要绑定账号、具有员工访问权限，并 @ 机器人。增强员工：检查渠道的访问设置，批准待处理的配对请求。</td></tr><tr><td>增强员工的机器人提示需要配对</td><td>管理员或组管理员在 <strong>配对使用者</strong> 中批准请求。使用者重新发送消息。</td></tr><tr><td>绑定链接打开的地址不对</td><td>部署人员需要把 <code>ADMIN_URL</code> 设置为管理后台的访问地址。</td></tr></tbody></table>
+
+## 自动任务
+
+<table><thead><tr><th width="260">现象</th><th>处理方法</th></tr></thead><tbody><tr><td>任务没有按时执行</td><td>检查任务是否已启用、员工是否在运行、费用归属账户是否有效。标准员工在这些情况下跳过执行，不补执行。</td></tr><tr><td>执行时间差了几个小时</td><td>标准员工使用保存任务时浏览器的时区。在正确时区的浏览器中重新保存任务。</td></tr><tr><td>结果没有发到群聊</td><td>确认 <strong>结果投递</strong> 的格式为 <code>平台:群ID</code>，员工已连接这个平台的渠道，机器人已加入这个群。</td></tr></tbody></table>
+
+## 运行环境
+
+页面显示下列提示时，把提示和详情发给部署人员。处理方法见 [AI 员工部署](https://deploy.cherry-ai.com/zh/docs/setup/advanced/ai-employees#常见问题)。
+
+* 标准员工：配置不完整、需要 Docker、无法获取镜像、无法连接、内部 token 不一致、版本不一致、Sandbox 隔离检查失败。
+* 增强员工：管理后台无法连接员工的运行环境。
+
+<Callout type="info">
+增强员工的运行环境需要更新或恢复时，见[服务维护](/zh/docs/admin/ai-employees/maintenance)。
+</Callout>

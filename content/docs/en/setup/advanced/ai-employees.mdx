@@ -1,0 +1,128 @@
+---
+title: AI Employee Deployment
+description: "Enable AI employees in a Docker deployment: mount the Docker socket, configure the network and images, and learn the runtime limits."
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+This page is for deployment operators. It explains how to enable AI employees in a Docker deployment. AI employees have two types: **standard employees** and **enhanced employees**. For both types, the API container creates and manages the runtime through Docker.
+
+<Callout type="info">
+This page applies only to Docker deployments.
+</Callout>
+
+## How It Runs
+
+<table><thead><tr><th width="140">Employee type</th><th>Runtime</th></tr></thead><tbody><tr><td><strong>Standard employee</strong></td><td>The API creates one Worker container <code>cherry-astra-worker</code>. All standard employees share this Worker. When an employee or assistant needs a file or command operation, the Worker creates a separate Sandbox for that employee or assistant. Its sessions share this Sandbox.</td></tr><tr><td><strong>Enhanced employee</strong></td><td>Each enhanced employee has one container <code>hermes-&lt;ID&gt;</code> and one data volume <code>hermes-&lt;ID&gt;-data</code>. The assistants of the employee run in the same container.</td></tr></tbody></table>
+
+<Callout type="warn">
+**You can run only one API instance.** The channel connections, the automation scheduler, and the runtime management of AI employees are kept in the API process. Do not run several API replicas. To upgrade, stop the old container first, then start the new container.
+</Callout>
+
+## Prerequisites
+
+* Docker 20.10 or later. The API container and the employee containers use the Docker daemon of the same host.
+* The API container mounts `/var/run/docker.sock`.
+* The server can pull the AI employee images, or you already pulled them. See [Images](#images).
+
+<Callout type="error">
+**Mounting the Docker socket gives the API container administrator access to the host.** Enable AI employees only on a host that is dedicated to Cherry Studio Enterprise, and limit access to this host.
+</Callout>
+
+## Docker Compose Configuration
+
+Merge the following settings into your existing Docker Compose configuration. Keep your current API image version, database settings, volumes, and network connections. This example is not a complete deployment file:
+
+```yaml
+services:
+  api:
+    image: cherrystudio/cherry-studio-enterprise-api:v0.5.1
+    container_name: cherry-studio-enterprise
+    environment:
+      # Admin console address used in channel binding prompts
+      - ADMIN_URL=https://admin.your-domain.com
+      # Enhanced employees: join the network of the API and call models through it
+      - HERMES_DOCKER_NETWORK=cherry-network
+      - HERMES_GATEWAY_URL=http://cherry-studio-enterprise:3670/v1
+    volumes:
+      - ./data:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - cherry-network
+
+networks:
+  cherry-network:
+    name: cherry-network
+```
+
+* `networks.cherry-network.name` sets a fixed network name. By default, Docker Compose adds the project name before the network name. With a fixed name, `HERMES_DOCKER_NETWORK` can match the network.
+* The host name in `HERMES_GATEWAY_URL` is the `container_name` of the API.
+
+The configuration takes effect after you recreate the API container:
+
+```bash
+docker compose up -d
+```
+
+## Standard Employees
+
+When the API runs in Docker and mounts the Docker socket, the API manages the Worker of standard employees automatically. No extra configuration is needed:
+
+* **Image:** Replace `-api` in the API image name with `-astra`. Keep the registry, namespace, and tag. For example, `cherrystudio/cherry-studio-enterprise-api:v0.5.1` maps to `cherrystudio/cherry-studio-enterprise-astra:v0.5.1`. The Worker and the Sandbox use the same image.
+* **Network:** The API creates the `cherry-astra` network and joins it. The Worker does not publish ports.
+* **Data:** The data of the Worker is kept in the `cherry-astra-data` volume.
+* **Check:** The API checks the Worker at startup and every 30 seconds after that. If the Worker does not exist, the API creates it again. If the Worker is stopped, the API starts it.
+* **Upgrade:** After an API upgrade, the API stops the old Worker, backs up the volume, and creates a Worker with the image of the new version. Before the old Worker stops, the API waits up to 30 minutes for accepted tasks to end. If the new Worker is not ready within 120 seconds, the API restores the backup and the old Worker.
+
+### Runtime Limits
+
+<table><thead><tr><th width="220">Item</th><th>Limit</th></tr></thead><tbody><tr><td><strong>Concurrent tasks</strong></td><td>At most 4 for each Worker</td></tr><tr><td><strong>Duration of one run</strong></td><td>30 minutes at most</td></tr><tr><td><strong>Sandbox resources</strong></td><td>For each employee or assistant Sandbox: 1 CPU, 1 GiB memory, 128 processes. One tool call can last 120 seconds at most</td></tr><tr><td><strong>Sandbox network</strong></td><td>Disabled. Employees access external systems through MCP servers</td></tr><tr><td><strong>Sandbox cleanup</strong></td><td>A Sandbox is removed after 10 minutes of idle time. The number of Sandboxes that are kept at the same time is the host memory in GiB divided by 2 and rounded down, with a minimum of 4 and a maximum of 32</td></tr></tbody></table>
+
+### External Worker (Optional)
+
+To run the Worker on another host, use external mode. Setting either `ASTRA_WORKER_URL` or `ASTRA_INTERNAL_TOKEN` on the API disables automatic Worker management. Both values are required for external mode. Setting only `ASTRA_WORKER_IMAGE` or `ASTRA_SANDBOX_IMAGE` does not enable external mode. Configure the API and the Worker as follows:
+
+<table><thead><tr><th width="160">Location</th><th width="240">Parameter</th><th>Description</th></tr></thead><tbody><tr><td>API</td><td><code>ASTRA_WORKER_URL</code></td><td>The Worker address that the API can reach, for example <code>http://astra-worker:3690</code></td></tr><tr><td>API and Worker</td><td><code>ASTRA_INTERNAL_TOKEN</code></td><td>The same value on both sides, at least 32 characters</td></tr><tr><td>Worker</td><td><code>ASTRA_CONTROL_URL</code></td><td>The API address that the Worker can reach, without a path</td></tr><tr><td>Worker</td><td><code>ASTRA_SANDBOX_IMAGE</code></td><td>The Sandbox image. It is usually the same as the Worker image</td></tr><tr><td>Worker</td><td><code>ASTRA_DATA_DIR</code></td><td>The data directory. The host and the Worker container must use the same absolute path. The directory must allow read and write for UID 1000</td></tr></tbody></table>
+
+The external Worker must mount its host's Docker socket and have permission to use it. Worker and Sandbox containers use the Docker daemon on that host; this can differ from the API host. Keep the API and Worker on the same release. A protocol mismatch makes the Worker unavailable.
+
+## Enhanced Employees
+
+* **Image:** The platform specifies one recommended image for each version, for example `docker-registry.cherry-ai.com/public/hermes-agent:v0.22.5`. An admin can update or change the image on the AI employee service page in the admin console.
+* **Network:** When the API runs in a container, the API reaches the employee containers through a shared Docker network. The employee containers do not publish host ports. For this reason, set `HERMES_DOCKER_NETWORK` to the network of the API.
+* **Model calls:** The employee containers call the model gateway of the API through `HERMES_GATEWAY_URL`.
+
+<table><thead><tr><th width="220">Parameter</th><th width="260">Default</th><th>Description</th></tr></thead><tbody><tr><td><code>HERMES_DOCKER_NETWORK</code></td><td>Not set</td><td>The Docker network that the employee containers join. You must set it when the API runs in a container</td></tr><tr><td><code>HERMES_GATEWAY_URL</code></td><td><code>http://host.docker.internal:3670/v1</code></td><td>The model gateway address that the employee containers use</td></tr><tr><td><code>HERMES_PORT_START</code>, <code>HERMES_PORT_END</code></td><td><code>18080</code>, <code>18179</code></td><td>The range of host ports that the employee containers publish when the API does not run in a container</td></tr><tr><td><code>HERMES_BIND_ADDRESS</code></td><td><code>127.0.0.1</code></td><td>The listen address of the host ports when the API does not run in a container</td></tr></tbody></table>
+
+## Images
+
+<table><thead><tr><th width="140">Image</th><th>Mirror in China</th><th>Docker Hub</th></tr></thead><tbody><tr><td><strong>Standard employee</strong></td><td><code>docker-registry.cherry-ai.com/public/cherry-studio-enterprise-astra</code></td><td><code>cherrystudio/cherry-studio-enterprise-astra</code></td></tr><tr><td><strong>Enhanced employee</strong></td><td><code>docker-registry.cherry-ai.com/public/hermes-agent</code></td><td>-</td></tr></tbody></table>
+
+If the server cannot access the image registry:
+
+* Standard employees: Sync the image to an internal registry and set the Worker image with `ASTRA_WORKER_IMAGE`. If you set only this parameter, the Sandbox uses the same image. If you need a different Sandbox image, also set `ASTRA_SANDBOX_IMAGE`.
+* Enhanced employees: First pull the recommended image on the server with `docker pull`. If you use an internal registry, an admin must switch to a custom image on the AI employee service page.
+
+## Backup
+
+In addition to the PostgreSQL database and the `./data` directory, back up these Docker volumes:
+
+* `cherry-astra-data`: The sessions, work files, and skill cache of standard employees.
+* `hermes-<ID>-data`: The data of each enhanced employee, including sessions, memory, files, and channel credentials.
+
+<Callout type="warn">
+Do not copy live runtime data. In a maintenance window, pause the employees, then stop the API before stopping the Worker and any remaining enhanced employee containers. Otherwise, the API can restart the Worker during the backup. Keep these containers stopped while you back up the database, data directory, and volumes. After the backup, start the API and resume the employees as needed. Start an external Worker manually. Protect all volumes and backups as sensitive data.
+</Callout>
+
+## Troubleshooting
+
+When an employee type is **Not available**, the admin console shows the reason. The API log also records `Astra unavailable (<reason>): <details>`.
+
+<table><thead><tr><th width="200">Reason</th><th>Solution</th></tr></thead><tbody><tr><td><code>dockerUnavailable</code></td><td>The API does not run in Docker, or it does not mount <code>/var/run/docker.sock</code>.</td></tr><tr><td><code>imageUnavailable</code></td><td>The image of standard employees cannot be pulled. Check access to the registry, or set <code>ASTRA_WORKER_IMAGE</code>.</td></tr><tr><td><code>conflict</code></td><td>A <code>cherry-astra-worker</code> container that Cherry Studio does not manage already exists. Check its owner, purpose, and data mounts. Back up any data that you need. Rename or delete the container only after you confirm that it is safe, then try again.</td></tr><tr><td><code>upgradeFailed</code></td><td>The Worker upgrade failed. The system keeps the old version. Check the API log.</td></tr><tr><td><code>notConfigured</code></td><td>External mode is missing <code>ASTRA_WORKER_URL</code> or <code>ASTRA_INTERNAL_TOKEN</code>, or the token has fewer than 32 characters.</td></tr><tr><td><code>unreachable</code></td><td>The API cannot connect to the Worker. Check <code>ASTRA_WORKER_URL</code> and make sure the Worker is running.</td></tr><tr><td><code>unauthorized</code>, <code>controlUnauthorized</code></td><td>The <code>ASTRA_INTERNAL_TOKEN</code> of the API and the Worker is different.</td></tr><tr><td><code>protocolMismatch</code></td><td>The API and the Worker have different versions. Upgrade both to the same version.</td></tr><tr><td><code>controlUnavailable</code></td><td>The Worker cannot connect to the API. Check <code>ASTRA_CONTROL_URL</code>.</td></tr><tr><td><code>sandboxBackendFailed</code></td><td>The Worker cannot manage the Sandbox. Check the permissions of the Docker socket.</td></tr><tr><td><code>isolationFailed</code></td><td>The Sandbox isolation check failed: the Sandbox can access the network, or it has no process limit. Check the network and PID limit configuration of Docker.</td></tr></tbody></table>
+
+If an enhanced employee shows "The admin console cannot connect to the runtime of the employee", the API log records `shares no Docker network with the console`. Do these steps:
+
+1. Pause the affected employee in the admin console.
+2. Set `HERMES_DOCKER_NETWORK` to the network of the API and recreate the API container.
+3. Check the Docker container name. The number in `hermes-<ID>` is a runtime number, not the employee UUID in the page URL. Remove only the affected container: `docker rm hermes-<ID>`. **Do not delete the volume `hermes-<ID>-data`.**
+4. Resume the employee in the admin console. The system creates the container with the new network configuration.

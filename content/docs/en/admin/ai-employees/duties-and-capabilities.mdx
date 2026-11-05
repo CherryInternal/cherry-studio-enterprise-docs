@@ -1,0 +1,94 @@
+---
+title: "Duties and Capabilities"
+description: View and edit the work instructions, model, skills, MCP servers, and secrets of an employee.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+<Callout type="info">
+**Navigation:** Sidebar → AI Employees → Click an employee → **Duties**, **Extensions**, or **Secrets** tab
+</Callout>
+
+The **Duties**, **Extensions**, and **Secrets** tabs in the employee details decide how the employee works. Only **Admins** and the **Group Admins** of the group can edit this configuration. Members can only view it.
+
+## Duties
+
+The **Duties** tab shows the work instructions, the model, and the personality and communication of the employee.
+
+<img src="/assets/images/en/admin/ai-employees-duties_en.webp" alt="Duties tab" />
+
+The **work instructions** are the full instructions that the employee reads each time it works. When you create an employee, the system generates the work instructions from the role, duties, and work rules.
+
+### Edit Duties and Capabilities
+
+1. On the **Duties** tab, click **Edit duties and capabilities**.
+2. Edit the **Work instructions**, **Personality and communication**, or the model.
+3. Click **Save**.
+
+<img src="/assets/images/en/admin/ai-employees-edit-duties_en.webp" alt="Edit duties and capabilities" />
+
+<Callout type="info">
+If you change the name or the role summary of an employee, the work instructions do not change. To change how the employee works, edit the work instructions directly.
+</Callout>
+
+When the saved changes take effect:
+
+<table><thead><tr><th width="140">Employee type</th><th>When it takes effect</th></tr></thead><tbody><tr><td><strong>Standard employee</strong></td><td>The next run uses the new configuration. A run that is in progress keeps the old work instructions, model, and skills.</td></tr><tr><td><strong>Enhanced employee</strong></td><td>New web sessions use the new configuration. Existing web sessions keep the old work instructions. The model and the personality and communication take effect from the next reply. For sessions in channels, you may need to pause the employee and then resume work.</td></tr></tbody></table>
+
+## Extensions
+
+The **Extensions** tab manages the skills and MCP servers of the employee.
+
+<img src="/assets/images/en/admin/ai-employees-extensions_en.webp" alt="Extensions tab" />
+
+### Skills
+
+A skill gives the employee guidance and scripts for one type of work. Skills come from the [Agent Skills](/docs/admin/agent-skills) library.
+
+* **Add a skill:** Click **Add from library** and select a skill that the group can use.
+* **Enable or disable:** Use the switch on the right of the skill.
+* **Remove:** Click the delete icon. The skill in the library is not affected.
+* **Update:** When the skill in the library has a new version, an **Update** button appears next to the skill. Click it and the employee uses the new version.
+
+<Callout type="info">
+After you add a skill, this employee manages it independently. When the skill in the library is updated, the skill of the employee is not replaced automatically.
+</Callout>
+
+### MCP Servers
+
+An MCP server gives the employee external tools, for example to query a ticket system. MCP servers come from the [MCP Servers](/docs/admin/mcp-server) library.
+
+* Click **Add from library** and select an MCP server that the group can use.
+* A change to an MCP server takes effect from the next run of the employee.
+* The page does not show the credentials of MCP servers.
+
+<Callout type="warn">
+**A standard employee supports only MCP servers of the HTTP type (streamable HTTP).** If a standard employee must use an MCP server, set it to the HTTP type in the library.
+</Callout>
+
+## Secrets
+
+A secret is a credential for the tools of the employee, for example an API token of a business system. The secret is given to the employee as an environment variable.
+
+<img src="/assets/images/en/admin/ai-employees-secrets_en.webp" alt="Secrets tab" />
+
+### Add or Update a Secret
+
+1. On the **Secrets** tab, click **Add or update secret**.
+2. In **Variable name**, enter the environment variable name, for example `TICKET_API_TOKEN`.
+3. In **Secret value**, enter the secret.
+4. Click **Save**.
+
+<img src="/assets/images/en/admin/ai-employees-secret-add_en.webp" alt="Add or update secret" />
+
+* After you save, the page shows only the variable name of the secret. It does not show the value.
+* If the variable name already exists, the new value replaces the old value.
+* A secret belongs only to the current employee or assistant. An employee and its assistants manage their secrets separately.
+
+### Delete a Secret
+
+Click the delete icon on the right of the secret. For a standard employee, a task that is running stops when it next checks the secret. Deleting a secret does not affect other employees and assistants.
+
+<Callout type="info">
+Credentials of the platform and channels are managed by the system. They do not appear on the **Secrets** tab.
+</Callout>

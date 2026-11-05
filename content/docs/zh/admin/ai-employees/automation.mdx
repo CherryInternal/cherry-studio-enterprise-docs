@@ -1,0 +1,67 @@
+---
+title: "自动任务"
+description: 让员工按计划执行周期工作，例如每个工作日早上整理一份反馈摘要，并把结果发到群聊。
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+<Callout type="info">
+**入口路径：** 侧边栏 → AI 员工 → 点击员工 → **自动任务** 标签页
+</Callout>
+
+自动任务让员工按计划执行一段工作内容。每次执行的结果可以保存在员工这里，也可以发到已连接的群聊。只有**管理员**和本组的**组管理员**可以管理自动任务。员工需要处于 **可使用** 状态。
+
+## 添加自动任务
+
+1. 在 **自动任务** 标签页，点击 **添加自动任务**。
+2. 填写任务字段。
+3. 点击 **保存**。
+
+<img src="/assets/images/zh/admin/ai-employees-task-form_zh.webp" alt="添加自动任务" />
+
+<table><thead><tr><th width="140">字段</th><th>说明</th></tr></thead><tbody><tr><td><strong>任务名称</strong></td><td>最多 64 个字符。</td></tr><tr><td><strong>工作内容</strong></td><td>每次执行时发给员工的指令，最多 4000 个字符。写明要做什么、输出什么格式。</td></tr><tr><td><strong>执行时间</strong></td><td>选择 <strong>每天</strong>、<strong>每个工作日</strong>、<strong>每周</strong> 或 <strong>自定义时间</strong>，再选择时间。自定义时间使用 Cron 表达式，例如 <code>0 9 * * 1-5</code> 表示工作日 09:00。</td></tr><tr><td><strong>结果投递</strong></td><td>结果发到哪里。见下方的<a href="#结果投递">结果投递</a>。</td></tr><tr><td><strong>会话方式</strong></td><td>只适用于标准员工。见下方的<a href="#会话方式">会话方式</a>。</td></tr></tbody></table>
+
+### 时区
+
+* **标准员工：** 使用保存任务时浏览器的时区。表单的提示中显示当前时区，例如 `Asia/Shanghai`。
+* **增强员工：** 使用员工运行环境的时区设置。
+
+### 结果投递
+
+<table><thead><tr><th width="200">填写</th><th>结果去向</th></tr></thead><tbody><tr><td><code>local</code></td><td>结果只保存在员工这里。点击 <strong>查看产出</strong> 查看。</td></tr><tr><td><code>平台:群ID</code></td><td>结果发到已连接渠道的群聊。标准员工的平台为 <code>feishu</code>、<code>dingtalk</code> 或 <code>wecom</code>，例如 <code>feishu:oc_xxx</code>。增强员工填写 <code>渠道:目标</code>。</td></tr></tbody></table>
+
+发到群聊前，员工需要先连接对应的[消息渠道](/zh/docs/admin/ai-employees/channels)，机器人也需要已经加入这个群。
+
+### 会话方式
+
+<table><thead><tr><th width="180">选项</th><th>说明</th></tr></thead><tbody><tr><td><strong>每次运行新建会话</strong></td><td>每次执行使用独立的对话历史。工作文件等员工资源仍然共用。</td></tr><tr><td><strong>共用同一个会话</strong></td><td>所有执行写入同一个会话，员工记得上一次的内容。适合需要对比上一次结果的任务。</td></tr></tbody></table>
+
+共用的会话以任务名称出现在聊天页面的会话列表中。这个会话被删除后，下一次执行会重新创建。
+
+## 管理自动任务
+
+<img src="/assets/images/zh/admin/ai-employees-tasks_zh.webp" alt="自动任务列表" />
+
+每个任务显示执行计划、投递方式、下次执行时间和最近一次执行结果。标准员工的任务还显示时区。
+
+* **查看产出：** 查看最近一次执行的结果。
+* **编辑：** 修改任务的字段。
+* **立即运行：** 马上执行一次。本次执行会使用模型和工具，并按任务配置投递结果。
+* **暂停 / 启用：** 暂停后任务不再按计划执行，启用后恢复。
+* **删除：** 删除任务，停止后续执行。
+
+<img src="/assets/images/zh/admin/ai-employees-task-output_zh.webp" alt="查看产出" />
+
+<Callout type="info">
+自动任务的模型用量和聊天一样，计入员工的费用归属账户。
+</Callout>
+
+## 标准员工的执行规则
+
+* 下列情况下，到期的执行被跳过，记录为 `skipped`。员工恢复正常后，任务从下一个计划时间继续，不补执行跳过的部分。
+  * 员工已暂停。
+  * 费用归属账户已停用、已删除或已离开员工所在的分组。
+  * 员工没有有效席位。
+* 同一个任务的上一次执行还没有结束时，新的执行不会开始。
+* 调度器每 5 秒检查一次到期任务。系统在任务开始前更新下一次执行时间。系统在这一步崩溃时，这一次执行会被跳过，不会自动补执行。
+* 一次执行最长 30 分钟。

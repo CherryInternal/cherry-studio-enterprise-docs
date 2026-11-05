@@ -1,0 +1,45 @@
+---
+title: "Chat with an Employee"
+description: Team members chat with an employee on the web, view the session history, and handle confirmation requests from the employee.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+<Callout type="info">
+**Navigation:** Sidebar → AI Employees → Click an employee → Click the **Chat** button in the top-right corner
+</Callout>
+
+Every member who can see an employee can chat with this employee on the web, including Members. In the employee list, you can also click the chat icon on the right of the employee to open the chat page directly.
+
+<img src="/assets/images/en/admin/ai-employees-chat_en.webp" alt="Chat with an employee" />
+
+## Chat
+
+1. Enter a message in the input box.
+2. Press `Enter` to send. Press `Shift + Enter` for a new line.
+3. While the employee replies, click **Stop reply** to stop the current reply.
+
+When the employee uses a tool, the message shows the steps that it runs. Click a step to expand the input and the result.
+
+Click **New chat** in the top-left corner to start a new session. The session list on the left shows the sessions of this employee. For standard employees, it also shows channel sessions and the shared sessions of automation tasks. A shared automation session uses the task name.
+
+For a standard employee's channel session, send new messages in the messaging app. You can view the session and cancel its current run from the web page.
+
+<Callout type="warn">
+**Sessions are shared in the group.** Every member who can see this employee can see sessions that other members started. For standard employees, this includes private bot chats in connected channels. These chats are not private to the sender within Cherry Studio. Do not send personal-only content. The same rules apply to assistants.
+</Callout>
+
+## Handle Confirmation Requests (Enhanced Employees)
+
+Before an enhanced employee runs some actions, the chat shows **Permission required** and waits for confirmation. The tools of a standard employee run without confirmation.
+
+* **Allow once:** The employee continues with this one action.
+* **Reject:** The employee does not run this action.
+
+Only the **billing account** of the employee, **Admins**, and the **Group Admins** of the group can confirm. Other members see **Waiting for the billing owner or an administrator**. They can cancel the run.
+
+When the employee needs more information from you, the chat shows the **Your answer** input box. Enter the answer and submit it. The employee then continues to work.
+
+## Common Messages
+
+<table><thead><tr><th width="240">Message</th><th>Solution</th></tr></thead><tbody><tr><td><strong>The reply failed</strong></td><td>Click retry.</td></tr><tr><td><strong>The connection closed</strong></td><td>Click retry to restore the current reply.</td></tr><tr><td><strong>The result is unknown</strong></td><td>Check the session history first to see if the employee received the message. If you send the message again, the employee can run the same action twice.</td></tr><tr><td><strong>Too many active runs</strong></td><td>The runtime of standard employees processes at most 4 runs at the same time. Try again later.</td></tr><tr><td><strong>All Sandboxes are in use</strong></td><td>The work environments of standard employees are all in use. Try again when other employees finish their work.</td></tr></tbody></table>

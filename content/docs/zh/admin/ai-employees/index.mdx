@@ -1,0 +1,76 @@
+---
+title: "AI 员工"
+description: 按岗位职责工作的 AI 成员。可以在网页中聊天、连接飞书等消息渠道、按计划执行自动任务。
+icon: Layers
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+<Callout type="info">
+**入口路径：** 侧边栏 → AI 员工
+</Callout>
+
+**AI 员工**是按岗位职责工作的 AI 成员。管理员为团队描述岗位和职责，AI 员工就按这份职责回答问题、使用工具、处理文件。团队成员可以在网页中和员工聊天，也可以在飞书、钉钉、企业微信中给员工的机器人发消息。员工还可以按计划执行自动任务，例如每周五整理一份反馈周报。
+
+<img src="/assets/images/zh/admin/ai-employees-list_zh.webp" alt="AI 员工列表" />
+
+<Callout type="warn">
+页面右上角的 **Alpha** 标记表示该功能处于早期阶段，界面和行为可能会变化。
+</Callout>
+
+## 与助手、智能体的区别
+
+<table><thead><tr><th width="120">功能</th><th>运行位置</th><th>适合的工作</th></tr></thead><tbody><tr><td><strong>助手</strong></td><td>用户的客户端</td><td>基于预设提示词和知识库的对话。</td></tr><tr><td><strong>智能体</strong></td><td>用户的客户端</td><td>编程开发等多步骤任务，技能脚本在客户端本地执行。</td></tr><tr><td><strong>AI 员工</strong></td><td>服务端的独立运行环境</td><td>按岗位长期工作：有自己的工作文件，可以连接消息渠道，可以按计划执行任务。同组成员共同使用。</td></tr></tbody></table>
+
+## 员工与助理
+
+一位员工下面可以新增多位**助理**，用于分担员工的部分工作。
+
+* 助理与所属员工共用分组、费用归属、员工类型和运行环境。
+* 助理的职责、技能、密钥和会话与员工分开管理。
+* 暂停员工会同时暂停它的全部助理。
+* 助理不单独占用席位，它使用所属员工的席位。
+
+## 员工类型
+
+创建员工时需要选择员工类型。**创建后不能更改员工类型。**
+
+<table><thead><tr><th width="140">项目</th><th>标准员工</th><th>增强员工</th></tr></thead><tbody><tr><td><strong>消息渠道</strong></td><td>飞书、钉钉、企业微信</td><td>飞书、钉钉、企业微信、Telegram、Discord、Slack、Matrix、Mattermost、Email、Signal、Home Assistant</td></tr><tr><td><strong>渠道使用者授权</strong></td><td>每位使用者用绑定码绑定自己的账号</td><td>管理员或组管理员批准配对请求</td></tr><tr><td><strong>工具执行</strong></td><td>工具无需确认，直接运行</td><td>部分操作需要费用归属账户、管理员或组管理员在聊天中确认</td></tr><tr><td><strong>MCP 服务</strong></td><td>只支持 HTTP 类型</td><td>支持</td></tr><tr><td><strong>技能、密钥、自动任务</strong></td><td>支持</td><td>支持</td></tr></tbody></table>
+
+新建员工时默认选中**标准员工**。
+
+## 席位
+
+每位员工占用一个授权席位。标准员工和增强员工分别使用各自的席位，席位数量按整个部署统计。员工列表顶部显示两类席位的已用数量和授权数量。
+
+<table><thead><tr><th width="140">授权版本</th><th>标准员工</th><th>增强员工</th></tr></thead><tbody><tr><td><strong>Express</strong></td><td>5</td><td>2</td></tr><tr><td><strong>Premium</strong></td><td>50</td><td>10</td></tr></tbody></table>
+
+上表是默认值。授权中单独指定了员工数量时，以授权为准。
+
+* 已暂停的员工仍然占用席位。删除清理完成后才会释放席位。等待清理的员工仍然占用席位。
+* 某类员工没有有效席位时，这类员工被禁用。已有员工仍然可以查看、暂停和删除。
+* 授权席位减少时，系统按员工类型分别排序，优先给较早创建的员工分配席位。系统每 5 秒检查一次，并暂停超出席位数量的员工。已暂停的员工仍参与排序。检查间隔不代表暂停一定在 5 秒内完成。
+
+## 权限
+
+<table><thead><tr><th width="140">角色</th><th>可以做什么</th></tr></thead><tbody><tr><td><strong>管理员</strong></td><td>管理所有分组的员工。</td></tr><tr><td><strong>组管理员</strong></td><td>在本组创建、修改、暂停和删除员工。</td></tr><tr><td><strong>普通成员</strong></td><td>查看本组的员工，并在网页中和员工聊天。</td></tr></tbody></table>
+
+<Callout type="warn">
+**会话在组内共享：** 能看到一位员工的成员，都能看到这位员工的网页会话，包括其他成员发起的会话。标准员工的列表还包含渠道会话，包括与机器人的私聊。不要通过这些会话发送只适合本人查看的内容。助理的会话也遵循相同规则。
+</Callout>
+
+## 员工状态
+
+<table><thead><tr><th width="120">状态</th><th>说明</th></tr></thead><tbody><tr><td><strong>准备中</strong></td><td>配置正在下发到运行环境。</td></tr><tr><td><strong>可使用</strong></td><td>员工已就绪，可以聊天、连接渠道和执行任务。</td></tr><tr><td><strong>已暂停</strong></td><td>员工和它的全部助理停止工作，仍然占用席位。</td></tr><tr><td><strong>需处理</strong></td><td>配置应用失败，需要重试。</td></tr></tbody></table>
+
+## 下一步
+
+* [创建员工](/zh/docs/admin/ai-employees/create-employee)：用 AI 起草或手动填写配置，创建第一位员工。
+* [职责与能力](/zh/docs/admin/ai-employees/duties-and-capabilities)：修改工作指令、模型、技能、MCP 服务和密钥。
+* [助理](/zh/docs/admin/ai-employees/assistants)：在员工下面新增助理。
+* [消息渠道](/zh/docs/admin/ai-employees/channels)：连接飞书、钉钉、企业微信等消息应用。
+* [自动任务](/zh/docs/admin/ai-employees/automation)：让员工按计划执行工作。
+* [和员工聊天](/zh/docs/admin/ai-employees/chat)：团队成员在网页中使用员工。
+* [暂停与删除](/zh/docs/admin/ai-employees/lifecycle)：更换费用归属，暂停、恢复和删除员工。
+* [服务维护](/zh/docs/admin/ai-employees/maintenance)：更新增强员工的运行镜像。
+* [常见问题](/zh/docs/admin/ai-employees/troubleshooting)：按场景排查问题。
