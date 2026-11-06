@@ -1,0 +1,46 @@
+---
+title: "Assistants"
+description: Add assistants under an employee to share part of the employee's work. Assistants share the group, billing account, and runtime of the employee.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+<Callout type="info">
+**Navigation:** Sidebar → AI Employees → Click an employee → Click the **Add assistant** button in the top-right corner
+</Callout>
+
+An **assistant** belongs to one employee and shares part of the work of this employee. For example, a customer feedback analyst can have a ticket assistant that exports and organizes tickets from the ticket system.
+
+## How Assistants Relate to Employees
+
+<table><thead><tr><th width="160">Item</th><th>Description</th></tr></thead><tbody><tr><td><strong>Shared with the employee</strong></td><td>Group, billing account, employee type, runtime, and seat.</td></tr><tr><td><strong>Managed separately</strong></td><td>Name, role, duties, work rules, model, skills, MCP servers, secrets, channels, automation, and sessions.</td></tr><tr><td><strong>Pause</strong></td><td>When you pause the employee, all of its assistants pause too.</td></tr><tr><td><strong>Delete</strong></td><td>When you delete an assistant, only the configuration and work data of this assistant are deleted. When you delete an employee, all of its assistants are deleted too.</td></tr></tbody></table>
+
+An assistant does not use a seat of its own.
+
+## Add an Assistant
+
+Only **Admins** and the **Group Admins** of the group can add assistants. The steps are the same as in [Create an Employee](/docs/admin/ai-employees/create-employee):
+
+* **AI draft:** Describe the duties of the assistant, click **Draft with AI**, review the draft, and click **Create assistant**.
+* **Manual setup:** Click **Fill in settings**, fill in the name, role, duties, work rules, and model, and click **Create assistant**.
+
+<img src="/assets/images/en/admin/ai-employees-assistant-new_en.webp" alt="Add an assistant: manual setup" />
+
+When you add an assistant, you do not select the group, employee type, or billing account. The assistant uses the settings of its employee automatically.
+
+## View Assistants
+
+In the employee list, an employee that has assistants shows an expand button on the left. Click the expand button to see all assistants of this employee. Each employee also has an **Add assistant** entry below it.
+
+<img src="/assets/images/en/admin/ai-employees-list-assistants_en.webp" alt="Assistants in the employee list" />
+
+Click an assistant to open the assistant details. The tabs of the assistant details are the same as for an employee: Duties, Channels, Automation, Extensions, Secrets, and Settings. The top of the page shows **Employee name / Assistant**. This shows the employee that the assistant belongs to.
+
+<img src="/assets/images/en/admin/ai-employees-assistant-detail_en.webp" alt="Assistant details" />
+
+## Delete an Assistant
+
+1. Open the assistant details and open the **Settings** tab.
+2. Click **Delete assistant** and confirm.
+
+When you delete an assistant, its configuration and work data are deleted, including sessions and files. The employee and the other assistants are not affected. **You cannot undo this action.**

@@ -1,0 +1,128 @@
+---
+title: AI 员工部署
+description: "在 Docker 部署中启用 AI 员工：挂载 Docker socket，配置网络和镜像，并了解运行限制。"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+本页面向部署人员，说明怎样在 Docker 部署中启用 AI 员工。AI 员工有两种类型：**标准员工**和**增强员工**。两种员工都由 API 容器通过 Docker 创建和管理运行环境。
+
+<Callout type="info">
+本页只适用于 Docker 部署。
+</Callout>
+
+## 运行方式
+
+<table><thead><tr><th width="140">员工类型</th><th>运行环境</th></tr></thead><tbody><tr><td><strong>标准员工</strong></td><td>API 创建一个 Worker 容器 <code>cherry-astra-worker</code>。全部标准员工共用这个 Worker。员工或助理需要执行文件或命令操作时，Worker 为这位员工或助理分别创建 Sandbox。该员工或助理的各个会话共用这个 Sandbox。</td></tr><tr><td><strong>增强员工</strong></td><td>每位增强员工对应一个容器 <code>hermes-&lt;编号&gt;</code> 和一个数据卷 <code>hermes-&lt;编号&gt;-data</code>。员工的助理在同一个容器中运行。</td></tr></tbody></table>
+
+<Callout type="warn">
+**API 只能运行一个实例。** AI 员工的渠道连接、自动任务调度和运行环境管理都保存在 API 进程中。不要运行多个 API 副本。升级时，先停止旧容器，再启动新容器。
+</Callout>
+
+## 前置条件
+
+* Docker 20.10 以上，API 容器和员工容器使用同一台主机的 Docker daemon。
+* API 容器挂载 `/var/run/docker.sock`。
+* 服务器可以拉取 AI 员工镜像，或已经预先拉取。见[镜像](#镜像)。
+
+<Callout type="error">
+**挂载 Docker socket 等于授予 API 容器主机的管理权限。** 只在专用于 Cherry Studio Enterprise 的主机上启用 AI 员工，并限制对这台主机的访问。
+</Callout>
+
+## Docker Compose 配置
+
+将以下设置合并到现有的 Docker Compose 配置中。保留当前的 API 镜像版本、数据库设置、数据卷和网络连接。下方示例不是完整的部署文件：
+
+```yaml
+services:
+  api:
+    image: cherrystudio/cherry-studio-enterprise-api:v0.5.1
+    container_name: cherry-studio-enterprise
+    environment:
+      # 渠道绑定提示中的管理后台地址
+      - ADMIN_URL=https://admin.your-domain.com
+      # 增强员工：加入 API 所在的网络，并通过这个网络调用模型
+      - HERMES_DOCKER_NETWORK=cherry-network
+      - HERMES_GATEWAY_URL=http://cherry-studio-enterprise:3670/v1
+    volumes:
+      - ./data:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - cherry-network
+
+networks:
+  cherry-network:
+    name: cherry-network
+```
+
+* `networks.cherry-network.name` 固定网络名称。Docker Compose 默认会在网络名前加项目名，固定名称后 `HERMES_DOCKER_NETWORK` 才能匹配。
+* `HERMES_GATEWAY_URL` 中的主机名使用 API 的 `container_name`。
+
+重新创建 API 容器后，配置生效：
+
+```bash
+docker compose up -d
+```
+
+## 标准员工
+
+API 运行在 Docker 中并挂载了 Docker socket 时，API 自动管理标准员工的 Worker，不需要额外配置：
+
+* **镜像：** 把 API 镜像名中的 `-api` 换成 `-astra`，保留镜像仓库地址、命名空间和标签。例如 `cherrystudio/cherry-studio-enterprise-api:v0.5.1` 对应 `cherrystudio/cherry-studio-enterprise-astra:v0.5.1`。Worker 和 Sandbox 使用同一个镜像。
+* **网络：** API 创建 `cherry-astra` 网络并加入。Worker 不发布端口。
+* **数据：** Worker 的数据保存在 `cherry-astra-data` 数据卷中。
+* **检查：** API 启动时和之后每 30 秒检查一次 Worker。Worker 不存在时重新创建，停止时启动。
+* **升级：** API 升级后，API 先停止旧 Worker，备份数据卷，再用新版本镜像创建 Worker。旧 Worker 停止前，最多等待 30 分钟让已接受的任务结束。新 Worker 在 120 秒内没有就绪时，API 恢复备份和旧 Worker。
+
+### 运行限制
+
+<table><thead><tr><th width="220">项目</th><th>限制</th></tr></thead><tbody><tr><td><strong>同时运行的任务</strong></td><td>每个 Worker 最多 4 个</td></tr><tr><td><strong>单次运行时长</strong></td><td>最长 30 分钟</td></tr><tr><td><strong>Sandbox 资源</strong></td><td>每位员工或助理的 Sandbox 各有 1 CPU、1 GiB 内存、128 个进程，单个工具调用最长 120 秒</td></tr><tr><td><strong>Sandbox 网络</strong></td><td>禁用。员工通过 MCP 服务访问外部系统</td></tr><tr><td><strong>Sandbox 回收</strong></td><td>空闲 10 分钟后回收。同时保留的 Sandbox 数量为主机内存 GiB 数除以 2 后向下取整，最少 4 个，最多 32 个</td></tr></tbody></table>
+
+### 外部 Worker（可选）
+
+需要在其他主机上运行 Worker 时，使用外部模式。在 API 上设置 `ASTRA_WORKER_URL` 或 `ASTRA_INTERNAL_TOKEN` 中任意一项，就会关闭 Worker 自动管理。外部模式必须同时配置这两项。仅设置 `ASTRA_WORKER_IMAGE` 或 `ASTRA_SANDBOX_IMAGE` 不会启用外部模式。按下表配置 API 和 Worker：
+
+<table><thead><tr><th width="160">位置</th><th width="240">参数</th><th>说明</th></tr></thead><tbody><tr><td>API</td><td><code>ASTRA_WORKER_URL</code></td><td>API 可以访问的 Worker 地址，例如 <code>http://astra-worker:3690</code></td></tr><tr><td>API 和 Worker</td><td><code>ASTRA_INTERNAL_TOKEN</code></td><td>两边相同，至少 32 个字符</td></tr><tr><td>Worker</td><td><code>ASTRA_CONTROL_URL</code></td><td>Worker 可以访问的 API 地址，不含路径</td></tr><tr><td>Worker</td><td><code>ASTRA_SANDBOX_IMAGE</code></td><td>Sandbox 镜像，一般与 Worker 镜像相同</td></tr><tr><td>Worker</td><td><code>ASTRA_DATA_DIR</code></td><td>数据目录。主机和 Worker 容器必须使用同一个绝对路径，目录需要允许 UID 1000 读写</td></tr></tbody></table>
+
+外部 Worker 必须挂载其所在主机的 Docker socket，并具有访问权限。Worker 和 Sandbox 使用该主机的 Docker daemon，可以与 API 不在同一台主机。API 和 Worker 应使用同一发布版本。协议版本不一致时，Worker 不可用。
+
+## 增强员工
+
+* **镜像：** 平台为每个版本指定一个推荐镜像，例如 `docker-registry.cherry-ai.com/public/hermes-agent:v0.22.5`。管理员可以在管理后台的 AI 员工服务页面更新或更换镜像。
+* **网络：** API 运行在容器中时，API 通过共享的 Docker 网络访问员工容器，员工容器不发布主机端口。因此需要把 `HERMES_DOCKER_NETWORK` 设置为 API 所在的网络。
+* **模型调用：** 员工容器通过 `HERMES_GATEWAY_URL` 调用 API 的模型网关。
+
+<table><thead><tr><th width="220">参数</th><th width="260">默认值</th><th>说明</th></tr></thead><tbody><tr><td><code>HERMES_DOCKER_NETWORK</code></td><td>不设置</td><td>员工容器加入的 Docker 网络。API 运行在容器中时必须设置</td></tr><tr><td><code>HERMES_GATEWAY_URL</code></td><td><code>http://host.docker.internal:3670/v1</code></td><td>员工容器访问的模型网关地址</td></tr><tr><td><code>HERMES_PORT_START</code>、<code>HERMES_PORT_END</code></td><td><code>18080</code>、<code>18179</code></td><td>API 不在容器中运行时，员工容器发布的主机端口范围</td></tr><tr><td><code>HERMES_BIND_ADDRESS</code></td><td><code>127.0.0.1</code></td><td>API 不在容器中运行时，主机端口的监听地址</td></tr></tbody></table>
+
+## 镜像
+
+<table><thead><tr><th width="140">镜像</th><th>国内镜像</th><th>Docker Hub</th></tr></thead><tbody><tr><td><strong>标准员工</strong></td><td><code>docker-registry.cherry-ai.com/public/cherry-studio-enterprise-astra</code></td><td><code>cherrystudio/cherry-studio-enterprise-astra</code></td></tr><tr><td><strong>增强员工</strong></td><td><code>docker-registry.cherry-ai.com/public/hermes-agent</code></td><td>-</td></tr></tbody></table>
+
+服务器无法访问镜像仓库时：
+
+* 标准员工：把镜像同步到内部仓库，用 `ASTRA_WORKER_IMAGE` 指定 Worker 镜像。只设置这个参数时，Sandbox 使用同一个镜像。需要不同的 Sandbox 镜像时，再设置 `ASTRA_SANDBOX_IMAGE`。
+* 增强员工：先在服务器上用 `docker pull` 拉取推荐镜像。使用内部仓库时，由管理员在 AI 员工服务页面改用自定义镜像。
+
+## 备份
+
+除 PostgreSQL 数据库和 `./data` 目录外，还需要备份以下 Docker 数据卷：
+
+* `cherry-astra-data`：标准员工的会话、工作文件和技能缓存。
+* `hermes-<编号>-data`：每位增强员工的数据，包括会话、记忆、文件和渠道凭据。
+
+<Callout type="warn">
+不要复制仍在使用中的运行数据。在维护窗口内，先暂停员工，再停止 API，然后停止 Worker 和仍在运行的增强员工容器。否则 API 可能在备份期间重新启动 Worker。备份数据库、数据目录和数据卷期间，保持这些容器停止。备份完成后启动 API，并按需恢复员工。外部 Worker 需要手动启动。所有数据卷和备份都应按敏感数据保护。
+</Callout>
+
+## 常见问题
+
+管理后台在员工类型 **暂不可用** 时显示原因。API 日志中也会记录 `Astra unavailable (<原因>): <详情>`。
+
+<table><thead><tr><th width="200">原因</th><th>处理方法</th></tr></thead><tbody><tr><td><code>dockerUnavailable</code></td><td>API 没有运行在 Docker 中，或没有挂载 <code>/var/run/docker.sock</code>。</td></tr><tr><td><code>imageUnavailable</code></td><td>无法拉取标准员工镜像。检查仓库访问，或设置 <code>ASTRA_WORKER_IMAGE</code>。</td></tr><tr><td><code>conflict</code></td><td>已有一个不由 Cherry Studio 管理的 <code>cherry-astra-worker</code> 容器。先核实容器归属、用途和数据挂载，并备份需要保留的数据。只有确认可以迁移或删除后，才改名或删除容器，再重试。</td></tr><tr><td><code>upgradeFailed</code></td><td>Worker 升级失败，系统保留旧版本。查看 API 日志。</td></tr><tr><td><code>notConfigured</code></td><td>外部模式缺少 <code>ASTRA_WORKER_URL</code> 或 <code>ASTRA_INTERNAL_TOKEN</code>，或令牌少于 32 个字符。</td></tr><tr><td><code>unreachable</code></td><td>API 无法连接 Worker。检查 <code>ASTRA_WORKER_URL</code> 和 Worker 是否在运行。</td></tr><tr><td><code>unauthorized</code>、<code>controlUnauthorized</code></td><td>API 和 Worker 的 <code>ASTRA_INTERNAL_TOKEN</code> 不同。</td></tr><tr><td><code>protocolMismatch</code></td><td>API 和 Worker 版本不同。把两边升级到同一版本。</td></tr><tr><td><code>controlUnavailable</code></td><td>Worker 无法连接 API。检查 <code>ASTRA_CONTROL_URL</code>。</td></tr><tr><td><code>sandboxBackendFailed</code></td><td>Worker 无法管理 Sandbox。检查 Docker socket 的权限。</td></tr><tr><td><code>isolationFailed</code></td><td>Sandbox 隔离检查失败：Sandbox 能访问网络，或没有进程数上限。检查 Docker 的网络和 PID 限制配置。</td></tr></tbody></table>
+
+增强员工显示“管理后台无法连接员工的运行环境”时，API 日志中会记录 `shares no Docker network with the console`。处理步骤：
+
+1. 在管理后台暂停受影响的员工。
+2. 把 `HERMES_DOCKER_NETWORK` 设置为 API 所在的网络，重新创建 API 容器。
+3. 核对 Docker 容器名称。`hermes-<编号>` 中的数字是运行环境编号，不是页面 URL 中的员工 UUID。只删除确认属于这位员工的容器：`docker rm hermes-<编号>`。**不要删除数据卷 `hermes-<编号>-data`。**
+4. 在管理后台恢复这位员工。系统用新的网络配置重新创建容器。

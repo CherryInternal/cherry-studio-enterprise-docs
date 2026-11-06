@@ -1,0 +1,82 @@
+---
+title: "Service Maintenance"
+description: View the status of enhanced employees, update the runtime image, and restore the previous state if an update fails.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+<Callout type="info">
+**Navigation:** Sidebar → AI Employees → Click the maintenance icon in the top-right corner of the page (**Admin maintenance**)
+</Callout>
+
+The **AI employee service** page maintains the runtime of enhanced employees. Only **System Admins** can open this page. The runtime of standard employees is updated together with the system version. It is not maintained on this page.
+
+<img src="/assets/images/en/admin/ai-employees-maintenance_en.webp" alt="AI employee service" />
+
+## Service Status
+
+The top of the page shows the overall status of the enhanced employee service:
+
+<table><thead><tr><th width="180">Status</th><th>Description</th></tr></thead><tbody><tr><td><strong>Service is running</strong></td><td>All enhanced employees run or pause as expected.</td></tr><tr><td><strong>Service maintenance</strong></td><td>An update or a restore is in progress.</td></tr><tr><td><strong>Some employees need attention</strong></td><td>Some employees are in the <strong>Needs attention</strong> status.</td></tr><tr><td><strong>Service needs recovery</strong></td><td>The last maintenance did not finish. Retry or restore as the page shows.</td></tr></tbody></table>
+
+Expand **Employee status** to see the status of each enhanced employee and assistant.
+
+## Update the Service
+
+When the platform releases a new recommended version, the **Service updates** card shows **An update is available**.
+
+1. Click **View update**.
+2. Read the impact description and click **Confirm and update**.
+3. Wait for the update to finish. The page shows the progress of each phase.
+
+<Callout type="warn">
+**The update applies to all enhanced employees and assistants.** During the update, chat, channel replies, and automation tasks stop for a short time. Update after the current work of the employees ends.
+</Callout>
+
+The update has these phases:
+
+1. **Prepare image:** The system downloads the new image. Employees continue to work normally in this phase.
+2. **Back up employee data:** The system pauses the employees and backs up the data of each employee.
+3. **Check service and assistants:** The system checks the backed-up copies with the new image.
+4. **Apply image:** The system creates the runtime of each employee again with the new image.
+5. **Restore running states:** Employees that were running resume. Employees that were paused stay paused.
+
+When the update is complete, the page shows **Service updated**. The configuration and the running states of the employees do not change.
+
+## If an Update Fails
+
+* **Could not prepare the image:** The image download failed. Employees continue to work in their previous state. Click **Retry preparation**.
+* **Update incomplete:** The failure happened after the prepare phase. Employees stop work and the backups are kept. Click **Retry update**, or click **Restore previous state**.
+
+### Restore the Previous State
+
+A restore returns the image and the employee data to the backup that the system made before the update.
+
+<Callout type="error">
+**Data created after the backup is replaced.** This includes the chat history, configuration changes, and task results created after the backup.
+</Callout>
+
+1. Click **Restore previous state**.
+2. Check the target version of the restore and click **Confirm restore**.
+
+When the restore is complete, the page shows **Previous state restored**. The backup is kept until the next update.
+
+## Use a Custom Image
+
+By default, the system uses the image that the platform recommends. If you cannot access the image registry of the platform, you can use the same image from your own registry.
+
+1. Expand **Advanced settings**.
+2. In **Image source**, select **Custom image**.
+3. In **Image reference**, enter the image.
+4. Click **Apply to all employees** and confirm. The process is the same as [Update the Service](#update-the-service).
+
+<img src="/assets/images/en/admin/ai-employees-maintenance-advanced_en.webp" alt="Advanced settings: runtime image" />
+
+* Enter a fixed version tag or a full `sha256` digest. Do not use `latest`.
+* A custom image must be compatible with the version of the image that the platform recommends. Use a custom image only after you sync the recommended image to your internal registry.
+* If a private registry needs authentication, the deployment operator must first pull the image on the server.
+* When you use a custom image, the platform does not show available updates. The admin maintains the version.
+
+<Callout type="warn">
+The backup contains the data and credentials of the employees. Protect the Docker volumes on the server as sensitive data.
+</Callout>

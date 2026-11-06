@@ -1,0 +1,46 @@
+---
+title: "助理"
+description: 在员工下面新增助理，分担员工的部分工作。助理与员工共用分组、费用归属和运行环境。
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+<Callout type="info">
+**入口路径：** 侧边栏 → AI 员工 → 点击员工 → 点击右上角 **新增助理** 按钮
+</Callout>
+
+**助理**属于一位员工，用于分担这位员工的部分工作。例如，客户反馈分析员下面可以有一位工单整理助理，专门从工单系统导出和整理工单。
+
+## 助理和员工的关系
+
+<table><thead><tr><th width="160">项目</th><th>说明</th></tr></thead><tbody><tr><td><strong>与员工共用</strong></td><td>所属分组、费用归属、员工类型、运行环境、席位。</td></tr><tr><td><strong>单独管理</strong></td><td>名称、岗位、职责、工作规则、模型、技能、MCP 服务、密钥、渠道、自动任务、会话。</td></tr><tr><td><strong>暂停</strong></td><td>暂停员工会同时暂停它的全部助理。</td></tr><tr><td><strong>删除</strong></td><td>删除助理只删除这位助理的配置和工作数据。删除员工会同时删除它的全部助理。</td></tr></tbody></table>
+
+助理不单独占用席位。
+
+## 新增助理
+
+只有**管理员**和本组的**组管理员**可以新增助理。新增助理的方式和[创建员工](/zh/docs/admin/ai-employees/create-employee)相同：
+
+* **AI 起草：** 描述助理的职责，点击 **帮我起草**，审阅后点击 **创建助理**。
+* **手动填写：** 点击 **填写配置**，填写名称、岗位、职责、工作规则和模型，然后点击 **创建助理**。
+
+<img src="/assets/images/zh/admin/ai-employees-assistant-new_zh.webp" alt="新增助理：手动填写" />
+
+新增助理时不需要选择分组、员工类型和费用归属。助理自动沿用所属员工的设置。
+
+## 查看助理
+
+在员工列表中，有助理的员工左侧显示展开按钮。点击展开按钮，查看这位员工的全部助理。每位员工下方也有 **新增助理** 入口。
+
+<img src="/assets/images/zh/admin/ai-employees-list-assistants_zh.webp" alt="员工列表中的助理" />
+
+点击助理进入助理详情。助理详情的标签页和员工相同：职责、渠道、自动任务、扩展、密钥、设置。页面顶部显示 **员工名称 / 助理**，说明这位助理属于哪位员工。
+
+<img src="/assets/images/zh/admin/ai-employees-assistant-detail_zh.webp" alt="助理详情" />
+
+## 删除助理
+
+1. 进入助理详情，打开 **设置** 标签页。
+2. 点击 **删除助理**，然后确认。
+
+删除助理会删除这位助理的配置和工作数据，包括会话和文件。员工和其他助理不受影响。**此操作无法撤销。**

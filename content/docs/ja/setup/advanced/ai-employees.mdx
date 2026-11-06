@@ -1,0 +1,128 @@
+---
+title: AI 社員のデプロイ
+description: "Docker デプロイで AI 社員を有効化します。Docker ソケットのマウント、ネットワークとイメージの設定、実行時の制限について説明します。"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+このページはデプロイ担当者向けです。Docker デプロイで AI 社員を有効化する方法を説明します。AI 社員には**標準従業員**と**拡張従業員**の 2 種類があります。どちらも、API コンテナが Docker を通じて実行環境を作成・管理します。
+
+<Callout type="info">
+このページは Docker デプロイにのみ適用されます。
+</Callout>
+
+## 実行方式
+
+<table><thead><tr><th width="140">社員の種類</th><th>実行環境</th></tr></thead><tbody><tr><td><strong>標準従業員</strong></td><td>API が Worker コンテナ <code>cherry-astra-worker</code> を作成します。すべての標準従業員がこの Worker を共有します。社員またはアシスタントがファイルやコマンドを操作するときは、Worker が社員またはアシスタントごとに Sandbox を作成します。その社員またはアシスタントの会話は、この Sandbox を共有します。</td></tr><tr><td><strong>拡張従業員</strong></td><td>拡張従業員ごとに、コンテナ <code>hermes-&lt;番号&gt;</code> とデータボリューム <code>hermes-&lt;番号&gt;-data</code> が 1 つずつ対応します。その社員のアシスタントは、同じコンテナ内で動作します。</td></tr></tbody></table>
+
+<Callout type="warn">
+**API は 1 インスタンスしか実行できません。** AI 社員のチャネル接続、自動タスクのスケジューリング、実行環境の管理は、API プロセス内に保持されます。API のレプリカを複数実行しないでください。アップグレードするときは、先に古いコンテナを停止してから、新しいコンテナを起動します。
+</Callout>
+
+## 前提条件
+
+* Docker 20.10 以上。API コンテナと社員のコンテナは、同じホストの Docker デーモンを使用します。
+* API コンテナに `/var/run/docker.sock` をマウントしていること。
+* サーバーが AI 社員のイメージを取得できること、または事前に取得済みであること。[イメージ](#イメージ)を参照してください。
+
+<Callout type="error">
+**Docker ソケットをマウントすることは、API コンテナにホストの管理権限を与えることと同じです。** AI 社員は、Cherry Studio Enterprise 専用のホストでのみ有効にし、そのホストへのアクセスを制限してください。
+</Callout>
+
+## Docker Compose の設定
+
+次の設定を既存の Docker Compose 設定に統合します。現在の API イメージのバージョン、データベース設定、ボリューム、ネットワーク接続は維持してください。以下は完全なデプロイファイルではありません：
+
+```yaml
+services:
+  api:
+    image: cherrystudio/cherry-studio-enterprise-api:v0.5.1
+    container_name: cherry-studio-enterprise
+    environment:
+      # チャネルのバインド案内に表示される管理コンソールのアドレス
+      - ADMIN_URL=https://admin.your-domain.com
+      # 拡張従業員：API と同じネットワークに参加し、このネットワーク経由でモデルを呼び出す
+      - HERMES_DOCKER_NETWORK=cherry-network
+      - HERMES_GATEWAY_URL=http://cherry-studio-enterprise:3670/v1
+    volumes:
+      - ./data:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - cherry-network
+
+networks:
+  cherry-network:
+    name: cherry-network
+```
+
+* `networks.cherry-network.name` でネットワーク名を固定します。Docker Compose はデフォルトでネットワーク名の前にプロジェクト名を付けます。名前を固定すると、`HERMES_DOCKER_NETWORK` が一致します。
+* `HERMES_GATEWAY_URL` のホスト名には、API の `container_name` を使います。
+
+API コンテナを再作成すると、設定が反映されます：
+
+```bash
+docker compose up -d
+```
+
+## 標準従業員
+
+API が Docker 上で動作し、Docker ソケットをマウントしている場合、API が標準従業員の Worker を自動的に管理します。追加の設定は不要です：
+
+* **イメージ：** API のイメージ名の `-api` を `-astra` に置き換えます。レジストリ、名前空間、タグは維持します。例えば、`cherrystudio/cherry-studio-enterprise-api:v0.5.1` には `cherrystudio/cherry-studio-enterprise-astra:v0.5.1` が対応します。Worker と Sandbox は同じイメージを使います。
+* **ネットワーク：** API が `cherry-astra` ネットワークを作成して参加します。Worker はポートを公開しません。
+* **データ：** Worker のデータは `cherry-astra-data` データボリュームに保存されます。
+* **チェック：** API は起動時と、その後 30 秒ごとに Worker を確認します。Worker が存在しなければ再作成し、停止していれば起動します。
+* **アップグレード：** API のアップグレード後、API はまず古い Worker を停止し、データボリュームをバックアップしてから、新しいバージョンのイメージで Worker を作成します。古い Worker を停止する前に、受け付け済みのタスクが終わるまで最大 30 分待ちます。新しい Worker が 120 秒以内に準備できない場合、API はバックアップと古い Worker を復元します。
+
+### 実行時の制限
+
+<table><thead><tr><th width="220">項目</th><th>制限</th></tr></thead><tbody><tr><td><strong>同時に実行するタスク</strong></td><td>Worker あたり最大 4 件</td></tr><tr><td><strong>1 回の実行時間</strong></td><td>最長 30 分</td></tr><tr><td><strong>Sandbox のリソース</strong></td><td>社員またはアシスタントごとの Sandbox に 1 CPU、1 GiB のメモリ、128 プロセス。1 回のツール呼び出しは最長 120 秒</td></tr><tr><td><strong>Sandbox のネットワーク</strong></td><td>無効。社員は MCP サーバーを通じて外部システムにアクセスします</td></tr><tr><td><strong>Sandbox の回収</strong></td><td>10 分間アイドル状態が続くと回収します。同時に保持する Sandbox の数は、ホストのメモリ（GiB）を 2 で割って小数点以下を切り捨てた値で、最小 4、最大 32 です</td></tr></tbody></table>
+
+### 外部 Worker（任意）
+
+別のホストで Worker を実行する場合は、外部モードを使います。API に `ASTRA_WORKER_URL` または `ASTRA_INTERNAL_TOKEN` のどちらかを設定すると、Worker の自動管理が無効になります。外部モードには両方の値が必要です。`ASTRA_WORKER_IMAGE` または `ASTRA_SANDBOX_IMAGE` だけでは外部モードになりません。API と Worker を次のように設定します：
+
+<table><thead><tr><th width="160">場所</th><th width="240">パラメーター</th><th>説明</th></tr></thead><tbody><tr><td>API</td><td><code>ASTRA_WORKER_URL</code></td><td>API からアクセスできる Worker のアドレス。例：<code>http://astra-worker:3690</code></td></tr><tr><td>API と Worker</td><td><code>ASTRA_INTERNAL_TOKEN</code></td><td>両側で同じ値。32 文字以上</td></tr><tr><td>Worker</td><td><code>ASTRA_CONTROL_URL</code></td><td>Worker からアクセスできる API のアドレス。パスは含めません</td></tr><tr><td>Worker</td><td><code>ASTRA_SANDBOX_IMAGE</code></td><td>Sandbox イメージ。通常は Worker のイメージと同じ</td></tr><tr><td>Worker</td><td><code>ASTRA_DATA_DIR</code></td><td>データディレクトリ。ホストと Worker コンテナで同じ絶対パスを使う必要があります。ディレクトリは UID 1000 の読み書きを許可する必要があります</td></tr></tbody></table>
+
+外部 Worker には、そのホストの Docker ソケットをマウントし、アクセス権限を与える必要があります。Worker と Sandbox はそのホストの Docker デーモンを使い、API とは別のホストで実行できます。API と Worker は同じリリースを使ってください。プロトコルのバージョンが異なると、Worker は利用できません。
+
+## 拡張従業員
+
+* **イメージ：** プラットフォームは、バージョンごとに推奨イメージを 1 つ指定します。例：`docker-registry.cherry-ai.com/public/hermes-agent:v0.22.5`。管理者は、管理コンソールの AI 社員サービスのページで、イメージを更新または変更できます。
+* **ネットワーク：** API がコンテナ内で動作している場合、API は共有の Docker ネットワークを通じて社員のコンテナにアクセスし、社員のコンテナはホストのポートを公開しません。そのため、`HERMES_DOCKER_NETWORK` に API が参加しているネットワークを設定する必要があります。
+* **モデル呼び出し：** 社員のコンテナは、`HERMES_GATEWAY_URL` を通じて API のモデルゲートウェイを呼び出します。
+
+<table><thead><tr><th width="220">パラメーター</th><th width="260">デフォルト値</th><th>説明</th></tr></thead><tbody><tr><td><code>HERMES_DOCKER_NETWORK</code></td><td>未設定</td><td>社員のコンテナが参加する Docker ネットワーク。API がコンテナ内で動作している場合は必ず設定します</td></tr><tr><td><code>HERMES_GATEWAY_URL</code></td><td><code>http://host.docker.internal:3670/v1</code></td><td>社員のコンテナがアクセスするモデルゲートウェイのアドレス</td></tr><tr><td><code>HERMES_PORT_START</code>、<code>HERMES_PORT_END</code></td><td><code>18080</code>、<code>18179</code></td><td>API がコンテナ外で動作している場合に、社員のコンテナが公開するホストのポート範囲</td></tr><tr><td><code>HERMES_BIND_ADDRESS</code></td><td><code>127.0.0.1</code></td><td>API がコンテナ外で動作している場合の、ホストポートの待ち受けアドレス</td></tr></tbody></table>
+
+## イメージ
+
+<table><thead><tr><th width="140">イメージ</th><th>中国国内ミラー</th><th>Docker Hub</th></tr></thead><tbody><tr><td><strong>標準従業員</strong></td><td><code>docker-registry.cherry-ai.com/public/cherry-studio-enterprise-astra</code></td><td><code>cherrystudio/cherry-studio-enterprise-astra</code></td></tr><tr><td><strong>拡張従業員</strong></td><td><code>docker-registry.cherry-ai.com/public/hermes-agent</code></td><td>-</td></tr></tbody></table>
+
+サーバーがイメージレジストリにアクセスできない場合：
+
+* 標準従業員：イメージを社内のレジストリに同期し、`ASTRA_WORKER_IMAGE` で Worker のイメージを指定します。このパラメーターだけを設定した場合、Sandbox も同じイメージを使います。Sandbox に別のイメージが必要な場合は、さらに `ASTRA_SANDBOX_IMAGE` を設定します。
+* 拡張従業員：まずサーバーで `docker pull` を使い、推奨イメージを取得します。社内のレジストリを使う場合は、管理者が AI 社員サービスのページでカスタムイメージに切り替えます。
+
+## バックアップ
+
+PostgreSQL データベースと `./data` ディレクトリに加えて、次の Docker データボリュームもバックアップしてください：
+
+* `cherry-astra-data`：標準従業員の会話、作業ファイル、スキルのキャッシュ。
+* `hermes-<番号>-data`：各拡張従業員のデータ。会話、メモリ、ファイル、チャネルの認証情報を含みます。
+
+<Callout type="warn">
+使用中の実行データをコピーしないでください。メンテナンス時間に社員を停止し、API を停止してから、Worker と残りの拡張従業員コンテナを停止します。API が動作していると、バックアップ中に Worker を再起動する可能性があります。データベース、データディレクトリ、ボリュームのバックアップ中は、これらのコンテナを停止したままにします。完了後、API を起動し、必要な社員を再開します。外部 Worker は手動で起動してください。すべてのボリュームとバックアップを機密データとして保護してください。
+</Callout>
+
+## よくある質問
+
+管理コンソールは、社員の種類が **利用できません** と表示されるときに、その理由を表示します。API ログにも `Astra unavailable (<原因>): <詳細>` と記録されます。
+
+<table><thead><tr><th width="200">原因</th><th>対処方法</th></tr></thead><tbody><tr><td><code>dockerUnavailable</code></td><td>API が Docker 上で動作していないか、<code>/var/run/docker.sock</code> がマウントされていません。</td></tr><tr><td><code>imageUnavailable</code></td><td>標準従業員のイメージを取得できません。レジストリへのアクセスを確認するか、<code>ASTRA_WORKER_IMAGE</code> を設定してください。</td></tr><tr><td><code>conflict</code></td><td>Cherry Studio が管理していない <code>cherry-astra-worker</code> コンテナがあります。先に所有者、用途、データのマウントを確認し、必要なデータをバックアップしてください。移動または削除してよいことを確認してから、名前の変更または削除を行い、再試行してください。</td></tr><tr><td><code>upgradeFailed</code></td><td>Worker のアップグレードに失敗し、システムは古いバージョンを維持しています。API ログを確認してください。</td></tr><tr><td><code>notConfigured</code></td><td>外部モードで <code>ASTRA_WORKER_URL</code> または <code>ASTRA_INTERNAL_TOKEN</code> が不足しているか、トークンが 32 文字未満です。</td></tr><tr><td><code>unreachable</code></td><td>API が Worker に接続できません。<code>ASTRA_WORKER_URL</code> と Worker が動作しているかを確認してください。</td></tr><tr><td><code>unauthorized</code>、<code>controlUnauthorized</code></td><td>API と Worker の <code>ASTRA_INTERNAL_TOKEN</code> が異なります。</td></tr><tr><td><code>protocolMismatch</code></td><td>API と Worker のバージョンが異なります。両方を同じバージョンにアップグレードしてください。</td></tr><tr><td><code>controlUnavailable</code></td><td>Worker が API に接続できません。<code>ASTRA_CONTROL_URL</code> を確認してください。</td></tr><tr><td><code>sandboxBackendFailed</code></td><td>Worker が Sandbox を管理できません。Docker ソケットの権限を確認してください。</td></tr><tr><td><code>isolationFailed</code></td><td>Sandbox の分離チェックに失敗しました。Sandbox がネットワークにアクセスできるか、プロセス数の上限がありません。Docker のネットワークと PID 制限の設定を確認してください。</td></tr></tbody></table>
+
+拡張従業員に「管理コンソールが社員の実行環境に接続できない」と表示される場合、API ログに `shares no Docker network with the console` と記録されます。対処手順：
+
+1. 管理コンソールで、対象の社員を停止します。
+2. `HERMES_DOCKER_NETWORK` を API が参加しているネットワークに設定し、API コンテナを再作成します。
+3. Docker のコンテナ名を確認します。`hermes-<番号>` の数字は実行環境の番号であり、ページの URL に含まれる社員の UUID ではありません。対象の社員のコンテナだけを削除します：`docker rm hermes-<番号>`。**データボリューム `hermes-<番号>-data` は削除しないでください。**
+4. 管理コンソールで社員を再開します。システムが新しいネットワーク設定でコンテナを再作成します。

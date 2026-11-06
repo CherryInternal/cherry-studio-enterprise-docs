@@ -1,0 +1,35 @@
+---
+title: "Troubleshooting"
+description: Common problems with AI employees and how to solve them, including creation, chat, channels, automation, and the runtime.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+This page lists common problems by scenario. Deployment problems of the runtime must be handled by the deployment operator. See [AI Employee Deployment](https://deploy.cherry-ai.com/docs/setup/advanced/ai-employees).
+
+## Creation and Seats
+
+<table><thead><tr><th width="260">Symptom</th><th>Solution</th></tr></thead><tbody><tr><td>The <strong>New AI employee</strong> button is missing</td><td>Only Admins and Group Admins can create employees.</td></tr><tr><td>An employee type shows <strong>Not available</strong></td><td>The runtime of this employee type is not ready. Send the reason that the page shows to the deployment operator.</td></tr><tr><td><strong>The current license has no seats for this type</strong></td><td>No valid seats are available for this type. Check the seat grant, license expiry, and license verification status. Contact us if the grant needs to change.</td></tr><tr><td><strong>All seats are in use</strong></td><td>Delete employees of the same type that you no longer use, or extend the license. Pausing an employee does not release its seat.</td></tr><tr><td>An employee was paused automatically</td><td>Check the valid seat count and the billing account. Seat reductions keep the oldest employees within each type; paused employees still count. A disabled, deleted, or transferred billing account also pauses the employee. Fix the cause, then resume work manually.</td></tr></tbody></table>
+
+## Chat
+
+<table><thead><tr><th width="260">Symptom</th><th>Solution</th></tr></thead><tbody><tr><td>The employee does not reply</td><td>Make sure the employee status is <strong>Ready</strong>. Check that the model of the employee is available.</td></tr><tr><td>The employee does not use the new configuration</td><td>A standard employee uses the new configuration from the next run. For an enhanced employee, start a new chat.</td></tr><tr><td><strong>Waiting for the billing owner or an administrator</strong> stays on the screen</td><td>An enhanced employee is waiting for confirmation. Ask the billing account, an admin, or a group admin to open this session and handle it.</td></tr><tr><td>The employee cannot find a skill or an MCP tool</td><td>On the <strong>Extensions</strong> tab, make sure the skill is enabled and the MCP server is added. A standard employee can use only MCP servers of the HTTP type.</td></tr></tbody></table>
+
+## Messaging Channels
+
+<table><thead><tr><th width="260">Symptom</th><th>Solution</th></tr></thead><tbody><tr><td>The channel shows <strong>Connection failed</strong></td><td>Check the App ID and Secret. Make sure the app on the open platform is published and has the bot and message permissions.</td></tr><tr><td>The bot replies "This account is not bound yet"</td><td>Standard employee: The user must generate a bind code on the <strong>Channels</strong> tab of the employee and send it to the bot in a private chat.</td></tr><tr><td>The bot replies "The bind code is invalid, expired, or already used"</td><td>A bind code is valid for 10 minutes and works only once. Generate a new bind code.</td></tr><tr><td>The bot replies "You do not have permission to use this AI employee"</td><td>The user is bound but does not belong to the group of the employee. Add the user to the group.</td></tr><tr><td>The bot does not reply in a group chat</td><td>Standard employee: The sender must bind their account, have access to the employee, and mention the bot with @. Enhanced employee: Check the channel's access settings and approve any pending pairing request.</td></tr><tr><td>The bot of an enhanced employee says that pairing is needed</td><td>An admin or group admin approves the request in <strong>Pair users</strong>. The user sends the message again.</td></tr><tr><td>The bind link opens the wrong address</td><td>The deployment operator must set <code>ADMIN_URL</code> to the access address of the admin console.</td></tr></tbody></table>
+
+## Automation
+
+<table><thead><tr><th width="260">Symptom</th><th>Solution</th></tr></thead><tbody><tr><td>A task does not run on time</td><td>Check that the task is enabled, the employee is running, and the billing account is valid. A standard employee skips the run in these cases and does not run it later.</td></tr><tr><td>The run time is off by several hours</td><td>A standard employee uses the time zone of the browser at the time you saved the task. Save the task again in a browser that uses the correct time zone.</td></tr><tr><td>The result is not sent to the group chat</td><td>Make sure the format of <strong>Destination</strong> is <code>platform:group ID</code>, the employee is connected to a channel of this platform, and the bot is in the group.</td></tr></tbody></table>
+
+## Runtime
+
+When the page shows one of the messages below, send the message and its details to the deployment operator. For the solutions, see [AI Employee Deployment](https://deploy.cherry-ai.com/docs/setup/advanced/ai-employees#troubleshooting).
+
+* Standard employee: incomplete configuration, Docker required, image unavailable, cannot connect, internal token mismatch, version mismatch, Sandbox isolation check failed.
+* Enhanced employee: the admin console cannot connect to the runtime of the employee.
+
+<Callout type="info">
+If the runtime of an enhanced employee must be updated or restored, see [Service Maintenance](/docs/admin/ai-employees/maintenance).
+</Callout>

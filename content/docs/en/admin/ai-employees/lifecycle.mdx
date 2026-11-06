@@ -1,0 +1,58 @@
+---
+title: "Pause and Delete"
+description: Change the billing account, pause and resume an employee, and delete an employee.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+<Callout type="info">
+**Navigation:** Sidebar → AI Employees → Click an employee → **Settings** tab
+</Callout>
+
+The **Settings** tab manages the billing account, the run status, and the deletion of an employee. Only **Admins** and the **Group Admins** of the group can do these actions.
+
+<img src="/assets/images/en/admin/ai-employees-settings_en.webp" alt="Employee settings" />
+
+## Change the Billing Account
+
+The billing account is the account that is charged for the model usage of the employee. This account must be an active member of the group of the employee.
+
+1. Under **Billing account**, click **Change**.
+2. Select the new account and save.
+3. At the top of the page, click **Resume work**.
+
+<Callout type="warn">
+**If you change the billing account, the employee and all of its assistants pause.** After the change, you must resume the work of the employee manually.
+</Callout>
+
+If the billing account is disabled, deleted, or leaves the group, the system pauses the employee and its assistants. Scheduled runs of standard employees are skipped while the employee cannot work. Select a valid billing account, then click **Resume work**.
+
+## Pause and Resume
+
+An employee and its assistants share one runtime. **If you pause the employee, all assistants pause too.**
+
+* **Pause:** Click **Pause employee** and confirm. After the pause, the employee no longer replies to web chats and channel messages, and automation tasks do not run.
+* **Resume:** At the top of the employee details page, click **Resume work**.
+
+A paused employee still uses a seat. To release the seat, delete the employee.
+
+## Delete an Employee
+
+1. Click **Delete employee**.
+2. Enter the name of the employee to confirm the deletion.
+
+When you delete an employee, the system removes the employee, all assistants, and their work data, including sessions, memory, and files. The seat is released only after cleanup finishes. If cleanup fails, the employee still uses a seat. Fix the runtime problem and retry the deletion.
+
+<Callout type="error">
+**You cannot undo the deletion of an employee.** Before you delete, make sure that you no longer need the sessions and files of this employee.
+</Callout>
+
+## The Employee Needs Attention
+
+If the configuration of the employee could not be sent to the runtime, the status shows **Needs attention**.
+
+1. Open the employee details and read the error message at the top of the page. Expand **Startup log** to see the full error.
+2. Fix the problem according to the error message, for example replace a model that is no longer valid.
+3. Click **Retry preparation**.
+
+For more problems, see [Troubleshooting](/docs/admin/ai-employees/troubleshooting).

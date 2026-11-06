@@ -1,0 +1,84 @@
+---
+title: "AI Employees"
+description: AI members that work to a defined role. Chat with them on the web, connect them to messaging apps such as Feishu, and let them run tasks on a schedule.
+icon: Layers
+---
+
+import { Callout } from 'fumadocs-ui/components/callout'
+
+<Callout type="info">
+**Navigation:** Sidebar → AI Employees
+</Callout>
+
+An **AI employee** is an AI member that works to a defined role. An administrator describes the role and duties for the team. The AI employee then answers questions, uses tools, and handles files according to those duties. Team members can chat with the employee on the web. They can also send messages to the employee's bot in Feishu, DingTalk, or WeCom. An employee can also run tasks on a schedule, for example a weekly feedback report every Friday.
+
+<img src="/assets/images/en/admin/ai-employees-list_en.webp" alt="AI Employees list" />
+
+<Callout type="warn">
+The **Alpha** badge in the top-right corner of the page shows that this feature is at an early stage. The interface and behavior can change.
+</Callout>
+
+## Differences from Assistants and Agents
+
+<table><thead><tr><th width="120">Feature</th><th>Where it runs</th><th>Best for</th></tr></thead><tbody><tr><td><strong>Assistants</strong></td><td>The user's client</td><td>Conversations based on preset prompts and knowledge bases.</td></tr><tr><td><strong>Agents</strong></td><td>The user's client</td><td>Multi-step tasks such as software development. Skill scripts run locally on the client.</td></tr><tr><td><strong>AI Employees</strong></td><td>A separate runtime on the server</td><td>Long-term work in a role. An employee has its own work files, can connect to messaging channels, and can run tasks on a schedule. Members of the same group share the employee.</td></tr></tbody></table>
+
+## Employees and Assistants
+
+You can add several **assistants** under one employee. Assistants share part of the employee's work.
+
+* An assistant shares the group, billing account, employee type, and runtime of its employee.
+* The duties, skills, secrets, and sessions of an assistant are managed separately from the employee.
+* When you pause an employee, all of its assistants pause too.
+* An assistant does not use a seat of its own. It uses the seat of its employee.
+
+## Employee Types
+
+You must select an employee type when you create an employee. **You cannot change the employee type after creation.**
+
+**Standard employees** use an Agent developed by Cherry. They support most Hermes features, with a focus on Sandbox isolation and operation on demand. **Enhanced employees** use Hermes. They support all Hermes features and can use the existing Hermes ecosystem.
+
+<table><thead><tr><th width="140">Item</th><th>Standard employee</th><th>Enhanced employee</th></tr></thead><tbody><tr><td><strong>Agent and features</strong></td><td>An Agent developed by Cherry. Supports most Hermes features.</td><td>Uses Hermes. Supports all Hermes features.</td></tr><tr><td><strong>Operation and resources</strong></td><td>Each employee's Sandbox starts automatically when needed. It stops and is removed after an idle period. A dedicated runtime does not need to stay active for each employee, which saves resources.</td><td>The Hermes runtime must stay active while the employee is available for work. It uses more resources continuously than a standard employee.</td></tr><tr><td><strong>Isolation and security</strong></td><td>Each employee has its own Sandbox. File and command operations are isolated to reduce their effect on other employees and the host.</td><td>Uses the Hermes runtime and security controls.</td></tr><tr><td><strong>Ecosystem</strong></td><td>Uses skills, MCP, and other capabilities. Suits teams that want lower resource use and stronger execution isolation.</td><td>Can use the existing Hermes ecosystem directly. Suits teams that depend on Hermes features and workflows.</td></tr></tbody></table>
+
+Both types support chat, skills, MCP, secrets, messaging channels, and automation. The overall channel binding and daily use workflows are similar. Enhanced employees follow the standard Hermes configuration and operation procedures. See [Messaging Channels](/docs/admin/ai-employees/channels) for supported channels and steps.
+
+<Callout type="info">
+For standard employees, each employee's Sandbox starts and stops on demand. This does not stop all platform services. Shared services continue to receive messages and schedule tasks.
+</Callout>
+
+**Standard employee** is selected by default when you create a new employee. Choose it for lower resource use and Sandbox isolation. Choose an enhanced employee when you need all Hermes features or the existing Hermes ecosystem.
+
+## Seats
+
+Each employee uses one licensed seat. Standard employees and enhanced employees use separate seats. Seats are counted for the whole deployment. The top of the employee list shows the used seats and licensed seats for both types.
+
+<table><thead><tr><th width="140">License edition</th><th>Standard employees</th><th>Enhanced employees</th></tr></thead><tbody><tr><td><strong>Express</strong></td><td>5</td><td>2</td></tr><tr><td><strong>Premium</strong></td><td>25</td><td>10</td></tr></tbody></table>
+
+The table shows the default values. If the license sets the employee numbers separately, the license values apply. Screenshots show the licensed counts of the demo environment, not the default values.
+
+* A paused employee still uses a seat. A seat is released only after deletion cleanup finishes. An employee awaiting cleanup still uses a seat.
+* If an employee type has no valid seats, this employee type is disabled. You can still view, pause, and delete the existing employees.
+* If the licensed seats decrease, the system assigns seats to the oldest employees first, separately for each type. The system checks every 5 seconds and pauses employees beyond the seat count. Paused employees still take part in this count. A check interval does not guarantee that the pause finishes within 5 seconds.
+
+## Permissions
+
+<table><thead><tr><th width="140">Role</th><th>What they can do</th></tr></thead><tbody><tr><td><strong>Admin</strong></td><td>Manage the employees of all groups.</td></tr><tr><td><strong>Group Admin</strong></td><td>Create, edit, pause, and delete employees in their own group.</td></tr><tr><td><strong>Member</strong></td><td>View the employees of their group and chat with them on the web.</td></tr></tbody></table>
+
+<Callout type="warn">
+**Sessions are shared in the group:** A member who can see an employee can see its web sessions, including sessions that other members started. For standard employees, the list also includes channel sessions, including private bot chats. Do not send personal-only content through these sessions. The same rules apply to assistants.
+</Callout>
+
+## Employee Status
+
+<table><thead><tr><th width="120">Status</th><th>Description</th></tr></thead><tbody><tr><td><strong>Preparing</strong></td><td>The system is sending the configuration to the runtime.</td></tr><tr><td><strong>Ready</strong></td><td>The employee is ready. It can chat, connect to channels, and run tasks.</td></tr><tr><td><strong>Paused</strong></td><td>The employee and all of its assistants stop work. They still use seats.</td></tr><tr><td><strong>Needs attention</strong></td><td>The configuration could not be applied. You must retry.</td></tr></tbody></table>
+
+## Next Steps
+
+* [Create an Employee](/docs/admin/ai-employees/create-employee): Draft the configuration with AI or fill it in manually, and create your first employee.
+* [Duties and Capabilities](/docs/admin/ai-employees/duties-and-capabilities): Edit the work instructions, model, skills, MCP servers, and secrets.
+* [Assistants](/docs/admin/ai-employees/assistants): Add assistants under an employee.
+* [Messaging Channels](/docs/admin/ai-employees/channels): Connect Feishu, DingTalk, WeCom, and other messaging apps.
+* [Automation](/docs/admin/ai-employees/automation): Let an employee run work on a schedule.
+* [Chat with an Employee](/docs/admin/ai-employees/chat): Team members use the employee on the web.
+* [Pause and Delete](/docs/admin/ai-employees/lifecycle): Change the billing account, and pause, resume, or delete an employee.
+* [Service Maintenance](/docs/admin/ai-employees/maintenance): Update the runtime image of enhanced employees.
+* [Troubleshooting](/docs/admin/ai-employees/troubleshooting): Solve problems by scenario.
