@@ -5,7 +5,28 @@ description: "Playwright、Filesystem、Fetch 等常用 MCP 服务器的官方�
 
 import { Callout } from 'fumadocs-ui/components/callout'
 
-为了方便您快速上手，以下是官方验证过的常用 MCP 服务器配置代码。
+以下示例区分网关托管的远程 HTTP 服务和本地执行的 `stdio` 服务。
+
+## 托管 HTTP：请求头密钥
+
+在 **手动添加** 的 JSON 配置中填入以下结构。将示例地址、请求头和值替换为提供方指定的配置。保存后，网关托管该请求头凭据，调用方使用代理地址。
+
+```json
+{
+  "name": "Team Search",
+  "type": "streamableHttp",
+  "baseUrl": "https://mcp.example.com/mcp",
+  "headers": { "Authorization": "Bearer REPLACE_WITH_API_KEY" }
+}
+```
+
+## 托管 HTTP：个人 OAuth
+
+1. 在表单中选择 `streamableHttp`，填写提供方的 MCP 服务地址。
+2. 如果提供方支持 DCR，选择 **OAuth 2.1（自动注册 / DCR）**。如果要求预注册应用，选择 **OAuth 2.1（预注册应用）**，登记表单显示的回调地址并填写应用凭据。
+3. 将 **凭据范围** 设为 **个人账号** 并保存。成员打开 `/connections`，在跳转后的 MCP 服务器页找到服务并点击 **连接授权**。
+
+OAuth 模式不需要在请求头中手动填入访问令牌。
 
 ## 🌐 Playwright (网页自动化)
 

@@ -5,7 +5,28 @@ description: "Playwright・Filesystem・Fetch など、よく使われる MCP �
 
 import { Callout } from 'fumadocs-ui/components/callout'
 
-素早く始められるよう、検証済みの MCP サーバー設定例を紹介します。
+ゲートウェイ管理のリモート HTTP サーバーと、ローカルで実行する `stdio` サーバーの設定例を紹介します。
+
+## ゲートウェイ管理の HTTP：リクエストヘッダーの API キー
+
+**Add Manually** をクリックし、JSON 設定で次の例を使います。URL、ヘッダー、値は提供元が指定する内容に置き換えます。保存後、リクエストヘッダーの資格情報はゲートウェイが管理し、呼び出し元はプロキシ URL を使います。
+
+```json
+{
+  "name": "Team Search",
+  "type": "streamableHttp",
+  "baseUrl": "https://mcp.example.com/mcp",
+  "headers": { "Authorization": "Bearer REPLACE_WITH_API_KEY" }
+}
+```
+
+## ゲートウェイ管理の HTTP：個人 OAuth
+
+1. フォームで `streamableHttp` を選び、提供元の MCP URL を入力します。
+2. 提供元が DCR に対応している場合は **OAuth 2.1 (Dynamic Registration / DCR)** を選びます。事前登録が必要な場合は **OAuth 2.1 (Pre-registered App)** を選びます。フォームのリダイレクト URI を提供元に登録し、アプリの資格情報を入力します。
+3. **資格情報スコープ** を **Personal account** に設定して保存します。メンバーは `/connections` を開き、移動先の MCP サーバーページで対象の **Connect** をクリックします。
+
+OAuth の場合、リクエストヘッダーにアクセストークンを入力する必要はありません。
 
 ## 🌐 Playwright（Web 自動化）
 

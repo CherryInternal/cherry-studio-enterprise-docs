@@ -10,7 +10,37 @@ import { Callout } from 'fumadocs-ui/components/callout'
 </Callout>
 
 <img src="/assets/images/zh/admin/mcp-server-list-management_zh.webp" alt="" />
+## 从市场添加服务器
+
+1. 打开资源库的 MCP 服务器页（`/library?tab=mcp`）。
+2. 切换到 **探索市场**，选择官方预设并点击 **添加**。表单会预填配置。也可以点击 **手动添加** 配置自定义服务。
+3. 按提供方要求补充配置并创建服务器。返回 **已添加** 查看认证方式和状态。
+
+## 认证方式与凭据范围
+
+| 认证类型 | 配置方法 |
+| --- | --- |
+| `none` | 选择 **自动（无需认证 / 请求头密钥 / 密钥 URL）**，填写不带查询参数的服务地址，不填凭据请求头。 |
+| `api_key` | 选择 **自动**，在 **请求头** 中填写提供方要求的请求头名称和值。 |
+| `secret_url` | 选择 **自动**，填写提供方给出的完整 URL。此模式识别查询参数中的密钥，请勿把密钥放在 URL 路径中。 |
+| `oauth_dcr` | 选择 **OAuth 2.1（自动注册 / DCR）**，由网关向提供方动态注册 OAuth 客户端。 |
+| `oauth_preregistered` | 选择 **OAuth 2.1（预注册应用）**，填写 Client ID 和提供方要求的 Client Secret，并向提供方登记复制的回调地址。 |
+
+- **团队共享**（`shared`）：适用于 API Key、密钥 URL 和共享 OAuth。共享 OAuth 保存后，由管理员点击 **授权团队共享连接** 完成授权。
+- **个人账号**（`personal`）：适用于 OAuth。成员可打开 `/connections`，该地址会跳转到资源库的 MCP 服务器页。找到服务后，使用 **连接授权**、**重新授权** 或 **解除绑定**。AI 员工可在员工详情页单独授权，使用自己的连接账号。
+
+凭据只写。编辑时保留已存请求头条目且不填新值，或将已存密钥 URL、Client Secret 的输入框留空，可保留原值。
+
+## 测试与排查
+
+- 保存 HTTP 服务器后，在编辑弹窗点击 **测试连接**。测试成功时会显示可用工具信息。
+- 在 **高级设置** 复制 **网关代理地址**。在 OAuth 配置区可复制 **OAuth 回调地址（Redirect URI）**。
+- 在 **日志** 查看调用时间、方法、调用方、状态和耗时。调用日志仅记录元数据，保留 30 天，不记录请求和响应正文。
+- 在 OAuth 服务器的 **绑定** 页签查看绑定。具备编辑权限的管理员可点击 **吊销**，使对应连接失效。
+
 ## 界面核心字段
+
+上图为旧版界面。新版列表将类型、ID 和描述等配置项放在详情弹窗中。
 
 <table><thead><tr><th width="94.671875">字段</th><th>说明</th></tr></thead><tbody><tr><td><strong>名称</strong></td><td>服务器的显示名称（如 <code>mcp-server-chart</code>）。</td></tr><tr><td><strong>所属组</strong></td><td>服务器所属的分组，决定哪些用户组可以使用该服务器。</td></tr><tr><td><strong>ID</strong></td><td>系统内部调用的唯一标识符（如 <code>antv-chart</code>）。</td></tr><tr><td><strong>类型</strong></td><td>通信协议类型，如 <code>stdio</code>（标准输入输出）。</td></tr><tr><td><strong>描述</strong></td><td>服务器的功能说明。</td></tr><tr><td><strong>关联助手</strong></td><td><strong>[关键指标]</strong> 显示当前有多少个助手正在使用该服务器。</td></tr><tr><td><strong>操作</strong></td><td>支持 <strong>查看</strong> 详情、<strong>编辑</strong> 配置或 <strong>删除</strong> 服务器。</td></tr></tbody></table>
 

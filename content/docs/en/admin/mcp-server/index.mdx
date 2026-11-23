@@ -18,5 +18,13 @@ By configuring MCP servers, you can grant assistants the following capabilities:
 * **System integration**: Connect databases, APIs, or internal systems.
 
 <Callout type="info">
-**Core advantage:** Configure once, share across all. Admin-configured MCP servers can be assigned to multiple assistants without rewriting tool code.
+Administrators can assign the same MCP server to several assistants. Administrators set up team credentials. Each member authorizes their own personal OAuth connections.
+</Callout>
+
+## Managed HTTP MCP
+
+The platform gateway provides access to remote HTTP MCP servers (`streamableHttp` or `sse`) at `/v1/mcps/:key/mcp`. The platform Vault encrypts and stores upstream credentials. Desktop clients and AI employee containers use platform credentials to connect to the gateway. They do not receive upstream secrets or OAuth tokens.
+
+<Callout type="warn">
+`stdio` servers run locally on the desktop or in an AI employee container that supports them. The configuration sends `env` values to that runtime. Do not put sensitive credentials in `env`. For high-risk external integrations, use managed HTTP MCP when available.
 </Callout>

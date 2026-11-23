@@ -265,6 +265,27 @@ Configured via `app.env`. Key variables:
 | `DB_TYPE`     | Database type (default `postgres`)    |
 | `DB_SSL`      | Enable SSL (default `false`)          |
 
+### MCP gateway and Vault
+
+These settings apply to self-hosted deployments. Express SaaS users do not set these variables.
+
+| Variable | Use |
+| --- | --- |
+| `API_URL` | For the gateway, set this to the HTTPS base URL that clients use to reach the API. The platform uses it for the proxy URL and the `/mcp-oauth/callback` URI. |
+| `ADMIN_URL` | For OAuth, set this to the HTTPS base URL that users use to reach the admin console. Users return to this address after authorization. |
+| `MCP_PROXY_ALLOWED_CIDRS` | The default is empty. SSRF protection blocks restricted private network destinations. Add only approved MCP destination IP addresses or the smallest CIDR ranges necessary. Use commas to separate entries. |
+| `VAULT_MASTER_KEYS` | Use the Base64 encoding of one 32-byte key (mapped to `v1`) or a comma-separated list of `<keyId>:<base64>` entries. Do not reuse the `JWT_SECRET` key material. |
+
+<Callout type="warn">
+For multiple replicas, all API and background worker replicas must use the same `VAULT_MASTER_KEYS`. Store the value in a Kubernetes Secret and reference it with `valueFrom.secretKeyRef` under `app.env.VAULT_MASTER_KEYS`. Do not use a local key file in each Pod.
+</Callout>
+
+When you migrate from a single Docker Compose host, put the `<keyId>:<base64>` entry from `/app/data/vault/master.key` in the Secret. Keep the original ID, for example `auto-v1`. This migration does not require re-encryption.
+
+To rotate the key, first load both keys on all replicas. Then use a trusted server-side maintenance operation to activate the new write key. A change to the list order or a restart does not activate it. After you confirm that no data uses the old key and that you can still restore backups, explicitly retire the old key before you remove it from the Secret.
+
+For `/v1/mcps/`, disable response buffering on the reverse proxy and set a read timeout of at least 300 seconds. For Nginx, use `proxy_buffering off;` and `proxy_read_timeout 300s;`. Use equivalent settings for Ingress or CLB. Make sure each proxy passes `Mcp-Session-Id` in requests and responses.
+
 ### Production Secrets Management
 
 Use Kubernetes Secrets for JWT keys and database passwords:

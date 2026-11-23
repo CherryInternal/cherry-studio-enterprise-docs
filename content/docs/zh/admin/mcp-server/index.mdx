@@ -18,5 +18,13 @@ import { Callout } from 'fumadocs-ui/components/callout'
 * **系统集成**：连接数据库、API 或企业内部系统。
 
 <Callout type="info">
-**核心优势**：一次配置，全员共享。管理员配置好的 MCP 服务器可以被分配给多个不同的助手使用，无需重复编写工具代码。
+管理员可以将同一个 MCP 服务器分配给多个助手。团队共享凭据由管理员配置；个人 OAuth 连接需要各成员单独授权。
+</Callout>
+
+## 托管 HTTP MCP
+
+远程 HTTP MCP（`streamableHttp` 或 `sse`）通过平台网关的 `/v1/mcps/:key/mcp` 访问。平台 Vault 加密保存上游凭据。桌面端和 AI 员工容器使用平台凭证访问网关，不接收上游密钥或 OAuth 令牌。
+
+<Callout type="warn">
+`stdio` 服务仍在桌面端或支持该类型的 AI 员工容器中本地执行。`env` 会随配置下发，请勿把敏感凭据放在其中。高风险外部集成应优先使用托管 HTTP MCP。
 </Callout>

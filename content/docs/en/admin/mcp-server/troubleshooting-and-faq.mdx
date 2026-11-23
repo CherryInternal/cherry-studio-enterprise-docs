@@ -12,7 +12,7 @@ description: "Troubleshooting steps and solutions for common MCP server configur
 
 **Q2: Assistant tool call keeps loading or errors?**
 
-* **Cause**: Missing runtime dependencies on the server.
+* **Common `stdio` cause**: The environment that runs the command is missing a runtime dependency. For managed HTTP, see the gateway checks below.
 * **Fix**:
   1. Ensure **Node.js** (for `npx`, download: https://nodejs.org/ ) or **Python** (for `uvx`, download: https://www.python.org/downloads/ ) is installed on the host running Cherry Studio.
   2. Check network connectivity. The first run of `npx` may download packages from npm, and timeouts can cause failures.
@@ -24,3 +24,21 @@ description: "Troubleshooting steps and solutions for common MCP server configur
 * **Verification**:
   1. Go to **Assistant Management** and bind this MCP server to a test assistant.
   2. In the chat, issue a tool command (e.g., "Read test.txt under the desktop directory").
+
+## Managed HTTP MCP
+
+**Why does the gateway return `403`?**
+
+Check the call status in the server's **Logs**. If the API returns `SSRF_BLOCKED`, the SSRF policy blocked the destination. In this case, a self-hosted administrator can set `MCP_PROXY_ALLOWED_CIDRS` on the API service. The default is empty, so the policy blocks restricted private network destinations. Add only the IP addresses or smallest CIDR ranges necessary for approved MCP destinations. Use commas to separate entries, then restart the API service.
+
+**Why does OAuth report a redirect mismatch or fail to return to the console?**
+
+For a self-hosted deployment, set `API_URL` and `ADMIN_URL` to HTTPS base URLs that users can reach. For example, `API_URL=https://api.example.com` gives `https://api.example.com/mcp-oauth/callback`. For a pre-registered app, copy the full redirect URI from the edit dialog and register it with the provider. `ADMIN_URL` controls where users return after authorization.
+
+**How do I restore a personal connection?**
+
+Open `/connections` and find the connection on the MCP Servers page. Select **Disconnect**, then select **Connect** and complete authorization. Try the tool call again.
+
+**Why did the HTTP request or SSE stream stop?**
+
+The gateway uses a 30-second upstream HTTP request timeout and a 300-second SSE idle timeout. Check the upstream response times and SSE heartbeat. For `/v1/mcps/`, make sure the reverse proxy does not buffer responses, has a read timeout of at least 300 seconds, and passes `Mcp-Session-Id` in both directions.
