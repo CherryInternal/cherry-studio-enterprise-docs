@@ -266,6 +266,27 @@ kubectl delete pvc cherry-studio-enterprise-data
 | `DB_TYPE`     | 数据库类型（默认 `postgres`）|
 | `DB_SSL`      | 是否启用 SSL（默认 `false`） |
 
+### MCP 网关与 Vault
+
+以下设置仅适用于私有化部署。Express SaaS 用户无需配置。
+
+| 变量 | 用途 |
+| --- | --- |
+| `API_URL` | 启用网关时设置为客户端可访问的 API HTTPS 基地址，用于生成代理地址和 `/mcp-oauth/callback` 回调地址。 |
+| `ADMIN_URL` | 启用 OAuth 时设置为用户可访问的管理后台 HTTPS 基地址，用于授权完成后的回跳。 |
+| `MCP_PROXY_ALLOWED_CIDRS` | 默认空，SSRF 防护会拦截受限内网目标。只放行已审核的 MCP 目标 IP 或最小 CIDR 范围，以逗号分隔。 |
+| `VAULT_MASTER_KEYS` | 使用单个 32 字节密钥的 Base64 编码（自动映射为 `v1`），或逗号分隔的 `<keyId>:<base64>` 列表。密钥材料不得与 `JWT_SECRET` 共用。 |
+
+<Callout type="warn">
+多副本部署必须为所有 API 和后台任务副本配置相同的 `VAULT_MASTER_KEYS`。使用 Kubernetes Secret，通过 `app.env.VAULT_MASTER_KEYS` 的 `valueFrom.secretKeyRef` 引用。不要依赖各 Pod 的本地密钥文件。
+</Callout>
+
+从单机 Docker Compose 迁移时，将 `/app/data/vault/master.key` 中的 `<keyId>:<base64>` 原样存入 Secret。保留原 ID（例如 `auto-v1`），无需重新加密现有凭据。
+
+轮换时先让所有副本加载新旧密钥，再通过受信任的服务端运维操作显式切换写入密钥。调整配置顺序或重启不会切钥。确认旧钥已无引用且备份仍可恢复后，显式退休旧钥，再从 Secret 移除。
+
+对 `/v1/mcps/` 关闭前置代理的响应缓冲，并设置至少 300 秒的读超时。Nginx 使用 `proxy_buffering off;` 和 `proxy_read_timeout 300s;`。Ingress 或 CLB 应使用等效设置。所有代理层都应保留 `Mcp-Session-Id` 请求头和响应头。
+
 ### 生产环境敏感信息管理
 
 建议使用 Kubernetes Secret 管理 JWT 密钥和数据库密码：

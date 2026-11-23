@@ -190,6 +190,25 @@ docker-compose down -v
 
 > 如需配置 Casdoor 单点登录 (SSO)，请参阅 <DynamicLink href="/[lang]/docs/setup/advanced/sso">单点登录配置</DynamicLink>。
 
+### MCP 网关与 Vault
+
+以下环境变量配置在私有化部署的 API 容器中。Express SaaS 用户无需配置。
+
+| 变量 | 用途 |
+| --- | --- |
+| `API_URL` | 启用网关时设置为客户端可访问的 API HTTPS 基地址，用于生成代理地址和 `/mcp-oauth/callback` 回调地址。 |
+| `ADMIN_URL` | 启用 OAuth 时设置为用户可访问的管理后台 HTTPS 基地址，用于授权完成后的回跳。 |
+| `MCP_PROXY_ALLOWED_CIDRS` | 默认空，SSRF 防护会拦截受限内网目标。只放行已审核的 MCP 目标 IP 或最小 CIDR 范围，以逗号分隔。 |
+| `VAULT_MASTER_KEYS` | 单机可留空。显式配置时，使用单个 32 字节密钥的 Base64 编码（自动映射为 `v1`），或逗号分隔的 `<keyId>:<base64>` 列表。密钥材料不得与 `JWT_SECRET` 共用。 |
+
+<Callout type="warn">
+单机留空时，Vault 在首次初始化时创建 `/app/data/vault/master.key`，并在数据库中锁定密钥指纹。必须持久化 `/app/data` 卷，并安全备份密钥文件和数据库。已有 Vault 数据时，如果密钥文件丢失或指纹不匹配，API 会拒绝启动。
+</Callout>
+
+迁移到多副本部署前，将密钥文件中的 `<keyId>:<base64>` 原样配置到所有副本的 `VAULT_MASTER_KEYS`。保留原 ID（例如 `auto-v1`），无需重新加密现有凭据。
+
+轮换时先让所有 API 和后台任务副本加载新旧密钥，再通过受信任的服务端运维操作显式切换写入密钥。调整列表顺序或重启不会切钥。确认旧钥已无引用且备份仍可恢复后，显式退休旧钥，再从配置移除。
+
 ### 数据持久化
 
 应用数据存储在 `/app/data` 目录，包括：
@@ -259,6 +278,8 @@ server {
     }
 }
 ```
+
+如果使用 MCP 网关，在 API 的 Nginx `server` 块中为 `/v1/mcps/` 添加独立的 `location`，沿用上例的转发目标和转发头，并设置 `proxy_buffering off;` 和 `proxy_read_timeout 300s;`。使用 Ingress 或 CLB 时，设置等效的缓冲策略和至少 300 秒的读超时。所有代理层都应保留 `Mcp-Session-Id` 请求头和响应头。
 
 ### 性能优化
 

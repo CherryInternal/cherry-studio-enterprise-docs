@@ -189,6 +189,25 @@ docker-compose down -v
 
 > For Casdoor SSO configuration, see [SSO configuration](/docs/setup/advanced/sso).
 
+### MCP gateway and Vault
+
+Set these environment variables in the API container for a self-hosted deployment. Express SaaS users do not set these variables.
+
+| Variable | Use |
+| --- | --- |
+| `API_URL` | For the gateway, set this to the HTTPS base URL that clients use to reach the API. The platform uses it for the proxy URL and the `/mcp-oauth/callback` URI. |
+| `ADMIN_URL` | For OAuth, set this to the HTTPS base URL that users use to reach the admin console. Users return to this address after authorization. |
+| `MCP_PROXY_ALLOWED_CIDRS` | The default is empty. SSRF protection blocks restricted private network destinations. Add only approved MCP destination IP addresses or the smallest CIDR ranges necessary. Use commas to separate entries. |
+| `VAULT_MASTER_KEYS` | Optional on a single host. Set it to the Base64 encoding of one 32-byte key (mapped to `v1`) or a comma-separated list of `<keyId>:<base64>` entries. Do not reuse the `JWT_SECRET` key material. |
+
+<Callout type="warn">
+On one host, if `VAULT_MASTER_KEYS` is empty, Vault creates `/app/data/vault/master.key` at first initialization and records its fingerprint in the database. Keep the `/app/data` volume and make secure backups of the key file and database. If Vault already has data, the API does not start when the key file is missing or its fingerprint does not match.
+</Callout>
+
+Before you migrate to multiple replicas, set `VAULT_MASTER_KEYS` to the `<keyId>:<base64>` entry from the key file on every replica. Keep the original ID, for example `auto-v1`. This migration does not require re-encryption.
+
+To rotate the key, first load both keys on all API and background worker replicas. Then use a trusted server-side maintenance operation to activate the new write key. A change to the list order or a restart does not activate it. After you confirm that no data uses the old key and that you can still restore backups, explicitly retire the old key before you remove it from the configuration.
+
 ### Data Persistence
 
 Application data is stored under `/app/data`, including:
@@ -258,6 +277,8 @@ server {
     }
 }
 ```
+
+For the MCP gateway, add a separate `/v1/mcps/` location in the API's Nginx `server` block. Use the same upstream and forwarded headers as above. Set `proxy_buffering off;` and `proxy_read_timeout 300s;`. For Ingress or CLB, use equivalent settings and a read timeout of at least 300 seconds. Make sure each proxy passes `Mcp-Session-Id` in requests and responses.
 
 ### Performance Optimization
 

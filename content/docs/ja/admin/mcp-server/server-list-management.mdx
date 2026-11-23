@@ -10,7 +10,39 @@ import { Callout } from 'fumadocs-ui/components/callout'
 </Callout>
 
 <img src="/assets/images/ja/admin/mcp-server-list-management_ja.webp" alt="" />
+## マーケットからサーバーを追加する
+
+日本語の翻訳がない項目は英語で表示されます。
+
+1. リソースライブラリの MCP サーバーページ（`/library?tab=mcp`）を開きます。
+2. **Explore Market** で公式プリセットを選び、**Add** をクリックします。設定がフォームに入力されます。独自のサーバーには **Add Manually** を使います。
+3. 提供元が指定する項目を入力し、サーバーを作成します。**Installed** で認証方式と状態を確認します。
+
+## 認証方式と資格情報スコープ
+
+| 認証タイプ | 設定方法 |
+| --- | --- |
+| `none` | **Auto (None / Header API Key / Secret URL)** を選びます。クエリパラメーターのない URL を入力し、認証用ヘッダーは追加しません。 |
+| `api_key` | **Auto** を選び、**リクエストヘッダー** に提供元が指定する名前と値を入力します。 |
+| `secret_url` | **Auto** を選び、提供元の URL 全体を入力します。この方式はクエリパラメーター内のシークレットを検出します。URL のパスにシークレットを入れないでください。 |
+| `oauth_dcr` | **OAuth 2.1 (Dynamic Registration / DCR)** を選びます。ゲートウェイが提供元に OAuth クライアントを動的に登録します。 |
+| `oauth_preregistered` | **OAuth 2.1 (Pre-registered App)** を選びます。Client ID と、必要に応じて Client Secret を入力します。リダイレクト URI をコピーして提供元に登録します。 |
+
+- **共有資格情報**（`shared`）：API キー、シークレット付き URL、共有 OAuth に使用します。共有 OAuth の場合はサーバーを保存した後、**Authorize Team Connection** をクリックします。
+- **Personal account**（`personal`）：OAuth に使用します。メンバーが `/connections` を開くと、リソースライブラリの MCP サーバーページに移動します。対象のサーバーで **Connect**、**Reauthorize**、または **Disconnect** を選びます。AI 従業員は詳細ページで独立したアカウントを認可できます。
+
+資格情報は書き込み専用です。保存済みヘッダーを維持するには項目を残し、値を空欄にします。保存済みのシークレット付き URL や Client Secret も空欄にすると維持されます。
+
+## 接続テストとログ
+
+- HTTP サーバーを保存してから、編集画面で **接続テスト** をクリックします。成功するとツールの情報が表示されます。
+- **詳細設定** で **ゲートウェイプロキシURL** をコピーできます。OAuth の設定欄では **OAuth Redirect URI** をコピーできます。
+- **ログ** で呼び出し時刻、メソッド、呼び出し元、状態、所要時間を確認します。ログはメタデータのみを 30 日間保持し、リクエストやレスポンスの本文は記録しません。
+- OAuth サーバーの **Bindings** で接続を確認できます。編集権限がある場合は **Revoke** で接続を解除できます。
+
 ## 主な項目
+
+画像は以前の画面です。現在はタイプ、ID、説明などの設定を詳細画面で確認できます。
 
 <table><thead><tr><th width="94.671875">項目</th><th>説明</th></tr></thead><tbody><tr><td><strong>名前</strong></td><td>表示名（例：<code>mcp-server-chart</code>）。</td></tr><tr><td><strong>所属グループ</strong></td><td>サーバーが属するグループ。どのユーザーグループがアクセスできるかを決定します。</td></tr><tr><td><strong>ID</strong></td><td>システム内部 ID（例：<code>antv-chart</code>）。</td></tr><tr><td><strong>タイプ</strong></td><td>通信プロトコル（例：<code>stdio</code>）。</td></tr><tr><td><strong>説明</strong></td><td>サーバーの機能説明。</td></tr><tr><td><strong>関連アシスタント</strong></td><td><strong>[重要]</strong> 現在利用中のアシスタント数。</td></tr><tr><td><strong>操作</strong></td><td><strong>詳細表示</strong>、<strong>編集</strong>、または <strong>削除</strong>。</td></tr></tbody></table>
 

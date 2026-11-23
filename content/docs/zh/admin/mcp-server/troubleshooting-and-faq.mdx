@@ -12,7 +12,7 @@ description: "MCP 服务器配置与调用中的常见问题排查步骤和解�
 
 **Q2: 助手调用工具时一直转圈或报错？**
 
-* **原因**：服务器环境缺少运行时依赖。
+* **`stdio` 常见原因**：执行命令的环境缺少运行时依赖。托管 HTTP 服务请参见下方网关排查。
 * **解决**：
   1. 确认运行 Cherry Studio 的主机上已安装 **Node.js**（对应 `npx`，下载：https://nodejs.org/ ）或 **Python**（对应 `uvx`，下载：https://www.python.org/downloads/ ）。
   2. 检查网络连接，首次运行 `npx` 可能需要从 npm 镜像源下载包，网络超时会导致启动失败。
@@ -24,3 +24,21 @@ description: "MCP 服务器配置与调用中的常见问题排查步骤和解�
 * **验证方法**：
   1. 进入 **助手管理**，将该 MCP 绑定到一个测试助手。
   2. 在对话框中输入需要调用工具的指令（如"读取 desktop 目录下的 test.txt"）。
+
+## 托管 HTTP MCP
+
+**为什么网关返回 `403`？**
+
+在服务器的 **日志** 中检查调用状态。若 API 返回 `SSRF_BLOCKED`，说明目标被 SSRF 策略拦截。此时，私有化部署管理员可在 API 服务设置 `MCP_PROXY_ALLOWED_CIDRS`。默认留空，受限内网目标会被阻断。仅添加已审核 MCP 目标所需的最小 IP 或 CIDR 范围，以逗号分隔，然后重启 API。
+
+**OAuth 回调不匹配或回不到管理后台怎么办？**
+
+私有化部署应将 `API_URL` 和 `ADMIN_URL` 设为用户可访问的 HTTPS 基地址。例如，`API_URL=https://api.example.com` 对应 `https://api.example.com/mcp-oauth/callback`。预注册应用应在提供方登记编辑弹窗中复制的完整回调地址。`ADMIN_URL` 决定授权后的后台回跳地址。
+
+**个人授权失效怎么办？**
+
+打开 `/connections`，在跳转后的 MCP 服务器页找到连接。点击 **解除绑定**，再点击 **连接授权** 完成授权，然后重试工具调用。
+
+**为何请求或 SSE 流断开？**
+
+网关的上游 HTTP 请求超时为 30 秒，SSE 流空闲超时为 300 秒。检查上游响应速度和 SSE 心跳。对 `/v1/mcps/`，检查前置代理是否关闭响应缓冲、读超时至少为 300 秒，并透传双向 `Mcp-Session-Id`。

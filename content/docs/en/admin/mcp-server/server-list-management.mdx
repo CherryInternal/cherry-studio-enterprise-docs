@@ -10,7 +10,37 @@ import { Callout } from 'fumadocs-ui/components/callout'
 </Callout>
 
 <img src="/assets/images/en/admin/mcp-server-list-management_en.webp" alt="" />
+## Add a server from the market
+
+1. Open the MCP Servers page in the resource library (`/library?tab=mcp`).
+2. In **Explore Market**, select an official preset and click **Add** to fill in the form. For a custom server, click **Add Manually**.
+3. Complete the settings that the provider requires and create the server. Go to **Installed** to see the authentication mode and status.
+
+## Authentication and credential scope
+
+| Authentication type | Configuration |
+| --- | --- |
+| `none` | Select **Auto (None / Header API Key / Secret URL)**. Enter a URL without query parameters and do not add credential headers. |
+| `api_key` | Select **Auto**. In **Request headers**, enter the header name and value that the provider requires. |
+| `secret_url` | Select **Auto**. Enter the full URL from the provider. This mode detects secrets in query parameters. Do not put secrets in the URL path. |
+| `oauth_dcr` | Select **OAuth 2.1 (Dynamic Registration / DCR)**. The gateway registers the OAuth client with the provider. |
+| `oauth_preregistered` | Select **OAuth 2.1 (Pre-registered App)**. Enter the Client ID and the Client Secret if required. Copy the redirect URI and register it with the provider. |
+
+- **Team shared** (`shared`): For API keys, secret URLs, and shared OAuth. For shared OAuth, save the server, then click **Authorize Team Connection**.
+- **Personal account** (`personal`): For OAuth. Members can open `/connections`, which redirects to the MCP Servers page in the resource library. Find the server and select **Connect**, **Reauthorize**, or **Disconnect**. An AI employee can use a separate connection. Authorize it on that employee's details page.
+
+Credentials are write-only. To keep stored values when you edit, keep the existing header entries and leave their values blank. Leave a stored secret URL or Client Secret blank to keep it.
+
+## Test and monitor a server
+
+- Save the HTTP server, then click **Test Connection** in the edit dialog. A successful test shows information about the tools.
+- Copy the **Proxy URL** from **Advanced settings**. For OAuth, copy the **OAuth Redirect URI** from the OAuth settings.
+- In **Logs**, check the time, method, caller, status, and duration of calls. The platform keeps only metadata for 30 days. It does not log request or response bodies.
+- For an OAuth server, open **Bindings** to view connections. If you have edit permission, select **Revoke** to disconnect a binding.
+
 ## Core Fields
+
+The screenshot shows an earlier version. In the current version, settings such as type, ID, and description are in the details dialog.
 
 <table><thead><tr><th width="94.671875">Field</th><th>Description</th></tr></thead><tbody><tr><td><strong>Name</strong></td><td>Display name (e.g., <code>mcp-server-chart</code>).</td></tr><tr><td><strong>Group</strong></td><td>The group the server belongs to, determining which user groups can access it.</td></tr><tr><td><strong>ID</strong></td><td>Unique internal identifier (e.g., <code>antv-chart</code>).</td></tr><tr><td><strong>Type</strong></td><td>Protocol type, e.g., <code>stdio</code> (standard input/output).</td></tr><tr><td><strong>Description</strong></td><td>A description of the server's functionality.</td></tr><tr><td><strong>Associated Assistants</strong></td><td><strong>[Key metric]</strong> Number of assistants using this server.</td></tr><tr><td><strong>Actions</strong></td><td>Supports <strong>View</strong> details, <strong>Edit</strong> configuration, or <strong>Delete</strong> the server.</td></tr></tbody></table>
 

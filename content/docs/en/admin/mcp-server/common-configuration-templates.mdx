@@ -5,7 +5,28 @@ description: "Ready-to-use configuration examples for popular MCP servers such a
 
 import { Callout } from 'fumadocs-ui/components/callout'
 
-To help you get started quickly, here are validated MCP server configurations.
+These examples cover remote HTTP servers that use the gateway and `stdio` servers that run locally.
+
+## Managed HTTP: API key in a request header
+
+Click **Add Manually** and use this example in the JSON configuration. Replace the URL, header, and value with the settings from your provider. After you save, the gateway stores the header credential. Callers use the proxy URL.
+
+```json
+{
+  "name": "Team Search",
+  "type": "streamableHttp",
+  "baseUrl": "https://mcp.example.com/mcp",
+  "headers": { "Authorization": "Bearer REPLACE_WITH_API_KEY" }
+}
+```
+
+## Managed HTTP: Personal OAuth
+
+1. In the form, select `streamableHttp` and enter the provider's MCP URL.
+2. If the provider supports DCR, select **OAuth 2.1 (Dynamic Registration / DCR)**. If the provider requires a registered app, select **OAuth 2.1 (Pre-registered App)**, register the redirect URI from the form, and enter the app credentials.
+3. Set **Credential scope** to **Personal account** and save. Members open `/connections`, find the server on the MCP Servers page, and select **Connect**.
+
+For OAuth, do not enter an access token in the request headers.
 
 ## 🌐 Playwright (Web Automation)
 
